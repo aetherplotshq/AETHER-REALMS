@@ -7,24 +7,26 @@
 </head>
 <body style="padding:20px; background:#050505;">
     <div style="max-width:800px; margin:0 auto;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h2 class="gold-text">GHOST CHAT <small style="color:#444;">(AUTO-WIPE 8H)</small></h2>
-            <button onclick="location.href='index.html'" style="background:none; border:1px solid #333; color:#888; padding:5px 15px; cursor:pointer;">EXIT</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+            <div style="display:flex; align-items:center; gap:15px;">
+                <div class="ghost-btn">💀 MILLIONAIRE GHOST GROUP</div>
+            </div>
+            <button onclick="location.href='index.html'" style="background:none; border:1px solid #222; color:#555; padding:8px 20px; cursor:pointer; border-radius:5px;">EXIT CHAT</button>
         </div>
 
-        <div id="chatBox" style="height:65vh; overflow-y:auto; background:#000; border:1px solid #222; padding:25px; border-radius:15px; display:flex; flex-direction:column;"></div>
+        <div id="chatBox" class="chat-container"></div>
         
-        <div style="margin-top:20px; display:grid; grid-template-columns: 1fr 1fr 2fr 100px; gap:10px;">
-            <input type="text" id="realmName" placeholder="GAME (e.g. GTA)" style="padding:15px; background:#111; border:1px solid #333; color:var(--gold);">
-            <input type="text" id="plotID" placeholder="PLOT #" style="padding:15px; background:#111; border:1px solid #333; color:var(--gold);">
-            <input type="text" id="msgInput" placeholder="Message..." style="padding:15px; background:#111; border:1px solid #333; color:#fff;">
-            <button id="sendBtn" style="background:var(--gold); border:none; font-weight:900; cursor:pointer; border-radius:5px;">SEND</button>
+        <div style="margin-top:20px; display:grid; grid-template-columns: 1fr 1fr 2fr 100px; gap:12px;">
+            <input type="text" id="realm" placeholder="GAME REALM" style="padding:15px; background:#111; border:1px solid #222; color:var(--gold); font-weight:bold;">
+            <input type="text" id="pID" placeholder="PLOT #" style="padding:15px; background:#111; border:1px solid #222; color:var(--gold); font-weight:bold;">
+            <input type="text" id="msg" placeholder="Type encrypted message..." style="padding:15px; background:#111; border:1px solid #222; color:#fff;">
+            <button id="sendBtn" style="background:var(--gold); border:none; font-weight:900; cursor:pointer; border-radius:5px; color:#000;">SEND</button>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = { apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM", databaseURL: "https://aether-realms-default-rtdb.firebaseio.com", projectId: "aether-realms" };
         const app = initializeApp(firebaseConfig);
@@ -32,13 +34,12 @@
         const chatRef = ref(db, 'ghost_chat');
 
         document.getElementById('sendBtn').onclick = () => {
-            const r = document.getElementById('realmName').value;
-            const p = document.getElementById('plotID').value;
-            const m = document.getElementById('msgInput').value;
-            if(!r || !p || !m) return alert("Fill all fields!");
-            
+            const r = document.getElementById('realm').value;
+            const p = document.getElementById('pID').value;
+            const m = document.getElementById('msg').value;
+            if(!r || !p || !m) return;
             push(chatRef, { sender: `REALM: ${r.toUpperCase()} | PLOT: #${p}`, text: m, time: Date.now() });
-            document.getElementById('msgInput').value = '';
+            document.getElementById('msg').value = '';
         };
 
         onValue(chatRef, (snap) => {
@@ -47,8 +48,8 @@
                 const d = child.val();
                 box.innerHTML += `
                     <div class="msg-bubble">
-                        <div class="msg-meta">${d.sender}</div>
-                        <div style="color:#eee;">${d.text}</div>
+                        <div class="sender-id">${d.sender}</div>
+                        <div style="color:#eee; font-size:14px;">${d.text}</div>
                     </div>`;
             });
             box.scrollTop = box.scrollHeight;
