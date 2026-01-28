@@ -2,64 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER REALM | Assets Map</title>
+    <title>AETHER REALM | Plot Map</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="obsidian-theme">
+<body>
     <header class="main-header">
         <div class="logo" onclick="location.href='index.html'">AETHER PLOTS</div>
-        <div id="currentRealm" class="gold-text">LOADING REALM...</div>
+        <div id="currentRealm" class="gold-text">LOADING...</div>
     </header>
 
     <div class="map-container">
-        <h3 class="label">VIP LEADER SLOTS (100x100)</h3>
+        <h3 class="label">VIP LEADER ASSETS (100x100)</h3>
         <div class="vip-grid" id="vipGrid"></div>
-
-        <hr class="divider">
-
-        <h3 class="label">COMMUNITY ASSETS (80x80)</h3>
+        
+        <h3 class="label">COMMUNITY PLOTS (80x80)</h3>
         <div class="community-grid" id="communityGrid"></div>
     </div>
 
-    <div class="chat-box">
-        <div id="messages">Initializing Ghost Chat... [Secure]</div>
-        <div class="chat-input">
-            <input type="text" id="userMsg" placeholder="Send encrypted message...">
-            <button onclick="sendChat()">SEND</button>
-        </div>
-    </div>
-
-    <script type="module">
-        import { db, ref, onValue } from "./firebase-config.js";
-
+    <script>
         const params = new URLSearchParams(window.location.search);
         const realm = params.get('realm') || 'Fortnite';
         document.getElementById('currentRealm').innerText = realm.toUpperCase() + " REALM";
 
-        // Generate 5 VIP Plots
-        const vipGrid = document.getElementById('vipGrid');
-        for(let i=1; i<=5; i++) {
-            vipGrid.innerHTML += `
-                <div class="plot vip" onclick="order('${i}', 9999)">
+        // Generate VIP 1-5
+        const vGrid = document.getElementById('vipGrid');
+        for(let i=1; i<=5; i++){
+            vGrid.innerHTML += `
+                <div class="plot vip" onclick="order('VIP-${i}', 9999)">
                     <span class="id">VIP-${i}</span>
                     <span class="price">$9,999</span>
                 </div>`;
         }
 
-        // Generate 95 Community Plots
-        const commGrid = document.getElementById('communityGrid');
-        for(let i=1; i<=95; i++) {
-            let price = (i<=20) ? 999 : (i<=45) ? 499 : (i<=70) ? 299 : 199;
-            commGrid.innerHTML += `
-                <div class="plot normal" onclick="order('${i}', ${price})">
+        // Generate Normal 1-95
+        const cGrid = document.getElementById('communityGrid');
+        for(let i=1; i<=95; i++){
+            let p = (i<=20) ? 999 : (i<=45) ? 499 : (i<=70) ? 299 : 199;
+            cGrid.innerHTML += `
+                <div class="plot normal" onclick="order('${i}', ${p})">
                     <span class="id">#${i}</span>
-                    <span class="price">$${price}</span>
+                    <span class="price">$${p}</span>
                 </div>`;
         }
 
-        window.order = (id, price) => {
+        function order(id, price) {
             window.location.href = `order.html?realm=${realm}&id=${id}&price=${price}`;
-        };
+        }
     </script>
 </body>
 </html>
