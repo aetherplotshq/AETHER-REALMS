@@ -1,7 +1,7 @@
 :root {
     --bg: #030303;
     --gold: #FFD700;
-    --gold-glow: rgba(255, 215, 0, 0.7);
+    --gold-glow: rgba(255, 215, 0, 0.8); /* আরও গাঢ় গ্লো */
 }
 
 body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
@@ -9,39 +9,33 @@ body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; mar
 /* Aggressive Game Card Hover */
 .game-card {
     background: #0a0a0a; border: 1px solid #1a1a1a; padding: 50px 20px;
-    border-radius: 15px; text-align: center; cursor: pointer; transition: 0.4s;
+    border-radius: 15px; text-align: center; cursor: pointer; transition: 0.3s;
 }
 .game-card:hover { 
-    border-color: var(--gold); 
-    transform: translateY(-15px) scale(1.05); 
-    box-shadow: 0 0 50px var(--gold-glow); /* আরও গাঢ় ইফেক্ট */
-    background: #111;
+    border-color: var(--gold); transform: translateY(-15px) scale(1.05); 
+    box-shadow: 0 0 60px var(--gold-glow); background: #000;
 }
 
-/* Custom Floating Support Logo (Right Center) */
-.support-side {
+/* Fixed Customer Support (Right Center) */
+.support-fixed {
     position: fixed; top: 50%; right: 20px; transform: translateY(-50%);
-    z-index: 9999; cursor: pointer; transition: 0.3s;
+    z-index: 10000; cursor: pointer; transition: 0.3s;
 }
-.support-side:hover { transform: translateY(-50%) scale(1.1); }
+.support-fixed img { width: 60px; filter: drop-shadow(0 0 10px var(--gold)); }
 
-/* Ghost Chat Logo (Aggressive Red/Gold) */
-.ghost-logo {
-    width: 60px; height: 60px; background: #000; border: 2px solid var(--gold);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 15px var(--gold-glow); font-size: 24px; text-decoration: none;
+/* Ghost Chat Aggressive Logo */
+.ghost-btn {
+    background: #000; border: 2px solid var(--gold); color: var(--gold);
+    padding: 10px 20px; border-radius: 50px; text-decoration: none;
+    font-weight: 900; font-size: 14px; display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 0 15px var(--gold-glow);
 }
 
-/* Messaging Layout (Messenger Style) */
-.msg-bubble {
-    max-width: 80%; padding: 12px 18px; border-radius: 20px; margin-bottom: 10px;
-    background: #1a1a1a; border: 1px solid #333; align-self: flex-start;
-}
-.msg-meta { font-size: 10px; color: var(--gold); margin-bottom: 5px; font-weight: bold; }
+/* Chat Layout - Messenger Style */
+.chat-container { height: 60vh; overflow-y: auto; background: #000; border: 1px solid #1a1a1a; padding: 20px; border-radius: 15px; }
+.msg-bubble { background: #111; border: 1px solid #222; padding: 12px; border-radius: 15px; margin-bottom: 12px; max-width: 85%; }
+.sender-id { font-size: 10px; color: var(--gold); font-weight: 900; margin-bottom: 5px; letter-spacing: 1px; }
 
-/* Payment Copy Box */
-.copy-box {
-    background: #111; border: 1px solid #333; padding: 5px 12px;
-    border-radius: 4px; cursor: pointer; font-size: 11px; transition: 0.2s;
-}
-.copy-box:hover { border-color: var(--gold); color: var(--gold); }
+/* Copy-to-Clipboard Payment Buttons */
+.pay-tag { background: #111; border: 1px solid #333; padding: 6px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; color: #fff; }
+.pay-tag:hover { border-color: var(--gold); color: var(--gold); }
