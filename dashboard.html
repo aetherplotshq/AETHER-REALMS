@@ -6,38 +6,63 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="main-header" style="padding:15px; border-bottom:1px solid var(--gold); display:flex; justify-content:space-between;">
-        <div class="logo" onclick="location.href='index.html'" style="color:var(--gold); font-weight:900; cursor:pointer;">AETHER PLOTS</div>
-        <div id="currentRealm" class="gold-text">LOADING...</div>
+    <header class="main-header" style="padding:20px; border-bottom:1px solid var(--gold); display:flex; justify-content:space-between; background:#000;">
+        <div class="logo" onclick="location.href='index.html'" style="color:var(--gold); font-weight:900; cursor:pointer; letter-spacing:2px;">AETHER PLOTS</div>
+        <div id="currentRealm" class="gold-text" style="font-weight:bold;">LOADING...</div>
     </header>
 
-    <div class="map-container" style="text-align:center; padding:20px;">
-        <div class="vip-grid" id="vipGrid" style="display:flex; justify-content:center; gap:15px; margin-bottom:40px;"></div>
-        <div class="community-grid" id="communityGrid" style="display:grid; grid-template-columns: repeat(10, 1fr); gap:10px; max-width:900px; margin:0 auto;"></div>
+    <div class="map-container">
+        <h3 style="letter-spacing:5px; color:#444; font-size:12px;">EXCLUSIVE VIP REALMS (100x100)</h3>
+        <div class="vip-grid" id="vipGrid" style="display:flex; justify-content:center; gap:20px; margin:30px 0;"></div>
+        
+        <h3 style="letter-spacing:5px; color:#444; font-size:12px; margin-top:50px;">COMMUNITY ASSETS (80x80)</h3>
+        <div class="community-grid" id="communityGrid"></div>
     </div>
 
     <div class="support-wrapper">
-        <div class="chat-btn" onclick="window.open('ghost-chat.html', '_blank')">💬 GHOST CHAT (8H)</div>
-        <div class="wa-btn" onclick="window.open('support.html', '_blank')">
+        <a href="ghost-chat.html" target="_blank" class="btn-float chat-btn">💬 GHOST CHAT (8H)</a>
+        <div class="btn-float wa-btn" onclick="window.open('support.html', '_blank')">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20">
             <span>SUPPORT</span>
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
+            authDomain: "aether-realms.firebaseapp.com",
+            databaseURL: "https://aether-realms-default-rtdb.firebaseio.com",
+            projectId: "aether-realms",
+            storageBucket: "aether-realms.firebasestorage.app",
+            messagingSenderId: "745970771566",
+            appId: "1:745970771566:web:1b0607362279665074a87f"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
         const params = new URLSearchParams(window.location.search);
         const realm = params.get('realm') || 'Fortnite';
-        document.getElementById('currentRealm').innerText = realm.toUpperCase();
+        document.getElementById('currentRealm').innerText = realm.toUpperCase() + " REALM";
 
+        // VIP Generation
         const vGrid = document.getElementById('vipGrid');
-        for(let i=1; i<=5; i++) {
-            vGrid.innerHTML += `<div class="plot vip" onclick="location.href='order.html?realm=${realm}&id=VIP-${i}&price=9999'">
-                <span style="font-size:10px;">VIP</span><div class="stars" style="color:gold;">★★★★★</div></div>`;
+        for(let i=1; i<=5; i++){
+            vGrid.innerHTML += `
+                <div class="plot vip" onclick="location.href='order.html?realm=${realm}&id=VIP-${i}&price=9999'">
+                    <span style="font-size:10px; font-weight:bold;">VIP ELITE</span>
+                    <span class="price" style="font-size:14px; font-weight:900;">$9,999</span>
+                    <div class="stars">★★★★★</div>
+                </div>`;
         }
 
+        // Community Generation
         const cGrid = document.getElementById('communityGrid');
-        for(let i=1; i<=95; i++) {
-            cGrid.innerHTML += `<div class="plot normal" style="border:1px solid #333; aspect-ratio:1/1; cursor:pointer;" onclick="location.href='order.html?realm=${realm}&id=${i}&price=199'">#${i}</div>`;
+        for(let i=1; i<=95; i++){
+            let price = (i<=20) ? 999 : (i<=45) ? 499 : (i<=70) ? 299 : 199;
+            cGrid.innerHTML += `<div class="plot normal" onclick="location.href='order.html?realm=${realm}&id=${i}&price=${price}'">#${i}<br>$${price}</div>`;
         }
     </script>
 </body>
