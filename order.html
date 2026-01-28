@@ -1,38 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><title>SECURE ACQUISITION</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8"><title>ACQUIRE ASSET</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-  <div style="max-width:550px; margin:80px auto; background:#0a0a0a; padding:50px; border-radius:20px; border:2px solid var(--gold); text-align:center;">
-    <h2 style="color:var(--gold); letter-spacing:2px;">ACQUIRE ASSET</h2>
-    <input type="text" id="custName" placeholder="ENTER FULL NAME" style="width:90%; padding:18px; margin:15px 0; background:#000; border:1px solid #333; color:#fff; border-radius:5px;">
-    
-    <select id="gameSelect" style="width:97%; padding:18px; margin:15px 0; background:#000; border:1px solid #333; color:#fff; border-radius:5px;">
-      <option>FORTNITE</option><option>CS2</option><option>MINECRAFT</option><option>VALORANT</option><option>APEX</option><option>ROBLOX</option><option>WARZONE</option><option>GTA</option><option>LEAGUE</option>
-    </select>
-
-    <div style="color:var(--gold); font-size:45px; font-weight:900; margin:30px 0;">PRICE: $<span id="dispP">0</span></div>
-    
-    <button style="width:100%; padding:20px; background:var(--gold); color:#000; font-weight:900; border:none; cursor:pointer; border-radius:5px; font-size:18px;" onclick="showOrderPopup()">SUBMIT ASSET DATA</button>
-  </div>
-
-  <div id="orderModal" class="modal">
-    <div class="modal-content">
-      <h2 style="color:var(--gold)">SUBMISSION CHECKLIST</h2>
-      <ul style="text-align:left; color:#ccc; line-height:2;">
-        <li>আপনার পূর্ণ নাম</li><li>নির্বাচিত গেম রিয়েলম</li><li>প্লট নম্বর এবং আইডি</li><li>পেমেন্ট ট্রানজেকশন স্ক্রিনশট</li>
-      </ul>
-      <p style="color:var(--gold); font-weight:bold; margin-top:20px;">এই তথ্যগুলো নিয়ে কাস্টমার সাপোর্টে যোগাযোগ করুন।</p>
-      <button style="background:var(--gold); border:none; padding:15px 40px; font-weight:900; cursor:pointer; border-radius:5px; margin-top:20px;" onclick="location.href='support.html'">GO TO SUPPORT</button>
+    <div id="oForm" style="max-width:520px; margin:60px auto; text-align:center; background:#0a0a0a; padding:45px; border:1px solid var(--gold); border-radius:20px;">
+        <h2 style="color:var(--gold); letter-spacing:2px; text-transform: uppercase;">Submission Checklist</h2>
+        <ul style="text-align:left; font-size:13px; color:#999; line-height:2; margin: 20px 0;">
+            <li>1. Enter Your Full Name Correctly</li>
+            <li>2. Verify Selected Game Realm</li>
+            <li>3. Confirm Plot ID and Price</li>
+            <li>4. Prepare Payment Transaction Screenshot</li>
+        </ul>
+        <input type="text" id="custName" placeholder="ENTER YOUR FULL NAME" style="width:90%; padding:18px; margin:15px 0; background:#000; border:1px solid #333; color:#fff; border-radius:5px; font-weight: bold;">
+        <div style="font-size:48px; font-weight:900; color:var(--gold); margin:25px 0;">$<span id="pr">0</span></div>
+        <button class="btn-gold" style="width:100%; font-size:18px;" onclick="finish()">SUBMIT ASSET DATA</button>
+        <div style="margin-top:25px; display:flex; justify-content:center; gap:15px;">
+            <button class="nav-btn" onclick="location.href='index.html'">BACK TO HOME</button>
+            <button class="nav-btn" onclick="history.back()">BACK TO MAP</button>
+        </div>
     </div>
-  </div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    document.getElementById('dispP').innerText = params.get('price') || '0';
-    function showOrderPopup() { document.getElementById('orderModal').style.display='block'; }
-  </script>
+    <div id="success" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="location.href='index.html'">&times;</span>
+            <h1 style="color:var(--gold); margin:0; text-transform: uppercase;">Congratulations, <span id="resName"></span>!</h1>
+            <p style="color:#aaa; margin-top:12px;">Your asset acquisition data has been successfully recorded.</p>
+            <div style="background:#111; padding:25px; border-radius:12px; margin:25px 0; text-align:left; font-size:14px; border: 1px dashed #333;">
+                <p style="color:var(--gold); font-weight:bold; margin-bottom:10px;">DATA SUMMARY:</p>
+                - OWNER: <span id="s1"></span><br>
+                - REALM: <span id="s2"></span><br>
+                - PLOT ID: <span id="s3"></span>
+            </div>
+            <button class="btn-gold" onclick="location.href='support.html'" style="width:100%;">CONTACT SUPPORT TO ACTIVATE</button>
+        </div>
+    </div>
+
+    <script>
+        const u = new URLSearchParams(window.location.search);
+        document.getElementById('pr').innerText = u.get('price') || '0';
+
+        function finish() {
+            const name = document.getElementById('custName').value;
+            if(!name) return alert("Please enter your name to proceed!");
+            
+            // Save for Ghost Chat Access Logic
+            localStorage.setItem('hasPlot', 'true');
+            localStorage.setItem('uName', name);
+            localStorage.setItem('uPlot', u.get('id'));
+            localStorage.setItem('uGame', u.get('realm'));
+
+            document.getElementById('oForm').style.display='none';
+            document.getElementById('resName').innerText = name.toUpperCase();
+            document.getElementById('s1').innerText = name;
+            document.getElementById('s2').innerText = u.get('realm');
+            document.getElementById('s3').innerText = u.get('id');
+            document.getElementById('success').style.display='block';
+            confetti({ particleCount: 300, spread: 90, origin: { y: 0.6 }, colors:['#FFD700','#ffffff','#B8860B'] });
+        }
+    </script>
 </body>
 </html>
