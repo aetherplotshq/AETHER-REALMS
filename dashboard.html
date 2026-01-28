@@ -2,51 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>THE MILLIONAIRE REALM | Dashboard</title>
+    <title>THE MILLIONAIRE REALM | Map</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header style="display:flex; justify-content:space-between; align-items:center; padding:15px 40px; border-bottom:1px solid var(--gold); background:#000;">
-        <button onclick="location.href='index.html'" style="background:#222; color:#fff; border:1px solid var(--gold); padding:8px 15px; cursor:pointer; border-radius:5px; font-weight:bold;">🏠 BACK TO HOME</button>
+        <button onclick="location.href='index.html'" style="background:#111; color:#fff; border:1px solid var(--gold); padding:10px 20px; cursor:pointer; font-weight:bold;">← BACK TO HOME</button>
         
-        <div style="display:flex; align-items:center; gap:25px;">
-            <div style="color:#666; font-size:12px;">PAYMENT METHODS (CLICK TO COPY):</div>
-            <div class="copy-box" onclick="copyText('8822334455')">BINANCE</div>
-            <div class="copy-box" onclick="copyText('0x1234abcd...')">METAMASK</div>
-            <div class="copy-box" onclick="copyText('pay@millionaire.com')">COINBASE</div>
+        <div style="display:flex; gap:15px; align-items:center;">
+            <span style="color:#444; font-size:10px;">PAYMENTS:</span>
+            <div class="copy-box" onclick="navigator.clipboard.writeText('8822334455'); alert('Binance Copied')">BINANCE</div>
+            <div class="copy-box" onclick="navigator.clipboard.writeText('0x1234...'); alert('Metamask Copied')">METAMASK</div>
+            <button onclick="location.href='order.html?realm='+new URLSearchParams(window.location.search).get('realm')" style="background:var(--gold); border:none; padding:10px 20px; font-weight:900; cursor:pointer; margin-left:20px;">ACQUIRE PLOT</button>
         </div>
     </header>
 
-    <div class="map-container" style="padding:40px 0; text-align:center;">
-        <div id="vipGrid" class="vip-grid"></div>
-        <div id="normalGrid" class="community-grid"></div>
-    </div>
+    <div class="community-grid" id="normalGrid" style="padding-top:50px;"></div>
 
-    <div class="floating-controls">
-        <a href="support.html" class="btn-float btn-wa">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20">
-            <span>SUPPORT</span>
-        </a>
+    <div class="support-side" onclick="location.href='support.html?from=map'">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="50" alt="Support">
     </div>
 
     <script>
-        function copyText(val) {
-            navigator.clipboard.writeText(val);
-            alert("Copied: " + val);
-        }
-
-        const params = new URLSearchParams(window.location.search);
-        const realm = params.get('realm') || 'Fortnite';
-
-        const v = document.getElementById('vipGrid');
-        for(let i=1; i<=5; i++) {
-            v.innerHTML += `<div class="plot vip" onclick="location.href='order.html?realm=${realm}&id=VIP-${i}&price=9999'"><span>$9,999</span><div style="color:var(--gold); font-size:10px;">★★★★★</div></div>`;
-        }
-
         const n = document.getElementById('normalGrid');
         for(let i=1; i<=98; i++) {
             let p = (i <= 28) ? 999 : (i <= 56) ? 499 : 199;
-            n.innerHTML += `<div class="plot normal" onclick="location.href='order.html?realm=${realm}&id=${i}&price=${p}'">#${i}<br>$${p}</div>`;
+            n.innerHTML += `<div class="plot normal" onclick="location.href='order.html?realm=${new URLSearchParams(window.location.search).get('realm')}&id=${i}&price=${p}'">#${i}<br>$${p}</div>`;
         }
     </script>
 </body>
