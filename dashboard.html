@@ -7,37 +7,44 @@
 </head>
 <body>
     <header style="padding: 20px 40px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #111;">
-        <button onclick="location.href='index.html'" style="background:none; border:1px solid var(--gold); color:var(--gold); padding:8px 20px; cursor:pointer; border-radius:5px;">← HOME</button>
-        <div style="color:var(--gold); font-weight:900; letter-spacing:2px;">REALM MAP</div>
-        <div style="width:100px;"></div> </header>
+        <button onclick="location.href='index.html'" style="background:none; border:1px solid var(--gold); color:var(--gold); padding:8px 20px; cursor:pointer; border-radius:5px; font-weight:bold;">← HOME</button>
+        <div id="realmTitle" style="color:var(--gold); font-weight:900; letter-spacing:3px;">REALM MAP</div>
+        <div style="width:100px;"></div>
+    </header>
 
     <div style="padding: 50px 0; text-align:center;">
         <div style="display:flex; justify-content:center; gap:30px; margin-bottom:80px;">
             <script>
                 for(let i=1; i<=5; i++) {
                     document.write(`
-                        <div class="plot-vip-active" style="width:160px; height:160px; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer;" onclick="location.href='order.html?id=VIP-${i}'">
-                            <div style="color:var(--gold); font-size:18px; font-weight:900;">VIP</div>
-                            <div style="color:var(--gold); font-size:14px; margin:5px 0;">★★★★★</div>
-                            <div style="color:#fff; font-size:24px; font-weight:900;">$9,999</div>
+                        <div class="plot-vip-active" style="width:165px; height:165px;" onclick="location.href='order.html?id=VIP-${i}&price=9999'">
+                            <div style="color:var(--gold); font-size:20px; font-weight:900;">VIP</div>
+                            <div style="color:var(--gold); font-size:14px; margin:8px 0;">★★★★★</div>
+                            <div style="color:#fff; font-size:26px; font-weight:900;">$9,999</div>
                         </div>
                     `);
                 }
             </script>
         </div>
 
-        <div class="community-grid">
-            <script>
-                for(let i=1; i<=95; i++) {
-                    document.write(`<div class="plot normal" onclick="location.href='order.html?id=${i}'">#${i}</div>`);
-                }
-            </script>
-        </div>
+        <div class="community-grid" id="normalGrid"></div>
     </div>
 
     <div class="support-fixed" onclick="location.href='support.html?from=map'">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
         <span style="display:block; color:var(--gold); font-size:9px; font-weight:900; margin-top:5px; letter-spacing:1px;">SUPPORT</span>
     </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const realm = urlParams.get('realm') || 'Game';
+        document.getElementById('realmTitle').innerText = realm.toUpperCase() + " REALM";
+
+        const grid = document.getElementById('normalGrid');
+        for(let i=1; i<=95; i++) {
+            let price = (i <= 28) ? 999 : (i <= 56) ? 499 : 199;
+            grid.innerHTML += `<div class="plot normal" onclick="location.href='order.html?id=${i}&price=${price}'">#${i}</div>`;
+        }
+    </script>
 </body>
 </html>
