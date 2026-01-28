@@ -1,51 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>REALM CANVAS</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASSET CANVAS | THE MILLIONAIRE REALM</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Digital Clock & Header Info */
+        .status-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 40px; background: #000; border-bottom: 1px solid #111;
+            font-family: 'Courier New', Courier, monospace; font-size: 12px; color: #555;
+        }
+        .live-clock { color: var(--gold); font-weight: bold; }
+
+        /* Navigation Buttons */
+        .nav-header {
+            padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .back-home-btn {
+            background: none; border: 1px solid #333; color: #888; padding: 10px 20px;
+            border-radius: 5px; cursor: pointer; text-decoration: none; transition: 0.3s;
+        }
+        .back-home-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* Tooltip for Plot Info */
+        .plot:hover::after {
+            content: "CLICK TO ACQUIRE"; position: absolute; bottom: -25px;
+            font-size: 8px; color: var(--gold); letter-spacing: 1px;
+        }
+    </style>
 </head>
 <body>
 
-  <header style="padding: 20px 40px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #111;">
-    <button onclick="location.href='index.html'" style="background:none; border:1px solid #FFD700; color:#FFD700; padding:8px 20px; cursor:pointer;">← HOME</button>
-    <div id="realmTitle" style="color:#FFD700; font-weight:900; letter-spacing:3px;">REALM MAP</div>
-    <div style="width:100px;"></div>
-  </header>
-
-  <div style="padding: 50px 0; text-align:center;">
-    <div style="display:flex; justify-content:center; gap:30px; margin-bottom:80px;">
-      <script>
-        for(let i=1; i<=5; i++) {
-          document.write(`
-            <div class="plot-vip-active" style="width:160px; height:160px;" onclick="location.href='order.html?id=VIP-${i}'">
-              <div style="color:#FFD700; font-size:18px; font-weight:900;">VIP</div>
-              <div style="color:#FFD700; font-size:12px; margin:5px 0;">★★★★★</div>
-              <div style="color:#fff; font-size:24px; font-weight:900;">$9,999</div>
-            </div>
-          `);
-        }
-      </script>
+    <div class="status-bar">
+        <div>REALM STATUS: <span style="color: #25D366;">ONLINE</span></div>
+        <div class="live-clock" id="digitalClock">00:00:00</div>
+        <div>SERVER: ASIA-01</div>
     </div>
 
-    <div class="community-grid" id="mainGrid"></div>
-  </div>
+    <header class="nav-header">
+        <a href="index.html" class="back-home-btn">← EXIT TO HOME</a>
+        <h2 id="realmName" style="color:var(--gold); letter-spacing:5px; margin:0; text-transform:uppercase;">REALM CANVAS</h2>
+        <div style="width:120px;"></div> </header>
 
-  <div class="support-fixed" onclick="location.href='support.html?from=map'">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
-    <span>SUPPORT</span>
-  </div>
+    <div style="padding: 40px 0; text-align:center;">
+        
+        <h3 style="color:#222; font-size:10px; letter-spacing:10px; margin-bottom:30px;">ULTRA VIP DOMINANCE ($9,999)</h3>
+        <div style="display:flex; justify-content:center; gap:30px; margin-bottom:80px;">
+            <script>
+                for(let i=1; i<=5; i++) {
+                    document.write(`
+                        <div class="plot-vip-active" style="width:170px; height:170px; position:relative;" onclick="location.href='order.html?id=VIP-${i}&price=9999'">
+                            <div style="color:var(--gold); font-size:18px; font-weight:900;">VIP-0${i}</div>
+                            <div style="color:var(--gold); font-size:12px; margin:5px 0;">MASTER ASSET</div>
+                            <div style="color:#fff; font-size:24px; font-weight:900;">$9,999</div>
+                        </div>
+                    `);
+                }
+            </script>
+        </div>
 
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const realm = urlParams.get('realm') || 'Game';
-    document.getElementById('realmTitle').innerText = realm.toUpperCase() + " REALM";
+        <h3 style="color:#222; font-size:10px; letter-spacing:10px; margin-bottom:30px;">COMMUNITY ASSETS (#1 - #95)</h3>
+        <div class="community-grid" id="assetGrid">
+            <script>
+                // Pricing Strategy: Plot 1-28 ($999), 29-56 ($499), 57-95 ($199)
+                for(let i=1; i<=95; i++) {
+                    let price = (i <= 28) ? 999 : (i <= 56) ? 499 : 199;
+                    document.write(`
+                        <div class="plot normal" style="position:relative;" onclick="location.href='order.html?id=${i}&price=${price}'">
+                            #${i}
+                        </div>
+                    `);
+                }
+            </script>
+        </div>
+    </div>
 
-    const grid = document.getElementById('mainGrid');
-    for(let i=1; i<=95; i++) {
-      grid.innerHTML += `<div class="plot normal" onclick="location.href='order.html?id=${i}'">#${i}</div>`;
-    }
-  </script>
+    <a href="ghost-chat.html" style="position:fixed; top:80px; right:25px; text-decoration:none; text-align:center;">
+        <div class="ghost-circle" style="width:45px; height:45px; font-size:18px;">💀</div>
+        <span style="color:#444; font-size:7px; display:block; margin-top:3px; font-weight:bold;">COMMUNITY</span>
+    </a>
+
+    <div class="support-fixed" onclick="location.href='support.html?from=map'">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
+        <span>SUPPORT</span>
+    </div>
+
+    <script>
+        // Update Realm Name from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const realm = urlParams.get('realm') || 'Digital';
+        document.getElementById('realmName').innerText = realm.toUpperCase() + " REALM";
+
+        // Live Clock Script
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById('digitalClock').innerText = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 
 </body>
 </html>
