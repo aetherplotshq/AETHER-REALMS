@@ -2,32 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>THE MILLIONAIRE REALM | Map</title>
+    <title>THE MILLIONAIRE REALM | Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header style="display:flex; justify-content:space-between; align-items:center; padding:15px 40px; border-bottom:1px solid var(--gold); background:#000;">
-        <button onclick="location.href='index.html'" style="background:#111; color:#fff; border:1px solid var(--gold); padding:10px 20px; cursor:pointer; font-weight:bold;">← BACK TO HOME</button>
+    <header style="display:flex; justify-content:space-between; align-items:center; padding:15px 40px; border-bottom:1px solid var(--gold); background:#000; position:sticky; top:0; z-index:100;">
+        <button onclick="location.href='index.html'" style="background:#111; color:#fff; border:1px solid var(--gold); padding:10px 20px; cursor:pointer; font-weight:bold; border-radius:5px;">← BACK TO HOME</button>
         
         <div style="display:flex; gap:15px; align-items:center;">
-            <span style="color:#444; font-size:10px;">PAYMENTS:</span>
-            <div class="copy-box" onclick="navigator.clipboard.writeText('8822334455'); alert('Binance Copied')">BINANCE</div>
-            <div class="copy-box" onclick="navigator.clipboard.writeText('0x1234...'); alert('Metamask Copied')">METAMASK</div>
-            <button onclick="location.href='order.html?realm='+new URLSearchParams(window.location.search).get('realm')" style="background:var(--gold); border:none; padding:10px 20px; font-weight:900; cursor:pointer; margin-left:20px;">ACQUIRE PLOT</button>
+            <span style="color:#444; font-size:11px; letter-spacing:1px;">AUTO-COPY PAYMENTS:</span>
+            <div class="pay-tag" onclick="navigator.clipboard.writeText('8822334455'); alert('Binance ID Copied')">BINANCE</div>
+            <div class="pay-tag" onclick="navigator.clipboard.writeText('0x1234abcd...'); alert('MetaMask Copied')">METAMASK</div>
+            <button onclick="location.href='order.html?realm='+new URLSearchParams(window.location.search).get('realm')" style="background:var(--gold); border:none; padding:10px 25px; font-weight:900; cursor:pointer; border-radius:5px; margin-left:15px;">ACQUIRE PLOT</button>
         </div>
     </header>
 
-    <div class="community-grid" id="normalGrid" style="padding-top:50px;"></div>
+    <div style="padding: 40px 0; text-align:center;">
+        <h2 style="color:#333; font-size:12px; letter-spacing:8px;">ELITE SECTORS (14 PLOTS PER ROW)</h2>
+        <div class="community-grid" id="normalGrid"></div>
+    </div>
 
-    <div class="support-side" onclick="location.href='support.html?from=map'">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="50" alt="Support">
+    <div class="support-fixed" onclick="location.href='support.html?from=map'">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
     </div>
 
     <script>
+        const params = new URLSearchParams(window.location.search);
+        const realm = params.get('realm') || 'Unknown';
         const n = document.getElementById('normalGrid');
+        
         for(let i=1; i<=98; i++) {
-            let p = (i <= 28) ? 999 : (i <= 56) ? 499 : 199;
-            n.innerHTML += `<div class="plot normal" onclick="location.href='order.html?realm=${new URLSearchParams(window.location.search).get('realm')}&id=${i}&price=${p}'">#${i}<br>$${p}</div>`;
+            let price = (i <= 28) ? 999 : (i <= 56) ? 499 : 199;
+            n.innerHTML += `<div class="plot normal" onclick="location.href='order.html?realm=${realm}&id=${i}&price=${price}'">#${i}<br>$${price}</div>`;
         }
     </script>
 </body>
