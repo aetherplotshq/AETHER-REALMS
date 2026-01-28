@@ -1,47 +1,46 @@
 :root {
     --bg: #050505;
-    --card: #0d0d0d;
+    --card: #111;
     --gold: #D4AF37;
     --text: #e0e0e0;
 }
 
-body {
-    background-color: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-}
-
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; }
 .gold-text { color: var(--gold); }
 
-/* Header Styling */
+/* Header */
 .main-header {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 20px 60px; background: rgba(0,0,0,0.9);
-    border-bottom: 1px solid #1a1a1a; position: sticky; top: 0; z-index: 1000;
+    padding: 15px 50px; background: #000; border-bottom: 1px solid var(--gold);
 }
-.logo { font-weight: 900; letter-spacing: 4px; color: var(--gold); font-size: 20px; }
-.nav-menu a { color: #888; text-decoration: none; margin-left: 25px; font-size: 11px; font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
-.nav-menu a:hover { color: var(--gold); }
-.admin-btn { border: 1px solid var(--gold); padding: 8px 15px; border-radius: 4px; }
+.logo { font-weight: 900; letter-spacing: 3px; color: var(--gold); cursor: pointer; }
 
-/* Hero Section */
-.hero { text-align: center; padding: 100px 20px; background: radial-gradient(circle at center, #111 0%, #050505 100%); }
-.hero h1 { font-size: 3.5rem; font-weight: 900; margin: 20px 0; letter-spacing: -2px; }
-.badge { background: #1a1a1a; padding: 5px 12px; border-radius: 50px; font-size: 10px; color: var(--gold); letter-spacing: 2px; }
+/* Dashboard Layout */
+.map-container { max-width: 1000px; margin: 30px auto; text-align: center; }
+.label { font-size: 12px; letter-spacing: 3px; color: #555; margin: 20px 0; }
 
-/* Grid Styling */
-.universe-container { max-width: 1200px; margin: 0 auto; padding: 50px 20px; }
-.section-title { text-align: center; margin-bottom: 50px; font-size: 1.5rem; letter-spacing: 5px; }
-.game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-
-.game-card {
-    background: var(--card); border: 1px solid #1a1a1a; padding: 40px 20px;
-    text-align: center; cursor: pointer; border-radius: 12px; transition: 0.4s;
-    position: relative; overflow: hidden;
+/* VIP Plots 100x100 */
+.vip-grid { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+.plot.vip {
+    width: 100px; height: 100px; border: 2px solid var(--gold);
+    background: rgba(212, 175, 55, 0.05);
 }
-.game-card:hover { border-color: var(--gold); transform: translateY(-10px); background: #111; }
-.game-card h3 { font-size: 1.2rem; margin-bottom: 15px; letter-spacing: 2px; }
-.plot-stats { display: flex; justify-content: space-around; font-size: 11px; font-weight: bold; color: #555; }
 
-.main-footer { text-align: center; padding: 50px; border-top: 1px solid #111; font-size: 10px; color: #333; letter-spacing: 2px; }
+/* Community Plots 80x80 */
+.community-grid {
+    display: grid; grid-template-columns: repeat(10, 80px); 
+    gap: 10px; width: fit-content; margin: 0 auto;
+}
+.plot.normal { width: 80px; height: 80px; border: 1px solid #333; background: #0d0d0d; }
+
+.plot {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; transition: 0.3s; border-radius: 4px;
+}
+.plot:hover { transform: scale(1.1); z-index: 10; background: var(--gold); color: #000; }
+.plot .id { font-size: 10px; font-weight: bold; }
+.plot .price { font-size: 12px; font-weight: 800; margin-top: 5px; }
+
+/* Order Card */
+.order-wrapper { display: flex; justify-content: center; padding: 50px; }
+.order-card { background: var(--card); padding: 40px; border-radius: 15px; border: 1px solid var(--gold); width: 100%; max-width: 450px; text-align: center; }
