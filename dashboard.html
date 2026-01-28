@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>REALM CANVAS</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>REALM CANVAS</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header style="padding: 20px 40px; display:flex; justify-content:space-between; align-items:center;">
-        <button onclick="location.href='index.html'" style="background:none; border:1px solid var(--gold); color:var(--gold); padding:8px 15px; cursor:pointer;">← HOME</button>
-        <div id="realmTitle" style="color:var(--gold); font-weight:900; letter-spacing:2px;">REALM MAP</div>
-        <div style="width:50px;"></div>
-    </header>
+  <header style="padding: 20px 40px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #111;">
+    <button onclick="location.href='index.html'" style="background:none; border:1px solid #FFD700; color:#FFD700; padding:8px 20px; cursor:pointer;">← HOME</button>
+    <div id="realmTitle" style="color:#FFD700; font-weight:900; letter-spacing:3px;">REALM MAP</div>
+    <div style="width:100px;"></div>
+  </header>
 
-    <div style="text-align:center; padding: 40px 0;">
-        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:60px;">
-            <script>
-                for(let i=1; i<=5; i++) {
-                    document.write(`
-                        <div class="plot-vip-active" style="width:150px; height:150px;" onclick="location.href='order.html?id=VIP-${i}'">
-                            <span style="color:var(--gold); font-weight:bold;">VIP</span>
-                            <span style="color:var(--gold); font-size:12px;">★★★★★</span>
-                            <span style="font-size:22px; font-weight:900;">$9,999</span>
-                        </div>
-                    `);
-                }
-            </script>
-        </div>
-
-        <div class="community-grid" id="mainGrid"></div>
-    </div>
-
-    <div class="support-fixed" onclick="location.href='support.html?from=map'">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
-        <span>SUPPORT</span>
-    </div>
-
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const realm = urlParams.get('realm') || 'Game';
-        document.getElementById('realmTitle').innerText = realm.toUpperCase() + " REALM";
-
-        const grid = document.getElementById('mainGrid');
-        for(let i=1; i<=95; i++) {
-            grid.innerHTML += `<div class="plot normal" onclick="location.href='order.html?id=${i}'">#${i}</div>`;
+  <div style="padding: 50px 0; text-align:center;">
+    <div style="display:flex; justify-content:center; gap:30px; margin-bottom:80px;">
+      <script>
+        for(let i=1; i<=5; i++) {
+          document.write(`
+            <div class="plot-vip-active" style="width:160px; height:160px;" onclick="location.href='order.html?id=VIP-${i}'">
+              <div style="color:#FFD700; font-size:18px; font-weight:900;">VIP</div>
+              <div style="color:#FFD700; font-size:12px; margin:5px 0;">★★★★★</div>
+              <div style="color:#fff; font-size:24px; font-weight:900;">$9,999</div>
+            </div>
+          `);
         }
-    </script>
+      </script>
+    </div>
+
+    <div class="community-grid" id="mainGrid"></div>
+  </div>
+
+  <div class="support-fixed" onclick="location.href='support.html?from=map'">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
+    <span>SUPPORT</span>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const realm = urlParams.get('realm') || 'Game';
+    document.getElementById('realmTitle').innerText = realm.toUpperCase() + " REALM";
+
+    const grid = document.getElementById('mainGrid');
+    for(let i=1; i<=95; i++) {
+      grid.innerHTML += `<div class="plot normal" onclick="location.href='order.html?id=${i}'">#${i}</div>`;
+    }
+  </script>
 
 </body>
 </html>
