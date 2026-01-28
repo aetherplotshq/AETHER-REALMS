@@ -2,25 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GHOST CHAT | THE MILLIONAIRE REALM</title>
+    <title>THE MILLIONAIRE REALM | GHOST CHAT</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="padding:20px; background:#050505; display:flex; flex-direction:column; align-items:center;">
-    
-    <header style="width:100%; max-width:800px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <div class="gold-text" style="font-weight:900; letter-spacing:2px; cursor:pointer;" onclick="location.href='index.html'">THE MILLIONAIRE REALM</div>
-        <div id="local-clock" class="clock-display" style="font-size:12px;">00:00:00</div>
-    </header>
+<body style="padding:20px; background:#050505;">
+    <div style="max-width:800px; margin:0 auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 class="gold-text">GHOST CHAT <small style="color:#444;">(AUTO-WIPE 8H)</small></h2>
+            <button onclick="location.href='index.html'" style="background:none; border:1px solid #333; color:#888; padding:5px 15px; cursor:pointer;">EXIT</button>
+        </div>
 
-    <div style="width:100%; max-width:800px;">
-        <h2 class="gold-text" style="letter-spacing:3px; font-size:18px;">GHOST CHAT <small style="color:#444; font-size:10px;">• ENCRYPTED & AUTO-WIPE (8H)</small></h2>
+        <div id="chatBox" style="height:65vh; overflow-y:auto; background:#000; border:1px solid #222; padding:25px; border-radius:15px; display:flex; flex-direction:column;"></div>
         
-        <div id="chatBox" style="height:65vh; overflow-y:auto; background:#000; border:1px solid #1a1a1a; padding:25px; margin-bottom:15px; border-radius:12px; box-shadow: inset 0 0 20px #000;">
-            </div>
-        
-        <div style="display:flex; gap:12px;">
-            <input type="text" id="msgInput" placeholder="Enter encrypted message..." style="flex:1; padding:18px; background:#0a0a0a; border:1px solid #222; color:#fff; border-radius:8px; outline:none; font-size:14px;">
-            <button id="sendBtn" style="padding:0 40px; background:var(--gold); border:none; cursor:pointer; font-weight:900; border-radius:8px; color:#000; transition:0.3s;">SEND</button>
+        <div style="margin-top:20px; display:grid; grid-template-columns: 1fr 1fr 2fr 100px; gap:10px;">
+            <input type="text" id="realmName" placeholder="GAME (e.g. GTA)" style="padding:15px; background:#111; border:1px solid #333; color:var(--gold);">
+            <input type="text" id="plotID" placeholder="PLOT #" style="padding:15px; background:#111; border:1px solid #333; color:var(--gold);">
+            <input type="text" id="msgInput" placeholder="Message..." style="padding:15px; background:#111; border:1px solid #333; color:#fff;">
+            <button id="sendBtn" style="background:var(--gold); border:none; font-weight:900; cursor:pointer; border-radius:5px;">SEND</button>
         </div>
     </div>
 
@@ -28,46 +26,33 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
-            databaseURL: "https://aether-realms-default-rtdb.firebaseio.com",
-            projectId: "aether-realms"
-        };
-
+        const firebaseConfig = { apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM", databaseURL: "https://aether-realms-default-rtdb.firebaseio.com", projectId: "aether-realms" };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const chatRef = ref(db, 'ghost_chat');
 
-        // Digital Clock Logic
-        setInterval(() => { document.getElementById('local-clock').innerText = new Date().toLocaleTimeString(); }, 1000);
-
-        // Send Message
         document.getElementById('sendBtn').onclick = () => {
+            const r = document.getElementById('realmName').value;
+            const p = document.getElementById('plotID').value;
             const m = document.getElementById('msgInput').value;
-            if(!m.trim()) return;
-            push(chatRef, { text: m, time: Date.now() });
+            if(!r || !p || !m) return alert("Fill all fields!");
+            
+            push(chatRef, { sender: `REALM: ${r.toUpperCase()} | PLOT: #${p}`, text: m, time: Date.now() });
             document.getElementById('msgInput').value = '';
         };
 
-        // Listen for Messages
         onValue(chatRef, (snap) => {
-            const box = document.getElementById('chatBox');
-            box.innerHTML = '';
-            const now = Date.now();
+            const box = document.getElementById('chatBox'); box.innerHTML = '';
             snap.forEach(child => {
                 const d = child.val();
-                if(now - d.time > 8*60*60*1000) { 
-                    remove(ref(db, 'ghost_chat/'+child.key)); 
-                } else {
-                    box.innerHTML += `<div style="margin-bottom:20px; border-left:3px solid var(--gold); padding-left:15px; animation: fadeIn 0.5s;">
-                        <div style="color:#fff; font-size:15px; letter-spacing:0.5px;">${d.text}</div>
-                        <div style="color:#444; font-size:10px; margin-top:5px;">TIMESTAMP: ${new Date(d.time).toLocaleTimeString()}</div>
+                box.innerHTML += `
+                    <div class="msg-bubble">
+                        <div class="msg-meta">${d.sender}</div>
+                        <div style="color:#eee;">${d.text}</div>
                     </div>`;
-                }
             });
             box.scrollTop = box.scrollHeight;
         });
     </script>
-    <style>@keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }</style>
 </body>
 </html>
