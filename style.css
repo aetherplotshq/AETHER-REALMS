@@ -6,42 +6,55 @@
 
 body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
 
-/* Glowing Main Title Animation */
+/* Glowing Main Title */
 .main-title {
-    font-size: 3.8rem; font-weight: 900; letter-spacing: 5px; text-transform: uppercase;
+    font-size: 3.5rem; font-weight: 900; letter-spacing: 5px; text-transform: uppercase;
     background: linear-gradient(to right, #fff 20%, var(--gold) 40%, var(--gold) 60%, #fff 80%);
     background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     animation: shineTitle 3s linear infinite; margin-bottom: 5px;
 }
 @keyframes shineTitle { to { background-position: 200% center; } }
 
-/* Luxury Digital Clock */
+/* Digital Clock */
 .clock-display {
-    font-family: 'Courier New', Courier, monospace;
-    color: var(--gold); padding: 8px 20px; border: 1px solid var(--gold-glow);
-    border-radius: 30px; background: rgba(0,0,0,0.9);
-    box-shadow: 0 0 15px var(--gold-glow); font-size: 16px;
+    font-family: monospace; color: var(--gold); padding: 5px 15px;
+    border: 1px solid var(--gold-glow); border-radius: 20px; box-shadow: 0 0 10px var(--gold-glow);
 }
 
-/* VIP Aggressive Glow & Stars */
+/* Map Canvas - Extended Width */
+.map-container { width: 95%; max-width: 1400px; margin: 0 auto; padding-bottom: 100px; }
+
+/* Grid Layout for Community (12 items per row now) */
+.community-grid {
+    display: grid; 
+    grid-template-columns: repeat(12, 1fr); /* দুই পাশে ২টি করে ৪টি কলাম বাড়ানো হয়েছে */
+    gap: 12px; margin-top: 20px;
+}
+
+.plot.normal {
+    aspect-ratio: 1/1; border: 1px solid #222; background: #0a0a0a;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 11px; transition: 0.3s;
+}
+.plot.normal:hover { background: var(--gold); color: #000; box-shadow: 0 0 15px var(--gold); }
+
+/* VIP Aggressive Glow */
+.vip-grid { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
 .plot.vip {
-    width: 115px; height: 115px; border: 3px solid var(--gold);
+    width: 120px; height: 120px; border: 3px solid var(--gold);
     background: radial-gradient(circle, rgba(212,175,55,0.2), #000);
     position: relative; cursor: pointer; display: flex; flex-direction: column;
     align-items: center; justify-content: center; animation: vipGlow 1.5s infinite alternate;
 }
 @keyframes vipGlow {
     from { box-shadow: 0 0 10px var(--gold); transform: scale(1); }
-    to { box-shadow: 0 0 45px var(--gold); transform: scale(1.06); }
+    to { box-shadow: 0 0 45px var(--gold); transform: scale(1.08); }
 }
-.vip-stars { color: var(--gold); font-size: 15px; text-shadow: 0 0 10px var(--gold); margin-top: 5px; }
 
-/* District-Style Game Card Hover */
-.game-card {
-    background: #0a0a0a; border: 1px solid #222; padding: 45px;
-    border-radius: 15px; cursor: pointer; transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.game-card:hover { 
-    border-color: var(--gold); transform: translateY(-15px) scale(1.02);
-    box-shadow: 0 0 40px var(--gold-glow); background: #111;
+/* Floating Customer Support Button */
+.support-wrapper { position: fixed; bottom: 30px; right: 30px; z-index: 10000; }
+.wa-btn {
+    background: #25D366; color: #fff; padding: 12px 25px; border-radius: 50px;
+    display: flex; align-items: center; gap: 12px; cursor: pointer; font-weight: bold;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: none; text-decoration: none;
 }
