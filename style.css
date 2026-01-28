@@ -1,43 +1,65 @@
 :root {
     --bg: #030303;
     --gold: #FFD700;
-    --gold-glow: rgba(255, 215, 0, 0.5);
+    --gold-glow: rgba(255, 215, 0, 0.4);
     --border: #1a1a1a;
 }
+
 body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
-.gold-text { color: var(--gold); text-shadow: 0 0 10px var(--gold-glow); }
 
-/* VIP Glow & Stars */
+/* Digital Clock Style */
+#digital-clock {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--gold);
+    font-weight: bold; font-size: 14px; letter-spacing: 2px;
+    padding: 5px 15px; border: 1px solid var(--gold-glow);
+    border-radius: 20px; background: rgba(0,0,0,0.8);
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+
+/* Header & Logo */
+.main-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 40px; background: #000; border-bottom: 1px solid var(--gold);
+}
+.logo { font-weight: 900; letter-spacing: 3px; color: var(--gold); cursor: pointer; font-size: 22px; }
+
+/* Aggressive VIP Plot Styling */
+.vip-grid { display: flex; justify-content: center; gap: 25px; margin: 40px 0; }
 .plot.vip {
-    width: 100px; height: 100px; border: 2px solid var(--gold);
-    background: rgba(212, 175, 55, 0.1); border-radius: 8px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    animation: vipPulse 1.5s infinite alternate; cursor: pointer;
+    width: 110px; height: 110px; border: 3px solid var(--gold);
+    background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, #000 100%);
+    position: relative; display: flex; flex-direction: column; 
+    align-items: center; justify-content: center;
+    animation: aggressiveGlow 1.5s infinite alternate; cursor: pointer;
 }
-@keyframes vipPulse {
+@keyframes aggressiveGlow {
     from { box-shadow: 0 0 10px var(--gold-glow); transform: scale(1); }
-    to { box-shadow: 0 0 30px var(--gold); transform: scale(1.05); }
+    to { box-shadow: 0 0 35px var(--gold); transform: scale(1.05); }
 }
-.stars { color: var(--gold); font-size: 12px; margin-top: 5px; }
+.vip-stars { color: var(--gold); font-size: 14px; text-shadow: 0 0 10px var(--gold); animation: twinkle 1s infinite; }
+@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-/* Grid Layout */
-.map-container { max-width: 1100px; margin: 50px auto; text-align: center; }
+/* Community Plots */
 .community-grid {
     display: grid; grid-template-columns: repeat(10, 1fr); gap: 12px;
-    max-width: 900px; margin: 0 auto; padding: 20px;
+    max-width: 950px; margin: 0 auto; padding-bottom: 50px;
 }
 .plot.normal {
     aspect-ratio: 1/1; border: 1px solid #222; background: #0a0a0a;
-    display: flex; align-items: center; justify-content: center; cursor: pointer;
-    font-size: 11px; transition: 0.3s;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: 0.3s; font-size: 11px;
 }
 .plot.normal:hover { background: var(--gold); color: #000; box-shadow: 0 0 15px var(--gold); }
 
-/* Floating UI */
-.support-wrapper { position: fixed; bottom: 25px; right: 25px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
-.btn-float {
-    padding: 12px 20px; border-radius: 50px; cursor: pointer; font-weight: bold;
-    display: flex; align-items: center; gap: 10px; border: none; text-decoration: none;
+/* Home Game Cards (64 District Style) */
+.game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 40px; }
+.game-card {
+    background: #0a0a0a; border: 1px solid #222; padding: 25px;
+    border-radius: 10px; cursor: pointer; transition: 0.5s; text-align: center;
 }
-.wa-btn { background: #25D366; color: #fff; }
-.chat-btn { background: #222; color: var(--gold); border: 1px solid var(--gold) !important; }
+.game-card:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 0 25px var(--gold-glow); }
+
+/* Support Buttons */
+.support-wrapper { position: fixed; bottom: 25px; right: 25px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
+.wa-btn { background: #25D366; color: #fff; padding: 12px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px; }
