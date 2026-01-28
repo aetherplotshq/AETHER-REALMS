@@ -2,87 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER ADMIN | Secure Access</title>
+    <title>AETHER ADMIN</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="background: #000; display: flex; align-items: center; justify-content: center; height: 100vh;">
-
-    <div id="loginScreen" style="text-align: center; background: #0a0a0a; padding: 40px; border: 1px solid var(--gold); border-radius: 15px;">
-        <h2 class="gold-text">SYSTEM AUTHENTICATION</h2>
-        <input type="password" id="adminPass" placeholder="Enter Secure Password" style="padding: 12px; width: 250px; background: #000; border: 1px solid #333; color: #fff; margin-bottom: 20px; text-align: center;">
-        <br>
-        <button onclick="checkPass()" style="padding: 10px 30px; background: var(--gold); border: none; font-weight: bold; cursor: pointer; border-radius: 5px;">ACCESS SYSTEM</button>
+<body style="background:#000; color:#fff; display:flex; align-items:center; justify-content:center; height:100vh;">
+    
+    <div id="login">
+        <h2 class="gold-text">SYSTEM ACCESS</h2>
+        <input type="password" id="pass" placeholder="Password" style="padding:15px; background:#111; border:1px solid var(--gold); color:#fff; text-align:center;">
+        <button onclick="login()" style="padding:15px; background:var(--gold); border:none; cursor:pointer; margin-top:10px; width:100%; font-weight:bold;">LOGIN</button>
     </div>
 
-    <div id="adminPanel" style="display: none; width: 90%; max-width: 1000px; background: #0a0a0a; padding: 30px; border: 1px solid var(--gold); border-radius: 15px;">
-        <div style="display: flex; justify-content: space-between;">
-            <h2 class="gold-text">MANUAL PLOT UPDATE</h2>
-            <button onclick="location.reload()" style="background: red; color: white; border: none; padding: 5px 15px; cursor: pointer;">LOGOUT</button>
-        </div>
-
-        <div class="control-grid" style="display: flex; gap: 20px; margin-top: 20px;">
-            <div style="flex: 1; border: 1px solid #222; padding: 20px;">
-                <label>Select Universe:</label>
-                <select id="selRealm" style="width: 100%; padding: 10px; background: #111; color: #fff;">
-                    <option value="Fortnite">Fortnite</option>
-                    <option value="CS2">CS 2</option>
-                    <option value="Minecraft">Minecraft</option>
-                </select>
-
-                <label style="margin-top: 15px; display: block;">Plot ID (1-100):</label>
-                <input type="number" id="selID" min="1" max="100" style="width: 90%; padding: 10px; background: #111; color: #fff;">
-                
-                <hr style="border: 0.1px solid #222; margin: 20px 0;">
-
-                <label>Owner Name:</label>
-                <input type="text" id="ownerName" placeholder="Customer Name/Brand" style="width: 90%; padding: 10px; background: #111; color: #fff;">
-                
-                <label style="margin-top: 15px; display: block;">Logo Image URL:</label>
-                <input type="text" id="logoURL" placeholder="https://image.com/logo.png" style="width: 90%; padding: 10px; background: #111; color: #fff;">
-                
-                <button onclick="updatePlot()" style="width: 100%; margin-top: 20px; padding: 15px; background: green; color: white; border: none; font-weight: bold; cursor: pointer;">UPDATE & PUBLISH LIVE</button>
-            </div>
-
-            <div style="flex: 1; border: 1px solid #222; padding: 20px; overflow-y: auto; max-height: 400px;">
-                <h4 class="gold-text">CURRENTLY LIVE PLOTS</h4>
-                <div id="liveList" style="font-size: 12px; color: #888;">
-                    No plots updated yet.
-                </div>
-            </div>
+    <div id="panel" style="display:none; width:80%;">
+        <h2 class="gold-text">ADMIN COMMAND</h2>
+        <div style="background:#111; padding:30px; border:1px solid var(--gold);">
+            <select id="r" style="padding:10px; width:100%; margin-bottom:10px;">
+                <option value="Fortnite">Fortnite</option><option value="CS2">CS2</option>
+            </select>
+            <input type="number" id="id" placeholder="Plot ID" style="padding:10px; width:95%; margin-bottom:10px;">
+            <input type="text" id="owner" placeholder="Owner Name" style="padding:10px; width:95%; margin-bottom:10px;">
+            <button id="updateBtn" style="padding:20px; background:green; color:white; width:100%; border:none; cursor:pointer; font-weight:bold;">UPDATE PLOT LIVE</button>
         </div>
     </div>
 
     <script type="module">
-        import { db, ref, set, onValue } from "./firebase-config.js";
+        import { db, ref, set } from "./firebase-config.js";
+        
+        window.login = () => {
+            if(document.getElementById('pass').value === "KAWSARahmed22@@") {
+                document.getElementById('login').style.display = 'none';
+                document.getElementById('panel').style.display = 'block';
+            } else { alert("WRONG PASSWORD"); }
+        };
 
-        // Password logic
-        window.checkPass = function() {
-            const pass = document.getElementById('adminPass').value;
-            if(pass === "KAWSARahmed22@@") {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-            } else {
-                alert("Incorrect Password! Access Denied.");
-            }
-        }
-
-        // Update logic
-        window.updatePlot = function() {
-            const realm = document.getElementById('selRealm').value;
-            const id = document.getElementById('selID').value;
-            const name = document.getElementById('ownerName').value;
-            const img = document.getElementById('logoURL').value;
-
-            if(!id) { alert("Select Plot ID"); return; }
-
-            set(ref(db, `realms/${realm}/plot_${id}`), {
-                owner: name,
-                image: img,
-                timestamp: Date.now()
-            }).then(() => {
-                alert("Plot Updated Successfully!");
-            });
-        }
+        document.getElementById('updateBtn').onclick = () => {
+            const realm = document.getElementById('r').value;
+            const id = document.getElementById('id').value;
+            const owner = document.getElementById('owner').value;
+            set(ref(db, `realms/${realm}/plot_${id}`), { owner: owner, timestamp: Date.now() })
+            .then(() => alert("UPDATED!"));
+        };
     </script>
 </body>
 </html>
