@@ -2,36 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>THE MILLIONAIRE REALM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE MILLIONAIRE REALM | VIP ASSETS</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div class="side-menu">
-    <div class="menu-item" onclick="alert('Wallets: Binance, TrustWallet, MetaMask')">💰</div>
-    <div class="menu-item" onclick="alert('Rules: One plot per user.')">📜</div>
-    <div class="menu-item" onclick="alert('News: GTA Realm VIP coming soon.')">⚡</div>
+    <div class="menu-item" onclick="alert('OFFICIAL WALLETS: \n1. BINANCE (USDT-TRC20)\n2. TRUST WALLET\n3. METAMASK')" title="Payment Methods">💰</div>
+    <div class="menu-item" onclick="alert('REALM PROTOCOL: \n1. One Plot Per Identity.\n2. Permanent Ownership.\n3. Verified by Support.')" title="Rules">📜</div>
+    <div class="menu-item" onclick="alert('REALM NEWS: \nNew VIP Sector opening soon in GTA Realm!')" title="News">⚡</div>
   </div>
 
-  <header style="padding: 60px 20px; text-align: center;">
+  <header style="padding: 70px 20px; text-align: center;">
     <h1 class="main-title">THE MILLIONAIRE REALM</h1>
-    <p style="color:var(--gold); font-weight:bold; letter-spacing:3px; margin-top:15px;">ASSETS: $99 - $999</p>
+    <p style="color:var(--gold); font-weight:bold; letter-spacing:4px; margin-top:20px; font-size:18px;">ASSETS: $99 - $999</p>
   </header>
 
-  <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:25px; padding:40px;"></div>
+  <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:30px; padding:60px;"></div>
 
   <div class="support-fixed" onclick="location.href='support.html'">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
-    <span style="display:block; color:var(--gold); font-size:9px; font-weight:bold;">SUPPORT</span>
+    <span>SUPPORT</span>
   </div>
 
   <script>
     const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
     const grid = document.getElementById('gameGrid');
     games.forEach(g => {
-      grid.innerHTML += `<div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
-        <h2 style="letter-spacing:5px;">${g.toUpperCase()}</h2>
-        <div style="color:var(--gold); font-size:11px;">$99 - $999</div>
-      </div>`;
+      grid.innerHTML += `
+        <div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
+          <h2 style="letter-spacing:6px; margin:0;">${g.toUpperCase()}</h2>
+          <div style="color:var(--gold); font-size:12px; font-weight:bold; margin-top:15px;">PRICE: $99 - $999</div>
+        </div>`;
     });
   </script>
 </body>
