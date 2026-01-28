@@ -1,57 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>ASSET CANVAS</title>
+  <meta charset="UTF-8"><title>REALM CANVAS</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
-<body>
+<body id="captureArea">
+  <div class="watermark" id="wMark">GAME</div>
 
-  <header style="padding: 20px 40px; display:flex; justify-content:space-between; align-items:center;">
-    <button onclick="location.href='index.html'" style="background:none; border:1px solid var(--gold); color:var(--gold); padding:10px 25px; cursor:pointer; font-weight:bold; border-radius:5px;">← EXIT HOME</button>
-    <div style="text-align:center;">
-        <div id="realmName" style="color:var(--gold); font-weight:900; letter-spacing:6px; font-size:26px;">REALM MAP</div>
-        <div id="liveClock" style="color:#555; font-family:monospace; margin-top:8px; font-size:14px;">00:00:00</div>
-    </div>
-    <div style="width:100px;"></div>
+  <header style="padding: 20px 40px; display:flex; justify-content:space-between;">
+    <button onclick="location.href='index.html'" class="btn-gold" style="padding:10px 20px;">← EXIT</button>
+    <button onclick="downloadMap()" class="btn-gold" style="padding:10px 20px; background:#fff;">DOWNLOAD MAP</button>
   </header>
 
-  <div style="padding: 60px 0; text-align:center;">
-    <h3 style="color:#222; letter-spacing:10px; font-size:12px; margin-bottom:40px;">ROYAL ELITE SECTOR ($999)</h3>
-    <div style="display:flex; justify-content:center; gap:40px; margin-bottom:100px;">
+  <div style="text-align:center; padding: 40px 0;">
+    <h3 style="color:var(--gold); letter-spacing:10px;">ROYAL ELITE ($9,999)</h3>
+    <div style="display:flex; justify-content:center; gap:50px; margin-bottom:100px;">
       <script>
         for(let i=1; i<=5; i++) {
           document.write(`
-            <div class="vip-container" style="width:190px; height:190px;" onclick="location.href='order.html?id=VIP-${i}&price=999'">
+            <div class="vip-container" style="width:220px; height:220px;" onclick="location.href='order.html?id=VIP-${i}&price=9999'">
               <div class="crown-icon">👑</div>
-              <div style="color:var(--gold); font-weight:bold; font-size:12px;">ROYAL ASSET</div>
               <div class="stars">★★★★★</div>
-              <div style="font-size:32px; font-weight:900; color:#fff;">$999</div>
+              <div style="font-size:35px; font-weight:900;">$9,999</div>
             </div>
           `);
         }
       </script>
     </div>
 
-    <h3 style="color:#222; letter-spacing:10px; font-size:12px; margin-bottom:30px;">COMMUNITY SECTOR ($99)</h3>
-    <div style="display: grid; grid-template-columns: repeat(14, 1fr); gap: 10px; padding: 0 50px;">
+    <h3 style="color:#222; letter-spacing:10px;">COMMUNITY ASSETS ($999+)</h3>
+    <div style="display:grid; grid-template-columns: repeat(14, 1fr); gap:10px; padding:0 50px;">
       <script>
         for(let i=1; i<=95; i++) {
-          document.write(`<div onclick="location.href='order.html?id=${i}&price=99'" 
-            style="aspect-ratio:1/1; border:1px solid #111; background:#080808; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; color:#444;">#${i}</div>`);
+          let price = (i <= 28) ? 1599 : (i <= 56) ? 1299 : 999;
+          document.write(`<div onclick="location.href='order.html?id=${i}&price=${price}'" 
+            style="aspect-ratio:1/1; border:1px solid #222; background:rgba(10,10,10,0.8); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; color:#555;">#${i}</div>`);
         }
       </script>
     </div>
   </div>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    document.getElementById('realmName').innerText = (urlParams.get('realm') || 'GAME').toUpperCase() + " REALM";
+    const url = new URLSearchParams(window.location.search);
+    const gameName = (url.get('realm') || 'GAME').toUpperCase();
+    document.getElementById('wMark').innerText = gameName;
 
-    function updateClock() {
-      document.getElementById('liveClock').innerText = new Date().toLocaleTimeString();
+    function downloadMap() {
+      html2canvas(document.getElementById('captureArea')).then(canvas => {
+        let link = document.createElement('a');
+        link.download = gameName + '_MAP.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
     }
-    setInterval(updateClock, 1000); updateClock();
   </script>
 </body>
 </html> 
