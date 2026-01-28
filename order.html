@@ -2,19 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SECURE CHECKOUT</title>
+    <title>CONFIRM ACQUISITION</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
-<body style="display:flex; align-items:center; justify-content:center; height:100vh;">
-    <div style="background:#0a0a0a; border:1px solid var(--gold); padding:30px; border-radius:15px; width:350px; text-align:center;">
-        <h2 class="gold-text">PAYMENT GATEWAY</h2>
-        <div style="background:#111; padding:15px; margin:20px 0; border-radius:8px; font-size:14px;">
-            <p>Binance ID: <b>8822334455</b></p>
-            <p>Coinbase: <b>pay@aether.com</b></p>
-            <p>MetaMask: <b>0x123...abc</b></p>
-        </div>
-        <button onclick="history.back()" style="background:#222; color:#555; border:none; padding:10px; cursor:pointer;">Cancel</button>
-        <button onclick="window.open('https://wa.me/8801576940717')" style="background:var(--gold); color:#000; border:none; padding:10px 20px; font-weight:bold; cursor:pointer; margin-left:10px;">CONFIRM PAY</button>
+<body style="display:flex; align-items:center; justify-content:center; height:100vh; background:#050505;">
+    
+    <div id="formBox" style="background:#0a0a0a; border:1px solid var(--gold); padding:40px; border-radius:15px; width:450px; text-align:center;">
+        <p style="color:var(--gold); font-size:11px; margin-bottom:20px;">PLEASE VERIFY DATA BEFORE SUBMISSION. SHARE THESE DETAILS WITH SUPPORT TO ACTIVATE YOUR PLOT.</p>
+        
+        <input type="text" id="custName" placeholder="ENTER YOUR BRAND NAME" class="order-input">
+        <input type="text" id="plotInfo" readonly class="order-input" style="color:var(--gold); border-color:#333;">
+        
+        <button onclick="confirmOrder()" style="width:100%; padding:15px; background:var(--gold); color:#000; font-weight:900; border:none; border-radius:5px; cursor:pointer;">SUBMIT & ACTIVATE</button>
+        <br><br>
+        <a href="javascript:history.back()" style="color:#444; text-decoration:none; font-size:12px;">← CANCEL & BACK</a>
     </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('plotInfo').value = `REALM: ${params.get('realm')} | PLOT: #${params.get('id')}`;
+
+        function confirmOrder() {
+            const name = document.getElementById('custName').value;
+            if(!name) { alert("Please enter your name"); return; }
+
+            // কনফেটি ইফেক্ট
+            var duration = 5 * 1000;
+            var end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 } });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+
+            document.getElementById('formBox').innerHTML = `
+                <h1 class="gold-text">CONGRATULATIONS!</h1>
+                <h2 style="color:#fff;">${name.toUpperCase()}</h2>
+                <p style="color:#888; font-size:13px; line-height:1.6;">Your request for Plot #${params.get('id')} has been logged.<br><br>Please contact Support now to provide proof and finalize deployment.</p>
+                <button onclick="location.href='support.html'" style="padding:15px 30px; background:#25D366; color:#fff; border:none; border-radius:50px; font-weight:bold; cursor:pointer; margin-top:20px;">CONTACT SUPPORT NOW</button>
+            `;
+        }
+    </script>
 </body>
 </html>
