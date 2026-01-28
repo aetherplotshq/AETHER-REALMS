@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>THE MILLIONAIRE REALM</title>
+    <title>THE MILLIONAIRE REALM | Assets</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <header style="padding: 60px 20px; text-align: center;">
-        <h1 style="color:var(--gold); font-size:35px; letter-spacing:10px; margin:0; font-weight:900;">THE MILLIONAIRE REALM</h1>
+        <h1 style="color:var(--gold); font-size:32px; letter-spacing:8px; margin:0;">THE MILLIONAIRE REALM</h1>
         <div style="margin-top:30px;">
-            <button onclick="location.href='order.html'" style="background:var(--gold); border:none; color:#000; padding:15px 45px; font-weight:900; border-radius:30px; cursor:pointer; font-size:16px; box-shadow: 0 5px 15px rgba(255,215,0,0.3);">BUY YOUR PLOT NOW</button>
+            <button onclick="location.href='order.html'" style="background:var(--gold); border:none; padding:15px 40px; font-weight:900; border-radius:30px; cursor:pointer;">BUY YOUR PLOT NOW</button>
         </div>
     </header>
 
@@ -18,22 +19,24 @@
         <div class="ghost-text">GHOST CHAT</div>
     </a>
 
-    <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:25px; padding:50px;"></div>
+    <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:25px; padding:40px;"></div>
 
     <div class="support-fixed" onclick="location.href='support.html?from=home'">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
-        <span style="display:block; color:var(--gold); font-size:9px; font-weight:900; margin-top:5px; letter-spacing:1px;">SUPPORT</span>
+        <span>SUPPORT</span>
     </div>
 
     <script>
         const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
         const grid = document.getElementById('gameGrid');
         games.forEach(g => {
-            grid.innerHTML += `<div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
-                <h2 style="letter-spacing:5px; margin:0;">${g.toUpperCase()}</h2>
-                <div style="color:var(--gold); font-size:11px; margin-top:10px; font-weight:bold;">$199 - $9,999</div>
-            </div>`;
+            grid.innerHTML += `
+                <div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
+                    <h2>${g.toUpperCase()}</h2>
+                    <div style="color:var(--gold); font-size:11px;">$199 - $9,999</div>
+                </div>`;
         });
     </script>
+
 </body>
 </html>
