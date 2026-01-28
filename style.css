@@ -1,41 +1,52 @@
 :root {
     --bg: #030303;
     --gold: #FFD700;
-    --gold-glow: rgba(255, 215, 0, 0.8); /* আরও গাঢ় গ্লো */
+    --gold-glow: rgba(255, 215, 0, 0.6);
 }
 
 body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
 
-/* Aggressive Game Card Hover */
-.game-card {
-    background: #0a0a0a; border: 1px solid #1a1a1a; padding: 50px 20px;
-    border-radius: 15px; text-align: center; cursor: pointer; transition: 0.3s;
+/* Aggressive News Ticker */
+.news-ticker { 
+    background: #000; color: #fff; padding: 10px; font-size: 13px; 
+    border-bottom: 1px solid var(--gold); overflow: hidden; white-space: nowrap;
 }
-.game-card:hover { 
-    border-color: var(--gold); transform: translateY(-15px) scale(1.05); 
-    box-shadow: 0 0 60px var(--gold-glow); background: #000;
-}
+.news-content { display: inline-block; animation: ticker 35s linear infinite; font-weight: bold; }
+@keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-/* Fixed Customer Support (Right Center) */
-.support-fixed {
-    position: fixed; top: 50%; right: 20px; transform: translateY(-50%);
-    z-index: 10000; cursor: pointer; transition: 0.3s;
+/* Luxury Notice Board */
+.notice-board { 
+    background: #0a0a0a; border: 2px solid #1a1a1a; padding: 25px; 
+    margin: 20px auto; width: 85%; border-radius: 10px; 
+    box-shadow: 0 0 20px rgba(0,0,0,1); border-left: 5px solid var(--gold);
 }
-.support-fixed img { width: 60px; filter: drop-shadow(0 0 10px var(--gold)); }
+.notice-board h3 { color: var(--gold); margin-top: 0; letter-spacing: 2px; text-transform: uppercase; }
+.notice-board ul { font-size: 13px; color: #aaa; line-height: 1.8; }
 
-/* Ghost Chat Aggressive Logo */
-.ghost-btn {
-    background: #000; border: 2px solid var(--gold); color: var(--gold);
-    padding: 10px 20px; border-radius: 50px; text-decoration: none;
-    font-weight: 900; font-size: 14px; display: flex; align-items: center; gap: 8px;
-    box-shadow: 0 0 15px var(--gold-glow);
+/* 14-Column Grid Layout */
+.community-grid {
+    display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; 
+    margin: 20px auto; width: 98%; max-width: 1550px;
 }
 
-/* Chat Layout - Messenger Style */
-.chat-container { height: 60vh; overflow-y: auto; background: #000; border: 1px solid #1a1a1a; padding: 20px; border-radius: 15px; }
-.msg-bubble { background: #111; border: 1px solid #222; padding: 12px; border-radius: 15px; margin-bottom: 12px; max-width: 85%; }
-.sender-id { font-size: 10px; color: var(--gold); font-weight: 900; margin-bottom: 5px; letter-spacing: 1px; }
+.plot.normal {
+    aspect-ratio: 1/1; border: 1px solid #111; background: #070707;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 10px; transition: 0.2s;
+}
+.plot.normal:hover { background: var(--gold); color: #000; transform: scale(1.1); z-index: 10; box-shadow: 0 0 15px var(--gold); }
 
-/* Copy-to-Clipboard Payment Buttons */
-.pay-tag { background: #111; border: 1px solid #333; padding: 6px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; color: #fff; }
-.pay-tag:hover { border-color: var(--gold); color: var(--gold); }
+/* Compact Support Button (Right Middle) */
+.support-mini {
+    position: fixed; top: 45%; right: 20px; z-index: 9999;
+    text-align: center; cursor: pointer; transition: 0.3s;
+}
+.support-mini:hover { transform: scale(1.1); }
+.support-mini img { width: 38px; filter: drop-shadow(0 0 5px var(--gold)); }
+.support-mini span { display: block; font-size: 8px; color: var(--gold); font-weight: 900; margin-top: 4px; }
+
+/* Ghost Chat Button */
+.ghost-link { 
+    border: 1px solid var(--gold); padding: 6px 15px; border-radius: 20px; 
+    color: var(--gold); text-decoration: none; font-size: 12px; font-weight: bold;
+}
