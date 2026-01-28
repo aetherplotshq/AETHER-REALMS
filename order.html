@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SECURE CHECKOUT | Aether Plots</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="order-wrapper">
+        <div class="order-card">
+            <h1 class="gold-text">ASSET ACQUISITION</h1>
+            <div class="details">
+                <p>Universe: <span id="rName">--</span></p>
+                <p>Plot ID: <span id="pID">--</span></p>
+                <p>Final Price: <span class="gold-text" id="pPrice">--</span></p>
+            </div>
+
+            <div class="payment-box">
+                <p class="small-label">USDT TRC20 (BINANCE/COINBASE)</p>
+                <code id="wallet">TYv7Jp9XmN4kR2z8vLqP1W7xT9yZ0uQ6wR</code>
+                <button class="copy-btn" onclick="copyWallet()">COPY ADDRESS</button>
+            </div>
+
+            <button class="confirm-btn" onclick="submitToWA()">CONFIRM PAYMENT</button>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('rName').innerText = params.get('realm');
+        document.getElementById('pID').innerText = "#" + params.get('id');
+        document.getElementById('pPrice').innerText = "$" + params.get('price');
+
+        function submitToWA() {
+            const wa = "8801XXXXXXXXX"; // আপনার নাম্বার দিন
+            const text = `I want to buy ${params.get('realm')} Plot #${params.get('id')} for $${params.get('price')}. My Transaction ID is: `;
+            window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`);
+        }
+    </script>
+</body>
+</html>
