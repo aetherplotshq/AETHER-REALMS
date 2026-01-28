@@ -2,47 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHER PLOTS | Digital Asset Protocol</title>
+    <title>AETHER PLOTS | Global Virtual Assets</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="main-header">
-        <div class="logo" onclick="location.href='index.html'">AETHER PLOTS</div>
-        <div id="digital-clock" class="clock-display">00:00:00 AM</div>
+    <header style="display:flex; justify-content:space-between; align-items:center; padding:20px 50px; border-bottom:1px solid var(--gold);">
+        <div style="color:var(--gold); font-weight:900; font-size:24px; letter-spacing:2px;">AETHER PLOTS</div>
+        <div id="local-clock" class="clock-display">LOADING TIME...</div>
     </header>
 
-    <div class="hero-section">
+    <div style="padding: 100px 20px; text-align:center;">
         <h1 class="main-title">OWN THE DIGITAL HORIZON</h1>
-        <p class="subtitle">100 Strategic Plots Per Realm. Permanent Ownership.</p>
+        <p style="color:#666; letter-spacing:4px; font-size:12px;">PREMIUM VIRTUAL ASSETS ENCRYPTED ON THE NETWORK</p>
     </div>
 
-    <div class="game-grid" id="gameList">
-        </div>
-
-    <div class="support-wrapper">
-        <div class="wa-btn" onclick="window.open('support.html', '_blank')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20" alt="WA">
-            <span>CUSTOMER SUPPORT</span>
-        </div>
-    </div>
+    <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:25px; padding:40px;"></div>
 
     <script>
         const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
-        const list = document.getElementById('gameList');
+        const grid = document.getElementById('gameGrid');
         games.forEach(g => {
-            list.innerHTML += `
+            grid.innerHTML += `
                 <div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
-                    <h3>${g.toUpperCase()}</h3>
-                    <div class="price-tag">STARTING FROM $199</div>
+                    <h2 style="letter-spacing:3px;">${g.toUpperCase()}</h2>
+                    <div style="color:var(--gold); font-weight:bold; font-size:14px;">MINIMUM $199 - UNLIMITED</div>
                 </div>`;
         });
 
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('digital-clock').innerText = now.toLocaleTimeString();
+        // Local Time Logic
+        function updateClock() {
+            const userTime = new Date().toLocaleTimeString();
+            document.getElementById('local-clock').innerText = userTime;
         }
-        setInterval(updateTime, 1000); updateTime();
+        setInterval(updateClock, 1000); updateClock();
     </script>
 </body>
 </html>
