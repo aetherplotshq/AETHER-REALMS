@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><title>SECURE PURCHASE</title>
+  <meta charset="UTF-8"><title>SECURE ACQUISITION</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div style="max-width:550px; margin:70px auto; background:#0a0a0a; padding:50px; border-radius:20px; border:2px solid var(--gold); text-align:center;">
-    <h2 style="color:var(--gold)">ACQUIRE ASSET</h2>
-    <input type="text" id="name" placeholder="FULL NAME" style="width:90%; padding:15px; margin:10px 0; background:#000; border:1px solid #333; color:#fff;">
-    <select id="game" style="width:95%; padding:15px; margin:10px 0; background:#000; border:1px solid #333; color:#fff;">
+  <div style="max-width:550px; margin:80px auto; background:#0a0a0a; padding:50px; border-radius:20px; border:2px solid var(--gold); text-align:center;">
+    <h2 style="color:var(--gold); letter-spacing:2px;">ACQUIRE ASSET</h2>
+    <input type="text" id="custName" placeholder="ENTER FULL NAME" style="width:90%; padding:18px; margin:15px 0; background:#000; border:1px solid #333; color:#fff; border-radius:5px;">
+    
+    <select id="gameSelect" style="width:97%; padding:18px; margin:15px 0; background:#000; border:1px solid #333; color:#fff; border-radius:5px;">
       <option>FORTNITE</option><option>CS2</option><option>MINECRAFT</option><option>VALORANT</option><option>APEX</option><option>ROBLOX</option><option>WARZONE</option><option>GTA</option><option>LEAGUE</option>
     </select>
-    <div style="color:var(--gold); font-size:40px; font-weight:900; margin:20px 0;">PRICE: $<span id="pr">0</span></div>
-    <button class="btn-gold" style="width:100%" onclick="showSupportPopup()">SUBMIT & GET PAYMENT LINK</button>
+
+    <div style="color:var(--gold); font-size:45px; font-weight:900; margin:30px 0;">PRICE: $<span id="dispP">0</span></div>
+    
+    <button style="width:100%; padding:20px; background:var(--gold); color:#000; font-weight:900; border:none; cursor:pointer; border-radius:5px; font-size:18px;" onclick="showOrderPopup()">SUBMIT ASSET DATA</button>
   </div>
 
-  <div id="supModal" class="modal">
+  <div id="orderModal" class="modal">
     <div class="modal-content">
-      <h2 style="color:var(--gold)">SUBMISSION DATA</h2>
-      <ul style="text-align:left; color:#ccc;">
-        <li>Full Name</li><li>Selected Game Realm</li><li>Plot Number</li><li>Transaction Screenshot</li>
+      <h2 style="color:var(--gold)">SUBMISSION CHECKLIST</h2>
+      <ul style="text-align:left; color:#ccc; line-height:2;">
+        <li>আপনার পূর্ণ নাম</li><li>নির্বাচিত গেম রিয়েলম</li><li>প্লট নম্বর এবং আইডি</li><li>পেমেন্ট ট্রানজেকশন স্ক্রিনশট</li>
       </ul>
-      <button class="btn-gold" onclick="location.href='support.html'">GO TO SUPPORT</button>
+      <p style="color:var(--gold); font-weight:bold; margin-top:20px;">এই তথ্যগুলো নিয়ে কাস্টমার সাপোর্টে যোগাযোগ করুন।</p>
+      <button style="background:var(--gold); border:none; padding:15px 40px; font-weight:900; cursor:pointer; border-radius:5px; margin-top:20px;" onclick="location.href='support.html'">GO TO SUPPORT</button>
     </div>
   </div>
 
   <script>
-    const u = new URLSearchParams(window.location.search);
-    document.getElementById('pr').innerText = u.get('price') || '0';
-    function showSupportPopup() { document.getElementById('supModal').style.display='block'; }
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById('dispP').innerText = params.get('price') || '0';
+    function showOrderPopup() { document.getElementById('orderModal').style.display='block'; }
   </script>
 </body>
 </html>
