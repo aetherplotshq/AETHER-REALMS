@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AETHER PLOTS | Global Digital Real Estate</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -25,110 +25,49 @@
     <section class="hero">
         <div class="hero-content">
             <span class="badge">GLOBAL DIGITAL ASSET PROTOCOL</span>
-            <h1>OWN THE <span class="gold-text">DIGITAL HORIZON</span></h1>
+            <h1 class="main-title">OWN THE DIGITAL HORIZON</h1>
             <p>100 Strategic Plots per Universe. No Renewals. Permanent Ownership.</p>
         </div>
     </section>
 
     <section class="universe-container">
         <h2 class="section-title">ACTIVE <span class="gold-text">REALMS</span></h2>
-        
-        <div class="game-grid">
-            <div class="game-card" onclick="location.href='dashboard.html?realm=Fortnite'">
-                <div class="game-info">
-                    <h3>FORTNITE</h3>
-                    <div class="plot-stats">
-                        <span>100 PLOTS</span>
-                        <span class="gold-text">FROM $199</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="location.href='dashboard.html?realm=CS2'">
-                <div class="game-info">
-                    <h3>COUNTER-STRIKE 2</h3>
-                    <div class="plot-stats">
-                        <span>100 PLOTS</span>
-                        <span class="gold-text">FROM $199</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="location.href='dashboard.html?realm=Minecraft'">
-                <div class="game-info">
-                    <h3>MINECRAFT</h3>
-                    <div class="plot-stats">
-                        <span>100 PLOTS</span>
-                        <span class="gold-text">FROM $199</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="location.href='dashboard.html?realm=Valorant'">
-                <div class="game-info">
-                    <h3>VALORANT</h3>
-                    <div class="plot-stats">
-                        <span>100 PLOTS</span>
-                        <span class="gold-text">FROM $199</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="location.href='dashboard.html?realm=Apex'">
-                <div class="game-info">
-                    <h3>APEX LEGENDS</h3>
-                    <div class="plot-stats">
-                        <span>100 PLOTS</span>
-                        <span class="gold-text">FROM $199</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="location.href='dashboard.html?realm=Roblox'">
-                <div class="game-info">
-                    <h3>ROBLOX</h3>
-                    <div class="plot-stats">
-                        <span>100 PLOTS</span>
-                        <span class="gold-text">FROM $199</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="location.href='dashboard.html?realm=Warzone'">
-                <div class="game-info">
-                    <h3>WARZONE</h3>
-                    <div class="plot-stats">
-                        <span>100 PLOTS</span>
-                        <span class="gold-text">FROM $199</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="location.href='dashboard.html?realm=GTA'">
-                <div class="game-info">
-                    <h3>GTA ONLINE</h3>
-                    <div class="plot-stats">
-                        <span>100 PLOTS</span>
-                        <span class="gold-text">FROM $199</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-card" onclick="location.href='dashboard.html?realm=League'">
-                <div class="game-info">
-                    <h3>LEAGUE OF LEGENDS</h3>
-                    <div class="plot-stats">
-                        <span>100 PLOTS</span>
-                        <span class="gold-text">FROM $199</span>
-                    </div>
-                </div>
-            </div>
+        <div class="game-grid" id="gameGrid">
+            <script>
+                const games = [
+                    {n: "FORTNITE", id: "Fortnite"}, {n: "COUNTER-STRIKE 2", id: "CS2"},
+                    {n: "MINECRAFT", id: "Minecraft"}, {n: "VALORANT", id: "Valorant"},
+                    {n: "APEX LEGENDS", id: "Apex"}, {n: "ROBLOX", id: "Roblox"},
+                    {n: "WARZONE", id: "Warzone"}, {n: "GTA ONLINE", id: "GTA"},
+                    {n: "LEAGUE OF LEGENDS", id: "League"}
+                ];
+                games.forEach(g => {
+                    document.write(`
+                        <div class="game-card" onclick="location.href='dashboard.html?realm=${g.id}'">
+                            <h3>${g.n}</h3>
+                            <div class="plot-stats">
+                                <span>100 PLOTS</span>
+                                <span class="gold-text">MIN $199 - NO LIMIT</span>
+                            </div>
+                        </div>
+                    `);
+                });
+            </script>
         </div>
     </section>
+
+    <div class="support-wrapper">
+        <div id="supportButtons" class="support-btns">
+            <button onclick="location.href='index.html'">🏠 HOME</button>
+        </div>
+        <div class="wa-btn" onclick="window.open('support.html', '_blank')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20">
+            <span>CUSTOMER SUPPORT</span>
+        </div>
+    </div>
 
     <footer class="main-footer">
         <p>&copy; 2026 AETHER PLOTS - ENCRYPTED ASSET NETWORK</p>
     </footer>
-
 </body>
 </html>
