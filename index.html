@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>THE MILLIONAIRE REALM</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>THE MILLIONAIRE REALM</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <header style="padding: 60px 20px; text-align: center;">
-    <h1 style="color:#FFD700; font-size:35px; letter-spacing:10px; margin:0;">THE MILLIONAIRE REALM</h1>
-    <div style="margin-top:30px;">
-      <button onclick="location.href='order.html'" style="background:#FFD700; border:none; color:#000; padding:15px 45px; font-weight:900; border-radius:30px; cursor:pointer;">BUY YOUR PLOT NOW</button>
+    <div style="background: var(--gold); color: #000; text-align: center; padding: 10px; font-size: 12px; font-weight: 900; letter-spacing: 2px;">
+        BLOCKCHAIN ASSET ACQUISITION LIVE - Q1 2026 PROTOCOL
     </div>
-  </header>
 
-  <a href="ghost-chat.html" class="ghost-btn-container">
-    <div class="ghost-circle">💀</div>
-    <div class="ghost-text">GHOST CHAT</div>
-  </a>
+    <header style="padding: 60px 20px; text-align: center;">
+        <h1 class="main-title">THE MILLIONAIRE REALM</h1>
+        <p style="color: #444; letter-spacing: 5px; font-size: 10px; margin-top: 10px;">DOMINATE THE DIGITAL CANVAS</p>
+        <div style="margin-top:40px;">
+            <button onclick="location.href='order.html'" style="background:var(--gold); border:none; padding:18px 50px; font-weight:900; border-radius:5px; cursor:pointer; font-size:16px;">ACQUIRE ASSET</button>
+        </div>
+    </header>
 
-  <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:25px; padding:50px;"></div>
+    <a href="ghost-chat.html" style="position:fixed; top:25px; right:25px; text-decoration:none; text-align:center;">
+        <div class="ghost-circle">💀</div>
+        <span style="color:#fff; font-size:8px; display:block; margin-top:5px; font-weight:bold;">GHOST CHAT</span>
+    </a>
 
-  <div class="support-fixed" onclick="location.href='support.html?from=home'">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
-    <span>SUPPORT</span>
-  </div>
+    <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:30px; padding:60px;"></div>
 
-  <script>
-    const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
-    const grid = document.getElementById('gameGrid');
-    games.forEach(g => {
-      grid.innerHTML += `
-        <div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
-          <h2 style="letter-spacing:5px;">${g.toUpperCase()}</h2>
-          <div style="color:#FFD700; font-size:11px;">$199 - $9,999</div>
-        </div>`;
-    });
-  </script>
+    <div class="support-fixed" onclick="location.href='support.html'">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
+        <span style="display:block; color:var(--gold); font-size:9px; font-weight:900; margin-top:5px;">SUPPORT</span>
+    </div>
 
+    <script>
+        const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
+        const grid = document.getElementById('gameGrid');
+        games.forEach(g => {
+            grid.innerHTML += `<div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
+                <h2 style="letter-spacing:5px;">${g.toUpperCase()}</h2>
+                <div style="color:var(--gold); font-size:11px; font-weight:bold;">$199 - $9,999</div>
+            </div>`;
+        });
+    </script>
 </body>
 </html>
