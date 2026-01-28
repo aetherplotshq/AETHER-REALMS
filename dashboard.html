@@ -2,49 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>THE MILLIONAIRE REALM | Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE MILLIONAIRE REALM | Asset Canvas</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header style="display:flex; justify-content:space-between; align-items:center; padding:15px 40px; border-bottom:1px solid var(--gold); background:#000;">
-        <button onclick="location.href='index.html'" style="background:#111; color:var(--gold); border:1px solid var(--gold); padding:8px 18px; cursor:pointer; font-weight:bold; border-radius:5px;">← BACK</button>
-        <div style="color:var(--gold); font-weight:900; letter-spacing:2px;">REALM ASSET CANVAS</div>
-        <div style="display:flex; gap:10px;">
-            <div class="copy-tag" style="border:1px solid #222; padding:5px 12px; font-size:10px; cursor:pointer;" onclick="navigator.clipboard.writeText('88223344'); alert('Copied')">BINANCE</div>
-            <div class="copy-tag" style="border:1px solid #222; padding:5px 12px; font-size:10px; cursor:pointer;" onclick="navigator.clipboard.writeText('0x123...'); alert('Copied')">METAMASK</div>
+
+    <header style="display:flex; justify-content:space-between; align-items:center; padding:15px 40px; border-bottom:1px solid var(--gold); background:#000; position:sticky; top:0; z-index:1000;">
+        <button onclick="location.href='index.html'" style="background:none; border:1px solid var(--gold); color:var(--gold); padding:8px 18px; cursor:pointer; font-weight:bold; border-radius:5px; transition: 0.3s;">🏠 HOME</button>
+        
+        <div id="realmTitle" style="color:var(--gold); font-weight:900; letter-spacing:3px; text-transform:uppercase; font-size: 18px;">REALM ASSETS</div>
+        
+        <div style="display:flex; gap:12px;">
+            <div class="pay-tag" style="border:1px solid #222; padding:6px 15px; font-size:11px; cursor:pointer; color:#fff; border-radius:4px;" onclick="navigator.clipboard.writeText('BINANCE_ID_HERE'); alert('Binance ID Copied')">BINANCE</div>
+            <div class="pay-tag" style="border:1px solid #333; padding:6px 15px; font-size:11px; cursor:pointer; color:#fff; border-radius:4px;" onclick="navigator.clipboard.writeText('METAMASK_ADDR_HERE'); alert('Wallet Copied')">METAMASK</div>
         </div>
     </header>
 
-    <div style="padding: 40px 0; text-align:center;">
-        <div style="display:flex; justify-content:center; gap:25px; margin-bottom:50px;">
-            <script>
-                for(let i=1; i<=5; i++) {
-                    document.write(`
-                        <div class="plot-vip" style="width:130px; height:130px; border:3px solid var(--gold); background:radial-gradient(circle, #222, #000); display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; box-shadow: 0 0 20px var(--gold-glow);" onclick="location.href='order.html?realm=VIP&id=V${i}&price=9999'">
-                            <span style="font-size:22px; font-weight:900; color:#fff;">$9,999</span>
-                            <div style="color:var(--gold); font-size:11px;">★★★★★</div>
-                        </div>
-                    `);
-                }
-            </script>
-        </div>
+    <div style="padding: 50px 0; text-align:center;">
+        
+        <h3 style="color:#1a1a1a; font-size:10px; letter-spacing:12px; margin-bottom:25px; text-transform:uppercase;">LEVEL 1: VIP ELITE SECTORS</h3>
+        <div id="vipRow" style="display:flex; justify-content:center; gap:25px; margin-bottom:70px;">
+            </div>
 
-        <div id="grid14" class="community-grid"></div>
+        <h3 style="color:#1a1a1a; font-size:10px; letter-spacing:12px; margin-bottom:25px; text-transform:uppercase;">COMMUNITY ASSETS (#1 - #95)</h3>
+        <div id="grid14" class="community-grid">
+            </div>
+
     </div>
 
-    <div class="support-mini" onclick="location.href='support.html?from=map'">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
-        <span>SUPPORT</span>
+    <div class="support-mini" onclick="location.href='support.html?from=map'" style="position: fixed; top: 45%; right: 20px; z-index: 9999; text-align: center; cursor: pointer;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support" style="width: 38px; filter: drop-shadow(0 0 5px var(--gold-glow));">
+        <span style="display: block; font-size: 8px; color: var(--gold); font-weight: 900; margin-top: 5px; letter-spacing: 1px;">SUPPORT</span>
     </div>
 
     <script>
+        // Get Realm Name from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const realm = urlParams.get('realm') || 'Game';
+        document.getElementById('realmTitle').innerText = realm + " REALM";
+
+        // 1. Generate 5 VIP Plots (Level 1)
+        const vipRow = document.getElementById('vipRow');
+        for(let i=1; i<=5; i++) {
+            vipRow.innerHTML += `
+                <div class="plot-vip" style="width:145px; height:145px; border:3px solid var(--gold); background:linear-gradient(145deg, #0a0a0a, #000); display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; box-shadow: 0 0 25px rgba(255, 215, 0, 0.2); transition: 0.3s;" 
+                     onclick="location.href='order.html?realm=${realm}&id=VIP-${i}&price=9999'">
+                    <span style="font-size:24px; font-weight:900; color:#fff;">$9,999</span>
+                    <div style="color:var(--gold); font-size:10px; margin-top:8px; font-weight:bold; letter-spacing:2px;">VIP-0${i} ★</div>
+                </div>`;
+        }
+
+        // 2. Generate 95 Normal Plots (Level 2, 3, 4) in 14-Column Layout
         const grid = document.getElementById('grid14');
-        const realm = new URLSearchParams(window.location.search).get('realm') || 'Game';
-        
-        for(let i=1; i<=98; i++) {
+        for(let i=1; i<=95; i++) {
+            // Pricing Logic: Level 2 ($999), Level 3 ($499), Level 4 ($199)
             let price = (i <= 28) ? 999 : (i <= 56) ? 499 : 199;
-            grid.innerHTML += `<div class="plot normal" onclick="location.href='order.html?realm=${realm}&id=${i}&price=${price}'">#${i}<br>$${price}</div>`;
+            
+            grid.innerHTML += `
+                <div class="plot normal" style="aspect-ratio:1/1; border:1px solid #111; background:#070707; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; font-size:10px; transition:0.2s;" 
+                     onclick="location.href='order.html?realm=${realm}&id=${i}&price=${price}'">
+                    <span style="color:#333; font-weight:bold;">#${i}</span>
+                    <span style="color:var(--gold); font-weight:bold; margin-top:2px; font-size:9px;">$${price}</span>
+                </div>`;
         }
     </script>
+
 </body>
 </html>
