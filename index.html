@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE MILLIONAIRE REALM | Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -16,23 +17,23 @@
 
     <header style="padding: 25px 40px; display:flex; justify-content:space-between; align-items:center;">
         <div style="color:var(--gold); font-weight:900; font-size:24px; letter-spacing:4px;">THE MILLIONAIRE REALM</div>
-        <a href="ghost-chat.html" class="ghost-link">💀 GHOST CHAT</a>
+        <a href="ghost-chat.html" class="ghost-link" style="text-decoration: none; border: 1px solid var(--gold); padding: 8px 15px; border-radius: 20px; color: var(--gold); font-weight: bold; font-size: 12px;">💀 GHOST CHAT</a>
     </header>
 
     <div class="notice-board">
-        <h3>📜 PROTOCOL & RULES</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+        <h3 style="color:var(--gold); margin-bottom: 15px;">📜 PROTOCOL & RULES</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: left;">
             <div>
-                <strong style="color:#eee;">WHAT YOU CAN DO:</strong>
-                <ul>
+                <strong style="color:#eee; display: block; margin-bottom: 10px;">WHAT YOU CAN DO:</strong>
+                <ul style="color: #aaa; font-size: 13px; line-height: 1.6; padding-left: 20px;">
                     <li>Acquire any available plot and link your Brand/Profile/Socials.</li>
                     <li>GHOST CHAT: Total freedom of speech. No rules, No filters.</li>
                     <li>Resell your plot documentation to other users at a higher price.</li>
                 </ul>
             </div>
             <div>
-                <strong style="color:#eee;">SUBMISSION TO SUPPORT:</strong>
-                <ul>
+                <strong style="color:#eee; display: block; margin-bottom: 10px;">SUBMISSION TO SUPPORT:</strong>
+                <ul style="color: #aaa; font-size: 13px; line-height: 1.6; padding-left: 20px;">
                     <li>Plot ID & Game Realm name.</li>
                     <li>Payment Screenshot & Transaction ID.</li>
                     <li>Link/URL you want to embed behind your plot.</li>
@@ -44,9 +45,9 @@
 
     <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:25px; padding:40px;"></div>
 
-    <div class="support-mini" onclick="location.href='support.html'">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
-        <span>SUPPORT</span>
+    <div class="support-mini" onclick="location.href='support.html'" style="position: fixed; top: 45%; right: 20px; z-index: 9999; text-align: center; cursor: pointer;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support" style="width: 38px;">
+        <span style="display: block; font-size: 8px; color: var(--gold); font-weight: 900; margin-top: 5px; letter-spacing: 1px;">SUPPORT</span>
     </div>
 
     <script>
@@ -55,7 +56,7 @@
         games.forEach(g => {
             grid.innerHTML += `
                 <div class="game-card" style="background:#0a0a0a; border:1px solid #1a1a1a; padding:60px 20px; text-align:center; cursor:pointer; transition:0.4s;" onclick="location.href='dashboard.html?realm=${g}'">
-                    <h2 style="letter-spacing:3px;">${g.toUpperCase()}</h2>
+                    <h2 style="letter-spacing:3px; color: #fff;">${g.toUpperCase()}</h2>
                     <div style="color:var(--gold); font-size:12px; font-weight:900;">MINIMUM $199</div>
                 </div>`;
         });
