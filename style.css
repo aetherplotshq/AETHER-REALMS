@@ -1,5 +1,5 @@
 :root {
-  --bg: #030303;
+  --bg: #020202;
   --gold: #FFD700;
   --gold-glow: rgba(255, 215, 0, 0.9);
 }
@@ -7,7 +7,7 @@
 body {
   background: var(--bg);
   color: #fff;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -21,48 +21,83 @@ body {
   background: linear-gradient(180deg, #FFD700 0%, #B8860B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+  margin: 0;
 }
 
-/* Aggressive VIP Glow */
-@keyframes vipPulse {
-  0% { box-shadow: 0 0 15px var(--gold-glow); transform: scale(1); }
-  50% { box-shadow: 0 0 50px var(--gold-glow); transform: scale(1.02); }
-  100% { box-shadow: 0 0 15px var(--gold-glow); transform: scale(1); }
+/* Side Menu: Payment, Rules, News */
+.side-menu {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1000;
 }
 
-.plot-vip-active {
-  border: 4px solid var(--gold);
+.menu-item {
+  width: 55px;
+  height: 55px;
   background: #000;
-  animation: vipPulse 1.5s infinite ease-in-out;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.menu-item:hover {
+  background: var(--gold);
+  transform: scale(1.1);
+}
+
+/* VIP Royal Plot Styling */
+.vip-container {
+  position: relative;
+  border: 3px solid var(--gold);
+  background: #000;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: 0.3s;
 }
 
-/* Ghost Chat Glowing Pulse */
-@keyframes ghostPulse {
-  0% { box-shadow: 0 0 5px #fff; border-color: #333; }
-  50% { box-shadow: 0 0 25px var(--gold); border-color: var(--gold); }
-  100% { box-shadow: 0 0 5px #fff; border-color: #333; }
+.crown-icon {
+  position: absolute;
+  top: -40px;
+  font-size: 40px;
+  filter: drop-shadow(0 0 10px var(--gold));
+  animation: float 2s infinite ease-in-out;
 }
 
-.ghost-circle {
-  width: 60px;
-  height: 60px;
-  background: #000;
-  border: 2px solid #222;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  animation: ghostPulse 2s infinite ease-in-out;
+.stars {
+  color: var(--gold);
+  font-size: 16px;
+  margin: 8px 0;
+  text-shadow: 0 0 10px var(--gold);
+  animation: starBlink 1s infinite alternate;
 }
 
-/* Fixed Support Logo Position */
+@keyframes starBlink {
+  from { opacity: 0.4; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* Global Support Logo */
 .support-fixed {
   position: fixed;
   bottom: 30px;
@@ -73,7 +108,7 @@ body {
 }
 
 .support-fixed img {
-  width: 50px;
+  width: 55px;
   filter: drop-shadow(0 0 10px var(--gold));
 }
 
@@ -83,15 +118,14 @@ body {
   font-size: 9px;
   font-weight: 900;
   margin-top: 5px;
-  letter-spacing: 1px;
 }
 
-/* Grid & Cards Layout */
+/* Game Cards */
 .game-card {
   background: #0a0a0a;
   border: 1px solid #1a1a1a;
   padding: 50px 20px;
-  border-radius: 12px;
+  border-radius: 15px;
   text-align: center;
   cursor: pointer;
   transition: 0.4s;
@@ -99,29 +133,5 @@ body {
 
 .game-card:hover {
   border-color: var(--gold);
-  box-shadow: 0 0 30px var(--gold-glow);
-}
-
-.community-grid {
-  display: grid;
-  grid-template-columns: repeat(14, 1fr);
-  gap: 8px;
-  padding: 20px;
-}
-
-.plot.normal {
-  aspect-ratio: 1/1;
-  border: 1px solid #111;
-  background: #070707;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  color: #444;
-  cursor: pointer;
-}
-
-.plot.normal:hover {
-  background: var(--gold);
-  color: #000;
+  box-shadow: 0 0 40px var(--gold-glow);
 }
