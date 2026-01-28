@@ -2,64 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE MILLIONAIRE REALM | Home</title>
+    <title>THE MILLIONAIRE REALM</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="news-ticker">
-        <div class="news-content">
-            ⚡ WHY THE PRICE? OUR PLOTS ARE LIMITED ASSETS ON THE BLOCKCHAIN ARCHITECTURE — ASSETS GROW 15% IN VALUE QUARTERLY. 
-            ⚡ LEVEL 1 (VIP): $9,999 (FRONT ROW DOMINANCE) | LEVEL 2 (ELITE): $999 | LEVEL 3 (PRIME): $499 | LEVEL 4 (CORE): $199. 
-            ⚡ ALL PLOTS ARE PERMANENT AND REDIRECT TO YOUR BRAND/LINK.
+    <header style="padding: 50px 40px; text-align: center;">
+        <h1 style="color:var(--gold); font-size:35px; letter-spacing:10px; margin:0;">THE MILLIONAIRE REALM</h1>
+        <div style="margin-top:25px; display:flex; justify-content:center; gap:20px;">
+            <button onclick="openModal('newsM')" style="background:none; border:1px solid var(--gold); color:var(--gold); padding:10px 30px; cursor:pointer; font-weight:bold; border-radius:5px;">LIVE NEWS</button>
+            <button onclick="openModal('rulesM')" style="background:none; border:1px solid #333; color:#fff; padding:10px 30px; cursor:pointer; border-radius:5px;">PROTOCOL RULES</button>
         </div>
-    </div>
-
-    <header style="padding: 25px 40px; display:flex; justify-content:space-between; align-items:center;">
-        <div style="color:var(--gold); font-weight:900; font-size:24px; letter-spacing:4px;">THE MILLIONAIRE REALM</div>
-        <a href="ghost-chat.html" class="ghost-link" style="text-decoration: none; border: 1px solid var(--gold); padding: 8px 15px; border-radius: 20px; color: var(--gold); font-weight: bold; font-size: 12px;">💀 GHOST CHAT</a>
     </header>
 
-    <div class="notice-board">
-        <h3 style="color:var(--gold); margin-bottom: 15px;">📜 PROTOCOL & RULES</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: left;">
-            <div>
-                <strong style="color:#eee; display: block; margin-bottom: 10px;">WHAT YOU CAN DO:</strong>
-                <ul style="color: #aaa; font-size: 13px; line-height: 1.6; padding-left: 20px;">
-                    <li>Acquire any available plot and link your Brand/Profile/Socials.</li>
-                    <li>GHOST CHAT: Total freedom of speech. No rules, No filters.</li>
-                    <li>Resell your plot documentation to other users at a higher price.</li>
-                </ul>
-            </div>
-            <div>
-                <strong style="color:#eee; display: block; margin-bottom: 10px;">SUBMISSION TO SUPPORT:</strong>
-                <ul style="color: #aaa; font-size: 13px; line-height: 1.6; padding-left: 20px;">
-                    <li>Plot ID & Game Realm name.</li>
-                    <li>Payment Screenshot & Transaction ID.</li>
-                    <li>Link/URL you want to embed behind your plot.</li>
-                    <li>Brand Logo or Personal Image.</li>
-                </ul>
-            </div>
+    <a href="ghost-chat.html" class="ghost-circle-btn">💀</a>
+
+    <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:30px; padding:60px;"></div>
+
+    <div id="newsM" class="modal" onclick="closeModal('newsM')">
+        <div class="modal-content">
+            <h2 style="color:var(--gold);">⚡ REALM NEWS</h2>
+            <p style="color:#aaa;">- VIP Plots ($9,999) now feature auto-pulsing blockchain status.</p>
+            <p style="color:#aaa;">- New realms added to the millionaire ecosystem.</p>
+        </div>
+    </div>
+    <div id="rulesM" class="modal" onclick="closeModal('rulesM')">
+        <div class="modal-content">
+            <h2 style="color:var(--gold);">📜 PROTOCOL</h2>
+            <p style="color:#aaa;">- No restrictions in Ghost Chat.</p>
+            <p style="color:#aaa;">- All payments must be verified via WhatsApp support.</p>
         </div>
     </div>
 
-    <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:25px; padding:40px;"></div>
-
-    <div class="support-mini" onclick="location.href='support.html'" style="position: fixed; top: 45%; right: 20px; z-index: 9999; text-align: center; cursor: pointer;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support" style="width: 38px;">
-        <span style="display: block; font-size: 8px; color: var(--gold); font-weight: 900; margin-top: 5px; letter-spacing: 1px;">SUPPORT</span>
+    <div class="support-fixed" onclick="location.href='support.html'">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
+        <span style="display:block; color:var(--gold); font-size:9px; font-weight:900; margin-top:5px; letter-spacing:1px;">SUPPORT</span>
     </div>
 
     <script>
         const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
         const grid = document.getElementById('gameGrid');
         games.forEach(g => {
-            grid.innerHTML += `
-                <div class="game-card" style="background:#0a0a0a; border:1px solid #1a1a1a; padding:60px 20px; text-align:center; cursor:pointer; transition:0.4s;" onclick="location.href='dashboard.html?realm=${g}'">
-                    <h2 style="letter-spacing:3px; color: #fff;">${g.toUpperCase()}</h2>
-                    <div style="color:var(--gold); font-size:12px; font-weight:900;">MINIMUM $199</div>
-                </div>`;
+            grid.innerHTML += `<div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
+                <h2 style="letter-spacing:5px;">${g.toUpperCase()}</h2>
+                <div style="color:var(--gold); font-size:12px; font-weight:900;">$199 - $9,999</div>
+            </div>`;
         });
+        function openModal(id) { document.getElementById(id).style.display = 'block'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
 </body>
 </html>
