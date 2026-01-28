@@ -2,54 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>THE MILLIONAIRE REALM | GHOST CHAT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHOST GROUP | THE MILLIONAIRE REALM</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Messenger Style Chat Look */
+        #chatBox {
+            height: 65vh; overflow-y: auto; background: #000;
+            border: 1px solid #1a1a1a; padding: 25px; border-radius: 20px;
+            display: flex; flex-direction: column; gap: 12px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
+        }
+        .msg-bubble {
+            max-width: 75%; padding: 12px 18px; border-radius: 18px;
+            background: #111; border: 1px solid #222; align-self: flex-start;
+            position: relative; animation: slideIn 0.3s ease;
+        }
+        .sender-id {
+            font-size: 10px; color: var(--gold); font-weight: 900;
+            margin-bottom: 4px; letter-spacing: 1px; text-transform: uppercase;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Aggressive Ghost Logo Styling */
+        .ghost-header-logo {
+            width: 50px; height: 50px; background: #000; border: 2px solid var(--gold);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 20px var(--gold-glow); font-size: 24px;
+        }
+    </style>
 </head>
-<body style="padding:20px; background:#050505;">
-    <div style="max-width:800px; margin:0 auto;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+<body style="padding:20px; background:#050505; color: #fff;">
+
+    <div style="max-width:900px; margin:0 auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom: 1px solid #1a1a1a; padding-bottom: 15px;">
             <div style="display:flex; align-items:center; gap:15px;">
-                <div class="ghost-btn">💀 MILLIONAIRE GHOST GROUP</div>
+                <div class="ghost-header-logo">💀</div>
+                <div>
+                    <h2 class="gold-text" style="margin:0; font-size: 18px; letter-spacing: 2px;">MILLIONAIRE GHOST GROUP</h2>
+                    <small style="color:#444;">SECURED END-TO-END | AUTO-WIPE 8H</small>
+                </div>
             </div>
-            <button onclick="location.href='index.html'" style="background:none; border:1px solid #222; color:#555; padding:8px 20px; cursor:pointer; border-radius:5px;">EXIT CHAT</button>
+            <button onclick="location.href='index.html'" style="background:none; border:1px solid #333; color:#888; padding:8px 20px; cursor:pointer; border-radius:30px; font-weight:bold; transition:0.3s;">EXIT REALM</button>
         </div>
 
-        <div id="chatBox" class="chat-container"></div>
+        <div id="chatBox">
+            <div style="text-align:center; color:#222; font-size:11px; margin-bottom:20px;">--- ENCRYPTED CONNECTION ESTABLISHED ---</div>
+        </div>
         
-        <div style="margin-top:20px; display:grid; grid-template-columns: 1fr 1fr 2fr 100px; gap:12px;">
-            <input type="text" id="realm" placeholder="GAME REALM" style="padding:15px; background:#111; border:1px solid #222; color:var(--gold); font-weight:bold;">
-            <input type="text" id="pID" placeholder="PLOT #" style="padding:15px; background:#111; border:1px solid #222; color:var(--gold); font-weight:bold;">
-            <input type="text" id="msg" placeholder="Type encrypted message..." style="padding:15px; background:#111; border:1px solid #222; color:#fff;">
-            <button id="sendBtn" style="background:var(--gold); border:none; font-weight:900; cursor:pointer; border-radius:5px; color:#000;">SEND</button>
+        <div style="margin-top:20px; display:grid; grid-template-columns: 140px 100px 1fr 100px; gap:10px;">
+            <input type="text" id="realm" placeholder="GAME (GTA)" style="padding:15px; background:#0a0a0a; border:1px solid #222; color:var(--gold); border-radius:10px; font-weight:bold; text-align:center;">
+            <input type="text" id="pID" placeholder="PLOT #" style="padding:15px; background:#0a0a0a; border:1px solid #222; color:var(--gold); border-radius:10px; font-weight:bold; text-align:center;">
+            <input type="text" id="msg" placeholder="Write your message..." style="padding:15px; background:#0a0a0a; border:1px solid #222; color:#fff; border-radius:10px; outline:none;">
+            <button id="sendBtn" style="background:var(--gold); border:none; font-weight:900; cursor:pointer; border-radius:10px; color:#000; transition:0.3s;">SEND</button>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, push, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        const firebaseConfig = { apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM", databaseURL: "https://aether-realms-default-rtdb.firebaseio.com", projectId: "aether-realms" };
+        const firebaseConfig = { 
+            apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM", 
+            databaseURL: "https://aether-realms-default-rtdb.firebaseio.com", 
+            projectId: "aether-realms" 
+        };
+        
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        const chatRef = ref(db, 'ghost_chat');
+        const chatRef = ref(db, 'ghost_messages');
 
+        // Send Message Logic
         document.getElementById('sendBtn').onclick = () => {
             const r = document.getElementById('realm').value;
             const p = document.getElementById('pID').value;
             const m = document.getElementById('msg').value;
-            if(!r || !p || !m) return;
-            push(chatRef, { sender: `REALM: ${r.toUpperCase()} | PLOT: #${p}`, text: m, time: Date.now() });
+            
+            if(!r || !p || !m) { alert("Input Game & Plot #"); return; }
+            
+            push(chatRef, {
+                sender: `REALM: ${r.toUpperCase()} | PLOT: #${p}`,
+                text: m,
+                timestamp: serverTimestamp()
+            });
             document.getElementById('msg').value = '';
         };
 
+        // Load Messages
         onValue(chatRef, (snap) => {
-            const box = document.getElementById('chatBox'); box.innerHTML = '';
+            const box = document.getElementById('chatBox');
+            box.innerHTML = '<div style="text-align:center; color:#222; font-size:11px; margin-bottom:20px;">--- ENCRYPTED CONNECTION ESTABLISHED ---</div>';
+            
             snap.forEach(child => {
                 const d = child.val();
                 box.innerHTML += `
                     <div class="msg-bubble">
                         <div class="sender-id">${d.sender}</div>
-                        <div style="color:#eee; font-size:14px;">${d.text}</div>
+                        <div style="color:#eee; font-size:14px; line-height:1.4;">${d.text}</div>
                     </div>`;
             });
             box.scrollTop = box.scrollHeight;
