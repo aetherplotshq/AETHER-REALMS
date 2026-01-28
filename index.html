@@ -6,24 +6,24 @@
 </head>
 <body>
   <div class="side-menu">
-    <div class="menu-item" onclick="showModal('payment')">💰</div>
-    <div class="menu-item" onclick="showModal('rules')">📜</div>
-    <div class="menu-item" onclick="showModal('news')">⚡</div>
-    <div class="menu-item" onclick="location.href='ghost-chat.html'">💀</div>
+    <div class="menu-item" onclick="showModal('payment')" title="Wallets">💰</div>
+    <div class="menu-item" onclick="showModal('rules')" title="Notice">📜</div>
+    <div class="menu-item" onclick="showModal('news')" title="News">⚡</div>
+    <div class="menu-item" onclick="location.href='ghost-chat.html'" title="Ghost Chat">💀</div>
   </div>
 
   <header style="padding: 80px 20px; text-align: center;">
     <h1 class="main-title">THE MILLIONAIRE REALM</h1>
-    <p style="color:var(--gold); font-weight:bold; letter-spacing:5px;">ASSETS: $999 - $9,999</p>
+    <p style="color:var(--gold); font-weight:bold; letter-spacing:5px; margin-top:20px;">PRICE: $999 - $9,999</p>
   </header>
 
   <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:30px; padding:60px;"></div>
 
   <div id="infoModal" class="modal">
     <div class="modal-content">
-      <h2 id="modalTitle" style="color:var(--gold)"></h2>
-      <p id="modalBody" style="line-height:1.6; color:#ccc;"></p>
-      <button class="btn-gold" onclick="closeModal()">BACK</button>
+      <h2 id="mTitle" style="color:var(--gold); letter-spacing:3px;"></h2>
+      <div id="mBody" style="line-height:1.8; color:#eee; margin:20px 0; font-size:16px;"></div>
+      <button style="background:var(--gold); border:none; padding:15px 40px; font-weight:900; cursor:pointer; border-radius:5px;" onclick="closeModal()">BACK</button>
     </div>
   </div>
 
@@ -31,25 +31,25 @@
     const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
     const grid = document.getElementById('gameGrid');
     games.forEach(g => {
-      grid.innerHTML += `<div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
-        <h2>${g.toUpperCase()}</h2><p>$999 - $9,999</p></div>`;
+      grid.innerHTML += `<div class="game-card" style="background:#0a0a0a; border:1px solid #1a1a1a; padding:50px; border-radius:15px; text-align:center; cursor:pointer;" onclick="location.href='dashboard.html?realm=${g}'">
+        <h2 style="letter-spacing:5px;">${g.toUpperCase()}</h2><p style="color:var(--gold); font-size:12px;">$999 - $9,999</p></div>`;
     });
 
-    function showModal(type) {
-      const modal = document.getElementById('infoModal');
-      const title = document.getElementById('modalTitle');
-      const body = document.getElementById('modalBody');
-      if(type==='payment') {
-        title.innerText = "PAYMENT METHODS";
-        body.innerHTML = "1. COINBASE<br>2. BINANCE<br>3. METAMASK<br><br>Contact support for wallet addresses.";
-      } else if(type==='rules') {
+    function showModal(t) {
+      const m = document.getElementById('infoModal');
+      const title = document.getElementById('mTitle');
+      const body = document.getElementById('mBody');
+      if(t==='payment') {
+        title.innerText = "OFFICIAL WALLETS";
+        body.innerHTML = "1. COINBASE<br>2. BINANCE<br>3. METAMASK<br><br>Contact support for verified wallet addresses.";
+      } else if(t==='rules') {
         title.innerText = "NOTICE & RULES";
-        body.innerHTML = "মেসেজ করার ক্ষেত্রে কোন প্রকার রুলস নেই। তবে প্লটে তথ্য পরিবর্তনের জন্য প্রতিবার $9 ফি প্রদান করতে হবে।";
-      } else if(type==='news') {
-        title.innerText = "REALM NEWS";
-        body.innerHTML = "একবার পেমেন্ট ও রিনিউ করার পর সারা জীবনের জন্য এটি লাইভ থাকবে। আপনি চাইলে আপনার প্লট অন্যের কাছে বিক্রি করতে পারবেন!";
+        body.innerHTML = "মেসেজ করার ক্ষেত্রে কোন প্রকার রুলস নেই।<br>প্লটে তথ্য পরিবর্তনের জন্য প্রতিবার $9 ফি প্রযোজ্য।";
+      } else if(t==='news') {
+        title.innerText = "LATEST NEWS";
+        body.innerHTML = "একবার পেমেন্ট ও রিনিউ করার পর সারা জীবনের জন্য এটি লাইভ থাকবে।<br>প্লট অন্য কারো কাছে বিক্রয়যোগ্য (Resellable)!";
       }
-      modal.style.display = "block";
+      m.style.display = "block";
     }
     function closeModal() { document.getElementById('infoModal').style.display = "none"; }
   </script>
