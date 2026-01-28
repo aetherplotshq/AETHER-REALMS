@@ -1,59 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>MAP CANVAS</title>
+    <meta charset="UTF-8"><title>ELITE MAP</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body id="captureArea">
-    <header style="padding: 20px 40px; display:flex; justify-content:space-between; align-items:center;">
-        <button class="nav-btn" onclick="location.href='index.html'">BACK TO HOME</button>
+    <header style="padding: 30px; display:flex; justify-content:space-between; align-items:center;">
+        <button class="nav-btn" onclick="location.href='index.html'">EXIT REALM</button>
         <div style="text-align:center;">
-            <div style="color:var(--gold); font-weight:900; letter-spacing:6px; font-size: 22px;" id="realmTitle">REALM</div>
-            <div style="color:#444; font-size:10px; margin-top:5px; letter-spacing: 2px;">ELITE MEMBERS ONLY</div>
+            <h2 id="realmTitle" style="margin:0; color:gold; font-family:'Orbitron'; letter-spacing:5px;">REALM</h2>
         </div>
-        <button class="nav-btn" onclick="downloadMap()" style="background:#fff; color:#000; border:none; font-weight:bold;">DOWNLOAD MAP</button>
+        <button class="premium-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
     </header>
 
-    <div style="text-align:center; margin-top: -10px;">
-        <div style="display:flex; justify-content:center; gap:40px; margin-bottom: 50px;">
+    <div style="text-align:center; padding-top: 50px;">
+        <div style="display:flex; justify-content:center; gap:50px; margin-bottom: 80px;">
             <script>
                 for(let i=1; i<=5; i++){
                     document.write(`
-                        <div class="vip-container" style="width:180px; height:180px;" onclick="location.href='order.html?id=VIP-${i}&price=9999&realm=${new URLSearchParams(window.location.search).get('realm')}'">
+                        <div class="vip-container" style="width:200px; height:200px;" onclick="location.href='order.html?id=VIP-${i}&price=9999&realm=${new URLSearchParams(window.location.search).get('realm')}'">
                             <div class="crown-icon">👑</div>
-                            <div class="vip-label">VIP ELITE</div>
-                            <div style="margin-top:50px; font-weight:900; font-size:26px;">$9,999</div>
-                            <div style="position:absolute; bottom:15px; color:var(--gold); font-size:18px;">★★★★★</div>
+                            <div style="margin-top:70px; font-weight:900; font-size:30px; color:gold;">$9,999</div>
+                            <div style="color:gold; margin-top:10px;">★★★★★</div>
                         </div>
                     `);
                 }
             </script>
         </div>
 
-        <div style="display:grid; grid-template-columns: repeat(14, 1fr); gap:10px; padding: 0 80px;">
+        <div style="display:grid; grid-template-columns: repeat(14, 1fr); gap:10px; padding: 0 50px;">
             <script>
                 const currentRealm = new URLSearchParams(window.location.search).get('realm');
                 for(let i=1; i<=95; i++){
                     let price = (i<=28)?1599:(i<=56)?1299:999;
-                    document.write(`<div onclick="location.href='order.html?id=${i}&price=${price}&realm=${currentRealm}'" style="aspect-ratio:1/1; border:1px solid #1a1a1a; background:#080808; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:11px; color:#555; transition:0.3s;" onmouseover="this.style.background='var(--gold)';this.style.color='#000'" onmouseout="this.style.background='#080808';this.style.color='#555'">#${i}</div>`);
+                    document.write(`<div onclick="location.href='order.html?id=${i}&price=${price}&realm=${currentRealm}'" style="aspect-ratio:1/1; border:1px solid #222; background:rgba(255,215,0,0.05); display:flex; align-items:center; justify-content:center; cursor:pointer; color:gold; transition:0.3s; font-weight:bold;">#${i}</div>`);
                 }
             </script>
         </div>
     </div>
-
-    <script>
-        const uParams = new URLSearchParams(window.location.search);
-        document.getElementById('realmTitle').innerText = (uParams.get('realm') || 'GAME').toUpperCase() + " REALM";
-
-        function downloadMap() {
-            html2canvas(document.getElementById('captureArea')).then(canvas => {
-                let link = document.createElement('a');
-                link.download = (uParams.get('realm') || 'REALM') + '_MILLIONAIRE_MAP.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        }
-    </script>
 </body>
 </html>
