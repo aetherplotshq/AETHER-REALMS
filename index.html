@@ -2,72 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AETHER PLOTS | Global Digital Real Estate</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <header class="main-header">
-        <div class="header-left">
-            <div class="logo">AETHER PLOTS<sup>™</sup></div>
-        </div>
-        <div class="header-right">
-            <nav class="nav-menu">
-                <a href="rules.html">OWNERSHIP RULES</a>
-                <a href="stats.html">MARKET DATA</a>
-                <a href="admin.html" class="admin-btn">SYSTEM ACCESS</a>
-            </nav>
-        </div>
+        <div class="logo" onclick="location.href='index.html'">AETHER PLOTS</div>
+        <div id="digital-clock">00:00:00 AM</div>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <span class="badge">GLOBAL DIGITAL ASSET PROTOCOL</span>
-            <h1 class="main-title">OWN THE DIGITAL HORIZON</h1>
-            <p>100 Strategic Plots per Universe. No Renewals. Permanent Ownership.</p>
-        </div>
+    <section style="text-align:center; padding:60px 20px;">
+        <h1 style="font-size:3.5rem; letter-spacing:5px;" class="gold-text">OWN THE DIGITAL HORIZON</h1>
+        <p style="color:#888;">100 Exclusive Plots Per Universe. Permanent Ownership.</p>
     </section>
 
-    <section class="universe-container">
-        <h2 class="section-title">ACTIVE <span class="gold-text">REALMS</span></h2>
-        <div class="game-grid" id="gameGrid">
-            <script>
-                const games = [
-                    {n: "FORTNITE", id: "Fortnite"}, {n: "COUNTER-STRIKE 2", id: "CS2"},
-                    {n: "MINECRAFT", id: "Minecraft"}, {n: "VALORANT", id: "Valorant"},
-                    {n: "APEX LEGENDS", id: "Apex"}, {n: "ROBLOX", id: "Roblox"},
-                    {n: "WARZONE", id: "Warzone"}, {n: "GTA ONLINE", id: "GTA"},
-                    {n: "LEAGUE OF LEGENDS", id: "League"}
-                ];
-                games.forEach(g => {
-                    document.write(`
-                        <div class="game-card" onclick="location.href='dashboard.html?realm=${g.id}'">
-                            <h3>${g.n}</h3>
-                            <div class="plot-stats">
-                                <span>100 PLOTS</span>
-                                <span class="gold-text">MIN $199 - NO LIMIT</span>
-                            </div>
-                        </div>
-                    `);
-                });
-            </script>
-        </div>
-    </section>
+    <div class="game-grid" id="gameList"></div>
 
     <div class="support-wrapper">
-        <div id="supportButtons" class="support-btns">
-            <button onclick="location.href='index.html'">🏠 HOME</button>
-        </div>
         <div class="wa-btn" onclick="window.open('support.html', '_blank')">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20">
             <span>CUSTOMER SUPPORT</span>
         </div>
     </div>
 
-    <footer class="main-footer">
-        <p>&copy; 2026 AETHER PLOTS - ENCRYPTED ASSET NETWORK</p>
-    </footer>
+    <script>
+        const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
+        const list = document.getElementById('gameList');
+        games.forEach(g => {
+            list.innerHTML += `
+                <div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
+                    <h3 style="letter-spacing:2px;">${g.toUpperCase()}</h3>
+                    <p class="gold-text" style="font-size:12px;">STARTING FROM $199 - NO LIMIT</p>
+                </div>`;
+        });
+
+        function clock() {
+            document.getElementById('digital-clock').innerText = new Date().toLocaleTimeString();
+        }
+        setInterval(clock, 1000); clock();
+    </script>
 </body>
 </html>
