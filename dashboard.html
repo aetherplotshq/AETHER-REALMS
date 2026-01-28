@@ -2,59 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER REALM | Plot Map</title>
+    <title>AETHER REALM | Plot Control</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="main-header">
-        <div class="logo" onclick="location.href='index.html'">AETHER<sup>™</sup></div>
-        <div id="digital-clock" class="clock-display">00:00:00 AM</div>
-        <div id="realmName" class="gold-text">REALM</div>
+    <header style="display:flex; justify-content:space-between; align-items:center; padding:20px 50px; border-bottom:1px solid var(--gold);">
+        <div style="color:var(--gold); font-weight:900; cursor:pointer;" onclick="location.href='index.html'">AETHER<sup>™</sup></div>
+        <div id="local-clock" class="clock-display">00:00:00</div>
+        <div id="realmName" style="color:var(--gold); font-weight:bold; letter-spacing:2px;">REALM</div>
     </header>
 
-    <div class="map-container">
-        <div class="section-label">VIP ELITE ASSETS (100x100)</div>
-        <div class="vip-grid" id="vGrid"></div>
+    <div style="text-align:center; padding:40px;">
+        <h3 style="color:#444; font-size:12px; letter-spacing:5px; margin-bottom:30px;">VIP ELITE SLOTS</h3>
+        <div id="vipGrid" style="display:flex; justify-content:center; gap:30px; margin-bottom:60px;"></div>
         
-        <div class="section-label" style="margin-top:50px;">COMMUNITY PLOTS (80x80)</div>
-        <div class="community-grid" id="cGrid"></div>
-    </div>
-
-    <div class="support-wrapper">
-        <button onclick="location.href='index.html'" class="back-home-btn">🏠 BACK TO HOME</button>
-        <div class="wa-btn" onclick="window.open('support.html', '_blank')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20" alt="WA">
-            <span>SUPPORT</span>
-        </div>
+        <h3 style="color:#444; font-size:12px; letter-spacing:5px;">COMMUNITY SECTORS</h3>
+        <div id="normalGrid" style="display:grid; grid-template-columns:repeat(10, 1fr); gap:10px; max-width:1000px; margin:20px auto;"></div>
     </div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
         const realm = params.get('realm') || 'Fortnite';
-        document.getElementById('realmName').innerText = realm.toUpperCase() + " REALM";
+        document.getElementById('realmName').innerText = realm.toUpperCase();
 
-        // Generate VIP Plots 1-5
-        const v = document.getElementById('vGrid');
+        const v = document.getElementById('vipGrid');
         for(let i=1; i<=5; i++){
             v.innerHTML += `
                 <div class="plot vip" onclick="location.href='order.html?realm=${realm}&id=VIP-${i}&price=9999'">
-                    <div class="vip-badge">ELITE</div>
-                    <span class="p-price">$9,999</span>
+                    <span style="font-size:18px; font-weight:900;">$9,999</span>
                     <div class="vip-stars">★★★★★</div>
                 </div>`;
         }
 
-        // Generate Normal Plots 1-95
-        const c = document.getElementById('cGrid');
+        const n = document.getElementById('normalGrid');
         for(let i=1; i<=95; i++){
             let p = (i<=20) ? 999 : (i<=45) ? 499 : (i<=70) ? 299 : 199;
-            c.innerHTML += `<div class="plot normal" onclick="location.href='order.html?realm=${realm}&id=${i}&price=${p}'">#${i}<br>$${p}</div>`;
+            n.innerHTML += `<div class="plot normal" style="border:1px solid #222; aspect-ratio:1/1; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:11px;" onclick="location.href='order.html?realm=${realm}&id=${i}&price=${p}'">#${i}<br>$${p}</div>`;
         }
 
-        function updateTime() {
-            document.getElementById('digital-clock').innerText = new Date().toLocaleTimeString();
-        }
-        setInterval(updateTime, 1000); updateTime();
+        setInterval(() => { document.getElementById('local-clock').innerText = new Date().toLocaleTimeString(); }, 1000);
     </script>
 </body>
 </html>
