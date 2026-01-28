@@ -2,47 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SECURE CHECKOUT | Aether Plots</title>
+    <title>SECURE CHECKOUT</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="background: #050505;">
-    <div class="container" style="max-width: 500px; margin: 50px auto; padding: 30px; border: 1px solid var(--gold); border-radius: 15px; background: #0a0a0a; text-align: center;">
-        <h2 class="gold-text">ACQUISITION PORTAL</h2>
-        <div id="orderSummary" style="margin: 20px 0; text-align: left; background: #111; padding: 15px; border-radius: 8px;">
-            <p>Universe: <span id="realmName" style="float:right; color:var(--gold);">--</span></p>
-            <p>Asset ID: <span id="assetID" style="float:right; color:var(--gold);">--</span></p>
-            <p>Price: <span id="assetPrice" style="float:right; color:var(--gold); font-weight:bold;">--</span></p>
+<body style="display:flex; align-items:center; justify-content:center; height:100vh;">
+    <div style="background:#0a0a0a; border:1px solid var(--gold); padding:30px; border-radius:15px; width:350px; text-align:center;">
+        <h2 class="gold-text">PAYMENT GATEWAY</h2>
+        <div style="background:#111; padding:15px; margin:20px 0; border-radius:8px; font-size:14px;">
+            <p>Binance ID: <b>8822334455</b></p>
+            <p>Coinbase: <b>pay@aether.com</b></p>
+            <p>MetaMask: <b>0x123...abc</b></p>
         </div>
-
-        <div class="payment-methods" style="display: flex; flex-direction: column; gap: 15px;">
-            <div class="pay-card" style="border: 1px solid #333; padding: 10px; border-radius: 8px;">
-                <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png" width="20"> 
-                <span>Binance Pay ID: <b>8822334455</b></span>
-            </div>
-            <div class="pay-card" style="border: 1px solid #333; padding: 10px; border-radius: 8px;">
-                <img src="https://cryptologos.cc/logos/coinbase-coin-logo.png" width="20"> 
-                <span>Coinbase Email: <b>pay@aetherplots.com</b></span>
-            </div>
-            <div class="pay-card" style="border: 1px solid #333; padding: 10px; border-radius: 8px;">
-                <img src="https://cryptologos.cc/logos/metamask-mask-logo.png" width="20"> 
-                <span>MetaMask: <b>0x123...abc789</b></span>
-            </div>
-        </div>
-
-        <button onclick="confirmToWA()" style="width: 100%; margin-top: 25px; padding: 15px; background: var(--gold); border: none; font-weight: bold; cursor: pointer; border-radius: 5px;">CONFIRM & SEND PROOF</button>
-        <button onclick="history.back()" style="margin-top: 10px; background: transparent; color: #555; border: none; cursor: pointer;">Cancel Transaction</button>
+        <button onclick="history.back()" style="background:#222; color:#555; border:none; padding:10px; cursor:pointer;">Cancel</button>
+        <button onclick="window.open('https://wa.me/8801576940717')" style="background:var(--gold); color:#000; border:none; padding:10px 20px; font-weight:bold; cursor:pointer; margin-left:10px;">CONFIRM PAY</button>
     </div>
-
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        document.getElementById('realmName').innerText = params.get('realm');
-        document.getElementById('assetID').innerText = "#" + params.get('id');
-        document.getElementById('assetPrice').innerText = "$" + params.get('price');
-
-        function confirmToWA() {
-            const msg = `Hello, I want to purchase Plot #${params.get('id')} in ${params.get('realm')} for $${params.get('price')}. My TxID is: `;
-            window.open(`https://wa.me/8801576940717?text=${encodeURIComponent(msg)}`);
-        }
-    </script>
 </body>
 </html>
