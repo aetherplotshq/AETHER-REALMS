@@ -1,63 +1,28 @@
 :root {
   --bg: #020202;
   --gold: #FFD700;
-  --gold-glow: rgba(255, 215, 0, 0.9);
+  --gold-glow: rgba(255, 215, 0, 0.8);
 }
 
 body {
   background: var(--bg);
   color: #fff;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
 }
 
-/* Premium Main Title */
 .main-title {
-  font-size: 3.5rem;
-  letter-spacing: 12px;
+  font-size: 3rem;
+  letter-spacing: 10px;
   font-weight: 900;
-  background: linear-gradient(180deg, #FFD700 0%, #B8860B 100%);
+  background: linear-gradient(180deg, #FFD700, #B8860B);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
   margin: 0;
 }
 
-/* Side Menu: Payment, Rules, News */
-.side-menu {
-  position: fixed;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  z-index: 1000;
-}
-
-.menu-item {
-  width: 55px;
-  height: 55px;
-  background: #000;
-  border: 2px solid var(--gold);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 24px;
-  transition: 0.3s;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-
-.menu-item:hover {
-  background: var(--gold);
-  transform: scale(1.1);
-}
-
-/* VIP Royal Plot Styling */
 .vip-container {
   position: relative;
   border: 3px solid var(--gold);
@@ -68,70 +33,68 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: 0.3s;
+  animation: vipPulse 1.5s infinite ease-in-out;
 }
 
 .crown-icon {
   position: absolute;
-  top: -40px;
-  font-size: 40px;
-  filter: drop-shadow(0 0 10px var(--gold));
+  top: -35px;
+  font-size: 35px;
   animation: float 2s infinite ease-in-out;
-}
-
-.stars {
-  color: var(--gold);
-  font-size: 16px;
-  margin: 8px 0;
-  text-shadow: 0 0 10px var(--gold);
-  animation: starBlink 1s infinite alternate;
-}
-
-@keyframes starBlink {
-  from { opacity: 0.4; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1.1); }
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  50% { transform: translateY(-10px); }
 }
 
-/* Global Support Logo */
+@keyframes vipPulse {
+  0%, 100% { box-shadow: 0 0 10px var(--gold-glow); }
+  50% { box-shadow: 0 0 30px var(--gold-glow); }
+}
+
+.side-menu {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 1000;
+}
+
+.menu-item {
+  width: 50px;
+  height: 50px;
+  background: #000;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 22px;
+}
+
 .support-fixed {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  z-index: 9999;
   text-align: center;
   cursor: pointer;
 }
 
 .support-fixed img {
-  width: 55px;
-  filter: drop-shadow(0 0 10px var(--gold));
+  width: 50px;
+  filter: drop-shadow(0 0 8px var(--gold));
 }
 
-.support-fixed span {
-  display: block;
-  color: var(--gold);
-  font-size: 9px;
-  font-weight: 900;
-  margin-top: 5px;
-}
-
-/* Game Cards */
 .game-card {
   background: #0a0a0a;
   border: 1px solid #1a1a1a;
-  padding: 50px 20px;
-  border-radius: 15px;
+  padding: 40px 20px;
+  border-radius: 12px;
   text-align: center;
   cursor: pointer;
-  transition: 0.4s;
-}
-
-.game-card:hover {
-  border-color: var(--gold);
-  box-shadow: 0 0 40px var(--gold-glow);
 }
