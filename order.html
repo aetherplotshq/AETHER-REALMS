@@ -2,78 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SECURE ORDER | THE MILLIONAIRE REALM</title>
+    <title>ACQUIRE PLOT</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        .order-container {
-            max-width: 600px; margin: 60px auto; background: #0a0a0a;
-            border: 1px solid #1a1a1a; padding: 40px; border-radius: 15px;
-            box-shadow: 0 0 50px rgba(0,0,0,1); text-align: center;
-        }
-        .pay-box {
-            background: #000; border: 1px solid #222; padding: 20px;
-            margin: 20px 0; border-radius: 10px; cursor: pointer; transition: 0.3s;
-        }
-        .pay-box:hover { border-color: var(--gold); background: #050505; }
-        .copy-btn {
-            background: var(--gold); border: none; padding: 5px 15px;
-            border-radius: 5px; font-weight: 900; font-size: 10px; cursor: pointer; margin-top: 10px;
-        }
-        .info-list { text-align: left; color: #666; font-size: 12px; margin-top: 30px; }
-        .info-list li { margin-bottom: 10px; }
+        .form-box { max-width: 500px; margin: 50px auto; background: #0a0a0a; padding: 40px; border: 1px solid #222; border-radius: 15px; text-align: center; }
+        input, select { width: 100%; padding: 15px; margin: 10px 0; background: #000; border: 1px solid #333; color: #fff; border-radius: 5px; box-sizing: border-box; }
+        .price-display { color: var(--gold); font-size: 32px; font-weight: 900; margin: 20px 0; }
     </style>
 </head>
 <body>
-
-    <div class="order-container">
-        <h2 style="color:var(--gold); letter-spacing:3px; margin-bottom:5px;">SECURE ASSET ACQUISITION</h2>
-        <p style="color:#444; font-size:11px; text-transform:uppercase; letter-spacing:2px;">Plot ID: <span id="displayID" style="color:#eee;"></span></p>
+    <div id="orderForm" class="form-box">
+        <h2 style="color:var(--gold); letter-spacing:2px;">ACQUIRE YOUR ASSET</h2>
+        <input type="text" id="custName" placeholder="ENTER YOUR NAME (REQUIRED)">
         
-        <div style="font-size:40px; font-weight:900; color:#fff; margin:30px 0;">
-            $<span id="displayPrice">0.00</span>
-        </div>
-
-        <div style="color:#888; font-size:12px; margin-bottom:20px;">CHOOSE YOUR PAYMENT GATEWAY</div>
-
-        <div class="pay-box">
-            <div style="color:var(--gold); font-weight:bold; font-size:14px;">BINANCE (USDT/BTC)</div>
-            <div id="binanceID" style="color:#555; font-size:13px; margin-top:5px;">8822334455 (Sample ID)</div>
-            <button class="copy-btn" onclick="copyText('8822334455')">COPY BINANCE ID</button>
-        </div>
-
-        <div class="pay-box">
-            <div style="color:var(--gold); font-weight:bold; font-size:14px;">METAMASK / TRUST WALLET</div>
-            <div id="walletAddr" style="color:#555; font-size:11px; margin-top:5px;">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</div>
-            <button class="copy-btn" onclick="copyText('0x71C7656EC7ab88b098defB751B7401B5f6d8976F')">COPY ADDRESS</button>
-        </div>
-
-        <div class="info-list">
-            <strong style="color:var(--gold); display:block; margin-bottom:15px;">REQUIRED FOR ACTIVATION:</strong>
-            <ul>
-                <li>Take a clear screenshot of your successful transaction.</li>
-                <li>Submit your Transaction Hash/ID to Support.</li>
-                <li>Provide the Link/Image you want to embed in this plot.</li>
-                <li>Plot activation takes 1-6 hours after verification.</li>
-            </ul>
-        </div>
-
-        <button onclick="location.href='support.html'" style="width:100%; padding:18px; background:var(--gold); border:none; border-radius:10px; font-weight:900; cursor:pointer; margin-top:30px; letter-spacing:1px;">CONFIRM & SEND PROOF</button>
+        <select id="gameRealm">
+            <option value="">SELECT GAME REALM</option>
+            <option>FORTNITE</option><option>CS2</option><option>MINECRAFT</option>
+            <option>VALORANT</option><option>APEX</option><option>ROBLOX</option>
+            <option>WARZONE</option><option>GTA</option><option>LEAGUE</option>
+        </select>
         
-        <a href="javascript:history.back()" style="display:block; margin-top:20px; color:#333; font-size:11px; text-decoration:none;">CANCEL TRANSACTION</a>
+        <input type="number" id="plotID" placeholder="ENTER PLOT NUMBER (1-100)" oninput="updatePrice()">
+        
+        <div class="price-display">PRICE: $<span id="dynamicPrice">0</span></div>
+        
+        <button onclick="processOrder()" style="width:100%; padding:18px; background:var(--gold); border:none; font-weight:900; cursor:pointer; border-radius:5px; font-size:16px;">SUBMIT DATA</button>
+        <button onclick="location.href='index.html'" style="background:none; border:none; color:#444; margin-top:15px; cursor:pointer;">BACK TO HOME</button>
+    </div>
+
+    <div id="congratsScreen" style="display:none; text-align:center; padding:100px 20px;">
+        <h1 style="color:var(--gold); font-size:45px; margin-bottom:10px;">CONGRATULATIONS, <span id="clientName"></span>!</h1>
+        <p style="font-size:20px; color:#fff;">YOUR PLOT ACQUISITION REQUEST HAS BEEN SUBMITTED.</p>
+        <div style="background:rgba(255,215,0,0.1); padding:25px; border:2px dashed var(--gold); margin:40px auto; max-width:600px; border-radius:10px;">
+            <p style="color:var(--gold); font-weight:bold; font-size:18px; margin:0;">⚠️ IMPORTANT STEP:</p>
+            <p style="color:#ccc;">আপনার প্লটটি অ্যাক্টিভেট করার জন্য অবশ্যই আমাদের অফিসিয়াল কাস্টমার সাপোর্ট (WhatsApp) এ পেমেন্ট প্রুফসহ যোগাযোগ করুন।</p>
+        </div>
+        <button onclick="location.href='index.html'" style="background:var(--gold); color:#000; border:none; padding:15px 50px; font-weight:900; cursor:pointer; border-radius:30px;">GOT IT</button>
     </div>
 
     <script>
-        // Get URL Parameters (Realm, ID, Price)
-        const params = new URLSearchParams(window.location.search);
-        document.getElementById('displayID').innerText = params.get('id') || '0';
-        document.getElementById('displayPrice').innerText = params.get('price') || '0.00';
+        function updatePrice() {
+            let id = document.getElementById('plotID').value;
+            let price = 0;
+            if(id >= 1 && id <= 5) price = 9999;
+            else if(id > 5 && id <= 28) price = 999;
+            else if(id > 28 && id <= 56) price = 499;
+            else if(id > 56 && id <= 100) price = 199;
+            document.getElementById('dynamicPrice').innerText = price;
+        }
 
-        function copyText(text) {
-            navigator.clipboard.writeText(text);
-            alert("Payment Detail Copied to Clipboard!");
+        function processOrder() {
+            let name = document.getElementById('custName').value;
+            let game = document.getElementById('gameRealm').value;
+            let pId = document.getElementById('plotID').value;
+            
+            if(!name || !game || !pId) { alert("Please fill all details!"); return; }
+
+            document.getElementById('clientName').innerText = name.toUpperCase();
+            document.getElementById('orderForm').style.display = 'none';
+            document.getElementById('congratsScreen').style.display = 'block';
+
+            confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 }, colors: ['#FFD700', '#ffffff', '#111111'] });
         }
     </script>
-
 </body>
 </html>
