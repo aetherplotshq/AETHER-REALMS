@@ -1,60 +1,46 @@
 :root {
     --bg: #030303;
     --gold: #FFD700;
-    --gold-glow: rgba(255, 215, 0, 0.6);
+    --gold-glow: rgba(255, 215, 0, 0.9);
 }
 
 body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
 
-/* Home Game Cards - Aggressive Glow */
-.game-card {
-    background: #0a0a0a; border: 1px solid #1a1a1a; padding: 60px 20px;
-    border-radius: 15px; text-align: center; cursor: pointer; transition: 0.4s;
-}
-.game-card:hover { 
-    border-color: var(--gold); transform: translateY(-10px);
-    box-shadow: 0 0 50px var(--gold-glow); background: #000;
-}
-
-/* VIP Plot Pulsing Animation (Up-Down Glow) */
-@keyframes pulseGlow {
-    0% { box-shadow: 0 0 10px var(--gold-glow); border-color: #555; }
-    50% { box-shadow: 0 0 40px var(--gold-glow); border-color: var(--gold); }
-    100% { box-shadow: 0 0 10px var(--gold-glow); border-color: #555; }
+/* VIP Aggressive Glow Animation */
+@keyframes vipPulse {
+    0% { box-shadow: 0 0 20px var(--gold-glow); transform: scale(1); border-color: var(--gold); }
+    50% { box-shadow: 0 0 60px var(--gold-glow); transform: scale(1.05); border-color: #fff; }
+    100% { box-shadow: 0 0 20px var(--gold-glow); transform: scale(1); border-color: var(--gold); }
 }
 .plot-vip-active {
-    border: 3px solid var(--gold); background: #000;
-    animation: pulseGlow 2s infinite ease-in-out;
+    border: 4px solid var(--gold); background: #000;
+    animation: vipPulse 1.5s infinite ease-in-out;
+    cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 
-/* 14-Column Layout */
-.community-grid {
-    display: grid; grid-template-columns: repeat(14, 1fr); gap: 8px;
-    margin: 20px auto; width: 95%; max-width: 1600px;
-}
-.plot.normal {
-    aspect-ratio: 1/1; border: 1px solid #111; background: #070707;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 10px; transition: 0.2s; color: #444;
-}
-.plot.normal:hover { background: var(--gold); color: #000; transform: scale(1.1); z-index: 5; }
-
-/* Customer Support (Positioned 1/3 from Bottom) */
+/* Global Support Logo Position (Your First Preferred Spot) */
 .support-fixed {
-    position: fixed; bottom: 33%; right: 30px; z-index: 1000;
-    text-align: center; cursor: pointer;
+    position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+    text-align: center; cursor: pointer; transition: 0.3s;
 }
-.support-fixed img { width: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
+.support-fixed img { width: 50px; filter: drop-shadow(0 0 10px var(--gold)); }
 
-/* Ghost Chat Circular Logo */
-.ghost-circle-btn {
-    width: 60px; height: 60px; background: #000; border: 2px solid #333;
+/* Ghost Chat with Text */
+.ghost-btn-container {
+    position: fixed; top: 25px; right: 25px; z-index: 1000;
+    display: flex; flex-direction: column; align-items: center; text-decoration: none;
+}
+.ghost-circle {
+    width: 55px; height: 55px; background: #000; border: 2px solid #333;
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    position: fixed; top: 25px; right: 25px; text-decoration: none; font-size: 24px;
-    box-shadow: 0 0 15px rgba(255,255,255,0.05); transition: 0.3s;
+    font-size: 24px; transition: 0.3s;
 }
-.ghost-circle-btn:hover { border-color: var(--gold); box-shadow: 0 0 20px var(--gold-glow); }
+.ghost-btn-container:hover .ghost-circle { border-color: var(--gold); box-shadow: 0 0 20px var(--gold); }
+.ghost-text { color: #fff; font-size: 9px; font-weight: 900; margin-top: 5px; letter-spacing: 1px; }
 
-/* Modal Styles for News & Rules */
-.modal { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
-.modal-content { background: #0a0a0a; border: 1px solid var(--gold); margin: 10% auto; padding: 30px; width: 80%; max-width: 500px; border-radius: 10px; }
+/* Game Cards */
+.game-card {
+    background: #0a0a0a; border: 1px solid #1a1a1a; padding: 50px 20px;
+    border-radius: 12px; text-align: center; cursor: pointer; transition: 0.4s;
+}
+.game-card:hover { border-color: var(--gold); box-shadow: 0 0 30px var(--gold-glow); }
