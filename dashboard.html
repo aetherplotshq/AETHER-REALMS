@@ -2,48 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER REALM | Assets</title>
+    <title>THE MILLIONAIRE REALM | Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header style="display:flex; justify-content:space-between; align-items:center; padding:15px 40px; border-bottom:1px solid var(--gold); background:#000;">
-        <div style="color:var(--gold); font-weight:900; cursor:pointer;" onclick="location.href='index.html'">AETHER<sup>™</sup></div>
+        <div style="color:var(--gold); font-weight:900; font-size:22px; letter-spacing:3px; cursor:pointer;" onclick="location.href='index.html'">THE MILLIONAIRE REALM</div>
         <div id="local-clock" class="clock-display">00:00:00</div>
         <div id="realmName" style="color:var(--gold); font-weight:bold; letter-spacing:2px;">REALM</div>
     </header>
 
-    <div class="map-container">
+    <div style="padding: 40px 0; text-align:center;">
+        <h3 style="color:#444; font-size:11px; letter-spacing:5px;">VIP ELITE SECTORS</h3>
         <div id="vipGrid" class="vip-grid"></div>
+        
+        <h3 style="color:#444; font-size:11px; letter-spacing:5px; margin-top:30px;">COMMUNITY ASSETS (14 PLOTS PER ROW)</h3>
         <div id="normalGrid" class="community-grid"></div>
     </div>
 
-    <div class="support-wrapper">
-        <a href="support.html" target="_blank" class="wa-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="25" height="25" alt="WA">
+    <div class="floating-controls">
+        <a href="ghost-chat.html" class="btn-float">💀 GHOST CHAT</a>
+        <a href="support.html" class="btn-float btn-wa">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="18" alt="WA">
             <span>SUPPORT</span>
         </a>
     </div>
+
+    <div class="money-quote">People respect your MONEY, Not YOU !! 💀📈</div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
         const realm = params.get('realm') || 'Fortnite';
         document.getElementById('realmName').innerText = realm.toUpperCase();
 
-        // VIP Plots
+        // VIP Section (5 Elite Plots)
         const v = document.getElementById('vipGrid');
         for(let i=1; i<=5; i++){
             v.innerHTML += `
                 <div class="plot vip" onclick="location.href='order.html?realm=${realm}&id=VIP-${i}&price=9999'">
                     <span style="font-size:18px; font-weight:900;">$9,999</span>
-                    <div style="color:var(--gold); margin-top:5px;">★★★★★</div>
+                    <div style="color:var(--gold); font-size:12px;">★★★★★</div>
                 </div>`;
         }
 
-        // Community Plots (Now 12 per row for better width)
+        // Community Section (14 Plots per row)
         const n = document.getElementById('normalGrid');
-        for(let i=1; i<=100; i++){ /* প্লট সংখ্যা ১০০ তে উন্নীত করা হয়েছে */
-            let p = (i<=20) ? 999 : (i<=50) ? 499 : 199;
-            n.innerHTML += `<div class="plot normal" onclick="location.href='order.html?realm=${realm}&id=${i}&price=${p}'">#${i}<br>$${p}</div>`;
+        const totalPlots = 98; // ১৪ x ৭ সারি = ৯৮টি প্লট
+        for(let i=1; i<=totalPlots; i++){
+            let price = (i <= 28) ? 999 : (i <= 56) ? 499 : 199;
+            n.innerHTML += `<div class="plot normal" onclick="location.href='order.html?realm=${realm}&id=${i}&price=${price}'">#${i}<br>$${price}</div>`;
         }
 
         setInterval(() => { document.getElementById('local-clock').innerText = new Date().toLocaleTimeString(); }, 1000);
