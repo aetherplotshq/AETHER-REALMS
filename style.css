@@ -1,59 +1,133 @@
 :root {
     --bg: #030303;
     --gold: #FFD700;
-    --gold-glow: rgba(255, 215, 0, 0.9);
+    --gold-glow: rgba(255, 215, 0, 0.8);
 }
 
-body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
+body {
+    background: var(--bg);
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
 
-/* VIP Aggressive Glow Animation (Up-Down Pulse) */
-@keyframes vipPulse {
-    0% { box-shadow: 0 0 15px var(--gold-glow); transform: scale(1); border-color: var(--gold); }
-    50% { box-shadow: 0 0 50px var(--gold-glow); transform: scale(1.05); border-color: #fff; }
-    100% { box-shadow: 0 0 15px var(--gold-glow); transform: scale(1); border-color: var(--gold); }
+/* Aggressive VIP Glow Animation */
+@keyframes vipGlow {
+    0% { box-shadow: 0 0 15px var(--gold-glow); border-color: var(--gold); }
+    50% { box-shadow: 0 0 50px var(--gold-glow); border-color: #fff; transform: scale(1.02); }
+    100% { box-shadow: 0 0 15px var(--gold-glow); border-color: var(--gold); }
 }
 
 .plot-vip-active {
-    border: 4px solid var(--gold); background: #000;
-    animation: vipPulse 1.5s infinite ease-in-out;
-    cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border: 3px solid var(--gold);
+    background: #000;
+    animation: vipGlow 2s infinite ease-in-out;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Global Support Logo Position (Fixed at Bottom-Right) */
-.support-fixed {
-    position: fixed; bottom: 30px; right: 30px; z-index: 9999;
-    text-align: center; cursor: pointer; transition: 0.3s;
-}
-.support-fixed img { width: 50px; filter: drop-shadow(0 0 10px var(--gold)); }
-
-/* Ghost Chat with Text & Circle */
+/* Ghost Chat Style */
 .ghost-btn-container {
-    position: fixed; top: 25px; right: 25px; z-index: 1000;
-    display: flex; flex-direction: column; align-items: center; text-decoration: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    text-align: center;
+    text-decoration: none;
 }
+
 .ghost-circle {
-    width: 55px; height: 55px; background: #000; border: 2px solid #333;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 24px; transition: 0.3s;
+    width: 50px;
+    height: 50px;
+    background: #000;
+    border: 2px solid #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: 0.3s;
 }
-.ghost-btn-container:hover .ghost-circle { border-color: var(--gold); box-shadow: 0 0 20px var(--gold); }
-.ghost-text { color: #fff; font-size: 8px; font-weight: 900; margin-top: 5px; letter-spacing: 1px; }
 
-/* 14 Column Grid for Dashboard */
-.community-grid {
-    display: grid; grid-template-columns: repeat(14, 1fr); gap: 8px;
-    margin: 20px auto; width: 95%; max-width: 1600px;
+.ghost-btn-container:hover .ghost-circle {
+    border-color: var(--gold);
+    box-shadow: 0 0 15px var(--gold);
 }
-.plot.normal {
-    aspect-ratio: 1/1; border: 1px solid #111; background: #070707;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 10px; transition: 0.2s; color: #444;
-}
-.plot.normal:hover { background: var(--gold); color: #000; transform: scale(1.1); z-index: 5; }
 
-/* Game Cards Home */
+.ghost-text {
+    color: #fff;
+    font-size: 8px;
+    font-weight: bold;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+/* Global Support Logo */
+.support-fixed {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    text-align: center;
+    cursor: pointer;
+}
+
+.support-fixed img {
+    width: 45px;
+    filter: drop-shadow(0 0 8px var(--gold));
+}
+
+.support-fixed span {
+    display: block;
+    color: var(--gold);
+    font-size: 8px;
+    font-weight: 900;
+    margin-top: 4px;
+}
+
+/* Layouts */
 .game-card {
-    background: #0a0a0a; border: 1px solid #1a1a1a; padding: 50px 20px;
-    border-radius: 12px; text-align: center; cursor: pointer; transition: 0.4s;
+    background: #0a0a0a;
+    border: 1px solid #1a1a1a;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.4s;
+    border-radius: 10px;
 }
-.game-card:hover { border-color: var(--gold); box-shadow: 0 0 30px var(--gold-glow); transform: translateY(-5px); }
+
+.game-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 30px var(--gold-glow);
+}
+
+.community-grid {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    gap: 8px;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.plot.normal {
+    aspect-ratio: 1/1;
+    border: 1px solid #111;
+    background: #070707;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #444;
+    cursor: pointer;
+}
+
+.plot.normal:hover {
+    background: var(--gold);
+    color: #000;
+}
