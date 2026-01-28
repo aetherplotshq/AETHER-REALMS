@@ -2,40 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER PLOTS | Global Digital Assets</title>
+    <title>THE MILLIONAIRE REALM | Elite Digital Assets</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header style="display:flex; justify-content:space-between; align-items:center; padding:20px 40px; border-bottom:1px solid var(--gold); background:#000;">
-        <div style="color:var(--gold); font-weight:900; font-size:24px; letter-spacing:3px;">AETHER PLOTS</div>
+        <div style="color:var(--gold); font-weight:900; font-size:26px; letter-spacing:4px; text-shadow: 0 0 15px var(--gold-glow);">THE MILLIONAIRE REALM</div>
         <div id="local-clock" class="clock-display">00:00:00 AM</div>
     </header>
 
     <div style="padding: 100px 20px; text-align:center;">
-        <h1 class="main-title">OWN THE DIGITAL HORIZON</h1>
-        <p style="color:#666; letter-spacing:4px; font-size:12px;">ENCRYPTED PREMIUM REAL ESTATE NETWORK</p>
+        <h1 class="main-title">THE MILLIONAIRE REALM</h1>
+        <p style="color:#666; letter-spacing:6px; font-size:12px; margin-top:10px;">WHERE CAPITAL MEETS DIGITAL DESTINY</p>
     </div>
 
     <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:25px; padding:40px;"></div>
 
-    <div class="support-wrapper">
-        <a href="support.html" target="_blank" class="wa-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="25" height="25" alt="WA">
-            <span>CUSTOMER SUPPORT</span>
+    <div class="floating-controls">
+        <a href="ghost-chat.html" class="btn-float">💀 GHOST CHAT</a>
+        <a href="support.html" class="btn-float btn-wa">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="18" alt="WA">
+            <span>SUPPORT</span>
         </a>
     </div>
+
+    <div class="money-quote">People respect your MONEY, Not YOU !! 💀📈</div>
+
+    <footer class="footer-text">
+        © 2026 THE MILLIONAIRE REALM INC. | SECURED BY BLOCKCHAIN ARCHITECTURE.
+    </footer>
 
     <script>
         const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
         const grid = document.getElementById('gameGrid');
         games.forEach(g => {
             grid.innerHTML += `
-                <div class="game-card" style="background:#0a0a0a; border:1px solid #222; padding:40px; border-radius:15px; text-align:center; cursor:pointer;" onclick="location.href='dashboard.html?realm=${g}'">
+                <div class="game-card" style="background:#0a0a0a; border:1px solid #222; padding:45px; border-radius:15px; text-align:center; cursor:pointer;" onclick="location.href='dashboard.html?realm=${g}'">
                     <h2 style="letter-spacing:2px; margin-bottom:10px;">${g.toUpperCase()}</h2>
-                    <div style="color:var(--gold); font-size:12px; font-weight:bold;">MIN $199 - UNLIMITED</div>
+                    <div style="color:var(--gold); font-size:12px; font-weight:bold;">MINIMUM $199</div>
                 </div>`;
         });
-
         setInterval(() => { document.getElementById('local-clock').innerText = new Date().toLocaleTimeString(); }, 1000);
     </script>
 </body>
