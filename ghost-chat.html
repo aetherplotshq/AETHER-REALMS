@@ -2,53 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER | Ghost Chat (Encrypted)</title>
+    <title>AETHER | Ghost Chat</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        #chatBox { height: 70vh; overflow-y: auto; background: #000; padding: 20px; border: 1px solid #222; margin-bottom: 10px; }
-        .msg { margin-bottom: 15px; border-bottom: 1px solid #111; padding-bottom: 5px; }
-        .time { font-size: 10px; color: #555; }
-    </style>
 </head>
 <body style="padding:20px; background:#050505;">
-    <h2 class="gold-text">GHOST CHAT <small style="color:#444;">(WIPES EVERY 8 HOURS)</small></h2>
-    <div id="chatBox"></div>
-    <div style="display:flex; gap:10px;">
-        <input type="text" id="msgInput" placeholder="Enter encrypted message..." style="flex:1; padding:15px; background:#111; border:1px solid #333; color:#fff;">
-        <button id="sendBtn" style="padding:15px 30px; background:var(--gold); border:none; cursor:pointer; font-weight:bold;">SEND</button>
+    <div style="max-width:800px; margin:0 auto;">
+        <h2 class="gold-text">GHOST CHAT <small style="color:#444; font-size:10px;">AUTO-WIPE EVERY 8 HOURS</small></h2>
+        <div id="chatBox" style="height:65vh; overflow-y:auto; background:#000; border:1px solid #222; padding:20px; margin-bottom:15px; border-radius:10px;"></div>
+        
+        <div style="display:flex; gap:10px;">
+            <input type="text" id="msgInput" placeholder="Write encrypted message..." style="flex:1; padding:15px; background:#111; border:1px solid #333; color:#fff; border-radius:5px;">
+            <button id="sendBtn" style="padding:15px 35px; background:var(--gold); border:none; cursor:pointer; font-weight:bold; border-radius:5px;">SEND</button>
+        </div>
     </div>
 
     <script type="module">
-        import { db, ref, set, onValue, push, remove } from "./firebase-config.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
+            databaseURL: "https://aether-realms-default-rtdb.firebaseio.com",
+            projectId: "aether-realms"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
         const chatRef = ref(db, 'ghost_chat');
 
-        // চ্যাট পাঠানো
-        window.sendChat = () => {
-            const msg = document.getElementById('msgInput').value;
-            if(!msg) return;
-            const newMsgRef = push(chatRef);
-            set(newMsgRef, { text: msg, timestamp: Date.now() });
+        document.getElementById('sendBtn').onclick = () => {
+            const m = document.getElementById('msgInput').value;
+            if(!m) return;
+            push(chatRef, { text: m, time: Date.now() });
             document.getElementById('msgInput').value = '';
         };
-        document.getElementById('sendBtn').onclick = sendChat;
 
-        // চ্যাট দেখানো এবং ৮ ঘণ্টা পর পর ডিলিট করা
-        onValue(chatRef, (snapshot) => {
-            const chatBox = document.getElementById('chatBox');
-            chatBox.innerHTML = '';
+        onValue(chatRef, (snap) => {
+            const box = document.getElementById('chatBox');
+            box.innerHTML = '';
             const now = Date.now();
-            const eightHours = 8 * 60 * 60 * 1000;
-
-            snapshot.forEach((child) => {
-                const data = child.val();
-                if (now - data.timestamp > eightHours) {
-                    remove(ref(db, `ghost_chat/${child.key}`)); // অটো ডিলিট
+            snap.forEach(child => {
+                const d = child.val();
+                if(now - d.time > 8*60*60*1000) { 
+                    remove(ref(db, 'ghost_chat/'+child.key)); 
                 } else {
-                    chatBox.innerHTML += `<div class="msg"><div>${data.text}</div><div class="time">${new Date(data.timestamp).toLocaleTimeString()}</div></div>`;
+                    box.innerHTML += `<div style="margin-bottom:15px; border-left:2px solid var(--gold); padding-left:10px;">
+                        <div style="color:#eee; font-size:14px;">${d.text}</div>
+                        <div style="color:#444; font-size:9px;">${new Date(d.time).toLocaleTimeString()}</div>
+                    </div>`;
                 }
             });
-            chatBox.scrollTop = chatBox.scrollHeight;
+            box.scrollTop = box.scrollHeight;
         });
     </script>
 </body>
