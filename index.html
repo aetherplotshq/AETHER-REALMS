@@ -3,31 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>THE MILLIONAIRE REALM | VIP Assets</title>
+  <title>THE MILLIONAIRE REALM | VIP ASSETS</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div style="background: #FFD700; color: #000; text-align: center; padding: 10px; font-size: 11px; font-weight: 900; letter-spacing: 2px;">
-    SYSTEM ONLINE: PLOT VERIFICATION ACTIVE | Q1 2026
+  <div class="side-menu">
+    <div class="menu-item" onclick="alert('OFFICIAL WALLETS: \n1. BINANCE (USDT-TRC20)\n2. TRUST WALLET\n3. METAMASK')" title="Payment Methods">💰</div>
+    <div class="menu-item" onclick="alert('REALM PROTOCOL: \n1. One Plot Per Identity.\n2. Permanent Ownership.\n3. Verified by Support.')" title="Rules">📜</div>
+    <div class="menu-item" onclick="alert('REALM NEWS: \nNew VIP Sector opening soon in GTA Realm!')" title="News">⚡</div>
   </div>
 
-  <header style="padding: 60px 20px; text-align: center;">
+  <header style="padding: 70px 20px; text-align: center;">
     <h1 class="main-title">THE MILLIONAIRE REALM</h1>
-    <p style="color: #444; letter-spacing: 4px; font-size: 10px; margin-top: 10px; font-weight: bold;">PREMIUM BLOCKCHAIN ASSET CANVAS</p>
-    <div style="margin-top:40px;">
-      <button onclick="location.href='order.html'" style="background:#FFD700; border:none; padding:18px 50px; font-weight:900; border-radius:5px; cursor:pointer; font-size:16px; box-shadow: 0 5px 15px rgba(255,215,0,0.3);">ACQUIRE ASSET</button>
-    </div>
+    <p style="color:var(--gold); font-weight:bold; letter-spacing:4px; margin-top:20px; font-size:18px;">ASSETS: $99 - $999</p>
   </header>
-
-  <a href="ghost-chat.html" style="position:fixed; top:35px; right:35px; text-decoration:none; text-align:center; z-index: 1000;">
-    <div class="ghost-circle">💀</div>
-    <span style="color:#fff; font-size:8px; display:block; margin-top:6px; font-weight:bold; letter-spacing:1px;">GHOST CHAT</span>
-  </a>
 
   <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:30px; padding:60px;"></div>
 
-  <div class="support-fixed" onclick="location.href='support.html?from=home'">
+  <div class="support-fixed" onclick="location.href='support.html'">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support">
     <span>SUPPORT</span>
   </div>
@@ -38,11 +32,10 @@
     games.forEach(g => {
       grid.innerHTML += `
         <div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
-          <h2 style="letter-spacing:5px; margin:0; color:#eee;">${g.toUpperCase()}</h2>
-          <div style="color:#FFD700; font-size:11px; font-weight:bold; margin-top:10px;">$199 - $9,999</div>
+          <h2 style="letter-spacing:6px; margin:0;">${g.toUpperCase()}</h2>
+          <div style="color:var(--gold); font-size:12px; font-weight:bold; margin-top:15px;">PRICE: $99 - $999</div>
         </div>`;
     });
   </script>
-
 </body>
 </html>
