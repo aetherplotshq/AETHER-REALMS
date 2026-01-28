@@ -2,39 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER PLOTS | Global Virtual Assets</title>
+    <title>AETHER PLOTS | Global Digital Assets</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header style="display:flex; justify-content:space-between; align-items:center; padding:20px 50px; border-bottom:1px solid var(--gold);">
-        <div style="color:var(--gold); font-weight:900; font-size:24px; letter-spacing:2px;">AETHER PLOTS</div>
-        <div id="local-clock" class="clock-display">LOADING TIME...</div>
+    <header style="display:flex; justify-content:space-between; align-items:center; padding:20px 40px; border-bottom:1px solid var(--gold); background:#000;">
+        <div style="color:var(--gold); font-weight:900; font-size:24px; letter-spacing:3px;">AETHER PLOTS</div>
+        <div id="local-clock" class="clock-display">00:00:00 AM</div>
     </header>
 
     <div style="padding: 100px 20px; text-align:center;">
         <h1 class="main-title">OWN THE DIGITAL HORIZON</h1>
-        <p style="color:#666; letter-spacing:4px; font-size:12px;">PREMIUM VIRTUAL ASSETS ENCRYPTED ON THE NETWORK</p>
+        <p style="color:#666; letter-spacing:4px; font-size:12px;">ENCRYPTED PREMIUM REAL ESTATE NETWORK</p>
     </div>
 
-    <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:25px; padding:40px;"></div>
+    <div id="gameGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:25px; padding:40px;"></div>
+
+    <div class="support-wrapper">
+        <a href="support.html" target="_blank" class="wa-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="25" height="25" alt="WA">
+            <span>CUSTOMER SUPPORT</span>
+        </a>
+    </div>
 
     <script>
         const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
         const grid = document.getElementById('gameGrid');
         games.forEach(g => {
             grid.innerHTML += `
-                <div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
-                    <h2 style="letter-spacing:3px;">${g.toUpperCase()}</h2>
-                    <div style="color:var(--gold); font-weight:bold; font-size:14px;">MINIMUM $199 - UNLIMITED</div>
+                <div class="game-card" style="background:#0a0a0a; border:1px solid #222; padding:40px; border-radius:15px; text-align:center; cursor:pointer;" onclick="location.href='dashboard.html?realm=${g}'">
+                    <h2 style="letter-spacing:2px; margin-bottom:10px;">${g.toUpperCase()}</h2>
+                    <div style="color:var(--gold); font-size:12px; font-weight:bold;">MIN $199 - UNLIMITED</div>
                 </div>`;
         });
 
-        // Local Time Logic
-        function updateClock() {
-            const userTime = new Date().toLocaleTimeString();
-            document.getElementById('local-clock').innerText = userTime;
-        }
-        setInterval(updateClock, 1000); updateClock();
+        setInterval(() => { document.getElementById('local-clock').innerText = new Date().toLocaleTimeString(); }, 1000);
     </script>
 </body>
 </html>
