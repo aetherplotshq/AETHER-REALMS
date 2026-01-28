@@ -2,68 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ACQUIRE PLOT</title>
+    <title>SECURE ACQUISITION</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <style>
-        .form-box { max-width: 500px; margin: 50px auto; background: #0a0a0a; padding: 40px; border: 1px solid #222; border-radius: 15px; text-align: center; }
-        input, select { width: 100%; padding: 15px; margin: 10px 0; background: #000; border: 1px solid #333; color: #fff; border-radius: 5px; box-sizing: border-box; }
-        .price-display { color: var(--gold); font-size: 32px; font-weight: 900; margin: 20px 0; }
-    </style>
 </head>
 <body>
-    <div id="orderForm" class="form-box">
-        <h2 style="color:var(--gold); letter-spacing:2px;">ACQUIRE YOUR ASSET</h2>
-        <input type="text" id="custName" placeholder="ENTER YOUR NAME (REQUIRED)">
+    <div id="orderForm" style="max-width:500px; margin:50px auto; background:#0a0a0a; padding:40px; border:1px solid #222; border-radius:15px; text-align:center;">
+        <h2 style="color:var(--gold);">ASSET ACQUISITION</h2>
+        <input type="text" id="cName" placeholder="YOUR FULL NAME" style="width:100%; padding:15px; margin:10px 0; background:#000; border:1px solid #333; color:#fff;">
         
-        <select id="gameRealm">
-            <option value="">SELECT GAME REALM</option>
-            <option>FORTNITE</option><option>CS2</option><option>MINECRAFT</option>
-            <option>VALORANT</option><option>APEX</option><option>ROBLOX</option>
-            <option>WARZONE</option><option>GTA</option><option>LEAGUE</option>
+        <select id="gRealm" style="width:100%; padding:15px; margin:10px 0; background:#000; border:1px solid #333; color:#fff;">
+            <option>SELECT REALM</option><option>FORTNITE</option><option>CS2</option>
         </select>
         
-        <input type="number" id="plotID" placeholder="ENTER PLOT NUMBER (1-100)" oninput="updatePrice()">
+        <input type="number" id="pNum" placeholder="PLOT NUMBER (1-100)" oninput="document.getElementById('pVal').innerText = (this.value <= 5 ? 9999 : 199)" style="width:100%; padding:15px; margin:10px 0; background:#000; border:1px solid #333; color:#fff;">
         
-        <div class="price-display">PRICE: $<span id="dynamicPrice">0</span></div>
+        <div style="color:var(--gold); font-size:30px; font-weight:900; margin:20px 0;">PRICE: $<span id="pVal">0</span></div>
         
-        <button onclick="processOrder()" style="width:100%; padding:18px; background:var(--gold); border:none; font-weight:900; cursor:pointer; border-radius:5px; font-size:16px;">SUBMIT DATA</button>
-        <button onclick="location.href='index.html'" style="background:none; border:none; color:#444; margin-top:15px; cursor:pointer;">BACK TO HOME</button>
+        <button onclick="submitAsset()" style="width:100%; padding:20px; background:var(--gold); border:none; font-weight:900; cursor:pointer;">SUBMIT DATA</button>
+        <button onclick="location.href='index.html'" style="background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">← BACK TO HOME</button>
     </div>
 
-    <div id="congratsScreen" style="display:none; text-align:center; padding:100px 20px;">
-        <h1 style="color:var(--gold); font-size:45px; margin-bottom:10px;">CONGRATULATIONS, <span id="clientName"></span>!</h1>
-        <p style="font-size:20px; color:#fff;">YOUR PLOT ACQUISITION REQUEST HAS BEEN SUBMITTED.</p>
-        <div style="background:rgba(255,215,0,0.1); padding:25px; border:2px dashed var(--gold); margin:40px auto; max-width:600px; border-radius:10px;">
-            <p style="color:var(--gold); font-weight:bold; font-size:18px; margin:0;">⚠️ IMPORTANT STEP:</p>
-            <p style="color:#ccc;">আপনার প্লটটি অ্যাক্টিভেট করার জন্য অবশ্যই আমাদের অফিসিয়াল কাস্টমার সাপোর্ট (WhatsApp) এ পেমেন্ট প্রুফসহ যোগাযোগ করুন।</p>
+    <div id="successScreen" style="display:none; text-align:center; padding-top:100px;">
+        <h1 style="color:var(--gold); font-size:40px;">CONGRATULATIONS, <span id="resName"></span>!</h1>
+        <p>YOUR SUBMISSION IS SUCCESSFUL.</p>
+        <div style="border:1px solid var(--gold); padding:20px; max-width:400px; margin:20px auto;">
+            📢 পেমেন্ট ভেরিফিকেশনের জন্য এখনই কাস্টমার সাপোর্ট (WhatsApp) এ মেসেজ দিন।
         </div>
-        <button onclick="location.href='index.html'" style="background:var(--gold); color:#000; border:none; padding:15px 50px; font-weight:900; cursor:pointer; border-radius:30px;">GOT IT</button>
+        <button onclick="location.href='index.html'" style="background:var(--gold); border:none; padding:15px 40px; font-weight:bold; cursor:pointer;">OK</button>
     </div>
 
     <script>
-        function updatePrice() {
-            let id = document.getElementById('plotID').value;
-            let price = 0;
-            if(id >= 1 && id <= 5) price = 9999;
-            else if(id > 5 && id <= 28) price = 999;
-            else if(id > 28 && id <= 56) price = 499;
-            else if(id > 56 && id <= 100) price = 199;
-            document.getElementById('dynamicPrice').innerText = price;
-        }
-
-        function processOrder() {
-            let name = document.getElementById('custName').value;
-            let game = document.getElementById('gameRealm').value;
-            let pId = document.getElementById('plotID').value;
-            
-            if(!name || !game || !pId) { alert("Please fill all details!"); return; }
-
-            document.getElementById('clientName').innerText = name.toUpperCase();
+        function submitAsset() {
+            let name = document.getElementById('cName').value;
+            if(!name) return alert("Enter Name");
+            document.getElementById('resName').innerText = name.toUpperCase();
             document.getElementById('orderForm').style.display = 'none';
-            document.getElementById('congratsScreen').style.display = 'block';
-
-            confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 }, colors: ['#FFD700', '#ffffff', '#111111'] });
+            document.getElementById('successScreen').style.display = 'block';
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#FFD700', '#fff'] });
         }
     </script>
 </body>
