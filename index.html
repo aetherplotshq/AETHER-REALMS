@@ -2,25 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER PLOTS | Global Digital Real Estate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHER PLOTS | Digital Asset Protocol</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header class="main-header">
         <div class="logo" onclick="location.href='index.html'">AETHER PLOTS</div>
-        <div id="digital-clock">00:00:00 AM</div>
+        <div id="digital-clock" class="clock-display">00:00:00 AM</div>
     </header>
 
-    <section style="text-align:center; padding:60px 20px;">
-        <h1 style="font-size:3.5rem; letter-spacing:5px;" class="gold-text">OWN THE DIGITAL HORIZON</h1>
-        <p style="color:#888;">100 Exclusive Plots Per Universe. Permanent Ownership.</p>
-    </section>
+    <div class="hero-section">
+        <h1 class="main-title">OWN THE DIGITAL HORIZON</h1>
+        <p class="subtitle">100 Strategic Plots Per Realm. Permanent Ownership.</p>
+    </div>
 
-    <div class="game-grid" id="gameList"></div>
+    <div class="game-grid" id="gameList">
+        </div>
 
     <div class="support-wrapper">
         <div class="wa-btn" onclick="window.open('support.html', '_blank')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20" alt="WA">
             <span>CUSTOMER SUPPORT</span>
         </div>
     </div>
@@ -31,15 +33,16 @@
         games.forEach(g => {
             list.innerHTML += `
                 <div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
-                    <h3 style="letter-spacing:2px;">${g.toUpperCase()}</h3>
-                    <p class="gold-text" style="font-size:12px;">STARTING FROM $199 - NO LIMIT</p>
+                    <h3>${g.toUpperCase()}</h3>
+                    <div class="price-tag">STARTING FROM $199</div>
                 </div>`;
         });
 
-        function clock() {
-            document.getElementById('digital-clock').innerText = new Date().toLocaleTimeString();
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('digital-clock').innerText = now.toLocaleTimeString();
         }
-        setInterval(clock, 1000); clock();
+        setInterval(updateTime, 1000); updateTime();
     </script>
 </body>
 </html>
