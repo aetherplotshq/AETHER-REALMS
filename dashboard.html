@@ -2,22 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER REALM | Plot Control</title>
+    <title>AETHER REALM | Assets</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header style="display:flex; justify-content:space-between; align-items:center; padding:20px 50px; border-bottom:1px solid var(--gold);">
+    <header style="display:flex; justify-content:space-between; align-items:center; padding:15px 40px; border-bottom:1px solid var(--gold); background:#000;">
         <div style="color:var(--gold); font-weight:900; cursor:pointer;" onclick="location.href='index.html'">AETHER<sup>™</sup></div>
         <div id="local-clock" class="clock-display">00:00:00</div>
         <div id="realmName" style="color:var(--gold); font-weight:bold; letter-spacing:2px;">REALM</div>
     </header>
 
-    <div style="text-align:center; padding:40px;">
-        <h3 style="color:#444; font-size:12px; letter-spacing:5px; margin-bottom:30px;">VIP ELITE SLOTS</h3>
-        <div id="vipGrid" style="display:flex; justify-content:center; gap:30px; margin-bottom:60px;"></div>
-        
-        <h3 style="color:#444; font-size:12px; letter-spacing:5px;">COMMUNITY SECTORS</h3>
-        <div id="normalGrid" style="display:grid; grid-template-columns:repeat(10, 1fr); gap:10px; max-width:1000px; margin:20px auto;"></div>
+    <div class="map-container">
+        <div id="vipGrid" class="vip-grid"></div>
+        <div id="normalGrid" class="community-grid"></div>
+    </div>
+
+    <div class="support-wrapper">
+        <a href="support.html" target="_blank" class="wa-btn">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="25" height="25" alt="WA">
+            <span>SUPPORT</span>
+        </a>
     </div>
 
     <script>
@@ -25,19 +29,21 @@
         const realm = params.get('realm') || 'Fortnite';
         document.getElementById('realmName').innerText = realm.toUpperCase();
 
+        // VIP Plots
         const v = document.getElementById('vipGrid');
         for(let i=1; i<=5; i++){
             v.innerHTML += `
                 <div class="plot vip" onclick="location.href='order.html?realm=${realm}&id=VIP-${i}&price=9999'">
                     <span style="font-size:18px; font-weight:900;">$9,999</span>
-                    <div class="vip-stars">★★★★★</div>
+                    <div style="color:var(--gold); margin-top:5px;">★★★★★</div>
                 </div>`;
         }
 
+        // Community Plots (Now 12 per row for better width)
         const n = document.getElementById('normalGrid');
-        for(let i=1; i<=95; i++){
-            let p = (i<=20) ? 999 : (i<=45) ? 499 : (i<=70) ? 299 : 199;
-            n.innerHTML += `<div class="plot normal" style="border:1px solid #222; aspect-ratio:1/1; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:11px;" onclick="location.href='order.html?realm=${realm}&id=${i}&price=${p}'">#${i}<br>$${p}</div>`;
+        for(let i=1; i<=100; i++){ /* প্লট সংখ্যা ১০০ তে উন্নীত করা হয়েছে */
+            let p = (i<=20) ? 999 : (i<=50) ? 499 : 199;
+            n.innerHTML += `<div class="plot normal" onclick="location.href='order.html?realm=${realm}&id=${i}&price=${p}'">#${i}<br>$${p}</div>`;
         }
 
         setInterval(() => { document.getElementById('local-clock').innerText = new Date().toLocaleTimeString(); }, 1000);
