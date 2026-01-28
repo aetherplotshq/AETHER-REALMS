@@ -2,45 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CONFIRM ACQUISITION</title>
+    <title>CONFIRM ORDER</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
-<body style="display:flex; align-items:center; justify-content:center; height:100vh; background:#050505;">
-    
-    <div id="formBox" style="background:#0a0a0a; border:1px solid var(--gold); padding:40px; border-radius:15px; width:450px; text-align:center;">
-        <p style="color:var(--gold); font-size:11px; margin-bottom:20px;">PLEASE VERIFY DATA BEFORE SUBMISSION. SHARE THESE DETAILS WITH SUPPORT TO ACTIVATE YOUR PLOT.</p>
-        
-        <input type="text" id="custName" placeholder="ENTER YOUR BRAND NAME" class="order-input">
-        <input type="text" id="plotInfo" readonly class="order-input" style="color:var(--gold); border-color:#333;">
-        
-        <button onclick="confirmOrder()" style="width:100%; padding:15px; background:var(--gold); color:#000; font-weight:900; border:none; border-radius:5px; cursor:pointer;">SUBMIT & ACTIVATE</button>
-        <br><br>
-        <a href="javascript:history.back()" style="color:#444; text-decoration:none; font-size:12px;">← CANCEL & BACK</a>
+<body style="display:flex; align-items:center; justify-content:center; height:100vh;">
+    <div id="box" style="background:#0a0a0a; border:1px solid var(--gold); padding:50px; border-radius:20px; text-align:center; width:400px;">
+        <h3 style="color:var(--gold); font-size:12px;">VERIFY SUBMISSION DATA</h3>
+        <input type="text" id="name" placeholder="YOUR BRAND NAME" style="width:100%; padding:15px; margin:20px 0; background:#111; border:1px solid #333; color:#fff;">
+        <button onclick="submit()" style="width:100%; padding:15px; background:var(--gold); border:none; font-weight:900; cursor:pointer;">SUBMIT & ACTIVATE</button>
     </div>
 
     <script>
-        const params = new URLSearchParams(window.location.search);
-        document.getElementById('plotInfo').value = `REALM: ${params.get('realm')} | PLOT: #${params.get('id')}`;
-
-        function confirmOrder() {
-            const name = document.getElementById('custName').value;
-            if(!name) { alert("Please enter your name"); return; }
-
-            // কনফেটি ইফেক্ট
-            var duration = 5 * 1000;
-            var end = Date.now() + duration;
-            (function frame() {
-                confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 } });
-                confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 } });
-                if (Date.now() < end) { requestAnimationFrame(frame); }
-            }());
-
-            document.getElementById('formBox').innerHTML = `
-                <h1 class="gold-text">CONGRATULATIONS!</h1>
+        function submit() {
+            const name = document.getElementById('name').value;
+            if(!name) return;
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+            document.getElementById('box').innerHTML = `
+                <h1 class="gold-text">CONGRATS!</h1>
                 <h2 style="color:#fff;">${name.toUpperCase()}</h2>
-                <p style="color:#888; font-size:13px; line-height:1.6;">Your request for Plot #${params.get('id')} has been logged.<br><br>Please contact Support now to provide proof and finalize deployment.</p>
-                <button onclick="location.href='support.html'" style="padding:15px 30px; background:#25D366; color:#fff; border:none; border-radius:50px; font-weight:bold; cursor:pointer; margin-top:20px;">CONTACT SUPPORT NOW</button>
+                <p style="color:#666; font-size:12px;">Contact support to share proof and activate plot.</p>
+                <button onclick="location.href='support.html'" style="padding:15px 30px; background:#25D366; color:#fff; border:none; border-radius:50px; font-weight:bold; cursor:pointer; margin-top:20px;">CONTACT SUPPORT</button>
             `;
         }
     </script>
