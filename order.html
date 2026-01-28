@@ -4,47 +4,22 @@
   <meta charset="UTF-8">
   <title>ACQUIRE ASSET</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-  <div id="orderForm" style="max-width:550px; margin:70px auto; background:#0a0a0a; padding:50px; border:1px solid #222; border-radius:20px; text-align:center;">
-    <h2 style="color:var(--gold); letter-spacing:3px;">ASSET ACQUISITION</h2>
-    
-    <input type="text" id="custName" placeholder="ENTER YOUR FULL NAME" style="width:100%; padding:18px; margin:15px 0; background:#000; border:1px solid #333; color:#fff; border-radius:5px;">
-    
-    <select id="gameSelect" style="width:100%; padding:18px; margin:15px 0; background:#000; border:1px solid #333; color:#fff; border-radius:5px;">
-        <option value="">SELECT GAME REALM</option>
-        <option>FORTNITE</option><option>CS2</option><option>MINECRAFT</option>
-        <option>VALORANT</option><option>APEX</option><option>ROBLOX</option>
-        <option>WARZONE</option><option>GTA</option><option>LEAGUE</option>
+  <div id="form" style="max-width:450px; margin:60px auto; background:#0a0a0a; padding:40px; border-radius:15px; text-align:center; border:1px solid #222;">
+    <h2 style="color:var(--gold);">ACQUIRE ASSET</h2>
+    <input type="text" id="n" placeholder="FULL NAME" style="width:100%; padding:15px; margin:10px 0; background:#000; border:1px solid #333; color:#fff;">
+    <select id="g" style="width:100%; padding:15px; margin:10px 0; background:#000; border:1px solid #333; color:#fff;">
+      <option>FORTNITE</option><option>CS2</option><option>MINECRAFT</option><option>VALORANT</option><option>APEX</option><option>ROBLOX</option><option>WARZONE</option><option>GTA</option><option>LEAGUE</option>
     </select>
-    
-    <input type="text" id="plotID" placeholder="PLOT NUMBER" style="width:100%; padding:18px; margin:15px 0; background:#000; border:1px solid #333; color:#fff; border-radius:5px;">
-    
-    <div style="color:var(--gold); font-size:40px; font-weight:900; margin:30px 0;">PRICE: $<span id="dispPrice">0</span></div>
-    
-    <button onclick="submitOrder()" style="width:100%; padding:22px; background:var(--gold); color:#000; font-weight:900; border:none; cursor:pointer; border-radius:5px; font-size:18px;">SUBMIT DATA</button>
+    <input type="text" id="p" placeholder="PLOT ID" style="width:100%; padding:15px; margin:10px 0; background:#000; border:1px solid #333; color:#fff;">
+    <div style="color:var(--gold); font-size:35px; font-weight:900; margin:20px 0;">PRICE: $<span id="pr">0</span></div>
+    <button onclick="alert('Data Submitted! Contact Support.')" style="width:100%; padding:18px; background:var(--gold); border:none; font-weight:900; cursor:pointer; border-radius:5px;">SUBMIT</button>
   </div>
-
-  <div id="success" style="display:none; text-align:center; padding-top:120px;">
-    <h1 style="color:var(--gold); font-size:50px;">CONGRATULATIONS!</h1>
-    <p style="font-size:20px;">Your asset data has been recorded. Contact Support to activate.</p>
-    <button onclick="location.href='index.html'" style="background:var(--gold); border:none; padding:18px 50px; font-weight:bold; cursor:pointer; margin-top:30px; border-radius:30px;">BACK TO HOME</button>
-  </div>
-
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    if(urlParams.get('price')) document.getElementById('dispPrice').innerText = urlParams.get('price');
-    if(urlParams.get('id')) document.getElementById('plotID').value = urlParams.get('id');
-
-    function submitOrder() {
-      const name = document.getElementById('custName').value;
-      if(!name) { alert("Please enter your name!"); return; }
-      
-      document.getElementById('orderForm').style.display='none';
-      document.getElementById('success').style.display='block';
-      confetti({ particleCount: 250, spread: 80, origin: { y: 0.6 }, colors: ['#FFD700', '#ffffff'] });
-    }
+    const u = new URLSearchParams(window.location.search);
+    if(u.get('price')) document.getElementById('pr').innerText = u.get('price');
+    if(u.get('id')) document.getElementById('p').value = u.get('id');
   </script>
 </body>
 </html>
