@@ -2,23 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER | Ghost Chat</title>
+    <title>GHOST CHAT | THE MILLIONAIRE REALM</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="padding:20px; background:#050505;">
-    <div style="max-width:800px; margin:0 auto;">
-        <h2 class="gold-text">GHOST CHAT <small style="color:#444; font-size:10px;">AUTO-WIPE EVERY 8 HOURS</small></h2>
-        <div id="chatBox" style="height:65vh; overflow-y:auto; background:#000; border:1px solid #222; padding:20px; margin-bottom:15px; border-radius:10px;"></div>
+<body style="padding:20px; background:#050505; display:flex; flex-direction:column; align-items:center;">
+    
+    <header style="width:100%; max-width:800px; display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <div class="gold-text" style="font-weight:900; letter-spacing:2px; cursor:pointer;" onclick="location.href='index.html'">THE MILLIONAIRE REALM</div>
+        <div id="local-clock" class="clock-display" style="font-size:12px;">00:00:00</div>
+    </header>
+
+    <div style="width:100%; max-width:800px;">
+        <h2 class="gold-text" style="letter-spacing:3px; font-size:18px;">GHOST CHAT <small style="color:#444; font-size:10px;">• ENCRYPTED & AUTO-WIPE (8H)</small></h2>
         
-        <div style="display:flex; gap:10px;">
-            <input type="text" id="msgInput" placeholder="Write encrypted message..." style="flex:1; padding:15px; background:#111; border:1px solid #333; color:#fff; border-radius:5px;">
-            <button id="sendBtn" style="padding:15px 35px; background:var(--gold); border:none; cursor:pointer; font-weight:bold; border-radius:5px;">SEND</button>
+        <div id="chatBox" style="height:65vh; overflow-y:auto; background:#000; border:1px solid #1a1a1a; padding:25px; margin-bottom:15px; border-radius:12px; box-shadow: inset 0 0 20px #000;">
+            </div>
+        
+        <div style="display:flex; gap:12px;">
+            <input type="text" id="msgInput" placeholder="Enter encrypted message..." style="flex:1; padding:18px; background:#0a0a0a; border:1px solid #222; color:#fff; border-radius:8px; outline:none; font-size:14px;">
+            <button id="sendBtn" style="padding:0 40px; background:var(--gold); border:none; cursor:pointer; font-weight:900; border-radius:8px; color:#000; transition:0.3s;">SEND</button>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
@@ -30,13 +38,18 @@
         const db = getDatabase(app);
         const chatRef = ref(db, 'ghost_chat');
 
+        // Digital Clock Logic
+        setInterval(() => { document.getElementById('local-clock').innerText = new Date().toLocaleTimeString(); }, 1000);
+
+        // Send Message
         document.getElementById('sendBtn').onclick = () => {
             const m = document.getElementById('msgInput').value;
-            if(!m) return;
+            if(!m.trim()) return;
             push(chatRef, { text: m, time: Date.now() });
             document.getElementById('msgInput').value = '';
         };
 
+        // Listen for Messages
         onValue(chatRef, (snap) => {
             const box = document.getElementById('chatBox');
             box.innerHTML = '';
@@ -46,14 +59,15 @@
                 if(now - d.time > 8*60*60*1000) { 
                     remove(ref(db, 'ghost_chat/'+child.key)); 
                 } else {
-                    box.innerHTML += `<div style="margin-bottom:15px; border-left:2px solid var(--gold); padding-left:10px;">
-                        <div style="color:#eee; font-size:14px;">${d.text}</div>
-                        <div style="color:#444; font-size:9px;">${new Date(d.time).toLocaleTimeString()}</div>
+                    box.innerHTML += `<div style="margin-bottom:20px; border-left:3px solid var(--gold); padding-left:15px; animation: fadeIn 0.5s;">
+                        <div style="color:#fff; font-size:15px; letter-spacing:0.5px;">${d.text}</div>
+                        <div style="color:#444; font-size:10px; margin-top:5px;">TIMESTAMP: ${new Date(d.time).toLocaleTimeString()}</div>
                     </div>`;
                 }
             });
             box.scrollTop = box.scrollHeight;
         });
     </script>
+    <style>@keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }</style>
 </body>
 </html>
