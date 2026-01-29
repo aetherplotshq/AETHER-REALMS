@@ -1,59 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Syncopate:wght@400;700&display=swap');
 
 :root {
-    --gold: linear-gradient(180deg, #FFD700 0%, #B8860B 100%);
-    --gold-solid: #FFD700;
-    --glow: 0 0 20px rgba(255, 215, 0, 0.6);
-    --glass: rgba(255, 255, 255, 0.03);
+    --gold: linear-gradient(135deg, #FFD700 0%, #FFAC04 50%, #B8860B 100%);
+    --neon-gold: #FFD700;
+    --dark-bg: #030303;
+    --glass: rgba(255, 215, 0, 0.05);
+    --glow: 0 0 30px rgba(255, 215, 0, 0.4);
 }
 
 body {
-    background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
-    color: #fff; font-family: 'Rajdhani', sans-serif; margin: 0; overflow-x: hidden;
+    background: radial-gradient(circle at top, #111 0%, #000 100%);
+    color: #fff; font-family: 'Orbitron', sans-serif; margin: 0;
+    overflow-x: hidden; scroll-behavior: smooth;
 }
 
-/* Luxury Buttons - No more black/white */
-.premium-btn {
-    background: var(--gold); color: #000; border: none; padding: 12px 25px;
-    font-family: 'Orbitron', sans-serif; font-weight: 900; border-radius: 50px;
-    cursor: pointer; text-transform: uppercase; transition: 0.4s;
-    box-shadow: var(--glow); letter-spacing: 1px;
+/* Luxury Animated Background */
+body::after {
+    content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    opacity: 0.1; z-index: -1;
 }
-.premium-btn:hover { transform: scale(1.1); box-shadow: 0 0 40px var(--gold-solid); }
 
+/* Premium Navigation Buttons */
 .nav-btn {
-    background: transparent; border: 1px solid var(--gold-solid); color: var(--gold-solid);
-    padding: 8px 20px; border-radius: 5px; cursor: pointer; text-transform: uppercase;
-    font-weight: bold; transition: 0.3s;
+    background: var(--glass); border: 1px solid var(--neon-gold);
+    color: var(--neon-gold); padding: 12px 25px; border-radius: 4px;
+    font-size: 11px; letter-spacing: 2px; transition: 0.5s; cursor: pointer;
+    text-shadow: 0 0 10px var(--neon-gold);
 }
-.nav-btn:hover { background: var(--gold); color: #000; }
+.nav-btn:hover { background: var(--gold); color: #000; box-shadow: var(--glow); }
 
-/* Ultra VIP Crown */
+/* Ultra-Premium Plot Cards */
+.game-card {
+    position: relative; background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
+    border: 1px solid rgba(255, 215, 0, 0.1); padding: 40px;
+    border-radius: 0px; text-align: center; cursor: pointer;
+    overflow: hidden; transition: 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+}
+.game-card::before {
+    content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: conic-gradient(transparent, transparent, var(--neon-gold), transparent);
+    animation: rotate 6s linear infinite; opacity: 0;
+}
+.game-card:hover::before { opacity: 0.3; }
+.game-card:hover { transform: translateY(-10px); border-color: var(--neon-gold); box-shadow: var(--glow); }
+
+/* High-End VIP Kingdom */
 .vip-container {
-    position: relative; border: 2px solid #FFD700; background: rgba(0,0,0,0.8);
-    border-radius: 20px; cursor: pointer; transition: 0.5s;
-    box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.2);
+    background: rgba(0,0,0,0.8); border: 2px solid gold; border-radius: 10px;
+    box-shadow: inset 0 0 50px rgba(255, 215, 0, 0.2);
+    animation: pulse 2s infinite ease-in-out;
 }
 .crown-icon {
-    position: absolute; top: -85px; font-size: 130px; 
-    filter: drop-shadow(0 0 30px #FFD700); animation: royalFloat 3s infinite ease-in-out;
+    font-size: 140px; filter: drop-shadow(0 0 40px gold);
+    animation: crownFloat 4s infinite ease-in-out;
 }
 
-@keyframes royalFloat { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-20px) rotate(2deg); } }
-
-/* Game Card Gold Glow */
-.game-card {
-    background: var(--glass); border: 1px solid rgba(255, 215, 0, 0.1);
-    padding: 30px; border-radius: 20px; text-align: center; cursor: pointer;
-    backdrop-filter: blur(10px); transition: 0.5s;
-}
-.game-card:hover { 
-    background: var(--gold); border-color: #fff;
-}
-.game-card:hover h2 { color: #000; }
-
-.main-title {
-    font-family: 'Orbitron', sans-serif; font-size: 3.5rem; letter-spacing: 15px;
-    background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
-}
+@keyframes rotate { 100% { transform: rotate(360deg); } }
+@keyframes crownFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+@keyframes pulse { 0%, 100% { border-color: #B8860B; } 50% { border-color: #FFD700; box-shadow: 0 0 80px rgba(255, 215, 0, 0.4); } }
