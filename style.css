@@ -53,4 +53,4 @@ body::before {
     animation: royalPulse 3s infinite ease-in-out;
 }
 
-@keyframes royalPulse { 0%, 100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.8; } 50% { transform: translateX(-50%) translateY(-20px) scale(1.1); opacity: 1; } }
+@keyframes royalPulse { 0%, 100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.8; } 50% { transform: translateX(-50%) translateY(-20px) scale(1.1); opacity: 1; } } 
