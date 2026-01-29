@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>THE MILLIONAIRE REALM | EXCLUSIVE</title>
+    <meta charset="UTF-8"><title>AETHER REALMS | THE ELITE</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div style="position:fixed; left:40px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:30px; z-index:1000;">
-        <div class="nav-btn" onclick="location.href='support.html'" style="border-radius:50%; width:50px; height:50px; display:flex; align-items:center; justify-content:center;">💬</div>
-        <div class="nav-btn" onclick="openPayment()" style="border-radius:50%; width:50px; height:50px; display:flex; align-items:center; justify-content:center;">💰</div>
-        <div class="nav-btn" onclick="location.href='ghost-chat.html'" style="border-radius:50%; width:50px; height:50px; display:flex; align-items:center; justify-content:center;">👻</div>
+    <div class="side-bar">
+        <div onclick="location.href='support.html'" title="Concierge" style="cursor:pointer; font-size:25px;">🎧</div>
+        <div onclick="location.href='ghost-chat.html'" title="Lounge" style="cursor:pointer; font-size:25px;">🛡️</div>
+        <div onclick="alert('System Status: Online')" title="Nodes" style="cursor:pointer; font-size:25px;">🌐</div>
     </div>
 
-    <header style="padding: 100px 0 60px; text-align: center;">
-        <h1 class="main-title" style="margin:0;">AETHER REALMS</h1>
-        <p style="color: gold; letter-spacing: 12px; font-size: 10px; margin-top: 20px; font-weight: bold;">PREMIUM VIRTUAL ASSETS MANAGEMENT</p>
+    <header style="padding: 120px 0 80px; text-align: center;">
+        <h1 style="font-family:'Syncopate'; font-size: 4rem; letter-spacing: 20px; color: transparent; -webkit-text-stroke: 1px gold; margin: 0;">REALMS</h1>
+        <div style="width: 100px; height: 2px; background: gold; margin: 20px auto;"></div>
+        <p style="color: gold; letter-spacing: 5px; font-size: 10px; opacity: 0.6;">SUPREME VIRTUAL ASSETS ECOSYSTEM</p>
     </header>
 
-    <div id="gameGrid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:30px; padding: 0 10%; max-width: 1300px; margin: auto;"></div>
+    <div id="matrixGrid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:40px; padding: 0 10%; max-width: 1400px; margin: auto;"></div>
 
     <script>
-        const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
-        const grid = document.getElementById('gameGrid');
-        games.forEach(g => {
-            grid.innerHTML += `<div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
-                <h2 style="font-size: 1.8rem; letter-spacing: 5px;">${g.toUpperCase()}</h2>
-                <span style="color: gold; font-size: 10px;">ENTER REALM →</span>
-            </div>`;
+        const realms = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
+        const grid = document.getElementById('matrixGrid');
+        realms.forEach(r => {
+            grid.innerHTML += `
+                <div class="game-portal" onclick="location.href='dashboard.html?realm=${r}'">
+                    <h3 style="letter-spacing:8px; font-size:1.5rem;">${r.toUpperCase()}</h3>
+                    <div style="font-size:10px; color:gold;">SECURE CONNECTION [STABLE]</div>
+                </div>`;
         });
     </script>
 </body>
