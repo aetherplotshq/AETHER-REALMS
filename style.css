@@ -58,4 +58,4 @@ body::after {
 
 @keyframes rotate { 100% { transform: rotate(360deg); } }
 @keyframes crownFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
-@keyframes pulse { 0%, 100% { border-color: #B8860B; } 50% { border-color: #FFD700; box-shadow: 0 0 80px rgba(255, 215, 0, 0.4); } }
+@keyframes pulse { 0%, 100% { border-color: #B8860B; } 50% { border-color: #FFD700; box-shadow: 0 0 80px rgba(255, 215, 0, 0.4); } } 
