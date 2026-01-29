@@ -7,25 +7,33 @@
 </nav>
 <div style="display:flex;">
     <div style="width:300px; height:85vh; background:rgba(255,255,255,0.01); border-right:1px solid rgba(255,215,0,0.1); display:flex; flex-direction:column;">
-        <div style="padding:15px; color:gold; font-size:10px; border-bottom:1px solid rgba(255,215,0,0.1);">LIVE CHAT [REALM]</div>
+        <div style="padding:15px; color:gold; font-size:10px; border-bottom:1px solid rgba(255,215,0,0.1);">LIVE CHAT [8H]</div>
         <div id="chatBox" style="flex:1; overflow-y:auto; padding:15px; font-size:12px; color:#666;"></div>
         <input type="text" id="msg" placeholder="Verify plot to chat..." disabled style="background:#000; border:none; border-top:1px solid gold; padding:18px; color:white; font-family:'Michroma'; font-size:11px;">
     </div>
-    <div id="mapArea" style="flex:1; text-align:center; padding-top:40px; background:#050505;">
+    <div id="mapArea" style="flex:1; text-align:center; padding-top:40px; background:#050505; overflow-y:auto;">
         <div id="kG" style="display:flex; justify-content:center; gap:25px; margin-bottom:50px;"></div>
-        <div id="pG" style="display:grid; grid-template-columns: repeat(14, 1fr); gap:8px; padding:0 40px;"></div>
+        <div id="pG" style="display:grid; grid-template-columns: repeat(10, 1fr); gap:12px; padding:0 80px; max-width:1000px; margin:auto;"></div>
     </div>
 </div>
 <script>
     const u = new URLSearchParams(window.location.search); const r = u.get('realm');
     document.getElementById('rT').innerText = r.toUpperCase();
-    for(let i=1;i<=5;i++) document.getElementById('kG').innerHTML += `<div class="king-plot" onclick="location.href='order.html?id=KINGDOM-${i}&price=9999&realm=${r}'" style="width:140px; height:170px; cursor:pointer;"><div class="royal-crown" style="font-size:65px; top:-40px;">👑</div><div style="margin-top:80px; color:gold; font-size:18px;">$9,999</div><small style="color:gold; font-size:8px;">KINGDOM</small></div>`;
-    for(let i=1;i<=95;i++){ let p=(i<=28)?1599:(i<=56)?1299:999; document.getElementById('pG').innerHTML += `<div onclick="location.href='order.html?id=${i}&price=${p}&realm=${r}'" style="aspect-ratio:1/1; border:1px solid #111; color:#333; font-size:9px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:#000;">#${i}</div>`; }
-    function snap(){ html2canvas(document.getElementById('mapArea')).then(c => { let l=document.createElement('a'); l.download=r+'_Realm_Map.png'; l.href=c.toDataURL(); l.click(); }); }
+    
+    // 5 Kingdom Plots - $999
+    for(let i=1;i<=5;i++) document.getElementById('kG').innerHTML += `<div class="king-plot" onclick="location.href='order.html?id=KINGDOM-${i}&price=999&realm=${r}'" style="width:130px; height:160px; cursor:pointer;"><div class="royal-crown" style="font-size:60px; top:-40px;">👑</div><div style="margin-top:75px; color:gold; font-size:18px;">$999</div></div>`;
+    
+    // 95 Plots - 10 per row logic
+    for(let i=1;i<=95;i++){ 
+        let p = (i<=20) ? 599 : (i<=50) ? 299 : 99; // Hierarchical Pricing
+        document.getElementById('pG').innerHTML += `<div onclick="location.href='order.html?id=${i}&price=${p}&realm=${r}'" style="aspect-ratio:1/1; border:1px solid #111; color:#333; font-size:10px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:#000; transition:0.3s;">#${i}</div>`; 
+    }
+
+    function snap(){ html2canvas(document.getElementById('mapArea')).then(c => { let l=document.createElement('a'); l.download=r+'_Map.png'; l.href=c.toDataURL(); l.click(); }); }
     if(localStorage.getItem('hasPlot')==='true'){
-        const inp = document.getElementById('msg'); inp.disabled = false; inp.placeholder = "Broadcast message...";
+        const inp = document.getElementById('msg'); inp.disabled = false;
         inp.addEventListener('keypress', (e) => { if(e.key==='Enter' && inp.value){
-            document.getElementById('chatBox').innerHTML += `<div style="margin-bottom:10px; border-left:1px solid gold; padding-left:10px;"><b style="color:gold; font-size:10px;">[#${localStorage.getItem('uPlot')}]</b>: ${inp.value}</div>`;
+            document.getElementById('chatBox').innerHTML += `<div style="margin-bottom:8px;"><b style="color:gold;">[#${localStorage.getItem('uPlot')}]</b>: ${inp.value}</div>`;
             inp.value = '';
         }});
     }
