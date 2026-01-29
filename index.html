@@ -1,30 +1,32 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>AETHER REALMS | ELITE</title><link rel="stylesheet" href="style.css"></head><body>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>AETHER REALMS</title><link rel="stylesheet" href="style.css"></head><body>
 <div class="side-bar">
-    <div onclick="location.href='support.html'" title="Support">🎧</div>
-    <div onclick="openPayment()" title="Wallet">💰</div>
-    <div onclick="location.href='ghost-chat.html'" title="Global Lounge">🛡️</div>
+    <div onclick="location.href='support.html'">🎧</div>
+    <div onclick="openPay()">💰</div>
+    <div onclick="location.href='ghost-chat.html'">🛡️</div>
 </div>
-<header style="padding: 100px 0 50px; text-align: center;">
-    <h1 style="font-family:'Syncopate'; font-size: 3.5rem; letter-spacing: 15px; color: transparent; -webkit-text-stroke: 1px gold; margin: 0;">REALMS</h1>
-    <p style="color: gold; letter-spacing: 5px; font-size: 10px; opacity: 0.6; margin-top:15px;">SUPREME VIRTUAL ASSETS ECOSYSTEM</p>
+<header style="padding: 80px 0; text-align: center;">
+    <h1 style="font-family:'Syncopate'; font-size: 3rem; letter-spacing: 15px; color: transparent; -webkit-text-stroke: 1px gold; margin: 0;">REALMS</h1>
+    <p style="color: gold; letter-spacing: 8px; font-size: 9px; opacity: 0.6; margin-top:10px;">SUPREME VIRTUAL ASSETS</p>
 </header>
-<div id="matrixGrid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:40px; padding: 0 10%; max-width: 1400px; margin: auto;"></div>
-<div id="payModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.95); backdrop-filter:blur(15px);">
-    <div style="max-width:400px; margin:8% auto; background:#050505; border:1px solid gold; padding:40px; border-radius:15px; text-align:center; box-shadow: 0 0 50px rgba(255,215,0,0.2);">
-        <h3 style="color:gold; font-family:'Syncopate'; margin-bottom:30px;">ELITE GATEWAY</h3>
-        <div onclick="copy('548291037','Binance')" style="background:rgba(255,215,0,0.05); padding:15px; border:1px solid rgba(255,215,0,0.2); margin-bottom:15px; cursor:pointer; display:flex; align-items:center; gap:15px;">
-            <img src="https://cdn.worldvectorlogo.com/logos/binance-3.svg" width="25"> <div><b style="color:gold;">BINANCE</b><br><small style="color:#555;">UID: 548291037</small></div>
+<div id="grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:25px; padding: 0 10%; max-width: 1300px; margin: auto;"></div>
+<div id="pM" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.96); backdrop-filter:blur(10px);">
+    <div style="max-width:380px; margin:10% auto; background:#050505; border:1px solid gold; padding:40px; border-radius:10px; text-align:center;">
+        <h4 style="color:gold; font-family:'Syncopate'; margin-bottom:25px;">GATEWAY</h4>
+        <div onclick="copy('548291037','Binance')" style="background:rgba(255,215,0,0.05); padding:15px; border:1px solid rgba(255,215,0,0.2); margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:12px; border-radius:8px;">
+            <img src="https://cdn.worldvectorlogo.com/logos/binance-3.svg" width="22"> <div style="text-align:left;"><b style="color:gold; font-size:11px;">BINANCE UID</b><br><small style="color:#555;">548291037</small></div>
         </div>
-        <div onclick="copy('0xWALLET_ADDRESS_HERE','Coinbase')" style="background:rgba(255,215,0,0.05); padding:15px; border:1px solid rgba(255,215,0,0.2); margin-bottom:15px; cursor:pointer; display:flex; align-items:center; gap:15px;">
-            <img src="https://www.vectorlogo.zone/logos/coinbase/coinbase-icon.svg" width="25"> <div><b style="color:gold;">COINBASE</b><br><small style="color:#555;">USDT (ERC20)</small></div>
+        <div onclick="copy('0x123...ABC','Coinbase')" style="background:rgba(255,215,0,0.05); padding:15px; border:1px solid rgba(255,215,0,0.2); margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:12px; border-radius:8px;">
+            <img src="https://www.vectorlogo.zone/logos/coinbase/coinbase-icon.svg" width="22"> <div style="text-align:left;"><b style="color:gold; font-size:11px;">COINBASE</b><br><small style="color:#555;">USDT (ERC20)</small></div>
         </div>
-        <button onclick="document.getElementById('payModal').style.display='none'" style="background:none; border:1px solid gold; color:gold; padding:10px 30px; margin-top:20px; cursor:pointer; font-family:'Michroma';">EXIT</button>
+        <div onclick="copy('0x456...XYZ','MetaMask')" style="background:rgba(255,215,0,0.05); padding:15px; border:1px solid rgba(255,215,0,0.2); margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:12px; border-radius:8px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" width="22"> <div style="text-align:left;"><b style="color:gold; font-size:11px;">METAMASK</b><br><small style="color:#555;">WEB3 WALLET</small></div>
+        </div>
+        <button onclick="document.getElementById('pM').style.display='none'" class="nav-btn" style="margin-top:15px;">CLOSE</button>
     </div>
 </div>
 <script>
-    const realms = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
-    const grid = document.getElementById('matrixGrid');
-    realms.forEach(r => { grid.innerHTML += `<div class="game-portal" onclick="location.href='dashboard.html?realm=${r}'"><h3 style="letter-spacing:8px;">${r.toUpperCase()}</h3><div style="font-size:9px; color:gold; opacity:0.5;">ENTER SYSTEM</div></div>`; });
-    function openPayment() { document.getElementById('payModal').style.display='block'; }
-    function copy(txt, name) { navigator.clipboard.writeText(txt); alert(name + " Address Copied!"); }
+    const gs = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
+    gs.forEach(r => { document.getElementById('grid').innerHTML += `<div class="game-portal" onclick="location.href='dashboard.html?realm=${r}'"><h3 style="letter-spacing:5px; font-size:18px;">${r.toUpperCase()}</h3><span style="font-size:8px; color:gold;">SELECT UNIT</span></div>`; });
+    function openPay() { document.getElementById('pM').style.display='block'; }
+    function copy(t, n) { navigator.clipboard.writeText(t); alert(n + " Address Copied!"); }
 </script></body></html>
