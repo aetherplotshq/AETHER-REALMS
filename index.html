@@ -15,18 +15,15 @@
         <div onclick="copy('548291037','Binance')" style="background:rgba(255,215,0,0.05); padding:15px; border:1px solid rgba(255,215,0,0.2); margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:12px; border-radius:8px;">
             <img src="https://cdn.worldvectorlogo.com/logos/binance-3.svg" width="22"> <div style="text-align:left;"><b style="color:gold; font-size:11px;">BINANCE UID</b><br><small style="color:#555;">548291037</small></div>
         </div>
-        <div onclick="copy('0x123...ABC','Coinbase')" style="background:rgba(255,215,0,0.05); padding:15px; border:1px solid rgba(255,215,0,0.2); margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:12px; border-radius:8px;">
+        <div onclick="copy('0x123...ADDR','Coinbase')" style="background:rgba(255,215,0,0.05); padding:15px; border:1px solid rgba(255,215,0,0.2); margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:12px; border-radius:8px;">
             <img src="https://www.vectorlogo.zone/logos/coinbase/coinbase-icon.svg" width="22"> <div style="text-align:left;"><b style="color:gold; font-size:11px;">COINBASE</b><br><small style="color:#555;">USDT (ERC20)</small></div>
-        </div>
-        <div onclick="copy('0x456...XYZ','MetaMask')" style="background:rgba(255,215,0,0.05); padding:15px; border:1px solid rgba(255,215,0,0.2); margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:12px; border-radius:8px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" width="22"> <div style="text-align:left;"><b style="color:gold; font-size:11px;">METAMASK</b><br><small style="color:#555;">WEB3 WALLET</small></div>
         </div>
         <button onclick="document.getElementById('pM').style.display='none'" class="nav-btn" style="margin-top:15px;">CLOSE</button>
     </div>
 </div>
 <script>
     const gs = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
-    gs.forEach(r => { document.getElementById('grid').innerHTML += `<div class="game-portal" onclick="location.href='dashboard.html?realm=${r}'"><h3 style="letter-spacing:5px; font-size:18px;">${r.toUpperCase()}</h3><span style="font-size:8px; color:gold;">SELECT UNIT</span></div>`; });
+    gs.forEach(r => { document.getElementById('grid').innerHTML += `<div class="game-portal" onclick="location.href='dashboard.html?realm=${r}'"><h3>${r.toUpperCase()}</h3><span style="font-size:8px; color:gold;">SELECT UNIT</span></div>`; });
     function openPay() { document.getElementById('pM').style.display='block'; }
-    function copy(t, n) { navigator.clipboard.writeText(t); alert(n + " Address Copied!"); }
-</script></body></html> 
+    function copy(t, n) { navigator.clipboard.writeText(t); alert(n + " Copied!"); }
+</script></body></html>
