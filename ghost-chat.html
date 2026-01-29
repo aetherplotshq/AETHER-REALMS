@@ -5,46 +5,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div style="max-width:900px; margin:50px auto; background:rgba(10,10,10,0.95); border:1px solid gold; border-radius:20px; height:85vh; display:flex; flex-direction:column; overflow:hidden; box-shadow: 0 0 100px rgba(0,0,0,1);">
-        <div style="padding:30px; border-bottom:1px solid rgba(255,215,0,0.1); display:flex; justify-content:space-between; align-items:center;">
-            <h2 style="color:gold; margin:0; letter-spacing:5px;">GHOST LOUNGE</h2>
-            <button class="nav-btn" onclick="location.href='index.html'">EXIT</button>
-        </div>
-        
-        <div id="chatBox" style="flex:1; padding:40px; overflow-y:auto; color:#ccc;">
-            <div id="lock" style="text-align:center; margin-top:150px;">
-                <h1 style="font-size:100px; margin:0;">🔒</h1>
-                <h2 style="color:gold;">ENTRY RESTRICTED</h2>
-                <p>ONLY VERIFIED ASSET OWNERS CAN ENTER THIS LOUNGE.</p>
+    <div style="max-width:1000px; margin:50px auto; background:rgba(0,0,0,0.95); border:1px solid gold; height:80vh; position:relative; display:flex; flex-direction:column;">
+        <div style="background:gold; color:black; padding:15px; font-weight:bold; letter-spacing:5px;">ENCRYPTED CHANNEL: GHOST-LOUNGE</div>
+        <div id="cBox" style="flex:1; padding:40px; overflow-y:auto; font-family:monospace;">
+            <div id="lBlock" style="text-align:center; padding-top:100px;">
+                <h1 style="font-size:80px; filter:grayscale(1);">🗝️</h1>
+                <h3 style="color:gold;">SYSTEM LOCKED</h3>
+                <p style="font-size:12px; opacity:0.5;">PURCHASE A REALM ASSET TO DECRYPT THIS CHANNEL.</p>
             </div>
         </div>
-
-        <div id="inputArea" style="display:none; padding:30px; background:#000; border-top:1px solid gold;">
-            <div id="status" style="font-size:10px; color:gold; margin-bottom:10px; text-transform:uppercase;"></div>
-            <div style="display:flex; gap:10px;">
-                <input type="text" id="m" placeholder="Transmit your message to the elite..." style="flex:1; background:#050505; border:1px solid gold; padding:20px; color:white; font-family:'Orbitron';">
-                <button class="nav-btn" onclick="send()">BROADCAST</button>
-            </div>
+        <div id="iArea" style="display:none; padding:30px; border-top:1px solid rgba(255,215,0,0.2);">
+            <input type="text" id="msgInput" placeholder="Broadcast to the network..." style="width:80%; background:none; border:none; border-bottom:1px solid gold; color:white; padding:10px; outline:none;">
+            <button onclick="sendMsg()" style="background:gold; border:none; padding:10px 30px; cursor:pointer; font-weight:bold;">SEND</button>
         </div>
     </div>
-
     <script>
-        const has = localStorage.getItem('hasPlot');
-        if(has === 'true'){
-            document.getElementById('lock').style.display = 'none';
-            document.getElementById('inputArea').style.display = 'block';
-            document.getElementById('status').innerText = `Logged in as: ${localStorage.getItem('uName')} | Plot #${localStorage.getItem('uPlot')} | Realm: ${localStorage.getItem('uGame')}`;
-        }
-        function send(){
-            const msg = document.getElementById('m').value;
-            if(!msg) return;
-            document.getElementById('chatBox').innerHTML += `
-                <div style="margin-bottom:25px; border-left:2px solid gold; padding-left:20px;">
-                    <span style="color:gold; font-size:11px; font-weight:bold;">${localStorage.getItem('uName')} | #${localStorage.getItem('uPlot')}</span><br>
-                    <p style="margin:5px 0; font-size:16px;">${msg}</p>
-                </div>`;
-            document.getElementById('m').value = '';
+        if(localStorage.getItem('hasPlot') === 'true'){
+            document.getElementById('lBlock').style.display='none';
+            document.getElementById('iArea').style.display='block';
         }
     </script>
 </body>
-</html> 
+</html>
