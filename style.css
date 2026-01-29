@@ -6,7 +6,7 @@ body { background: var(--bg); color: #fff; font-family: 'Michroma', sans-serif; 
 .side-bar div:hover { transform: scale(1.2); filter: drop-shadow(0 0 8px gold); }
 .game-portal { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,215,0,0.1); padding: 45px; text-align: center; cursor: pointer; transition: 0.5s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
 .game-portal:hover { background: rgba(255,215,0,0.1); border-color: gold; transform: translateY(-5px); }
-.king-plot { position: relative; border: 2px solid gold; background: #000; border-radius: 12px; box-shadow: 0 0 20px rgba(255,215,0,0.2); }
+.king-plot { position: relative; border: 2px solid gold; background: #000; border-radius: 12px; box-shadow: 0 0 15px rgba(255,215,0,0.3); }
 .royal-crown { position: absolute; left: 50%; transform: translateX(-50%); animation: float 3s infinite ease-in-out; }
 .nav-btn { background: none; border: 1px solid gold; color: gold; padding: 12px 30px; cursor: pointer; font-family: 'Michroma'; font-size: 11px; text-transform: uppercase; }
-@keyframes float { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-15px); } } 
+@keyframes float { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-15px); } }
