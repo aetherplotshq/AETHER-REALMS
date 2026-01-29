@@ -1,56 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Michroma&display=swap');
-
-:root {
-    --accent: #FFD700;
-    --neon: #00f2ff;
-    --bg-dark: #050505;
-    --panel: rgba(255, 255, 255, 0.03);
-}
-
-body {
-    background: var(--bg-dark);
-    color: #fff; font-family: 'Michroma', sans-serif;
-    margin: 0; overflow-x: hidden;
-}
-
-/* Cosmic Background Animation */
-body::before {
-    content: ''; position: fixed; width: 100vw; height: 100vh;
-    background: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
-    z-index: -2;
-}
-
-/* Floating Hyper-Menu */
-.side-bar {
-    position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
-    background: rgba(255, 215, 0, 0.05); backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 215, 0, 0.2); padding: 20px;
-    border-radius: 50px; display: flex; flex-direction: column; gap: 30px; z-index: 1000;
-}
-
-/* Interactive Hexagon Plot Cards */
-.game-portal {
-    position: relative; height: 250px; background: var(--panel);
-    border: 1px solid rgba(255, 215, 0, 0.1); clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;
-}
-.game-portal:hover {
-    background: rgba(255, 215, 0, 0.15); border-color: var(--accent);
-    transform: perspective(1000px) rotateY(15deg) scale(1.05);
-    box-shadow: -20px 0 50px rgba(255, 215, 0, 0.2);
-}
-
-/* The Grand Crown FX */
-.king-plot {
-    position: relative; width: 280px; height: 350px; background: rgba(0,0,0,0.8);
-    border: 2px solid var(--accent); border-radius: 20px;
-    box-shadow: 0 0 50px rgba(255, 215, 0, 0.1);
-}
-.royal-crown {
-    font-size: 160px; filter: drop-shadow(0 0 40px var(--accent));
-    position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-    animation: royalPulse 3s infinite ease-in-out;
-}
-
-@keyframes royalPulse { 0%, 100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.8; } 50% { transform: translateX(-50%) translateY(-20px) scale(1.1); opacity: 1; } } 
+:root { --accent: #FFD700; --bg: #000; }
+body { background: var(--bg); color: #fff; font-family: 'Michroma', sans-serif; margin: 0; overflow-x: hidden; }
+.side-bar { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); background: rgba(255,215,0,0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,215,0,0.2); padding: 20px; border-radius: 50px; display: flex; flex-direction: column; gap: 25px; z-index: 1000; }
+.side-bar div { cursor: pointer; font-size: 24px; transition: 0.3s; }
+.side-bar div:hover { transform: scale(1.2); filter: drop-shadow(0 0 8px gold); }
+.game-portal { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,215,0,0.1); padding: 45px; text-align: center; cursor: pointer; transition: 0.5s; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); }
+.game-portal:hover { background: rgba(255,215,0,0.1); border-color: gold; transform: translateY(-5px); }
+.king-plot { position: relative; border: 2px solid gold; background: #000; border-radius: 12px; box-shadow: 0 0 20px rgba(255,215,0,0.2); }
+.royal-crown { position: absolute; left: 50%; transform: translateX(-50%); animation: float 3s infinite ease-in-out; }
+.nav-btn { background: none; border: 1px solid gold; color: gold; padding: 12px 30px; cursor: pointer; font-family: 'Michroma'; font-size: 11px; text-transform: uppercase; }
+@keyframes float { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-15px); } }
