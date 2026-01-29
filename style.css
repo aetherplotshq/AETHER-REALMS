@@ -9,4 +9,4 @@ body { background: var(--bg); color: #fff; font-family: 'Michroma', sans-serif; 
 .king-plot { position: relative; border: 2px solid gold; background: #000; border-radius: 12px; box-shadow: 0 0 20px rgba(255,215,0,0.2); }
 .royal-crown { position: absolute; left: 50%; transform: translateX(-50%); animation: float 3s infinite ease-in-out; }
 .nav-btn { background: none; border: 1px solid gold; color: gold; padding: 12px 30px; cursor: pointer; font-family: 'Michroma'; font-size: 11px; text-transform: uppercase; }
-@keyframes float { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-15px); } }
+@keyframes float { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-15px); } } 
