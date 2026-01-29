@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>KINGDOM MAP</title>
+    <meta charset="UTF-8"><title>ASSET MAP</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body id="captureArea">
-    <header style="padding: 40px; display:flex; justify-content:space-between; align-items:center;">
-        <button class="nav-btn" onclick="location.href='index.html'">← BACK TO SELECTION</button>
-        <div style="text-align:center;">
-            <h2 id="realmTitle" style="color:gold; font-size: 30px; letter-spacing: 10px; margin:0;">REALM</h2>
-            <p style="color:#555; font-size:10px; margin-top:5px;">OFFICIAL PROPERTY MAP</p>
-        </div>
-        <button class="nav-btn" style="background:gold; color:black;" onclick="download()">EXPORT MAP</button>
-    </header>
+<body id="capture">
+    <nav style="padding: 40px; display:flex; justify-content:space-between; align-items:center;">
+        <button onclick="location.href='index.html'" style="background:none; border:1px solid gold; color:gold; padding:10px 30px; cursor:pointer;">DISCONNECT</button>
+        <h2 id="rT" style="color:gold; font-family:'Syncopate'; letter-spacing:10px;">MAP</h2>
+        <button style="background:gold; color:black; border:none; padding:10px 30px; font-weight:bold; cursor:pointer;">DOWNLOAD DATA</button>
+    </nav>
 
-    <div style="text-align:center; padding: 20px 0;">
-        <div style="display:flex; justify-content:center; gap:40px; margin-bottom: 100px;">
+    <div style="text-align:center;">
+        <div style="display:flex; justify-content:center; gap:60px; margin-top: 150px; margin-bottom: 100px;">
             <script>
-                const r = new URLSearchParams(window.location.search).get('realm');
+                const url = new URLSearchParams(window.location.search).get('realm');
                 for(let i=1; i<=5; i++){
                     document.write(`
-                        <div class="vip-container" style="width:220px; height:220px; cursor:pointer;" onclick="location.href='order.html?id=KINGDOM-${i}&price=9999&realm=${r}'">
-                            <div class="crown-icon">👑</div>
-                            <div style="margin-top:60px; font-weight:900; font-size:32px; color:gold;">$9,999</div>
-                            <div style="color:gold; letter-spacing:3px; font-size:10px;">ULTIMATE KINGDOM</div>
+                        <div class="king-plot" onclick="location.href='order.html?id=KINGDOM-${i}&price=9999&realm=${url}'" style="cursor:pointer;">
+                            <div class="royal-crown">👑</div>
+                            <div style="margin-top:120px; font-size:40px; color:gold; font-weight:900;">$9,999</div>
+                            <p style="color:gold; font-size:10px; letter-spacing:3px;">SUPREME KINGDOM</p>
                         </div>
                     `);
                 }
             </script>
         </div>
 
-        <div style="display:grid; grid-template-columns: repeat(14, 1fr); gap:12px; padding: 0 80px;">
+        <div style="display:grid; grid-template-columns: repeat(14, 1fr); gap:15px; padding: 0 100px; padding-bottom:100px;">
             <script>
                 for(let i=1; i<=95; i++){
-                    let p = (i<=28)?1599:(i<=56)?1299:999;
-                    document.write(`<div onclick="location.href='order.html?id=${i}&price=${p}&realm=${r}'" 
-                        style="aspect-ratio:1/1; border:1px solid #222; background:rgba(255,215,0,0.02); display:flex; align-items:center; justify-content:center; cursor:pointer; color:#777; transition:0.3s; font-size:12px;">#${i}</div>`);
+                    let price = (i<=28)?1599:(i<=56)?1299:999;
+                    document.write(`
+                        <div onclick="location.href='order.html?id=${i}&price=${price}&realm=${url}'" 
+                        style="aspect-ratio:1/1; border:1px solid rgba(255,215,0,0.1); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; color:gold; background:rgba(255,215,0,0.01);">
+                        #${i}</div>
+                    `);
                 }
+                document.getElementById('rT').innerText = url.toUpperCase();
             </script>
         </div>
     </div>
-    <script>document.getElementById('realmTitle').innerText = r.toUpperCase();</script>
 </body>
-</html> 
+</html>
