@@ -1,57 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"><title>ACQUIRE ASSET</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-</head>
-<body>
-    <div id="oForm" style="max-width:550px; margin:50px auto; background:rgba(0,0,0,0.9); padding:50px; border:2px solid gold; border-radius:30px; text-align:center; box-shadow: 0 0 50px rgba(255,215,0,0.2);">
-        <h2 style="color:gold; font-family:'Orbitron';">SUBMISSION CHECKLIST</h2>
-        <div style="text-align:left; background:rgba(255,215,0,0.05); padding:20px; border-radius:15px; margin:20px 0; border-left: 4px solid gold;">
-            <p>1. Enter Full Name Correctly</p>
-            <p>2. Verify Selected Game Realm</p>
-            <p>3. Confirm Plot ID and Price</p>
-            <p>4. Prepare Transaction Screenshot</p>
-        </div>
-        <input type="text" id="custName" placeholder="ENTER YOUR FULL NAME" style="width:90%; padding:15px; margin-bottom:20px; background:#111; border:1px solid gold; color:white; font-size:18px;">
-        <div style="font-size:60px; font-weight:900; color:gold; text-shadow: 0 0 20px gold;">$<span id="pr">0</span></div>
-        <button class="premium-btn" style="width:100%;" onclick="finish()">SUBMIT ASSET DATA</button>
-        <div style="margin-top:20px; display:flex; justify-content:center; gap:20px;">
-            <button class="nav-btn" onclick="location.href='index.html'">HOME</button>
-            <button class="nav-btn" onclick="history.back()">BACK TO MAP</button>
-        </div>
-    </div>
-
-    <div id="success" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:9999; text-align:center; padding-top:100px;">
-        <h1 style="color:gold; font-family:'Orbitron'; font-size:3rem;">CONGRATULATIONS!</h1>
-        <h2 id="resName" style="color:white;"></h2>
-        <div style="background:rgba(255,215,0,0.1); padding:30px; border-radius:20px; max-width:400px; margin:40px auto; border: 1px solid gold;">
-            <p style="color:gold;">OWNER: <span id="s1" style="color:white;"></span></p>
-            <p style="color:gold;">REALM: <span id="s2" style="color:white;"></span></p>
-            <p style="color:gold;">PLOT ID: <span id="s3" style="color:white;"></span></p>
-        </div>
-        <button class="premium-btn" style="padding:20px 50px;" onclick="location.href='support.html'">CONTACT SUPPORT TO ACTIVATE</button>
-    </div>
-
-    <script>
-        const u = new URLSearchParams(window.location.search);
-        document.getElementById('pr').innerText = u.get('price');
-        function finish() {
-            const name = document.getElementById('custName').value;
-            if(!name) return;
-            localStorage.setItem('hasPlot','true');
-            localStorage.setItem('uName', name);
-            localStorage.setItem('uPlot', u.get('id'));
-            localStorage.setItem('uGame', u.get('realm'));
-            document.getElementById('oForm').style.display='none';
-            document.getElementById('resName').innerText = name.toUpperCase();
-            document.getElementById('s1').innerText = name;
-            document.getElementById('s2').innerText = u.get('realm');
-            document.getElementById('s3').innerText = u.get('id');
-            document.getElementById('success').style.display='block';
-            confetti({ particleCount: 500, spread: 100, origin: { y: 0.6 }, colors:['#FFD700','#FFF'] });
-        }
-    </script>
-</body>
-</html> 
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>ACQUIRE ASSET</title><link rel="stylesheet" href="style.css"><script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script></head><body>
+<div id="oForm" style="max-width:480px; margin:60px auto; background:#050505; padding:45px; border:1px solid gold; border-radius:12px; text-align:center;">
+    <h2 style="color:gold; font-family:'Syncopate';">SUBMIT DATA</h2>
+    <input type="text" id="custName" placeholder="ENTER FULL NAME" style="width:90%; padding:15px; margin:25px 0; background:#000; border:1px solid gold; color:white; font-family:'Michroma'; outline:none;">
+    <button class="nav-btn" style="width:100%; background:gold; color:black; font-weight:bold;" onclick="finish()">ACTIVATE PLOT</button>
+</div>
+<div id="success" style="display:none; text-align:center; padding-top:120px;">
+    <h1 style="color:gold;">REGISTRATION COMPLETE!</h1>
+    <p style="opacity:0.6;">Visit support to finalize your ownership.</p>
+    <button class="nav-btn" onclick="location.href='index.html'">GO HOME</button>
+</div>
+<script>
+function finish() {
+    const name = document.getElementById('custName').value;
+    if(!name) return alert("Enter Name.");
+    const u = new URLSearchParams(window.location.search);
+    localStorage.setItem('hasPlot','true');
+    localStorage.setItem('uPlot', u.get('id'));
+    document.getElementById('oForm').style.display='none';
+    document.getElementById('success').style.display='block';
+    confetti({ particleCount: 300, spread: 100, origin: { y: 0.6 }, colors:['#FFD700','#FFF'] });
+}
+</script></body></html>
