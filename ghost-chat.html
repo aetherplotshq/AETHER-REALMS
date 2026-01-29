@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>GHOST CHAT</title>
+    <meta charset="UTF-8"><title>GHOST LOUNGE</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header style="padding:30px; text-align:center; border-bottom: 1px solid rgba(255,215,0,0.1);">
-        <button class="nav-btn" onclick="location.href='index.html'" style="position:absolute; left:30px;">EXIT LOUNGE</button>
-        <h2 style="color:gold; font-family:'Orbitron'; letter-spacing:10px;">GHOST LOUNGE</h2>
-    </header>
-
-    <div id="chatBox" style="max-width:800px; margin:30px auto; height:60vh; background:rgba(0,0,0,0.5); border:1px solid gold; overflow-y:auto; padding:30px; border-radius:20px; backdrop-filter:blur(20px);">
-        <div id="lockMsg" style="text-align:center; padding-top:100px;">
-            <div style="font-size:80px; filter:drop-shadow(0 0 20px red);">🔒</div>
-            <h2 style="color:#555; font-family:'Orbitron';">ELITE ACCESS ONLY</h2>
-            <p style="color:#333;">CHAT UNLOCKS AUTOMATICALLY AFTER ASSET ACQUISITION.</p>
+    <div style="max-width:900px; margin:50px auto; background:rgba(10,10,10,0.95); border:1px solid gold; border-radius:20px; height:85vh; display:flex; flex-direction:column; overflow:hidden; box-shadow: 0 0 100px rgba(0,0,0,1);">
+        <div style="padding:30px; border-bottom:1px solid rgba(255,215,0,0.1); display:flex; justify-content:space-between; align-items:center;">
+            <h2 style="color:gold; margin:0; letter-spacing:5px;">GHOST LOUNGE</h2>
+            <button class="nav-btn" onclick="location.href='index.html'">EXIT</button>
         </div>
-    </div>
-
-    <div id="inputArea" style="max-width:800px; margin:20px auto; display:none;">
-        <div style="background:gold; color:black; padding:10px 20px; font-weight:900; border-radius:10px 10px 0 0; font-family:'Orbitron'; font-size:12px;">
-            VERIFIED: <span id="uD"></span>
+        
+        <div id="chatBox" style="flex:1; padding:40px; overflow-y:auto; color:#ccc;">
+            <div id="lock" style="text-align:center; margin-top:150px;">
+                <h1 style="font-size:100px; margin:0;">🔒</h1>
+                <h2 style="color:gold;">ENTRY RESTRICTED</h2>
+                <p>ONLY VERIFIED ASSET OWNERS CAN ENTER THIS LOUNGE.</p>
+            </div>
         </div>
-        <div style="display:flex; gap:10px;">
-            <input type="text" id="msg" placeholder="Broadcast to other millionaires..." style="flex:1; padding:20px; background:#111; border:1px solid gold; color:#fff; border-radius:0 0 0 10px;">
-            <button class="premium-btn" style="border-radius:0 0 10px 0;" onclick="send()">SEND</button>
+
+        <div id="inputArea" style="display:none; padding:30px; background:#000; border-top:1px solid gold;">
+            <div id="status" style="font-size:10px; color:gold; margin-bottom:10px; text-transform:uppercase;"></div>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="m" placeholder="Transmit your message to the elite..." style="flex:1; background:#050505; border:1px solid gold; padding:20px; color:white; font-family:'Orbitron';">
+                <button class="nav-btn" onclick="send()">BROADCAST</button>
+            </div>
         </div>
     </div>
 
     <script>
-        const hasPlot = localStorage.getItem('hasPlot');
-        if(hasPlot === 'true') {
-            document.getElementById('lockMsg').style.display = 'none';
+        const has = localStorage.getItem('hasPlot');
+        if(has === 'true'){
+            document.getElementById('lock').style.display = 'none';
             document.getElementById('inputArea').style.display = 'block';
-            document.getElementById('uD').innerText = `${localStorage.getItem('uName')} | PLOT #${localStorage.getItem('uPlot')} | ${localStorage.getItem('uGame')}`;
+            document.getElementById('status').innerText = `Logged in as: ${localStorage.getItem('uName')} | Plot #${localStorage.getItem('uPlot')} | Realm: ${localStorage.getItem('uGame')}`;
         }
-        function send() {
-            const m = document.getElementById('msg').value;
-            if(!m) return;
+        function send(){
+            const msg = document.getElementById('m').value;
+            if(!msg) return;
             document.getElementById('chatBox').innerHTML += `
-                <div style="margin-bottom:20px; padding:15px; background:rgba(255,215,0,0.05); border-radius:10px;">
-                    <span style="color:gold; font-weight:900; font-size:12px;">[${localStorage.getItem('uName')} | #${localStorage.getItem('uPlot')} | ${localStorage.getItem('uGame')}]</span><br>
-                    <span style="color:white; font-size:16px;">${m}</span>
+                <div style="margin-bottom:25px; border-left:2px solid gold; padding-left:20px;">
+                    <span style="color:gold; font-size:11px; font-weight:bold;">${localStorage.getItem('uName')} | #${localStorage.getItem('uPlot')}</span><br>
+                    <p style="margin:5px 0; font-size:16px;">${msg}</p>
                 </div>`;
-            document.getElementById('msg').value = '';
-            document.getElementById('chatBox').scrollTop = document.getElementById('chatBox').scrollHeight;
+            document.getElementById('m').value = '';
         }
     </script>
 </body>
