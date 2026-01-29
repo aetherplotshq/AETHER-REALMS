@@ -1,41 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>THE MILLIONAIRE REALM</title>
+    <meta charset="UTF-8"><title>THE MILLIONAIRE REALM | EXCLUSIVE</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div style="position:fixed; right:30px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:25px; z-index:1000;">
-        <div class="menu-item" style="font-size:30px; cursor:pointer; filter:drop-shadow(0 0 10px gold);" onclick="openPayment()">💰</div>
-        <div class="menu-item" style="font-size:30px; cursor:pointer; filter:drop-shadow(0 0 10px gold);" onclick="openModal('rules')">📜</div>
-        <div class="menu-item" style="font-size:30px; cursor:pointer; filter:drop-shadow(0 0 10px gold);" onclick="openModal('news')">⚡</div>
-        <div class="menu-item" style="font-size:30px; cursor:pointer; filter:drop-shadow(0 0 10px gold);" onclick="location.href='ghost-chat.html'">💀</div>
+    <div style="position:fixed; left:40px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:30px; z-index:1000;">
+        <div class="nav-btn" onclick="location.href='support.html'" style="border-radius:50%; width:50px; height:50px; display:flex; align-items:center; justify-content:center;">💬</div>
+        <div class="nav-btn" onclick="openPayment()" style="border-radius:50%; width:50px; height:50px; display:flex; align-items:center; justify-content:center;">💰</div>
+        <div class="nav-btn" onclick="location.href='ghost-chat.html'" style="border-radius:50%; width:50px; height:50px; display:flex; align-items:center; justify-content:center;">👻</div>
     </div>
 
-    <header style="padding: 60px 0; text-align: center;">
-        <h1 class="main-title">THE MILLIONAIRE REALM</h1>
-        <p style="color:#555; letter-spacing: 8px; font-weight: bold; margin-top: 15px;">WHERE LEGENDS OWN THE WORLD</p>
+    <header style="padding: 100px 0 60px; text-align: center;">
+        <h1 class="main-title" style="margin:0;">AETHER REALMS</h1>
+        <p style="color: gold; letter-spacing: 12px; font-size: 10px; margin-top: 20px; font-weight: bold;">PREMIUM VIRTUAL ASSETS MANAGEMENT</p>
     </header>
 
-    <div id="gameGrid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; padding: 0 10%; max-width: 1200px; margin: auto;"></div>
-
-    <div id="uModal" class="modal">
-        <div class="modal-content" style="border: 3px solid #FFD700; background: #000;">
-            <h2 id="mTitle" style="color: gold; font-family: 'Orbitron';"></h2>
-            <div id="mBody" style="color: #fff; padding: 20px; font-size: 18px;"></div>
-            <button class="premium-btn" onclick="closeModal()">CLOSE</button>
-        </div>
-    </div>
+    <div id="gameGrid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:30px; padding: 0 10%; max-width: 1300px; margin: auto;"></div>
 
     <script>
         const games = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
         const grid = document.getElementById('gameGrid');
         games.forEach(g => {
-            grid.innerHTML += `<div class="game-card" onclick="location.href='dashboard.html?realm=${g}'"><h2 style="font-family:'Orbitron'; font-size:1.5rem;">${g}</h2></div>`;
+            grid.innerHTML += `<div class="game-card" onclick="location.href='dashboard.html?realm=${g}'">
+                <h2 style="font-size: 1.8rem; letter-spacing: 5px;">${g.toUpperCase()}</h2>
+                <span style="color: gold; font-size: 10px;">ENTER REALM →</span>
+            </div>`;
         });
-        function openModal(t) { document.getElementById('uModal').style.display='block'; }
-        function closeModal() { document.getElementById('uModal').style.display='none'; }
-        function openPayment() { /* logic same as before but inside premium modal */ }
     </script>
 </body>
 </html>
