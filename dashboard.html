@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>ELITE MAP</title>
+    <meta charset="UTF-8"><title>KINGDOM MAP</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body id="captureArea">
-    <header style="padding: 30px; display:flex; justify-content:space-between; align-items:center;">
-        <button class="nav-btn" onclick="location.href='index.html'">EXIT REALM</button>
+    <header style="padding: 40px; display:flex; justify-content:space-between; align-items:center;">
+        <button class="nav-btn" onclick="location.href='index.html'">← BACK TO SELECTION</button>
         <div style="text-align:center;">
-            <h2 id="realmTitle" style="margin:0; color:gold; font-family:'Orbitron'; letter-spacing:5px;">REALM</h2>
+            <h2 id="realmTitle" style="color:gold; font-size: 30px; letter-spacing: 10px; margin:0;">REALM</h2>
+            <p style="color:#555; font-size:10px; margin-top:5px;">OFFICIAL PROPERTY MAP</p>
         </div>
-        <button class="premium-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
+        <button class="nav-btn" style="background:gold; color:black;" onclick="download()">EXPORT MAP</button>
     </header>
 
-    <div style="text-align:center; padding-top: 50px;">
-        <div style="display:flex; justify-content:center; gap:50px; margin-bottom: 80px;">
+    <div style="text-align:center; padding: 20px 0;">
+        <div style="display:flex; justify-content:center; gap:40px; margin-bottom: 100px;">
             <script>
+                const r = new URLSearchParams(window.location.search).get('realm');
                 for(let i=1; i<=5; i++){
                     document.write(`
-                        <div class="vip-container" style="width:200px; height:200px;" onclick="location.href='order.html?id=VIP-${i}&price=9999&realm=${new URLSearchParams(window.location.search).get('realm')}'">
+                        <div class="vip-container" style="width:220px; height:220px; cursor:pointer;" onclick="location.href='order.html?id=KINGDOM-${i}&price=9999&realm=${r}'">
                             <div class="crown-icon">👑</div>
-                            <div style="margin-top:70px; font-weight:900; font-size:30px; color:gold;">$9,999</div>
-                            <div style="color:gold; margin-top:10px;">★★★★★</div>
+                            <div style="margin-top:60px; font-weight:900; font-size:32px; color:gold;">$9,999</div>
+                            <div style="color:gold; letter-spacing:3px; font-size:10px;">ULTIMATE KINGDOM</div>
                         </div>
                     `);
                 }
             </script>
         </div>
 
-        <div style="display:grid; grid-template-columns: repeat(14, 1fr); gap:10px; padding: 0 50px;">
+        <div style="display:grid; grid-template-columns: repeat(14, 1fr); gap:12px; padding: 0 80px;">
             <script>
-                const currentRealm = new URLSearchParams(window.location.search).get('realm');
                 for(let i=1; i<=95; i++){
-                    let price = (i<=28)?1599:(i<=56)?1299:999;
-                    document.write(`<div onclick="location.href='order.html?id=${i}&price=${price}&realm=${currentRealm}'" style="aspect-ratio:1/1; border:1px solid #222; background:rgba(255,215,0,0.05); display:flex; align-items:center; justify-content:center; cursor:pointer; color:gold; transition:0.3s; font-weight:bold;">#${i}</div>`);
+                    let p = (i<=28)?1599:(i<=56)?1299:999;
+                    document.write(`<div onclick="location.href='order.html?id=${i}&price=${p}&realm=${r}'" 
+                        style="aspect-ratio:1/1; border:1px solid #222; background:rgba(255,215,0,0.02); display:flex; align-items:center; justify-content:center; cursor:pointer; color:#777; transition:0.3s; font-size:12px;">#${i}</div>`);
                 }
             </script>
         </div>
     </div>
+    <script>document.getElementById('realmTitle').innerText = r.toUpperCase();</script>
 </body>
-</html> 
+</html>
