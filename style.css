@@ -1,32 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Pirata+One&display=swap');
-
-:root { --gold: #ffd700; --lava: #ff4500; --shadow: rgba(0,0,0,0.9); }
-
-body { background: #080808; color: #fff; font-family: 'Pirata One', cursive; margin: 0; }
-
-/* 3x3 Grid for Home */
-.game-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1200px; margin: 50px auto; padding: 20px; }
-.game-card { height: 250px; border: 1px solid #222; border-radius: 15px; cursor: pointer; position: relative; overflow: hidden; background-size: cover; background-position: center; transition: 0.4s; }
-.game-card:hover { border-color: var(--gold); transform: scale(1.05); }
-
-/* The Beast Evolution (Main 5 Plots) */
-.main-beast-container { position: relative; transition: 0.5s; }
-.beast-image { 
-    position: absolute; width: 140%; top: -40%; left: -20%; 
-    z-index: 2; pointer-events: none; 
-    filter: drop-shadow(0 0 10px var(--lava));
-}
-.plot-frame { 
-    width: 150px; height: 180px; border: 4px solid #333; 
-    background: var(--shadow); position: relative; z-index: 1; 
-}
-
-/* Lava & Glow Effects for Level 10 */
-.lvl-10 .plot-frame { border-color: var(--lava); box-shadow: 0 0 30px var(--lava); }
-.lvl-10 .beast-image { animation: breathe 2s infinite ease-in-out; filter: drop-shadow(0 0 25px var(--lava)); }
-
-@keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-
-/* Floating Ghost Chat */
-.chat-icon { position: fixed; right: 20px; bottom: 20px; font-size: 40px; cursor: pointer; z-index: 1000; }
-.chat-window { display: none; position: fixed; right: 20px; bottom: 80px; width: 320px; height: 450px; background: #000; border: 2px solid gold; z-index: 1000; flex-direction: column; } 
+:root { --gold: #FCD535; --dark: #0B0E11; --card: #1E2329; }
+body { background: var(--dark); color: #fff; font-family: sans-serif; margin: 0; text-align: center; }
+.top-nav { background: var(--card); padding: 15px; border-bottom: 1px solid #333; display: flex; justify-content: space-around; font-size: 12px; color: var(--gold); }
+.game-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 50px; }
+.game-box { border: 2px solid var(--gold); padding: 30px; cursor: pointer; background: var(--card); font-weight: bold; }
+.game-box:hover { background: var(--gold); color: #000; }
+.map { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; max-width: 650px; margin: 20px auto; }
+.plot { width: 60px; height: 60px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; font-size: 10px; cursor: pointer; overflow: hidden; }
+.plot img { width: 100%; height: 100%; object-fit: cover; }
+input, select { padding: 10px; margin: 10px 0; width: 80%; background: #000; color: #fff; border: 1px solid var(--gold); }
+button { padding: 10px 25px; background: var(--gold); border: none; font-weight: bold; cursor: pointer; }
