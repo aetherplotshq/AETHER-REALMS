@@ -2,52 +2,92 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K | THE ELITE LEGACY</title>
+    <title>K | INSPIRING LEGACY</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="cookie-banner" class="cookie-box">
-        <p>This site uses technical cookies to ensure the elite experience. <button onclick="closeCookie()">Settings</button> <button onclick="closeCookie()" class="gold-btn" style="padding: 8px 15px; margin-left: 10px;">Accept All</button></p>
-    </div>
-
     <header class="main-header">
         <div class="menu-trigger" onclick="toggleMenu()">
             <div class="bars"><span></span><span></span></div>
             <p>MENU</p>
         </div>
         
-        <div class="logo-center">
-            <div class="shield-k">K</div>
+        <div class="logo-wrapper">
+            <div class="logo-center rr-style">
+                <span class="text-logo">K</span>
+                <img src="white-cat-face.png" class="cat-logo" alt="Cat Face">
+            </div>
         </div>
 
-        <div class="contact-top">
-            <a href="https://wa.me/8801576940717" style="text-decoration:none; color:black; font-size:10px; border-bottom:1px solid #9E7E45;">WHATSAPP</a>
+        <div class="header-right">
+            <a href="support.html"><span class="search-icon">🔍</span> CUSTOMER SERVICE</a>
         </div>
     </header>
 
-    <section style="height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; background: #fff;">
-        <div>
-            <h1 style="font-family: 'Cinzel', serif; font-weight: 100; font-size: 3rem; letter-spacing: 15px; color: #111;">THE ELITE 100</h1>
-            <p style="letter-spacing: 5px; color: #9E7E45; font-size: 12px; margin-top: 20px;">STORY OF SUCCESS FOR 1M+ CREATORS</p>
-            <button class="gold-btn" style="margin-top: 40px;" onclick="toggleMenu()">EXPLORE REALMS</button>
+    <section class="hero-video-bg">
+        <div class="hero-overlay">
+            <p class="tagline">INSPIRING GREATNESS</p>
+            <h1 class="main-title">THE ELITE 100</h1>
         </div>
     </section>
 
     <div id="menu-overlay" class="menu-overlay">
         <span class="close-overlay" onclick="toggleMenu()">&times;</span>
         <nav class="nav-content">
-            <p style="font-size: 10px; color: #999; letter-spacing: 5px;">SELECT REALM</p>
+            <small>SELECT REALM</small>
             <ul>
                 <li onclick="location.href='dashboard.html?g=FreeFire'">FREE FIRE</li>
                 <li onclick="location.href='dashboard.html?g=PUBGM'">PUBG MOBILE</li>
-                <li onclick="location.href='dashboard.html?g=Fortnite'">FORTNITE</li>
-                <li onclick="location.href='dashboard.html?g=Minecraft'">MINECRAFT</li>
+                <li onclick="location.href='dashboard.html?g=Genshin'">GENSHIN IMPACT</li>
                 <li onclick="location.href='dashboard.html?g=Roblox'">ROBLOX</li>
-                </ul>
+                <li onclick="location.href='dashboard.html?g=Fortnite'">FORTNITE</li>
+                <li onclick="location.href='dashboard.html?g=COD'">CALL OF DUTY</li>
+                <li onclick="location.href='dashboard.html?g=Honkai'">HONKAI: STAR RAIL</li>
+                <li onclick="location.href='dashboard.html?g=Clash'">CLASH OF CLANS</li>
+                <li onclick="location.href='dashboard.html?g=Valorant'">VALORANT</li>
+                <li onclick="location.href='dashboard.html?g=MLBB'">MOBILE LEGENDS</li>
+            </ul>
         </nav>
     </div>
+
+    <footer class="rr-footer">
+        <div class="footer-logo">
+            <p>K-REALMS</p>
+            <small>ELITE PLOTS</small>
+        </div>
+        <hr class="footer-line">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <a href="dashboard.html">EXPLORE REALMS</a>
+                <a href="support.html">FIND A SPOT</a>
+                <a href="privacy.html">PRIVACY</a>
+                <a href="#">LANGUAGE 🇬🇧</a>
+            </div>
+            <div class="footer-col">
+                <a href="#">COOKIES</a>
+                <a href="#">ELIGIBILITY</a>
+                <a href="support.html">CAREERS</a>
+                <a href="dashboard.html">SITE MAP</a>
+            </div>
+            <div class="footer-col">
+                <a href="#">PRESSCLUB</a>
+                <a href="#">REGULATION</a>
+                <a href="#">WHISPERS</a>
+            </div>
+            <div class="footer-col">
+                <a href="#">LEGAL</a>
+                <a href="#">FAQS</a>
+                <a href="support.html">CONTACT</a>
+                <a href="#">SUSTAINABILITY</a>
+            </div>
+            <div class="footer-socials">
+                <a href="https://youtube.com/@k_realms" class="social-icon">YT</a>
+                <a href="https://facebook.com/k_realms" class="social-icon">FB</a>
+                <a href="https://instagram.com/k_realms" class="social-icon">IG</a>
+                <a href="https://x.com/k_realms" class="social-icon">X</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
