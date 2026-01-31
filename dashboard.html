@@ -1,72 +1,57 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>MAP</title><link rel="stylesheet" href="style.css"></head><body>
-
-<nav style="display:flex; justify-content:space-between; padding:20px; background:#111;">
-    <button onclick="location.href='index.html'" class="plot-frame" style="width:auto; height:auto; padding:10px 20px;">BACK</button>
-    <div id="rTitle" style="color:gold; font-size:24px;"></div>
-    <button onclick="location.href='support.html'" class="plot-frame" style="width:auto; height:auto; padding:10px 20px;">RULES/NEWS</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>REALM MAP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav style="display:flex; justify-content:space-between; padding:20px; background:#111; border-bottom:2px solid gold;">
+    <button onclick="location.href='index.html'" class="plot-frame" style="padding:10px 20px;">🏠 HOME</button>
+    <div id="rTitle" style="color:gold; font-size:28px; font-family:'Cinzel Decorative';"></div>
+    <button onclick="location.href='support.html'" class="plot-frame" style="padding:10px 20px;">📜 NEWS/RULES</button>
 </nav>
 
-<div style="padding:150px 20px; text-align:center;">
+<div style="padding:120px 20px; text-align:center;">
     <div style="display:flex; justify-content:center; gap:40px; align-items:flex-end; margin-bottom:100px;">
-        <div id="K4" class="main-beast-container"><div class="plot-frame" onclick="openBuy('K4')">COMMANDER</div></div>
-        <div id="K2" class="main-beast-container"><div class="plot-frame" onclick="openBuy('K2')">GUARDIAN</div></div>
-        <div id="Leader" class="main-beast-container" style="transform:scale(1.3);"><div class="plot-frame" onclick="openBuy('Leader')">KING</div></div>
-        <div id="K3" class="main-beast-container"><div class="plot-frame" onclick="openBuy('K3')">GUARDIAN</div></div>
-        <div id="K5" class="main-beast-container"><div class="plot-frame" onclick="openBuy('K5')">COMMANDER</div></div>
+        <div id="K4" class="main-beast-container"><div class="plot-frame" onclick="goBuy('K4')">COMMANDER</div></div>
+        <div id="K2" class="main-beast-container"><div class="plot-frame" onclick="goBuy('K2')">GUARDIAN</div></div>
+        <div id="Leader" class="main-beast-container" style="transform:scale(1.3);"><div class="plot-frame" onclick="goBuy('Leader')">KING</div></div>
+        <div id="K3" class="main-beast-container"><div class="plot-frame" onclick="goBuy('K3')">GUARDIAN</div></div>
+        <div id="K5" class="main-beast-container"><div class="plot-frame" onclick="goBuy('K5')">COMMANDER</div></div>
     </div>
     
-    <div id="grid95" style="display:grid; grid-template-columns: repeat(10, 1fr); gap:10px; max-width:1100px; margin:auto;"></div>
+    <div id="grid95" style="display:grid; grid-template-columns: repeat(10, 1fr); gap:15px; max-width:1100px; margin:auto;"></div>
 </div>
 
-<div class="chat-icon" onclick="toggleChat()">💀</div>
-<div id="chatBox" class="chat-window">
-    <div id="msgs" style="flex:1; overflow-y:auto; padding:10px;"></div>
-    <input type="text" id="chatInp" placeholder="Type here..." style="padding:15px; background:#222; color:gold; border:none;" disabled>
-</div>
+<div class="ghost-chat-icon" onclick="location.href='ghost-chat.html'">💀</div>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-    import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
-        authDomain: "aether-realms.firebaseapp.com",
-        databaseURL: "https://aether-realms-default-rtdb.firebaseio.com",
-        projectId: "aether-realms",
-        storageBucket: "aether-realms.firebasestorage.app",
-        messagingSenderId: "745970771566",
-        appId: "1:745970771566:web:1b0607362279665074a87f"
-    };
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+    import { db, ref, onValue } from "./firebase-config.js";
 
     const realm = new URLSearchParams(window.location.search).get('realm');
-    document.getElementById('rTitle').innerText = realm;
+    document.getElementById('rTitle').innerText = realm + " REALM";
 
-    // চ্যাট লজিক
-    onValue(ref(db, 'global_chat'), (snap) => {
-        const msgs = document.getElementById('msgs'); msgs.innerHTML = '';
-        const limit = Date.now() - (8*60*60*1000);
-        snap.forEach(c => {
-            const d = c.val();
-            if(d.time > limit) msgs.innerHTML += `<div><b>${d.name}:</b> ${d.text}</div>`;
-        });
-        msgs.scrollTop = msgs.scrollHeight;
-    });
-
-    // ইভোলিউশন লজিক: লেভেল ১০ হলে Beast Image এবং লার্ভা ইফেক্ট আসবে
+    // ইভোলিউশন লজিক
     const mainIds = ['Leader', 'K2', 'K3', 'K4', 'K5'];
     mainIds.forEach(id => {
         onValue(ref(db, 'plots/'+id), (s) => {
-            if(s.val()?.level >= 10) {
+            const data = s.val();
+            if(data && data.level >= 10) {
                 document.getElementById(id).classList.add('lvl-10');
-                // এখানে আপনি আপনার দানবের পিএনজি লিংক বসাবেন যা ফ্রেম ধরে থাকবে
-                document.getElementById(id).innerHTML += `<img src="beast_${id}.png" class="beast-image">`;
+                // লার্ভা/বিস্ট ইমেজ অ্যাড করা
+                if(!document.getElementById('img_'+id)){
+                   document.getElementById(id).innerHTML += `<img id="img_${id}" src="beast_${id}.png" class="beast-image">`;
+                }
             }
         });
     });
 
-    for(let i=1; i<=95; i++) document.getElementById('grid95').innerHTML += `<div class="plot-frame" style="width:70px; height:70px; font-size:10px; display:flex; align-items:center; justify-content:center;">#${i}</div>`;
+    // ৯৫টি প্লট জেনারেট
+    for(let i=1; i<=95; i++) {
+        document.getElementById('grid95').innerHTML += `<div class="plot-frame" style="width:70px; height:70px; font-size:12px; display:flex; align-items:center; justify-content:center;" onclick="goBuy('#${i}')">#${i}</div>`;
+    }
 
-    window.toggleChat = () => { const c = document.getElementById('chatBox'); c.style.display = (c.style.display==='flex')?'none':'flex'; }
-</script></body></html> 
+    window.goBuy = (id) => { location.href = `acquire.html?id=${id}`; }
+</script>
+</body>
+</html>
