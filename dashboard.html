@@ -1,21 +1,43 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" href="style.css"><title>MAP</title></head><body>
-    <div class="top-nav"><button onclick="location.href='index.html'">HOME</button><h2 id="gt"></h2><button onclick="location.href='support.html'">SUPPORT</button></div>
-    <div class="map" id="map"></div>
+<!DOCTYPE html>
+<html>
+<head><link rel="stylesheet" href="style.css"><title>REALM DASHBOARD</title></head>
+<body>
+    <header class="main-header">
+        <button onclick="history.back()" style="background:none; border:none; color:white; cursor:pointer;">← BACK</button>
+        <div class="logo-center"><div class="shield-k">K</div></div>
+        <div id="price-meter" style="text-align:right; font-size:10px;">
+            <span style="color:var(--gold)">LIVE PRICE: $<span id="current-price">500</span></span><br>
+            <span style="color:#555">NEXT 10 PLOTS: $<span id="next-price">600</span></span>
+        </div>
+    </header>
+
+    <div id="map-container" style="margin-top:150px; display:grid; grid-template-columns: repeat(10, 80px); gap:10px; justify-content:center;">
+        </div>
+
     <script type="module">
         import { db, ref, onValue } from "./firebase-config.js";
-        const g = new URLSearchParams(window.location.search).get('g') || 'FreeFire';
-        document.getElementById('gt').innerText = g + " (100 Plots)";
-        const map = document.getElementById('map');
-        for(let i=1; i<=100; i++) {
-            const p = document.createElement('div'); p.className='plot'; p.id='p'+i; p.innerText='#'+i;
-            p.onclick = () => location.href=`order.html?g=${g}&id=${i}`;
-            map.appendChild(p);
-        }
-        onValue(ref(db, 'live/'+g), (s) => {
-            s.forEach(c => {
-                const d = c.val(); const el = document.getElementById('p'+d.id);
-                if(el) el.innerHTML = `<a href="${d.url}" target="_blank"><img src="${d.img}"></a>`;
-            });
+        const g = new URLSearchParams(window.location.search).get('g');
+        
+        // Price Calculation Logic ($500 base, 20% increase every 10 sales)
+        onValue(ref(db, 'sales_count/' + g), (s) => {
+            const count = s.val() || 0;
+            const level = Math.floor(count / 10);
+            const currentPrice = 500 * Math.pow(1.2, level);
+            const nextPrice = 500 * Math.pow(1.2, level + 1);
+            
+            document.getElementById('current-price').innerText = currentPrice.toFixed(0);
+            document.getElementById('next-price').innerText = nextPrice.toFixed(0);
         });
+
+        // Generate 100 Plots (Fixed Size)
+        const container = document.getElementById('map-container');
+        for(let i=1; i<=100; i++) {
+            const p = document.createElement('div');
+            p.style = "width:80px; height:80px; border:0.1px solid #222; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:10px; color:#333;";
+            p.innerText = i;
+            p.onclick = () => location.href=`order.html?g=${g}&p=${i}`;
+            container.appendChild(p);
+        }
     </script>
-</body></html>
+</body>
+</html>
