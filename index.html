@@ -1,8 +1,13 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>AETHER REALMS</title><link rel="stylesheet" href="style.css"></head><body>
-
-<header style="text-align:center; padding:50px; border-bottom:1px solid #222;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>AETHER REALMS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header style="text-align:center; padding:50px;">
     <h1 style="font-family:'Cinzel Decorative'; color:gold; font-size:50px;">AETHER REALMS</h1>
-    <div id="liveClock" style="font-size:20px; color:orange; margin-top:10px;"></div>
+    <div id="liveClock" style="font-size:22px; color:orange;">00:00:00</div>
 </header>
 
 <div class="game-grid" id="gameGrid"></div>
@@ -23,9 +28,10 @@
     games.forEach(g => {
         document.getElementById('gameGrid').innerHTML += `
         <div class="game-card" style="background-image:url('${g.i}')" onclick="location.href='dashboard.html?realm=${g.n}'">
-            <h2 style="position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.7); margin:0; padding:10px; text-align:center;">${g.n}</h2>
+            <h2>${g.n}</h2>
         </div>`;
     });
-
     setInterval(() => { document.getElementById('liveClock').innerText = new Date().toLocaleTimeString(); }, 1000);
-</script></body></html> 
+</script>
+</body>
+</html>
