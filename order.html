@@ -1,21 +1,91 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" href="style.css"><title>ORDER</title></head><body>
-    <div style="margin-top:100px; border:1px solid gold; display:inline-block; padding:30px;">
-        <h2>RESERVE PLOT</h2>
-        <p id="info"></p>
-        <input type="text" id="cn" placeholder="Enter Your Name"><br>
-        <button onclick="buy()">SUBMIT ORDER</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RESERVE YOUR LEGACY | K</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .order-container { max-width: 600px; margin: 150px auto; padding: 40px; border: 1px solid #222; background: #050505; }
+        .payment-box { border-bottom: 1px solid #222; padding-bottom: 20px; margin-bottom: 30px; }
+        .payment-box p { font-size: 11px; color: var(--gold); margin: 5px 0; letter-spacing: 1px; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-size: 10px; color: #555; margin-bottom: 8px; text-transform: uppercase; }
+        input[type="text"], input[type="file"] {
+            width: 100%; padding: 12px; background: transparent; border: 1px solid #222; color: #fff; font-size: 14px;
+        }
+        .submit-btn { 
+            width: 100%; padding: 15px; background: var(--gold); border: none; 
+            color: #000; font-weight: bold; cursor: pointer; letter-spacing: 2px; margin-top: 20px;
+        }
+        .submit-btn:hover { background: #fff; transition: 0.5s; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <button onclick="history.back()" style="background:none; border:none; color:white; cursor:pointer; position:absolute; left:50px;">← BACK</button>
+        <div class="logo-center"><div class="shield-k">K</div></div>
+    </header>
+
+    <div class="order-container">
+        <h2 style="font-weight: 300; letter-spacing: 5px; text-align: center;">SECURE PLOT</h2>
+        <p id="order-info" style="text-align:center; font-size:12px; color:#555; margin-bottom:40px;"></p>
+
+        <div class="payment-box">
+            <label>Payment Addresses</label>
+            <p>BINANCE UID: 912221034</p>
+            <p>USDT (TRC20): TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</p>
+            <p>METAMASK (ETH): 0x443792A4884e8e855f954ccEF910778Aff1eb78E</p>
+        </div>
+
+        <div class="input-group">
+            <label>Channel / Profile Link (1M+ Followers)</label>
+            <input type="text" id="social-link" placeholder="https://youtube.com/c/yourchannel">
+        </div>
+
+        <div class="input-group">
+            <label>Proof of Ownership (Dashboard Screenshot)</label>
+            <input type="file" id="proof-img" accept="image/*">
+        </div>
+
+        <div class="input-group">
+            <label>Your Contact Email</label>
+            <input type="text" id="cust-email" placeholder="example@gmail.com">
+        </div>
+
+        <button class="submit-btn" onclick="submitOrder()">REQUEST VERIFICATION</button>
+        
+        <p style="font-size: 10px; color: #333; text-align: center; margin-top: 20px;">
+            After submission, our team will manually verify your 1M+ status and contact you via aetherplotshq@gmail.com.
+        </p>
     </div>
+
     <script type="module">
         import { db, ref, set } from "./firebase-config.js";
         const g = new URLSearchParams(window.location.search).get('g');
-        const id = new URLSearchParams(window.location.search).get('id');
-        document.getElementById('info').innerText = `${g} - Plot #${id}`;
-        window.buy = () => {
-            const name = document.getElementById('cn').value;
-            if(!name) return alert("Name required!");
-            set(ref(db, `orders/${g}/${id}`), {name, id, g}).then(() => {
-                alert("Success! Now contact support."); location.href='support.html';
+        const p = new URLSearchParams(window.location.search).get('p');
+        document.getElementById('order-info').innerText = `${g.toUpperCase()} REALM | PLOT #${p}`;
+
+        window.submitOrder = () => {
+            const link = document.getElementById('social-link').value;
+            const email = document.getElementById('cust-email').value;
+
+            if(!link || !email) {
+                alert("Please provide all required information.");
+                return;
+            }
+
+            // ডাটাবেসে অর্ডার সেভ করা
+            set(ref(db, `pending_orders/${g}/${p}`), {
+                realm: g,
+                plotID: p,
+                socialLink: link,
+                email: email,
+                status: "Pending Verification"
+            }).then(() => {
+                alert("Application Sent. We will verify and email you shortly.");
+                location.href = 'index.html';
             });
-        }
+        };
     </script>
-</body></html>
+</body>
+</html>
