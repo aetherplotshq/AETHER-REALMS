@@ -1,29 +1,32 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>AETHER REALMS</title><link rel="stylesheet" href="style.css"></head><body>
-<div class="side-bar">
-    <div onclick="location.href='support.html'">🎧</div>
-    <div onclick="openPay()">💰</div>
-    <div onclick="location.href='ghost-chat.html'">🛡️</div>
-</div>
-<header style="padding: 80px 0; text-align: center;">
-    <h1 style="font-family:'Syncopate'; font-size: 3rem; letter-spacing: 15px; color: transparent; -webkit-text-stroke: 1px gold; margin: 0;">REALMS</h1>
-    <p style="color: gold; letter-spacing: 8px; font-size: 9px; opacity: 0.6; margin-top:10px;">SUPREME VIRTUAL ASSETS</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>PIRATE REALMS</title><link rel="stylesheet" href="style.css"></head><body>
+<header style="text-align:center; padding:60px 20px; border-bottom: 1px solid var(--gold);">
+    <h1 style="font-family:'Cinzel Decorative'; font-size:3.5rem; color:var(--gold); margin:0;">THE PIRATE REALMS</h1>
+    <p style="letter-spacing:8px; color:var(--bronze);">ANCIENT TREASURE MAP</p>
+    <button class="nav-btn" onclick="document.getElementById('pModal').style.display='block'">RECHARGE DOUBLOONS</button>
 </header>
-<div id="grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:25px; padding: 0 10%; max-width: 1300px; margin: auto;"></div>
-<div id="pM" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.96); backdrop-filter:blur(10px);">
-    <div style="max-width:380px; margin:10% auto; background:#050505; border:1px solid gold; padding:40px; border-radius:10px; text-align:center;">
-        <h4 style="color:gold; font-family:'Syncopate'; margin-bottom:25px;">GATEWAY</h4>
-        <div onclick="copy('548291037','Binance')" style="background:rgba(255,215,0,0.05); padding:15px; border:1px solid rgba(255,215,0,0.2); margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:12px; border-radius:8px;">
-            <img src="https://cdn.worldvectorlogo.com/logos/binance-3.svg" width="22"> <div style="text-align:left;"><b style="color:gold; font-size:11px;">BINANCE UID</b><br><small style="color:#555;">548291037</small></div>
+
+<div id="realms" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:30px; padding:50px; max-width:1400px; margin:auto;"></div>
+
+<div id="pModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; backdrop-filter:blur(5px);">
+    <div style="max-width:400px; margin:10% auto; background:#111; border:2px solid gold; padding:40px; text-align:center; box-shadow: 0 0 50px #000;">
+        <h2 style="color:gold; font-family:'Cinzel Decorative';">PAYMENT GATEWAY</h2>
+        <div style="text-align:left; font-size:14px; background:rgba(255,255,255,0.05); padding:20px; border-radius:10px; margin:20px 0;">
+            <p>BINANCE UID: <br><b style="color:gold;">912221034</b> (KAWSAR6700)</p>
+            <p>USDT TRC20: <br><b style="color:gold; font-size:10px;">TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</b></p>
+            <p>METAMASK ERC20: <br><b style="color:gold; font-size:10px;">0x443792A4884e8e855f954ccEF910778Aff1eb78E</b></p>
         </div>
-        <div onclick="copy('0x123...ADDR','Coinbase')" style="background:rgba(255,215,0,0.05); padding:15px; border:1px solid rgba(255,215,0,0.2); margin-bottom:12px; cursor:pointer; display:flex; align-items:center; gap:12px; border-radius:8px;">
-            <img src="https://www.vectorlogo.zone/logos/coinbase/coinbase-icon.svg" width="22"> <div style="text-align:left;"><b style="color:gold; font-size:11px;">COINBASE</b><br><small style="color:#555;">USDT (ERC20)</small></div>
-        </div>
-        <button onclick="document.getElementById('pM').style.display='none'" class="nav-btn" style="margin-top:15px;">CLOSE</button>
+        <button onclick="document.getElementById('pModal').style.display='none'" class="nav-btn" style="width:100%;">CLOSE GATEWAY</button>
     </div>
 </div>
+
 <script>
     const gs = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
-    gs.forEach(r => { document.getElementById('grid').innerHTML += `<div class="game-portal" onclick="location.href='dashboard.html?realm=${r}'"><h3>${r.toUpperCase()}</h3><span style="font-size:8px; color:gold;">SELECT UNIT</span></div>`; });
-    function openPay() { document.getElementById('pM').style.display='block'; }
-    function copy(t, n) { navigator.clipboard.writeText(t); alert(n + " Copied!"); }
+    gs.forEach(r => {
+        document.getElementById('realms').innerHTML += `
+        <div class="frame row-1" style="padding:50px;" onclick="location.href='dashboard.html?realm=${r}'">
+            <div style="font-size:40px;">⚓</div>
+            <h2 style="margin:10px 0;">${r.toUpperCase()}</h2>
+            <small style="color:var(--bronze);">ENTER REALM</small>
+        </div>`;
+    });
 </script></body></html>
