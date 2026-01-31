@@ -1,32 +1,31 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>PIRATE REALMS</title><link rel="stylesheet" href="style.css"></head><body>
-<header style="text-align:center; padding:60px 20px; border-bottom: 1px solid var(--gold);">
-    <h1 style="font-family:'Cinzel Decorative'; font-size:3.5rem; color:var(--gold); margin:0;">THE PIRATE REALMS</h1>
-    <p style="letter-spacing:8px; color:var(--bronze);">ANCIENT TREASURE MAP</p>
-    <button class="nav-btn" onclick="document.getElementById('pModal').style.display='block'">RECHARGE DOUBLOONS</button>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>AETHER REALMS</title><link rel="stylesheet" href="style.css"></head><body>
+
+<header style="text-align:center; padding:50px; border-bottom:1px solid #222;">
+    <h1 style="font-family:'Cinzel Decorative'; color:gold; font-size:50px;">AETHER REALMS</h1>
+    <div id="liveClock" style="font-size:20px; color:orange; margin-top:10px;"></div>
 </header>
 
-<div id="realms" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:30px; padding:50px; max-width:1400px; margin:auto;"></div>
-
-<div id="pModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; backdrop-filter:blur(5px);">
-    <div style="max-width:400px; margin:10% auto; background:#111; border:2px solid gold; padding:40px; text-align:center; box-shadow: 0 0 50px #000;">
-        <h2 style="color:gold; font-family:'Cinzel Decorative';">PAYMENT GATEWAY</h2>
-        <div style="text-align:left; font-size:14px; background:rgba(255,255,255,0.05); padding:20px; border-radius:10px; margin:20px 0;">
-            <p>BINANCE UID: <br><b style="color:gold;">912221034</b> (KAWSAR6700)</p>
-            <p>USDT TRC20: <br><b style="color:gold; font-size:10px;">TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</b></p>
-            <p>METAMASK ERC20: <br><b style="color:gold; font-size:10px;">0x443792A4884e8e855f954ccEF910778Aff1eb78E</b></p>
-        </div>
-        <button onclick="document.getElementById('pModal').style.display='none'" class="nav-btn" style="width:100%;">CLOSE GATEWAY</button>
-    </div>
-</div>
+<div class="game-grid" id="gameGrid"></div>
 
 <script>
-    const gs = ["Fortnite", "CS2", "Minecraft", "Valorant", "Apex", "Roblox", "Warzone", "GTA", "League"];
-    gs.forEach(r => {
-        document.getElementById('realms').innerHTML += `
-        <div class="frame row-1" style="padding:50px;" onclick="location.href='dashboard.html?realm=${r}'">
-            <div style="font-size:40px;">⚓</div>
-            <h2 style="margin:10px 0;">${r.toUpperCase()}</h2>
-            <small style="color:var(--bronze);">ENTER REALM</small>
+    const games = [
+        {n: "Free Fire", i: "https://wallpapers.com/images/featured/free-fire-70vst9vst.jpg"},
+        {n: "PUBG Mobile", i: "https://images.alphacoders.com/102/1029243.jpg"},
+        {n: "Fortnite", i: "https://images.alphacoders.com/105/1055747.jpg"},
+        {n: "Valorant", i: "https://images6.alphacoders.com/107/1073801.jpg"},
+        {n: "Minecraft", i: "https://images.alphacoders.com/109/1090412.jpg"},
+        {n: "Apex Legends", i: "https://images8.alphacoders.com/100/1002241.jpg"},
+        {n: "Roblox", i: "https://images.alphacoders.com/111/1111111.jpg"},
+        {n: "CS2", i: "https://images.alphacoders.com/112/1121121.jpg"},
+        {n: "GTA V", i: "https://images.alphacoders.com/113/1131131.jpg"}
+    ];
+
+    games.forEach(g => {
+        document.getElementById('gameGrid').innerHTML += `
+        <div class="game-card" style="background-image:url('${g.i}')" onclick="location.href='dashboard.html?realm=${g.n}'">
+            <h2 style="position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.7); margin:0; padding:10px; text-align:center;">${g.n}</h2>
         </div>`;
     });
+
+    setInterval(() => { document.getElementById('liveClock').innerText = new Date().toLocaleTimeString(); }, 1000);
 </script></body></html>
