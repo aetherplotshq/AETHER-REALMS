@@ -1,19 +1,27 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>WAR MAP</title><link rel="stylesheet" href="style.css"></head><body>
-<nav style="padding:15px 30px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.9); border-bottom:1px solid var(--gold);">
-    <button onclick="location.href='index.html'" class="nav-btn">EXIT MAP</button>
-    <h2 id="realmName" style="color:gold; font-family:'Cinzel Decorative'; margin:0; font-size:1.5rem;"></h2>
-    <button onclick="location.href='support.html'" class="nav-btn">LEVEL UP</button>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>MAP</title><link rel="stylesheet" href="style.css"></head><body>
+
+<nav style="display:flex; justify-content:space-between; padding:20px; background:#111;">
+    <button onclick="location.href='index.html'" class="plot-frame" style="width:auto; height:auto; padding:10px 20px;">BACK</button>
+    <div id="rTitle" style="color:gold; font-size:24px;"></div>
+    <button onclick="location.href='support.html'" class="plot-frame" style="width:auto; height:auto; padding:10px 20px;">RULES/NEWS</button>
 </nav>
 
-<div style="padding:40px 20px; text-align:center;">
-    <div id="kingdoms" style="display:flex; justify-content:center; gap:20px; margin-bottom:60px; flex-wrap:wrap;"></div>
-    <div id="grid" style="display:grid; grid-template-columns: repeat(10, 1fr); gap:12px; max-width:1100px; margin:auto; padding-bottom:100px;"></div>
+<div style="padding:150px 20px; text-align:center;">
+    <div style="display:flex; justify-content:center; gap:40px; align-items:flex-end; margin-bottom:100px;">
+        <div id="K4" class="main-beast-container"><div class="plot-frame" onclick="openBuy('K4')">COMMANDER</div></div>
+        <div id="K2" class="main-beast-container"><div class="plot-frame" onclick="openBuy('K2')">GUARDIAN</div></div>
+        <div id="Leader" class="main-beast-container" style="transform:scale(1.3);"><div class="plot-frame" onclick="openBuy('Leader')">KING</div></div>
+        <div id="K3" class="main-beast-container"><div class="plot-frame" onclick="openBuy('K3')">GUARDIAN</div></div>
+        <div id="K5" class="main-beast-container"><div class="plot-frame" onclick="openBuy('K5')">COMMANDER</div></div>
+    </div>
+    
+    <div id="grid95" style="display:grid; grid-template-columns: repeat(10, 1fr); gap:10px; max-width:1100px; margin:auto;"></div>
 </div>
 
-<div class="chat-box">
-    <div style="background:var(--bronze); padding:12px; text-align:center; font-weight:bold; color:#000; font-family:sans-serif;">GHOST CHAT (LIVE)</div>
-    <div id="messages"></div>
-    <input type="text" id="chatInput" placeholder="Wait for Admin Approval..." disabled>
+<div class="chat-icon" onclick="toggleChat()">💀</div>
+<div id="chatBox" class="chat-window">
+    <div id="msgs" style="flex:1; overflow-y:auto; padding:10px;"></div>
+    <input type="text" id="chatInp" placeholder="Type here..." style="padding:15px; background:#222; color:gold; border:none;" disabled>
 </div>
 
 <script type="module">
@@ -29,63 +37,36 @@
         messagingSenderId: "745970771566",
         appId: "1:745970771566:web:1b0607362279665074a87f"
     };
-
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    document.getElementById('realmName').innerText = urlParams.get('realm') || "REALM";
+    const realm = new URLSearchParams(window.location.search).get('realm');
+    document.getElementById('rTitle').innerText = realm;
 
-    // Global Chat Logic (সবার মেসেজ সবাই দেখবে)
+    // চ্যাট লজিক
     onValue(ref(db, 'global_chat'), (snap) => {
-        const box = document.getElementById('messages');
-        box.innerHTML = '';
-        snap.forEach(child => {
-            const d = child.val();
-            box.innerHTML += `<div class="msg"><span class="msg-user">${d.name}</span><span class="msg-text">${d.text}</span></div>`;
+        const msgs = document.getElementById('msgs'); msgs.innerHTML = '';
+        const limit = Date.now() - (8*60*60*1000);
+        snap.forEach(c => {
+            const d = c.val();
+            if(d.time > limit) msgs.innerHTML += `<div><b>${d.name}:</b> ${d.text}</div>`;
         });
-        box.scrollTop = box.scrollHeight;
+        msgs.scrollTop = msgs.scrollHeight;
     });
 
-    // Chat Unlock Check (অ্যাডমিন লাইভ করলে খুলে যাবে)
-    const myId = localStorage.getItem('myPlotId');
-    if(myId) {
-        onValue(ref(db, 'plots/' + myId), (snap) => {
-            if(snap.val() && snap.val().status === 'active') {
-                const inp = document.getElementById('chatInput');
-                inp.disabled = false;
-                inp.placeholder = "Type message, Captain...";
+    // ইভোলিউশন লজিক: লেভেল ১০ হলে Beast Image এবং লার্ভা ইফেক্ট আসবে
+    const mainIds = ['Leader', 'K2', 'K3', 'K4', 'K5'];
+    mainIds.forEach(id => {
+        onValue(ref(db, 'plots/'+id), (s) => {
+            if(s.val()?.level >= 10) {
+                document.getElementById(id).classList.add('lvl-10');
+                // এখানে আপনি আপনার দানবের পিএনজি লিংক বসাবেন যা ফ্রেম ধরে থাকবে
+                document.getElementById(id).innerHTML += `<img src="beast_${id}.png" class="beast-image">`;
             }
         });
-    }
-
-    document.getElementById('chatInput').addEventListener('keypress', (e) => {
-        if(e.key === 'Enter' && e.target.value != '') {
-            push(ref(db, 'global_chat'), {
-                name: localStorage.getItem('uName') || 'Pirate',
-                text: e.target.value
-            });
-            e.target.value = '';
-        }
     });
 
-    // Map Generation
-    const kings = [
-        {id:'K4', c:'commander', p:599}, {id:'K2', c:'guardian', p:799},
-        {id:'Leader', c:'leader', p:999},
-        {id:'K3', c:'guardian', p:799}, {id:'K5', c:'commander', p:599}
-    ];
-    kings.forEach(k => {
-        document.getElementById('kingdoms').innerHTML += `<div class="frame ${k.c}" style="width:130px; padding:20px;">
-            <div style="font-size:40px;">☠️</div><div style="color:gold; font-size:18px;">$${k.p}</div><small>${k.id}</small>
-        </div>`;
-    });
+    for(let i=1; i<=95; i++) document.getElementById('grid95').innerHTML += `<div class="plot-frame" style="width:70px; height:70px; font-size:10px; display:flex; align-items:center; justify-content:center;">#${i}</div>`;
 
-    for(let i=1; i<=100; i++) {
-        let rc = (i<=10)?'row-1':(i<=20)?'row-2':(i<=30)?'row-3':'';
-        let pr = (i<=10)?299:(i<=20)?199:(i<=30)?99:29;
-        document.getElementById('grid').innerHTML += `<div class="frame ${rc}" style="aspect-ratio:1/1; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:11px;">
-            <span>#${i}</span><b style="color:gold;">$${pr}</b>
-        </div>`;
-    }
+    window.toggleChat = () => { const c = document.getElementById('chatBox'); c.style.display = (c.style.display==='flex')?'none':'flex'; }
 </script></body></html>
