@@ -1,24 +1,26 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" href="style.css"><title>ADMIN</title></head><body>
-    <h1 id="h" style="display:none;">PENDING ORDERS</h1>
-    <div id="ol"></div>
+<!DOCTYPE html><html><head><link rel="stylesheet" href="style.css"><title>APPLICATIONS | K</title></head>
+<body>
+    <div style="padding:100px 50px;">
+        <h1 style="font-weight:300; letter-spacing:5px;">PENDING VERIFICATIONS</h1>
+        <div id="order-list"></div>
+    </div>
     <script type="module">
-        import { db, ref, onValue, set, remove } from "./firebase-config.js";
-        if(prompt("Pass:") !== "KAWSARahmed22@@") location.href='index.html';
-        else document.getElementById('h').style.display='block';
-        onValue(ref(db, 'orders'), s => {
-            const l = document.getElementById('ol'); l.innerHTML = "";
+        import { db, ref, onValue, remove } from "./firebase-config.js";
+        if(prompt("Security Key:") !== "KAWSARahmed22@@") location.href='index.html';
+        
+        onValue(ref(db, 'pending_orders'), s => {
+            const list = document.getElementById('order-list'); list.innerHTML = "";
             s.forEach(gs => gs.forEach(o => {
                 const d = o.val();
-                l.innerHTML += `<div style="border:1px solid gold; margin:10px; padding:10px;">
-                    <p>${d.g} Plot #${d.id} - ${d.name}</p>
-                    <input type="text" id="i${d.id}" placeholder="Image Link"><input type="text" id="w${d.id}" placeholder="Web Link">
-                    <button onclick="window.ap('${d.g}','${d.id}','${d.name}')">APPROVE</button>
+                list.innerHTML += `<div style="border:1px solid #222; padding:30px; margin-bottom:20px;">
+                    <p>REALM: ${d.realm} | PLOT: #${d.plotID}</p>
+                    <p>EMAIL: ${d.email}</p>
+                    <p>LINK: <a href="${d.socialLink}" target="_blank" style="color:var(--gold)">VIEW CHANNEL</a></p>
+                    <button class="gold-btn" onclick="alert('Proceed to Manual Update to Go Live')">APPROVE</button>
+                    <button style="background:none; border:1px solid red; color:red; padding:10px;" onclick="window.del('${d.realm}','${d.plotID}')">REJECT</button>
                 </div>`;
             }));
         });
-        window.ap = (g,id,n) => {
-            const img = document.getElementById('i'+id).value; const url = document.getElementById('w'+id).value;
-            set(ref(db, `live/${g}/${id}`), {id, name:n, img, url}).then(()=>remove(ref(db, `orders/${g}/${id}`)));
-        }
+        window.del = (g, p) => remove(ref(db, `pending_orders/${g}/${p}`));
     </script>
 </body></html>
