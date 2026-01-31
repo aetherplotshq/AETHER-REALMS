@@ -1,145 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>REALM ADMIN - COMMANDER</title>
+    <meta charset="UTF-8"><title>ADMIN PANEL</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background: #050505; color: gold; padding: 20px; font-family: sans-serif; }
-        .admin-container { max-width: 1200px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .panel { background: #111; border: 1px solid gold; padding: 20px; border-radius: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; color: white; }
-        th, td { border: 1px solid #333; padding: 10px; text-align: left; }
-        th { background: gold; color: black; }
-        input, select { background: #000; color: gold; border: 1px solid gold; padding: 8px; width: 100%; margin: 5px 0; }
-        .btn-approve { background: #2ecc71; color: white; border: none; padding: 5px 10px; cursor: pointer; }
-        .btn-update { background: gold; color: black; font-weight: bold; border: none; padding: 12px; width: 100%; cursor: pointer; margin-top: 10px; }
+        body { background: #000; color: gold; padding: 20px; }
+        .panel { border: 1px solid gold; padding: 20px; margin-bottom: 20px; background: #111; }
+        table { width: 100%; color: white; border-collapse: collapse; }
+        th, td { border: 1px solid #333; padding: 10px; }
     </style>
 </head>
 <body>
-
-<h1 style="text-align:center; font-family:'Cinzel Decorative';">TREASURE SHIP CONTROL</h1>
-
-<div class="admin-container">
-    
+    <h1>SHIP CONTROL PANEL</h1>
     <div class="panel">
-        <h2>📥 NEW ORDER REQUESTS</h2>
-        <div style="max-height: 500px; overflow-y: auto;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Plot ID</th>
-                        <th>Name</th>
-                        <th>Time</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="orderList">
-                    </tbody>
-            </table>
-        </div>
+        <h2>ORDERS</h2>
+        <table id="orderTable">
+            <tr><th>Plot</th><th>Name</th><th>Action</th></tr>
+        </table>
     </div>
 
     <div class="panel">
-        <h2>🛠️ PLOT MANAGEMENT</h2>
-        <div style="margin-top:20px;">
-            <label>Target Plot ID:</label>
-            <input type="text" id="targetId" placeholder="e.g. Leader or #45">
-            
-            <label>Owner Name:</label>
-            <input type="text" id="targetOwner" placeholder="Assign Owner Name">
-            
-            <label>Set Level (1-10):</label>
-            <select id="targetLvl">
-                <option value="1">Level 1 (Basic)</option>
-                <option value="5">Level 5 (Awakened)</option>
-                <option value="10">Level 10 (Supreme Beast)</option>
-            </select>
-
-            <label>Account Status:</label>
-            <select id="targetStatus">
-                <option value="active">Active (Unlock Chat & Effects)</option>
-                <option value="pending">Pending (Locked)</option>
-            </select>
-
-            <button class="btn-update" onclick="applyChanges()">APPLY GLOBAL UPDATE</button>
-        </div>
-
-        <div style="margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
-            <h3>🚨 DANGER ZONE</h3>
-            <button onclick="clearChat()" style="background:red; color:white; border:none; padding:10px; cursor:pointer;">FORCE CLEAR CHAT (ALL)</button>
-        </div>
+        <h2>UPDATE PLOT</h2>
+        <input type="text" id="pId" placeholder="Plot ID">
+        <input type="number" id="pLvl" placeholder="Level (1-10)">
+        <button onclick="updatePlot()">UPDATE LIVE</button>
     </div>
-
-</div>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-    import { getDatabase, ref, onValue, set, update, remove } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+    import { db, ref, onValue, update, remove } from "./firebase-config.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
-        authDomain: "aether-realms.firebaseapp.com",
-        databaseURL: "https://aether-realms-default-rtdb.firebaseio.com",
-        projectId: "aether-realms",
-        storageBucket: "aether-realms.firebasestorage.app",
-        messagingSenderId: "745970771566",
-        appId: "1:745970771566:web:1b0607362279665074a87f"
-    };
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // ১. অর্ডার রিকোয়েস্ট লোড করা
     onValue(ref(db, 'orders'), (snap) => {
-        const list = document.getElementById('orderList');
-        list.innerHTML = '';
-        snap.forEach(child => {
-            const data = child.val();
-            const key = child.key;
-            list.innerHTML += `
-                <tr>
-                    <td><b style="color:gold;">${data.plotId}</b></td>
-                    <td>${data.customerName}</td>
-                    <td style="font-size:10px;">${data.time}</td>
-                    <td><button class="btn-approve" onclick="copyToForm('${data.plotId}', '${data.customerName}', '${key}')">SELECT</button></td>
-                </tr>
-            `;
+        const table = document.getElementById('orderTable');
+        table.innerHTML = '<tr><th>Plot</th><th>Name</th><th>Action</th></tr>';
+        snap.forEach(c => {
+            const d = c.val();
+            table.innerHTML += `<tr><td>${d.plotId}</td><td>${d.customerName}</td><td><button onclick="document.getElementById('pId').value='${d.plotId}'">SELECT</button></td></tr>`;
         });
     });
 
-    // ২. সিলেক্ট করলে ফর্মে ডাটা আসা
-    window.copyToForm = (id, name, key) => {
-        document.getElementById('targetId').value = id;
-        document.getElementById('targetOwner').value = name;
-        alert("Plot " + id + " selected for review.");
-    };
-
-    // ৩. ফাইনাল আপডেট প্রয়োগ
-    window.applyChanges = () => {
-        const id = document.getElementById('targetId').value;
-        const owner = document.getElementById('targetOwner').value;
-        const lvl = document.getElementById('targetLvl').value;
-        const status = document.getElementById('targetStatus').value;
-
-        if(!id) return alert("Select a Plot first!");
-
-        // প্লট আপডেট করা
-        update(ref(db, 'plots/' + id), {
-            owner: owner,
-            level: parseInt(lvl),
-            status: status
-        }).then(() => {
-            alert("SUCCESS: Plot " + id + " is now Level " + lvl);
-        });
-    };
-
-    // ৪. চ্যাট ডিলিট (Manual Force Clear)
-    window.clearChat = () => {
-        if(confirm("Delete all messages from history?")) {
-            remove(ref(db, 'global_chat'));
-            alert("Chat cleared.");
-        }
-    };
+    window.updatePlot = () => {
+        const id = document.getElementById('pId').value;
+        const lvl = document.getElementById('pLvl').value;
+        update(ref(db, 'plots/' + id), { level: parseInt(lvl), status: 'active' })
+        .then(() => alert("Plot Updated!"));
+    }
 </script>
 </body>
 </html>
