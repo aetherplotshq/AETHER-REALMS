@@ -1,49 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"><title>ADMIN PANEL</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body { background: #000; color: gold; padding: 20px; }
-        .panel { border: 1px solid gold; padding: 20px; margin-bottom: 20px; background: #111; }
-        table { width: 100%; color: white; border-collapse: collapse; }
-        th, td { border: 1px solid #333; padding: 10px; }
-    </style>
-</head>
-<body>
-    <h1>SHIP CONTROL PANEL</h1>
-    <div class="panel">
-        <h2>ORDERS</h2>
-        <table id="orderTable">
-            <tr><th>Plot</th><th>Name</th><th>Action</th></tr>
-        </table>
-    </div>
-
-    <div class="panel">
-        <h2>UPDATE PLOT</h2>
-        <input type="text" id="pId" placeholder="Plot ID">
-        <input type="number" id="pLvl" placeholder="Level (1-10)">
-        <button onclick="updatePlot()">UPDATE LIVE</button>
-    </div>
-
-<script type="module">
-    import { db, ref, onValue, update, remove } from "./firebase-config.js";
-
-    onValue(ref(db, 'orders'), (snap) => {
-        const table = document.getElementById('orderTable');
-        table.innerHTML = '<tr><th>Plot</th><th>Name</th><th>Action</th></tr>';
-        snap.forEach(c => {
-            const d = c.val();
-            table.innerHTML += `<tr><td>${d.plotId}</td><td>${d.customerName}</td><td><button onclick="document.getElementById('pId').value='${d.plotId}'">SELECT</button></td></tr>`;
+<!DOCTYPE html><html><head><link rel="stylesheet" href="style.css"><title>ADMIN</title></head><body>
+    <h1 id="h" style="display:none;">PENDING ORDERS</h1>
+    <div id="ol"></div>
+    <script type="module">
+        import { db, ref, onValue, set, remove } from "./firebase-config.js";
+        if(prompt("Pass:") !== "KAWSARahmed22@@") location.href='index.html';
+        else document.getElementById('h').style.display='block';
+        onValue(ref(db, 'orders'), s => {
+            const l = document.getElementById('ol'); l.innerHTML = "";
+            s.forEach(gs => gs.forEach(o => {
+                const d = o.val();
+                l.innerHTML += `<div style="border:1px solid gold; margin:10px; padding:10px;">
+                    <p>${d.g} Plot #${d.id} - ${d.name}</p>
+                    <input type="text" id="i${d.id}" placeholder="Image Link"><input type="text" id="w${d.id}" placeholder="Web Link">
+                    <button onclick="window.ap('${d.g}','${d.id}','${d.name}')">APPROVE</button>
+                </div>`;
+            }));
         });
-    });
-
-    window.updatePlot = () => {
-        const id = document.getElementById('pId').value;
-        const lvl = document.getElementById('pLvl').value;
-        update(ref(db, 'plots/' + id), { level: parseInt(lvl), status: 'active' })
-        .then(() => alert("Plot Updated!"));
-    }
-</script>
-</body>
-</html>
+        window.ap = (g,id,n) => {
+            const img = document.getElementById('i'+id).value; const url = document.getElementById('w'+id).value;
+            set(ref(db, `live/${g}/${id}`), {id, name:n, img, url}).then(()=>remove(ref(db, `orders/${g}/${id}`)));
+        }
+    </script>
+</body></html>
