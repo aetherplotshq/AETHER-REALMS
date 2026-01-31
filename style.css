@@ -1,35 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Pirata+One&display=swap');
 
-:root { --gold: #d4af37; --bronze: #8b4513; --wood: #1a120b; }
+:root { --gold: #ffd700; --lava: #ff4500; --shadow: rgba(0,0,0,0.9); }
 
-body { 
-    background: radial-gradient(circle, #2c1e12 0%, #000 100%); 
-    color: #e0c097; font-family: 'Pirata One', cursive; margin: 0; overflow-x: hidden;
+body { background: #080808; color: #fff; font-family: 'Pirata One', cursive; margin: 0; }
+
+/* 3x3 Grid for Home */
+.game-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1200px; margin: 50px auto; padding: 20px; }
+.game-card { height: 250px; border: 1px solid #222; border-radius: 15px; cursor: pointer; position: relative; overflow: hidden; background-size: cover; background-position: center; transition: 0.4s; }
+.game-card:hover { border-color: var(--gold); transform: scale(1.05); }
+
+/* The Beast Evolution (Main 5 Plots) */
+.main-beast-container { position: relative; transition: 0.5s; }
+.beast-image { 
+    position: absolute; width: 140%; top: -40%; left: -20%; 
+    z-index: 2; pointer-events: none; 
+    filter: drop-shadow(0 0 10px var(--lava));
+}
+.plot-frame { 
+    width: 150px; height: 180px; border: 4px solid #333; 
+    background: var(--shadow); position: relative; z-index: 1; 
 }
 
-/* Kingdom & Row Frames */
-.frame { border: 2px solid #5c4033; background: rgba(0,0,0,0.8); transition: 0.3s; cursor: pointer; position: relative; text-align: center; }
-.frame:hover { transform: scale(1.05); filter: brightness(1.2); border-color: var(--gold); }
+/* Lava & Glow Effects for Level 10 */
+.lvl-10 .plot-frame { border-color: var(--lava); box-shadow: 0 0 30px var(--lava); }
+.lvl-10 .beast-image { animation: breathe 2s infinite ease-in-out; filter: drop-shadow(0 0 25px var(--lava)); }
 
-.leader { border: 5px solid gold !important; box-shadow: 0 0 25px gold; }
-.guardian { border: 4px solid silver !important; box-shadow: 0 0 15px silver; }
-.commander { border: 4px solid #cd7f32 !important; box-shadow: 0 0 10px #cd7f32; }
+@keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-.row-1 { border: 3px solid gold !important; }
-.row-2 { border: 3px solid silver !important; }
-.row-3 { border: 3px solid #cd7f32 !important; }
-
-/* Shared Ghost Chat */
-.chat-box {
-    position: fixed; left: 20px; bottom: 20px; width: 320px; height: 450px;
-    background: rgba(10, 5, 0, 0.95); border: 2px solid var(--gold);
-    display: flex; flex-direction: column; z-index: 1000;
-}
-#messages { flex: 1; overflow-y: auto; padding: 15px; border-bottom: 1px solid var(--gold); scroll-behavior: smooth; }
-.msg { margin-bottom: 12px; border-bottom: 1px solid rgba(212,175,55,0.1); padding-bottom: 5px; }
-.msg-user { color: var(--gold); font-weight: bold; font-size: 13px; text-transform: uppercase; display: block; }
-.msg-text { color: #fff; font-size: 15px; }
-
-#chatInput { background: #000; border: none; padding: 15px; color: gold; outline: none; font-family: 'Pirata One'; font-size: 16px; }
-
-.nav-btn { font-family: 'Cinzel Decorative'; background: var(--bronze); color: #fff; padding: 10px 20px; border: 1px solid gold; cursor: pointer; }
+/* Floating Ghost Chat */
+.chat-icon { position: fixed; right: 20px; bottom: 20px; font-size: 40px; cursor: pointer; z-index: 1000; }
+.chat-window { display: none; position: fixed; right: 20px; bottom: 80px; width: 320px; height: 450px; background: #000; border: 2px solid gold; z-index: 1000; flex-direction: column; }
