@@ -1,37 +1,21 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>ADMIN CONTROL</title><style>body{background:#000; color:gold; padding:50px; font-family:sans-serif;} input{padding:12px; margin:5px; width:250px; background:#111; border:1px solid gold; color:#fff;}</style></head><body>
-    <h1 style="color:gold;">REALM ADMINISTRATION</h1>
-    <div style="border:1px solid #333; padding:30px; display:inline-block;">
-        <input type="text" id="pId" placeholder="Plot ID (Leader/K1/45)"><br>
-        <input type="text" id="uName" placeholder="Owner Name"><br>
-        <input type="number" id="uLvl" placeholder="Set Level (1-10)"><br><br>
-        <button onclick="update('active')" style="background:gold; color:#000; padding:10px 20px; font-weight:bold; cursor:pointer;">APPROVE & LIVE</button>
-        <button onclick="update('pending')" style="background:#555; color:#fff; padding:10px 20px; cursor:pointer;">DEACTIVATE</button>
-    </div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>ADMIN</title><style>body{background:#000; color:gold; padding:50px;}</style></head><body>
+    <h1>SHIP CONTROL</h1>
+    <input type="text" id="pId" placeholder="Plot ID">
+    <input type="number" id="uLvl" placeholder="Level (1-10)">
+    <button onclick="update()">SET LEVEL</button>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
         import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
-            authDomain: "aether-realms.firebaseapp.com",
-            databaseURL: "https://aether-realms-default-rtdb.firebaseio.com",
-            projectId: "aether-realms",
-            storageBucket: "aether-realms.firebasestorage.app",
-            messagingSenderId: "745970771566",
-            appId: "1:745970771566:web:1b0607362279665074a87f"
-        };
+        const firebaseConfig = { /* SAME CONFIG */ };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        window.update = (status) => {
+        window.update = () => {
             const id = document.getElementById('pId').value;
-            const name = document.getElementById('uName').value;
             const lvl = document.getElementById('uLvl').value;
-            if(!id) return alert("Enter Plot ID");
-
-            update(ref(db, 'plots/' + id), { owner: name, level: lvl, status: status });
-            alert("Updated Success!");
+            update(ref(db, 'plots/'+id), { level: lvl, status: 'active' });
+            alert("Level Updated!");
         }
     </script>
 </body></html>
