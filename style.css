@@ -29,4 +29,4 @@ body { background: #080808; color: #fff; font-family: 'Pirata One', cursive; mar
 
 /* Floating Ghost Chat */
 .chat-icon { position: fixed; right: 20px; bottom: 20px; font-size: 40px; cursor: pointer; z-index: 1000; }
-.chat-window { display: none; position: fixed; right: 20px; bottom: 80px; width: 320px; height: 450px; background: #000; border: 2px solid gold; z-index: 1000; flex-direction: column; }
+.chat-window { display: none; position: fixed; right: 20px; bottom: 80px; width: 320px; height: 450px; background: #000; border: 2px solid gold; z-index: 1000; flex-direction: column; } 
