@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" href="style.css"><title>MANUAL UPDATE</title></head><body>
+    <div id="auth" style="margin-top:100px;">
+        <input type="password" id="pw" placeholder="Security Key"><button onclick="login()">UNLOCK</button>
+    </div>
+    <div id="panel" style="display:none; padding:20px;">
+        <h2>MANUAL LIVE PANEL</h2>
+        <select id="sg"><option>FreeFire</option><option>PUBGM</option><option>Fortnite</option><option>Valorant</option><option>Minecraft</option><option>Apex</option><option>Roblox</option><option>CS2</option><option>GTAV</option></select>
+        <input type="number" id="sid" placeholder="Plot ID (1-100)">
+        <input type="text" id="sn" placeholder="Name"><input type="text" id="sim" placeholder="Image URL"><input type="text" id="sl" placeholder="Web Link">
+        <button onclick="live()">PUBLISH NOW</button>
+        <hr><div id="liveList"></div>
+    </div>
+    <script type="module">
+        import { db, ref, set, onValue, remove } from "./firebase-config.js";
+        window.login = () => {
+            if(document.getElementById('pw').value === "KAWSARahmed22@@") {
+                document.getElementById('auth').style.display='none'; document.getElementById('panel').style.display='block';
+            }
+        };
+        window.live = () => {
+            const g = document.getElementById('sg').value; const id = document.getElementById('sid').value;
+            set(ref(db, `live/${g}/${id}`), {id, name:document.getElementById('sn').value, img:document.getElementById('sim').value, url:document.getElementById('sl').value});
+            alert("Live!");
+        };
+        onValue(ref(db, 'live'), s => {
+            const l = document.getElementById('liveList'); l.innerHTML = "";
+            s.forEach(gs => gs.forEach(p => {
+                l.innerHTML += `<p>${gs.key} #${p.key} <button onclick="window.del('${gs.key}','${p.key}')">DEL</button></p>`;
+            }));
+        });
+        window.del = (g,p) => remove(ref(db, `live/${g}/${p}`));
+    </script>
+</body></html>
