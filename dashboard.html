@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html>
-<head><link rel="stylesheet" href="style.css"><title>REALM DASHBOARD</title></head>
-<body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>REALM DASHBOARD | K</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color: #ffffff;">
     <header class="main-header">
-        <button onclick="history.back()" style="background:none; border:none; color:white; cursor:pointer;">← BACK</button>
+        <button onclick="history.back()" style="background:none; border:none; color:black; cursor:pointer; font-size:10px; letter-spacing:2px;">← BACK</button>
         <div class="logo-center"><div class="shield-k">K</div></div>
-        <div id="price-meter" style="text-align:right; font-size:10px;">
-            <span style="color:var(--gold)">LIVE PRICE: $<span id="current-price">500</span></span><br>
-            <span style="color:#555">NEXT 10 PLOTS: $<span id="next-price">600</span></span>
+        <div id="price-meter" style="text-align:right; font-family:Arial, sans-serif;">
+            <p style="font-size:10px; color:#9E7E45; margin:0;">CURRENT PRICE: $<span id="current-price">500</span></p>
+            <p style="font-size:9px; color:#999; margin:0;">NEXT INCREASE: PLOT <span id="next-trigger">6</span></p>
         </div>
     </header>
 
-    <div id="map-container" style="margin-top:150px; display:grid; grid-template-columns: repeat(10, 80px); gap:10px; justify-content:center;">
+    <div id="map-container">
         </div>
 
     <script type="module">
         import { db, ref, onValue } from "./firebase-config.js";
-        const g = new URLSearchParams(window.location.search).get('g');
+        const g = new URLSearchParams(window.location.search).get('g') || "FreeFire";
         
-        // Price Calculation Logic ($500 base, 20% increase every 10 sales)
-        onValue(ref(db, 'sales_count/' + g), (s) => {
-            const count = s.val() || 0;
-            const level = Math.floor(count / 10);
+        // প্রাইসিং লজিক: প্রতি ৫টি প্লটে ২০% বৃদ্ধি
+        onValue(ref(db, 'sales_count/' + g), (snapshot) => {
+            const soldCount = snapshot.val() || 0;
+            const level = Math.floor(soldCount / 5); // প্রতি ৫টি পর পর লেভেল বাড়বে
             const currentPrice = 500 * Math.pow(1.2, level);
-            const nextPrice = 500 * Math.pow(1.2, level + 1);
-            
+            const nextTrigger = (level + 1) * 5 + 1;
+
             document.getElementById('current-price').innerText = currentPrice.toFixed(0);
-            document.getElementById('next-price').innerText = nextPrice.toFixed(0);
+            document.getElementById('next-trigger').innerText = nextTrigger;
         });
 
-        // Generate 100 Plots (Fixed Size)
+        // ১০০টি ফিক্সড সাইজ প্লট তৈরি
         const container = document.getElementById('map-container');
         for(let i=1; i<=100; i++) {
-            const p = document.createElement('div');
-            p.style = "width:80px; height:80px; border:0.1px solid #222; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:10px; color:#333;";
-            p.innerText = i;
-            p.onclick = () => location.href=`order.html?g=${g}&p=${i}`;
-            container.appendChild(p);
+            const plot = document.createElement('div');
+            plot.className = "plot-box";
+            plot.id = `p-${i}`;
+            plot.innerText = i;
+            plot.onclick = () => location.href=`order.html?g=${g}&p=${i}`;
+            container.appendChild(plot);
         }
+
+        // ডাটাবেস থেকে লোগো লোড করা
+        onValue(ref(db, `live/${g}`), (snap) => {
+            snap.forEach(child => {
+                const data = child.val();
+                const el = document.getElementById('p-' + data.plotID);
+                if(el) {
+                    el.style.padding = "0";
+                    el.innerHTML = `<a href="${data.url}" target="_blank"><img src="${data.img}" style="width:100%; height:100%; object-fit:cover;"></a>`;
+                }
+            });
+        });
     </script>
 </body>
 </html>
