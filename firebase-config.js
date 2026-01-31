@@ -15,5 +15,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// এগুলো এক্সপোর্ট করছি যাতে অন্য ফাইলে ব্যবহার করা যায়
 export { db, ref, set, onValue, push, remove, update, serverTimestamp };
