@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>AETHER REALMS</title>
+    <meta charset="UTF-8">
+    <title>THE GLOBAL CREATOR HOMEPAGE</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .game-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 50px; }
+        .game-card { border: 2px solid #FCD535; padding: 40px; background: #1E2329; cursor: pointer; border-radius: 15px; font-weight: bold; font-size: 20px; transition: 0.3s; }
+        .game-card:hover { transform: scale(1.05); background: #FCD535; color: #000; }
+    </style>
 </head>
 <body>
-<header style="text-align:center; padding:50px;">
-    <h1 style="font-family:'Cinzel Decorative'; color:gold; font-size:50px;">AETHER REALMS</h1>
-    <div id="liveClock" style="font-size:22px; color:orange;">00:00:00</div>
-</header>
+<div class="top-nav">
+    <div class="pill yellow">BINANCE ID: 912221034</div>
+    <div class="pill white">USDT (TRC20): TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</div>
+</div>
 
-<div class="game-grid" id="gameGrid"></div>
+<h1 class="shimmer-title">SELECT YOUR GAME REALM</h1>
 
-<script>
-    const games = [
-        {n: "Free Fire", i: "https://wallpapers.com/images/featured/free-fire-70vst9vst.jpg"},
-        {n: "PUBG Mobile", i: "https://images.alphacoders.com/102/1029243.jpg"},
-        {n: "Fortnite", i: "https://images.alphacoders.com/105/1055747.jpg"},
-        {n: "Valorant", i: "https://images6.alphacoders.com/107/1073801.jpg"},
-        {n: "Minecraft", i: "https://images.alphacoders.com/109/1090412.jpg"},
-        {n: "Apex Legends", i: "https://images8.alphacoders.com/100/1002241.jpg"},
-        {n: "Roblox", i: "https://images.alphacoders.com/111/1111111.jpg"},
-        {n: "CS2", i: "https://images.alphacoders.com/112/1121121.jpg"},
-        {n: "GTA V", i: "https://images.alphacoders.com/113/1131131.jpg"}
-    ];
-
-    games.forEach(g => {
-        document.getElementById('gameGrid').innerHTML += `
-        <div class="game-card" style="background-image:url('${g.i}')" onclick="location.href='dashboard.html?realm=${g.n}'">
-            <h2>${g.n}</h2>
-        </div>`;
-    });
-    setInterval(() => { document.getElementById('liveClock').innerText = new Date().toLocaleTimeString(); }, 1000);
-</script>
+<div class="game-grid">
+    <div class="game-card" onclick="location.href='dashboard.html?realm=FreeFire'">FREE FIRE</div>
+    <div class="game-card" onclick="location.href='dashboard.html?realm=PUBGM'">PUBG MOBILE</div>
+    <div class="game-card" onclick="location.href='dashboard.html?realm=Fortnite'">FORTNITE</div>
+    <div class="game-card" onclick="location.href='dashboard.html?realm=Valorant'">VALORANT</div>
+    <div class="game-card" onclick="location.href='dashboard.html?realm=Minecraft'">MINECRAFT</div>
+    <div class="game-card" onclick="location.href='dashboard.html?realm=Apex'">APEX LEGENDS</div>
+    <div class="game-card" onclick="location.href='dashboard.html?realm=Roblox'">ROBLOX</div>
+    <div class="game-card" onclick="location.href='dashboard.html?realm=CS2'">CS2</div>
+    <div class="game-card" onclick="location.href='dashboard.html?realm=GTAV'">GTA V</div>
+</div>
 </body>
 </html>
