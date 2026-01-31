@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getDatabase, ref, set, onValue, push, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
-  databaseURL: "https://aether-realms-default-rtdb.firebaseio.com" // আপনার ডাটাবেস ইউআরএল
+  databaseURL: "https://aether-realms-default-rtdb.firebaseio.com"
 };
 
 const app = initializeApp(firebaseConfig);
