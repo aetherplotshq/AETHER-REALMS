@@ -1,95 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ACQUIRE ASSET</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-</head>
-<body>
-
-<div id="oForm" style="max-width:480px; margin:60px auto; background:#050505; padding:45px; border:2px solid gold; border-radius:12px; text-align:center; box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);">
-    <h2 style="color:gold; font-family:'Cinzel Decorative'; letter-spacing: 3px;">CLAIM YOUR TERRITORY</h2>
-    
-    <div style="background:#111; padding:10px; border:1px dashed gold; margin-bottom:20px;">
-        <span style="color:grey; font-size:12px;">SELECTED PLOT</span><br>
-        <b id="displayPlotId" style="color:gold; font-size:20px;">#00</b>
+<!DOCTYPE html><html><head><link rel="stylesheet" href="style.css"><title>ORDER</title></head><body>
+    <div style="margin-top:100px; border:1px solid gold; display:inline-block; padding:30px;">
+        <h2>RESERVE PLOT</h2>
+        <p id="info"></p>
+        <input type="text" id="cn" placeholder="Enter Your Name"><br>
+        <button onclick="buy()">SUBMIT ORDER</button>
     </div>
-
-    <input type="text" id="custName" placeholder="ENTER YOUR GAMING NAME" style="width:90%; padding:15px; margin-bottom:20px; background:#000; border:1px solid gold; color:white; font-family:sans-serif; outline:none; text-align:center;">
-    
-    <button class="nav-btn" style="width:100%; background:gold; color:black; font-weight:bold; height:50px; cursor:pointer; font-size:18px;" onclick="submitToFirebase()">ACTIVATE & CLAIM</button>
-    
-    <p style="color:grey; font-size:12px; margin-top:15px;">* Information will be sent to the Captain's Log</p>
-</div>
-
-<div id="success" style="display:none; text-align:center; padding-top:100px;">
-    <div style="font-size:100px; animation: breathe 2s infinite;">🔥</div>
-    <h1 style="color:gold; font-family:'Cinzel Decorative'; font-size:40px;">REGISTRATION COMPLETE!</h1>
-    <p style="color:white; font-size:18px;">Your request for Plot <span id="finalId" style="color:gold;"></span> has been sent.</p>
-    <p style="opacity:0.6;">Contact support on WhatsApp to go live.</p>
-    
-    <div style="margin-top:30px;">
-        <button class="nav-btn" onclick="location.href='index.html'" style="margin:10px;">BACK TO HOME</button>
-        <button class="nav-btn" onclick="window.open('https://wa.me/8801576940717')" style="background:#25D366; border:none; color:white;">WHATSAPP NOW</button>
-    </div>
-</div>
-
-<script type="module">
-    // Firebase Setup
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
-        authDomain: "aether-realms.firebaseapp.com",
-        databaseURL: "https://aether-realms-default-rtdb.firebaseio.com",
-        projectId: "aether-realms",
-        storageBucket: "aether-realms.firebasestorage.app",
-        messagingSenderId: "745970771566",
-        appId: "1:745970771566:web:1b0607362279665074a87f"
-    };
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // ১. ইউআরএল থেকে প্লট আইডি নেওয়া
-    const urlParams = new URLSearchParams(window.location.search);
-    const plotId = urlParams.get('id') || "None";
-    document.getElementById('displayPlotId').innerText = plotId;
-    document.getElementById('finalId').innerText = plotId;
-
-    // ২. ডাটা সাবমিট ফাংশন
-    window.submitToFirebase = function() {
-        const name = document.getElementById('custName').value;
-        if(!name) return alert("Please enter your name, Captain!");
-
-        // ফায়ারবেসে 'orders' লিস্টে সেভ করা হচ্ছে
-        const orderRef = ref(db, 'orders');
-        push(orderRef, {
-            customerName: name,
-            plotId: plotId,
-            time: new Date().toLocaleString(),
-            status: "pending"
-        }).then(() => {
-            // সেভ হয়ে গেলে এনিমেশন দেখানো
-            document.getElementById('oForm').style.display='none';
-            document.getElementById('success').style.display='block';
-            
-            // গেমিং গোল্ডেন কনফেটি ইফেক্ট
-            confetti({
-                particleCount: 400,
-                spread: 120,
-                origin: { y: 0.6 },
-                colors: ['#FFD700', '#FFA500', '#FFFFFF']
+    <script type="module">
+        import { db, ref, set } from "./firebase-config.js";
+        const g = new URLSearchParams(window.location.search).get('g');
+        const id = new URLSearchParams(window.location.search).get('id');
+        document.getElementById('info').innerText = `${g} - Plot #${id}`;
+        window.buy = () => {
+            const name = document.getElementById('cn').value;
+            if(!name) return alert("Name required!");
+            set(ref(db, `orders/${g}/${id}`), {name, id, g}).then(() => {
+                alert("Success! Now contact support."); location.href='support.html';
             });
-            
-            // লোকাল স্টোরেজে সেভ (যাতে চ্যাট আনলক হয় পরে)
-            localStorage.setItem('uName', name);
-            localStorage.setItem('myPlotId', plotId);
-        }).catch((error) => {
-            alert("Connection Lost! Try again.");
-        });
-    }
-</script>
-</body>
-</html>
+        }
+    </script>
+</body></html>
