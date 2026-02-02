@@ -1,21 +1,35 @@
+/* Rolls-Royce Premium Theme - K-REALMS */
 :root {
-    --rr-gold: #9E7E45; /* Rolls-Royce Classic Gold */
+    --rr-gold: #9E7E45; /* Signature Gold */
     --rr-black: #111111;
     --rr-white: #ffffff;
     --rr-border: #e5e5e5;
 }
 
+/* Base Setup */
 * { cursor: none !important; box-sizing: border-box; }
-body { margin: 0; background: var(--rr-white); font-family: 'Helvetica Neue', Arial, sans-serif; overflow-x: hidden; }
+body { 
+    margin: 0; 
+    background: var(--rr-white); 
+    font-family: 'Helvetica Neue', Arial, sans-serif; 
+    overflow-x: hidden; 
+}
 
-/* Custom Golden Cursor */
+/* Custom Golden Circle Cursor */
 #custom-cursor {
     width: 20px; height: 20px; border: 1.5px solid var(--rr-gold);
     border-radius: 50%; position: fixed; pointer-events: none;
     z-index: 9999; transition: transform 0.1s ease;
 }
 
-/* Updated Double K Logo (RR Style Color) */
+/* Main Header */
+.main-header {
+    height: 100px; border-bottom: 1px solid var(--rr-border); display: flex;
+    align-items: center; justify-content: space-between; padding: 0 60px;
+    position: fixed; top: 0; width: 100%; background: var(--rr-white); z-index: 1000;
+}
+
+/* Double K Logo Style */
 .rr-logo-box { 
     display: flex; flex-direction: column; align-items: center; 
     border: 1px solid var(--rr-gold); padding: 5px 15px; background: transparent;
@@ -23,32 +37,70 @@ body { margin: 0; background: var(--rr-white); font-family: 'Helvetica Neue', Ar
 .k-up, .k-down { color: var(--rr-gold); font-size: 28px; font-weight: 200; line-height: 1; }
 .k-down { transform: scaleY(-1); margin-top: -2px; }
 
+/* Map Wrapper */
+.map-wrapper { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    padding: 160px 40px 100px; 
+}
+
 /* 200x200 VIP Section */
-.vip-section { display: flex; gap: 30px; margin-bottom: 60px; justify-content: center; flex-wrap: wrap; }
+.vip-section { 
+    display: flex; gap: 30px; margin-bottom: 60px; justify-content: center; flex-wrap: wrap; 
+}
 .vip-plot {
-    width: 200px; height: 200px; border: 2px solid var(--rr-gold);
+    width: 200px; height: 200px; border: 2.5px solid var(--rr-gold);
     background: var(--rr-white); display: flex; flex-direction: column; 
     align-items: center; justify-content: center; position: relative;
     transition: 0.5s; box-shadow: 0 10px 30px rgba(158, 126, 69, 0.05);
+    overflow: hidden;
 }
-.vip-plot:hover { background: #fffdf9; transform: translateY(-5px); }
+.vip-plot:hover { transform: translateY(-5px); background: #fffdf9; }
 .stars { color: var(--rr-gold); font-size: 14px; margin-bottom: 10px; letter-spacing: 3px; }
 
-/* 100x100 Canvas Grid */
+/* 100x100 Standard Plot Canvas */
 .canvas-grid {
-    display: grid; grid-template-columns: repeat(10, 100px);
-    grid-template-rows: repeat(10, 100px); border: 1px solid var(--rr-border);
+    display: grid; 
+    grid-template-columns: repeat(10, 100px); /* Default for 100 plots */
+    gap: 0px; 
+    border: 1px solid var(--rr-border);
 }
 .plot-unit {
-    width: 100px; height: 100px; border: 0.1px solid var(--rr-border);
+    width: 100px; height: 100px; border: 0.5px solid var(--rr-border);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     font-size: 10px; background: var(--rr-white); transition: 0.3s;
+    overflow: hidden;
 }
-.plot-unit:hover { border: 1px solid var(--rr-gold); z-index: 10; background: #fafafa; }
+.plot-unit:hover { border: 1.5px solid var(--rr-gold); z-index: 10; background: #fafafa; }
 
-/* Main Header */
-.main-header {
-    height: 100px; border-bottom: 1px solid var(--rr-border); display: flex;
-    align-items: center; justify-content: space-between; padding: 0 60px;
-    position: fixed; top: 0; width: 100%; background: var(--rr-white); z-index: 1000;
+/* Menu Overlay */
+.menu-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 0;
+    background: #fff; z-index: 2000; transition: 0.6s cubic-bezier(0.6, 0, 0.1, 1);
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+}
+.menu-overlay.open { height: 100vh; }
+.nav-links ul { list-style: none; padding: 0; text-align: center; }
+.nav-links li { font-size: 2rem; margin: 20px 0; color: #ccc; transition: 0.4s; letter-spacing: 5px; }
+.nav-links li:hover { color: var(--rr-gold); letter-spacing: 10px; }
+
+/* Floating WhatsApp Style Chat Button */
+.floating-chat {
+    position: fixed; bottom: 40px; right: 40px;
+    width: 65px; height: 65px; z-index: 3000;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+}
+.floating-chat:hover { transform: scale(1.15) rotate(5deg); }
+.floating-chat img { width: 100%; height: 100%; }
+
+/* Millionaire Page Special Overrides */
+.millionaire-mode { background: #000 !important; }
+.millionaire-mode .plot-unit { background: #050505; border-color: #1a1a1a; color: var(--rr-gold); }
+.millionaire-mode .canvas-grid { grid-template-columns: repeat(15, 100px); } /* Grid for 365 plots */
+
+/* Responsive - Mobile adjustment */
+@media (max-width: 1000px) {
+    .canvas-grid { grid-template-columns: repeat(5, 100px); }
 }
