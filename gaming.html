@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GAMING REALM | K</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="main-header">
+        <button onclick="history.back()">← BACK</button>
+        <div class="logo-center"><div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div></div>
+        <div style="text-align:right; font-size:10px; color:var(--gold);">GAMING REALM: AUCTION + DYNAMIC PRICE</div>
+    </header>
+
+    <div id="map-container"></div>
+
+    <script type="module">
+        const container = document.getElementById('map-container');
+        const g = new URLSearchParams(window.location.search).get('g') || "FreeFire";
+
+        // ১-৫: VIP AUCTION
+        for(let i=1; i<=5; i++) {
+            createPlot(i, "AUCTION", true);
+        }
+        // ৬-২৫: Fixed $1,299
+        for(let i=6; i<=25; i++) {
+            createPlot(i, 1299, false);
+        }
+        // ২৬-১০৫: Dynamic (-$10 each)
+        for(let i=26; i<=105; i++) {
+            let price = 1099 - ((i - 26) * 10);
+            if(price < 150) price = 150; // সর্বনিম্ন সীমা $১৫০
+            createPlot(i, price, false);
+        }
+
+        function createPlot(id, price, isVIP) {
+            const p = document.createElement('div');
+            p.className = isVIP ? "plot vip-plot" : "plot";
+            p.innerHTML = `<span>#${id}</span><br><strong>${typeof price === 'number' ? '$'+price : price}</strong>`;
+            p.onclick = () => location.href = `order.html?g=${g}&p=${id}&pr=${price}`;
+            container.appendChild(p);
+        }
+    </script>
+</body>
+</html>
