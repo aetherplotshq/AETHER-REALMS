@@ -3,137 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOCIAL REALM | AETHER PLOTS</title>
+    <title>SOCIAL REALM | AETHER COLLECTIVE</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        .map-container { 
-            padding: 160px 20px 100px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-        }
+        /* সোশ্যাল রিয়েলমের জন্য আধুনিক ডার্ক থিম */
+        body { background: #080808; color: #fff; font-family: 'Helvetica Neue', sans-serif; overflow-x: hidden; }
         
-        .download-area {
-            background: #fff;
-            padding: 40px;
-            border: 1px solid #f0f0f0;
-            text-align: center;
+        .header-social { text-align: center; margin-top: 60px; padding: 0 20px; }
+        .header-social h1 { letter-spacing: 15px; font-weight: 200; font-size: 28px; color: #fff; text-transform: uppercase; }
+        .header-social p { font-size: 9px; letter-spacing: 5px; color: #9E7E45; margin-top: 10px; text-transform: uppercase; }
+
+        /* ক্যানভাস ম্যাপ */
+        .social-map { 
+            width: 1000px; height: 1000px; 
+            margin: 80px auto; display: grid; 
+            grid-template-columns: repeat(10, 1fr);
+            border: 1px solid #1a1a1a; background: #000;
+            box-shadow: 0 0 80px rgba(158, 126, 69, 0.05);
         }
 
-        .canvas-grid {
-            display: grid;
-            grid-template-columns: repeat(10, 100px); /* ১০x১০ গ্রিড = ১০০ প্লট */
-            gap: 0;
-            border: 1px solid #eee;
-            margin-top: 30px;
+        .plot {
+            width: 100px; height: 100px;
+            border: 1px solid rgba(255,255,255,0.03);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 8px; color: #333; transition: 0.4s;
+            position: relative; cursor: none;
         }
 
-        .plot-unit {
-            width: 100px;
-            height: 100px;
-            border: 0.5px solid #eee;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            cursor: none;
-            transition: 0.2s;
-            position: relative;
-            background: #fff;
+        .plot:hover {
+            background: #fff; color: #000;
+            border-color: #fff; z-index: 5;
+            transform: scale(1.05);
         }
 
-        .plot-unit:hover {
-            border: 1px solid var(--gold);
-            z-index: 10;
-            background: #fdfaf5;
-        }
+        /* প্রাইসিং টিয়ার (আপনার ইনস্ট্রাকশন অনুযায়ী) */
+        .tier-border { border: 1px solid rgba(158, 126, 69, 0.3); background: rgba(158,126,69,0.02); } /* $99 */
+        .tier-inner { background: rgba(255,255,255,0.01); } /* $89 */
+        .tier-reserved { background: #111; pointer-events: none; opacity: 0.3; } /* Third Row - Locked */
 
-        .plot-unit img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* ফ্লোটিং চ্যাট বাটন */
+        .floating-chat {
+            position: fixed; bottom: 40px; right: 40px;
+            width: 65px; height: 65px; background: #fff;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; text-decoration: none; z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); transition: 0.4s;
         }
+        .floating-chat:hover { transform: translateY(-5px) rotate(10deg); }
 
-        /* স্পেশাল সোশ্যাল ব্যাজ */
-        .social-badge {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            font-size: 7px;
-            color: var(--gold);
-            letter-spacing: 1px;
+        .price-legend { 
+            display: flex; justify-content: center; gap: 30px; 
+            margin-top: 40px; font-size: 10px; letter-spacing: 2px;
         }
+        .legend-item span { color: #9E7E45; margin-right: 5px; }
     </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
 
     <header class="header">
-        <button onclick="location.href='index.html'" style="background:none; border:none; letter-spacing:2px; font-weight:bold;">← BACK</button>
-        <div class="logo">A<span>K</span></div>
-        <button onclick="downloadSocialMap()" class="btn-download">DOWNLOAD SOCIAL MAP</button>
+        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold; color:#fff; cursor:none;">← BACK</button>
+        <div style="font-size:30px; font-weight:900; font-family:serif;">K</div>
+        <div style="font-size:9px; letter-spacing:3px; color:#9E7E45;">SOCIAL ARCHIVE</div>
     </header>
 
-    <div class="map-container">
-        <div id="social-capture" class="download-area">
-            <h2 style="font-weight: 100; letter-spacing: 10px; text-transform: uppercase;">Social Realm</h2>
-            <p style="font-size: 10px; color: var(--gold); letter-spacing: 4px; margin-bottom: 30px;">CONNECTING THE ELITE 100</p>
-            
-            <div id="plot-grid" class="canvas-grid">
-                </div>
-        </div>
+    <div class="header-social">
+        <h1>Social Realm</h1>
+        <p>The Nexus of Digital Influence</p>
     </div>
 
+    <div class="price-legend">
+        <div class="legend-item"><span>$99</span> CORNER ESTATE</div>
+        <div class="legend-item"><span>$89</span> PRIME ROW</div>
+        <div class="legend-item"><span>$39</span> CORE AREA</div>
+    </div>
+
+    <div class="social-map" id="social-grid">
+        </div>
+
     <a href="chat.html" class="floating-chat">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat">
+        <span style="font-size: 24px;">💬</span>
+        <div style="position: absolute; top: 12px; right: 12px; width: 8px; height: 8px; background: #9E7E45; border-radius: 50%; border: 2px solid #fff;"></div>
     </a>
 
-    <footer class="footer">
-        © 2026 AETHER PLOTS. SOCIAL NETWORK OF LEGENDS.
-    </footer>
+    <script>
+        const grid = document.getElementById('social-grid');
 
-    <script type="module">
-        import { db, ref, onValue } from "./firebase-config.js";
+        for (let i = 1; i <= 100; i++) {
+            const plot = document.createElement('div');
+            plot.classList.add('plot');
 
-        const grid = document.getElementById('plot-grid');
-        const realmName = "Social";
+            const row = Math.ceil(i / 10);
+            const col = i % 10 === 0 ? 10 : i % 10;
 
-        onValue(ref(db, `sold_plots/${realmName}`), (snapshot) => {
-            const soldData = snapshot.val() || {};
-            grid.innerHTML = "";
+            let price = 39;
+            let status = "Available";
 
-            for (let i = 1; i <= 100; i++) {
-                const plotDiv = document.createElement('div');
-                plotDiv.className = 'plot-unit';
-
-                if (soldData[i]) {
-                    plotDiv.innerHTML = `<img src="${soldData[i].logo}" alt="Social Plot ${i}">`;
-                    plotDiv.onclick = () => window.open(soldData[i].link, '_blank');
-                } else {
-                    // আপনার প্রাইসিং রুলস অনুযায়ী
-                    let price = 39; 
-                    plotDiv.innerHTML = `
-                        <span class="social-badge">LIVE</span>
-                        <span style="color:#ccc">#${i}</span>
-                        <strong style="margin-top:5px; color:var(--gold)">$${price}</strong>
-                    `;
-                    plotDiv.onclick = () => location.href = `order.html?g=${realmName}&p=${i}&pr=${price}`;
-                }
-                grid.appendChild(plotDiv);
+            // ১. প্রথম ৪ কর্নার রো (বাটন/বর্ডার) - $99
+            if (row === 1 || row === 10 || col === 1 || col === 10) {
+                price = 99;
+                plot.classList.add('tier-border');
             }
-        });
+            // ২. দ্বিতীয় রো - $89
+            else if (row === 2 || row === 9 || col === 2 || col === 9) {
+                price = 89;
+                plot.classList.add('tier-inner');
+            }
+            // ৩. তৃতীয় রো - সংরক্ষিত (বিক্রির জন্য নয়)
+            else if (row === 3 || row === 8 || col === 3 || col === 8) {
+                price = "RESERVED";
+                plot.classList.add('tier-reserved');
+                status = "Locked";
+            }
 
-        window.downloadSocialMap = () => {
-            const area = document.getElementById('social-capture');
-            html2canvas(area, { scale: 2 }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Aether-Social-Realm-Map.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        };
+            plot.innerHTML = `<span>#S-${i}</span>`;
+
+            if (status !== "Locked") {
+                plot.onclick = () => {
+                    // অর্ডারিং পেজে ডাটা পাঠানো
+                    window.location.href = `order.html?s=Social%20Realm&id=${i}&p=${price}`;
+                };
+            }
+
+            grid.appendChild(plot);
+        }
     </script>
     <script src="script.js"></script>
 </body>
