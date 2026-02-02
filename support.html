@@ -6,110 +6,132 @@
     <title>CONCIERGE | AETHER PLOTS</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background: #fff; color: #111; font-family: 'Helvetica Neue', sans-serif; }
+        body { background: #fff; color: #111; font-family: 'Helvetica Neue', sans-serif; overflow-x: hidden; }
         
         .support-wrapper {
             max-width: 900px;
-            margin: 120px auto 100px;
+            margin: 100px auto 100px;
             padding: 0 40px;
             text-align: center;
         }
 
         .brand-k-support {
-            font-size: 50px;
+            font-size: 60px;
             font-weight: 900;
             font-family: serif;
             margin-bottom: 20px;
+            color: #000;
         }
 
         .support-header h1 {
             font-weight: 100;
             letter-spacing: 15px;
             text-transform: uppercase;
-            font-size: clamp(24px, 5vw, 36px);
-            margin-bottom: 20px;
+            font-size: clamp(24px, 5vw, 32px);
+            margin-bottom: 10px;
         }
 
+        /* সাবমিশন গাইডলাইন বক্স */
+        .submission-checklist {
+            background: #fafafa;
+            border: 1px solid #eee;
+            padding: 35px;
+            margin: 50px auto;
+            max-width: 550px;
+            text-align: left;
+        }
+
+        .checklist-title {
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: #9E7E45;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .checklist-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .checklist-items li {
+            font-size: 11px;
+            color: #666;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .checklist-items li::before {
+            content: "→";
+            margin-right: 15px;
+            color: #9E7E45;
+            font-weight: bold;
+        }
+
+        /* কার্ড গ্রিড */
         .support-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 80px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
         }
 
         .support-card {
-            padding: 50px 30px;
+            padding: 60px 30px;
             border: 1px solid #f5f5f5;
             transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
             text-decoration: none;
             color: inherit;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            align-items: center;
         }
 
         .support-card:hover {
             border-color: #9E7E45;
-            transform: translateY(-10px);
+            transform: translateY(-5px);
         }
 
-        .support-card h3 {
-            font-size: 10px;
-            letter-spacing: 5px;
+        .support-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 30px;
+            filter: grayscale(1);
+            transition: 0.3s;
+        }
+
+        .support-card:hover .support-icon {
+            filter: grayscale(0);
+        }
+
+        .contact-label {
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: #bbb;
             text-transform: uppercase;
-            color: #9E7E45;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
-        .support-card p {
-            font-size: 12px;
-            color: #888;
-            line-height: 2;
-            letter-spacing: 1px;
-            margin-bottom: 25px;
-        }
-
-        .contact-link {
+        .contact-info {
             font-weight: bold;
-            font-size: 11px;
-            color: #111;
+            font-size: 12px;
             letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .faq-section {
-            margin-top: 150px;
-            text-align: left;
-            border-top: 1px solid #f5f5f5;
-            padding-top: 80px;
-        }
-
-        .faq-item {
-            margin-bottom: 45px;
-            max-width: 700px;
-        }
-
-        .faq-item h4 {
-            font-size: 10px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
             color: #111;
-        }
-
-        .faq-item p {
-            font-size: 13px;
-            color: #888;
-            line-height: 1.8;
-            font-weight: 300;
+            text-transform: uppercase;
         }
 
         footer {
             margin-top: 100px;
             font-size: 9px;
-            letter-spacing: 5px;
+            letter-spacing: 6px;
             color: #ccc;
-            padding-bottom: 50px;
             text-transform: uppercase;
         }
     </style>
@@ -119,51 +141,41 @@
 
     <header class="header">
         <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold; cursor:none;">← BACK</button>
-        <div style="font-size:10px; letter-spacing:3px; color:#9E7E45;">CONCIERGE SERVICES</div>
+        <div style="font-size:10px; letter-spacing:3px; color:#aaa;">PRIVATE CONCIERGE</div>
     </header>
 
     <div class="support-wrapper">
         <div class="brand-k-support">K</div>
         <div class="support-header">
-            <h1>At Your Service</h1>
-            <p style="font-size: 9px; letter-spacing: 6px; color: #bbb; text-transform: uppercase;">Excellence is our standard</p>
+            <h1>HQ Support</h1>
+        </div>
+
+        <div class="submission-checklist">
+            <div class="checklist-title">Required for Submission</div>
+            <ul class="checklist-items">
+                <li>Selected Plot Number & Section</li>
+                <li>Your Official Brand Logo</li>
+                <li>Target URL / Social Link</li>
+                <li>Payment Proof (Transaction Screenshot)</li>
+            </ul>
         </div>
 
         <div class="support-grid">
             <div class="support-card">
-                <h3>Official Inquiry</h3>
-                <p>For documentation, brand partnerships, or enterprise solutions.</p>
-                <span class="contact-link">aetherplotshq@gmail.com</span>
+                <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" class="support-icon" alt="Email">
+                <div class="contact-label">Official Mail</div>
+                <div class="contact-info">aetherplotshq@gmail.com</div>
             </div>
 
-            <a href="https://wa.me/8801XXXXXXXXX" class="support-card">
-                <h3>Live Concierge</h3>
-                <p>Real-time assistance for estate acquisition and immediate updates.</p>
-                <span class="contact-link" style="color: #9E7E45;">SECURE LINE →</span>
+            <a href="https://wa.me/8801XXXXXXXXX?text=Hello HQ, I have prepared my Plot ID, Logo, and Payment Proof for integration." class="support-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="support-icon" alt="WhatsApp">
+                <div class="contact-label">Live Support</div>
+                <div class="contact-info" style="color:#9E7E45;">WhatsApp Message →</div>
             </a>
         </div>
 
-        <div class="faq-section">
-            <h2 style="font-weight: 100; letter-spacing: 8px; margin-bottom: 50px; font-size: 18px; text-transform: uppercase;">Common Inquiries</h2>
-            
-            <div class="faq-item">
-                <h4>How do I update my plot assets?</h4>
-                <p>To maintain the integrity of the estate, all updates are handled through our manual portal. Each revision incurs a processing fee of $9 to ensure exclusivity.</p>
-            </div>
-
-            <div class="faq-item">
-                <h4>What defines lifetime ownership?</h4>
-                <p>Once the one-time renewal fee is fulfilled, your plot remains a permanent part of the Aether archives with no further recurring costs.</p>
-            </div>
-
-            <div class="faq-item">
-                <h4>Is plot resale permitted?</h4>
-                <p>Owners may transfer their legacy. Aether HQ facilitates these high-value transactions for a 5% commission to ensure a secure transfer of assets.</p>
-            </div>
-        </div>
-
         <footer>
-            © 2026 Aether Plots — Inspiring Greatness
+            © 2026 AETHER PLOTS — SINCE 2026
         </footer>
     </div>
 
