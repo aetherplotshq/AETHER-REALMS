@@ -2,49 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SOCIAL REALM | K-REALMS</title>
+    <title>SOCIAL DOMAIN | K-REALMS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="custom-cursor"></div>
     <header class="main-header">
-        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; color:var(--rr-gold); font-weight:bold;">← BACK</button>
-        <div class="logo-center">
-            <div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div>
-        </div>
-        <div id="realm-name" style="color:var(--rr-gold); font-size:10px; letter-spacing:3px;">SOCIAL DOMAIN</div>
+        <button onclick="history.back()" style="background:none; border:none; color:var(--rr-gold); font-weight:bold;">← BACK</button>
+        <div class="logo-center"><div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div></div>
+        <div style="color:var(--rr-gold); font-size:10px; letter-spacing:3px;">SOCIAL DOMAIN</div>
     </header>
 
     <div class="map-wrapper" style="display:flex; flex-direction:column; align-items:center; padding-top:160px;">
-        <h3 style="font-weight:100; letter-spacing:5px; margin-bottom:30px; font-size:14px; color:var(--rr-gold);">PREMIUM INFLUENCER DOMAINS</h3>
-        
-        <div class="vip-section">
-            <script>
-                for(let i=1; i<=5; i++){
-                    document.write(`
-                        <div class="vip-plot" onclick="location.href='order.html?g=Social&p=VIP${i}&pr=Auction'">
-                            <div class="stars">★★★★★</div>
-                            <span style="font-size:10px; letter-spacing:2px;">VIP SOCIAL #${i}</span>
-                            <strong style="margin-top:10px; color:var(--rr-gold);">AUCTION</strong>
-                        </div>
-                    `);
-                }
-            </script>
-        </div>
-        
+        <div class="vip-section" id="social-vip"></div>
         <div class="canvas-grid" id="social-canvas"></div>
     </div>
 
-    <script src="script.js"></script>
-    <script>
-        const container = document.getElementById('social-canvas');
-        for(let i=1; i<=100; i++){
-            const div = document.createElement('div');
-            div.className = 'plot-unit';
-            div.innerHTML = `<span style="color:#888;">#${i}</span><br><strong>$1,999</strong>`;
-            div.onclick = () => location.href=`order.html?g=Social&p=${i}&pr=1999`;
-            container.appendChild(div);
-        }
+    <a href="chat.html" class="floating-chat">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat">
+    </a>
+
+    <script type="module">
+        import { db, ref, onValue } from "./firebase-config.js";
+        const g = "Social";
+        onValue(ref(db, `sold_plots/${g}`), (snapshot) => {
+            const soldData = snapshot.val() || {};
+            const vDiv = document.getElementById('social-vip');
+            const cDiv = document.getElementById('social-canvas');
+            vDiv.innerHTML = ""; cDiv.innerHTML = "";
+
+            for(let i=1; i<=5; i++){
+                const div = document.createElement('div'); div.className='vip-plot';
+                if(soldData[i]){ div.innerHTML = `<img src="${soldData[i].logo}" style="width:100%; height:100%; object-fit:cover;">`; div.onclick = () => window.open(soldData[i].link, '_blank'); }
+                else { div.innerHTML = `<div class="stars">★★★★★</div><span>VIP #${i}</span><strong>AUCTION</strong>`; div.onclick = () => location.href=`order.html?g=${g}&p=${i}&pr=Auction`; }
+                vDiv.appendChild(div);
+            }
+            for(let i=1; i<=100; i++){
+                const pID = i+5; const div = document.createElement('div'); div.className='plot-unit';
+                if(soldData[pID]){ div.innerHTML = `<img src="${soldData[pID].logo}" style="width:100%; height:100%; object-fit:cover;">`; div.onclick = () => window.open(soldData[pID].link, '_blank'); }
+                else { div.innerHTML = `<span>#${pID}</span><strong>$1,999</strong>`; div.onclick = () => location.href=`order.html?g=${g}&p=${pID}&pr=1999`; }
+                cDiv.appendChild(div);
+            }
+        });
     </script>
 </body>
 </html>
