@@ -2,53 +2,127 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CONGRATULATIONS | K-REALMS</title>
+    <title>CONGRATULATIONS | AETHER PLOTS</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        body { background: #fff; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; }
-        .congrats-card { padding: 60px; border: 1px solid var(--rr-gold); max-width: 600px; position: relative; }
-        h1 { font-weight: 100; letter-spacing: 15px; color: var(--rr-black); margin-bottom: 20px; }
-        p { letter-spacing: 3px; color: #888; font-size: 12px; line-height: 2; }
-        .rr-badge { color: var(--rr-gold); font-size: 10px; letter-spacing: 5px; margin-bottom: 30px; display: block; }
+        body { 
+            background: #fff; 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .congrats-card {
+            text-align: center;
+            padding: 80px 50px;
+            border: 1px solid #eee;
+            background: #fff;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 30px 100px rgba(0,0,0,0.03);
+        }
+
+        .ak-badge {
+            font-size: 24px;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .ak-badge span {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        h1 {
+            font-weight: 100;
+            letter-spacing: 15px;
+            text-transform: uppercase;
+            font-size: 28px;
+            color: #111;
+            margin-bottom: 25px;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+            margin: 0 auto 30px;
+        }
+
+        p {
+            font-size: 11px;
+            letter-spacing: 3px;
+            line-height: 2.2;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .btn-return {
+            background: #000;
+            color: #fff;
+            padding: 18px 45px;
+            text-decoration: none;
+            font-size: 10px;
+            letter-spacing: 3px;
+            transition: 0.4s;
+            display: inline-block;
+        }
+
+        .btn-return:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+        }
     </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
-    
+
     <div class="congrats-card">
-        <span class="rr-badge">APPLICATION RECEIVED</span>
-        <h1>WELCOME TO THE ELITE</h1>
-        <p>Your bespoke application for <strong>K-REALMS</strong> estate has been successfully submitted. Our private concierge will review your credentials and contact you shortly.</p>
-        <button onclick="location.href='index.html'" style="background:none; border:1px solid #111; padding:15px 40px; margin-top:40px; letter-spacing:3px; cursor:none;">RETURN TO HUB</button>
+        <div class="ak-badge">A<span>K</span></div>
+        <h1>Welcome to the Elite</h1>
+        <div class="divider"></div>
+        <p>Your bespoke application for the <strong>Aether Plots</strong> estate has been successfully received. Our private concierge will review your credentials shortly.</p>
+        <a href="index.html" class="btn-return">Return to Realm Hub</a>
     </div>
 
     <script src="script.js"></script>
     <script>
-        // পেজ লোড হতেই গোল্ডেন কনফেটি এনিমেশন
-        var end = Date.now() + (2 * 1000);
-        var colors = ['#9E7E45', '#ffffff', '#111111'];
+        // Automatic Celebration on Load
+        const duration = 3 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-        (function frame() {
-          confetti({
-            particleCount: 3,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-            colors: colors
-          });
-          confetti({
-            particleCount: 3,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-            colors: colors
-          });
+        function randomInRange(min, max) {
+          return Math.random() * (max - min) + min;
+        }
 
-          if (Date.now() < end) {
-            requestAnimationFrame(frame);
+        const interval = setInterval(function() {
+          const timeLeft = animationEnd - Date.now();
+
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
           }
-        }());
+
+          const particleCount = 50 * (timeLeft / duration);
+          
+          // গোল্ডেন এবং হোয়াইট কনফেটি
+          confetti(Object.assign({}, defaults, { 
+            particleCount, 
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+            colors: ['#9E7E45', '#ffffff']
+          }));
+          confetti(Object.assign({}, defaults, { 
+            particleCount, 
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+            colors: ['#9E7E45', '#111111']
+          }));
+        }, 250);
     </script>
 </body>
 </html>
