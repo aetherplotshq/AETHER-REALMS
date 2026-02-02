@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MILLIONAIRES CLUB | AETHER ESTATE</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* আল্ট্রা-লাক্সারি ব্ল্যাক অ্যান্ড গোল্ড থিম */
+        body { background: #000; color: #fff; font-family: 'serif'; overflow-x: hidden; }
+        
+        .header-club { text-align: center; margin-top: 50px; }
+        .header-club h1 { letter-spacing: 20px; font-weight: 100; font-size: clamp(24px, 5vw, 36px); text-transform: uppercase; margin-bottom: 10px; }
+        .header-club p { font-size: 9px; letter-spacing: 7px; color: #9E7E45; text-transform: uppercase; }
+
+        /* ১০০x১০০ সাইজের ১০০টি প্লট গ্রিড */
+        .grid-canvas { 
+            width: 1000px; height: 1000px; 
+            margin: 60px auto 100px; display: grid; 
+            grid-template-columns: repeat(10, 1fr);
+            border: 1px solid #1a1a1a; position: relative;
+            box-shadow: 0 0 100px rgba(158, 126, 69, 0.15);
+        }
+
+        .plot {
+            width: 100px; height: 100px;
+            border: 1px solid rgba(158, 126, 69, 0.1);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 8px; color: #444; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative; cursor: none; background: #050505;
+        }
+
+        /* প্রথম লাইনের জন্য বিশেষ বিডিং ইফেক্ট */
+        .tier-premium:hover {
+            background: #9E7E45 !important;
+            color: #000 !important;
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 0 50px #9E7E45;
+        }
+        
+        .tier-premium:hover::after {
+            content: "BID NOW";
+            position: absolute; bottom: 10px; font-weight: bold; font-size: 7px;
+        }
+
+        /* প্রাইসিং টায়ার ডিজাইন */
+        .tier-premium { border: 1px solid #9E7E45; background: rgba(158, 126, 69, 0.05); } /* $99 + Bidding */
+        .tier-second { background: rgba(255, 255, 255, 0.02); } /* $89 */
+        .tier-locked { background: #0a0a0a; pointer-events: none; opacity: 0.2; } /* Reserved Row 3 */
+
+        /* ফ্লোটিং লাইভ চ্যাট (৪ ঘণ্টা ভ্যানিশিং মোড) */
+        .chat-trigger {
+            position: fixed; bottom: 40px; right: 40px;
+            width: 70px; height: 70px; background: #000;
+            border: 1px solid #9E7E45; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none; z-index: 1000; transition: 0.5s;
+        }
+        .chat-trigger:hover { transform: scale(1.1) rotate(15deg); box-shadow: 0 0 40px #9E7E45; }
+
+        .price-legend { 
+            display: flex; justify-content: center; gap: 40px; 
+            margin-top: 40px; font-size: 10px; letter-spacing: 3px; color: #666;
+        }
+        .legend-item b { color: #9E7E45; margin-right: 8px; font-weight: 100; }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+
+    <header class="header">
+        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold; color:#fff; cursor:none;">← BACK</button>
+        <div style="font-size:40px; font-weight:900; font-family:serif; color:#fff;">K</div>
+        <div style="font-size:9px; letter-spacing:4px; color:#9E7E45;">ESTATE MANAGEMENT</div>
+    </header>
+
+    <div class="header-club">
+        <h1>Millionaires Club</h1>
+        <p>The Pinnacle of Digital Ownership</p>
+    </div>
+
+    <div class="price-legend">
+        <div class="legend-item"><b>$99+</b> PREMIUM LINE</div>
+        <div class="legend-item"><b>$89</b> INNER CIRCLE</div>
+        <div class="legend-item"><b>$39</b> CORE ASSETS</div>
+    </div>
+
+    <div class="grid-canvas" id="main-grid">
+        </div>
+
+    <a href="chat.html" class="chat-trigger">
+        <span style="font-size: 24px;">💎</span>
+        <div style="position: absolute; top: 15px; right: 15px; width: 10px; height: 10px; background: #9E7E45; border-radius: 50%; box-shadow: 0 0 10px #9E7E45;"></div>
+    </a>
+
+    <script>
+        const grid = document.getElementById('main-grid');
+
+        for (let i = 1; i <= 100; i++) {
+            const plot = document.createElement('div');
+            plot.classList.add('plot');
+
+            const row = Math.ceil(i / 10);
+            const col = i % 10 === 0 ? 10 : i % 10;
+
+            let price = 39;
+            let status = "Available";
+            let type = "standard";
+
+            // আপনার ৪-স্তরের প্রাইসিং লজিক:
+            // ১. বাইরের ৪ কর্নার রো (Tier 1) - $99 (এখানেই বিডিং সিচুয়েশন তৈরি হবে)
+            if (row === 1 || row === 10 || col === 1 || col === 10) {
+                price = 99;
+                plot.classList.add('tier-premium');
+                type = "millionaire";
+            }
+            // ২. দ্বিতীয় রো (Tier 2) - $89
+            else if (row === 2 || row === 9 || col === 2 || col === 9) {
+                price = 89;
+                plot.classList.add('tier-second');
+            }
+            // ৩. তৃতীয় রো (Reserved - আপনি বিক্রি করবেন না)
+            else if (row === 3 || row === 8 || col === 3 || col === 8) {
+                price = "RESERVED";
+                plot.classList.add('tier-locked');
+                status = "Locked";
+            }
+
+            plot.innerHTML = `<span>#${i}</span>`;
+
+            if (status === "Available") {
+                plot.onclick = () => {
+                    // অর্ডারিং পেজে ডাটা পাঠানো
+                    window.location.href = `order.html?s=Millionaires%20Club&id=${i}&p=${price}&type=${type}`;
+                };
+            }
+
+            grid.appendChild(plot);
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
