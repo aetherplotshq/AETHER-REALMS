@@ -2,170 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K | INSPIRING GREATNESS</title>
+    <title>K-REALMS | THE ELITE HUB</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* হোমপেজ স্পেশাল স্ক্রলিং ইফেক্ট */
-        .hero-section {
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        #gaming-home { background: #ffffff; z-index: 3; }
-        #social-home { background: #f9f9f9; z-index: 2; }
-        #vault-home { background: #000000; color: #fff; z-index: 1; }
-
-        .content-box {
-            max-width: 800px;
-            padding: 20px;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            font-size: 10px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #9E7E45;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
-    </style>
 </head>
 <body>
-
+    <div id="custom-cursor"></div>
+    
     <header class="main-header">
         <div class="menu-trigger" onclick="toggleMenu()">
-            <div class="bars"><span></span><span></span></div>
             <p>MENU</p>
         </div>
-        
         <div class="logo-center">
-            <div class="rr-logo-box">
-                <span class="k-up">K</span>
-                <span class="k-down">K</span>
-            </div>
+            <div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div>
         </div>
-
         <div class="header-right">
-            <a href="support.html">CUSTOMER SERVICE</a>
+            <a href="support.html" style="text-decoration:none; color:#111; font-size:12px; letter-spacing:1px;">CUSTOMER SERVICE</a>
         </div>
     </header>
 
-    <section class="hero-section" id="gaming-home">
-        <div class="content-box">
-            <p class="tagline">INSPIRING GREATNESS</p>
-            <h1 style="font-weight: 100; font-size: 3rem; letter-spacing: 15px;">GAMING REALMS</h1>
-            <p style="font-size: 12px; color: #666; margin: 20px 0;">EXPLORE THE WORLD'S TOP 10 COMPETITIVE LANDSCAPES</p>
-            <button class="gold-btn" onclick="toggleMenu()">EXPLORE MODELS</button>
-        </div>
-        <div class="scroll-indicator">Scroll to Reveal Social</div>
-    </section>
-
-    <section class="hero-section" id="social-home">
-        <div class="content-box">
-            <p class="tagline">THE DIGITAL INFLUENCE</p>
-            <h1 style="font-weight: 100; font-size: 3rem; letter-spacing: 15px;">SOCIAL DOMAINS</h1>
-            <p style="font-size: 12px; color: #666; margin: 20px 0;">FOR THE WORLD'S TOP 10 INFLUENTIAL PLATFORMS</p>
-            <p style="color: #9E7E45; letter-spacing: 2px;">EXCLUSIVE ACCESS | $1,999</p>
-        </div>
-        <div class="scroll-indicator">Scroll to Reveal The Vault</div>
-    </section>
-
-    <section class="hero-section" id="vault-home">
-        <div class="content-box">
-            <p class="tagline" style="color: #9E7E45;">THE ULTIMATE DESTINATION</p>
-            <h1 style="font-weight: 100; font-size: 3rem; letter-spacing: 15px; color: #9E7E45;">MILLIONAIRE CLUB</h1>
-            <p style="font-size: 12px; color: #ccc; margin: 20px 0;">ONLY FOR THE ELITE | VERIFIED STATUS REQUIRED</p>
-            <button class="gold-btn" style="background: #9E7E45; color: #000; border:none;" onclick="location.href='millionaire.html'">ACCESS VAULT | $9,999</button>
-        </div>
+    <section style="height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
+        <p style="letter-spacing:8px; color:#9E7E45; font-size:10px; margin-bottom:10px;">INSPIRING GREATNESS</p>
+        <h1 style="font-size:4.5rem; font-weight:100; letter-spacing:25px; margin:0;">K-REALMS</h1>
+        <p style="color:#888; font-size:11px; letter-spacing:3px; margin-top:20px;">THE DIGITAL ESTATE FOR 1M+ CREATORS</p>
+        <button onclick="toggleMenu()" style="background:none; border:1px solid #111; padding:18px 50px; letter-spacing:4px; margin-top:40px; font-size:10px; font-weight:bold;">EXPLORE THE REALMS</button>
     </section>
 
     <div id="menu-overlay" class="menu-overlay">
-        <span class="close-overlay" onclick="toggleMenu()">&times;</span>
-        <nav class="nav-links">
-            <div style="display: flex; justify-content: space-around; width: 100%; text-align: left;">
-                <div>
-                    <h4 style="font-size: 10px; letter-spacing: 5px; color: #9E7E45; margin-bottom: 30px;">GAMING REALMS</h4>
-                    <ul style="list-style: none; padding: 0;">
-                        <li onclick="location.href='gaming.html?g=FreeFire'">FREE FIRE</li>
-                        <li onclick="location.href='gaming.html?g=PUBGM'">PUBG MOBILE</li>
-                        <li onclick="location.href='gaming.html?g=Roblox'">ROBLOX</li>
-                        <li onclick="location.href='gaming.html?g=Genshin'">GENSHIN IMPACT</li>
-                        <li onclick="location.href='gaming.html?g=Valorant'">VALORANT</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 style="font-size: 10px; letter-spacing: 5px; color: #9E7E45; margin-bottom: 30px;">SOCIAL REALMS</h4>
-                    <ul style="list-style: none; padding: 0;">
-                        <li onclick="location.href='social.html?g=YouTube'">YOUTUBE</li>
-                        <li onclick="location.href='social.html?g=Instagram'">INSTAGRAM</li>
-                        <li onclick="location.href='social.html?g=TikTok'">TIKTOK</li>
-                        <li onclick="location.href='social.html?g=X'">X (TWITTER)</li>
-                        <li onclick="location.href='social.html?g=Twitch'">TWITCH</li>
-                    </ul>
-                </div>
+        <span onclick="toggleMenu()" style="position:absolute; top:40px; right:50px; font-size:40px; cursor:none;">&times;</span>
+        <nav class="nav-links" style="display:flex; width:85%; justify-content:space-around; text-align:left;">
+            <div>
+                <h4 style="color:var(--gold); letter-spacing:4px; font-size:12px; margin-bottom:30px;">GAMING MODELS</h4>
+                <ul>
+                    <li onclick="location.href='gaming.html?g=FreeFire'">FREE FIRE</li>
+                    <li onclick="location.href='gaming.html?g=PUBGM'">PUBG MOBILE</li>
+                    <li onclick="location.href='gaming.html?g=Roblox'">ROBLOX</li>
+                    <li onclick="location.href='gaming.html?g=Valorant'">VALORANT</li>
+                    <li onclick="location.href='gaming.html?g=Minecraft'">MINECRAFT</li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color:var(--gold); letter-spacing:4px; font-size:12px; margin-bottom:30px;">SOCIAL DOMAINS</h4>
+                <ul>
+                    <li onclick="location.href='social.html?g=YouTube'">YOUTUBE</li>
+                    <li onclick="location.href='social.html?g=Instagram'">INSTAGRAM</li>
+                    <li onclick="location.href='social.html?g=TikTok'">TIKTOK</li>
+                    <li onclick="location.href='social.html?g=Facebook'">FACEBOOK</li>
+                    <li onclick="location.href='social.html?g=Twitch'">TWITCH</li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color:var(--gold); letter-spacing:4px; font-size:12px; margin-bottom:30px;">THE VAULT</h4>
+                <ul>
+                    <li onclick="location.href='millionaire.html'" style="color:var(--gold); font-weight:bold;">MILLIONAIRE CLUB</li>
+                    <li onclick="location.href='support.html'">CONCIERGE</li>
+                </ul>
             </div>
         </nav>
     </div>
 
-    <footer class="rr-footer">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4>MODELS</h4>
-                <a href="gaming.html">GAMING REALMS</a>
-                <a href="social.html">SOCIAL DOMAINS</a>
-                <a href="millionaire.html">MILLIONAIRE CLUB</a>
-            </div>
-            <div class="footer-col">
-                <h4>BESPOKE SERVICES</h4>
-                <a href="support.html">CONCIERGE</a>
-                <a href="support.html">ELIGIBILITY PROOF</a>
-                <a href="manual_update.html">OWNER PORTAL</a>
-            </div>
-            <div class="footer-col">
-                <h4>LEGAL</h4>
-                <a href="#">PRIVACY</a>
-                <a href="#">COOKIES</a>
-                <a href="#">TERMS</a>
-            </div>
-            <div class="footer-col socials">
-                <h4>CONNECT</h4>
-                <a href="https://wa.me/8801576940717">WHATSAPP</a>
-                <a href="#">INSTAGRAM</a>
-                <a href="#">YOUTUBE</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2026 K-REALMS. ALL RIGHTS RESERVED.</p>
-        </div>
-    </footer>
-
     <script src="script.js"></script>
-    <script>
-        // স্ক্রলিং এনিমেশন লজিক
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.hero-section');
-            const scrollPos = window.pageYOffset;
-
-            sections.forEach((section, i) => {
-                const sectionTop = section.offsetTop;
-                if (scrollPos >= sectionTop - window.innerHeight / 2) {
-                    section.style.opacity = '1';
-                } else if (i !== 0) {
-                    section.style.opacity = '0';
-                }
-            });
-        });
-    </script>
 </body>
 </html>
