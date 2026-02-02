@@ -3,49 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RESERVE YOUR LEGACY | AETHER PLOTS</title>
+    <title>RESERVE YOUR LEGACY | K</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background: #fff; color: #111; }
-        .order-container { max-width: 700px; margin: 150px auto; padding: 60px; border: 1px solid #eee; background: #fff; box-shadow: 0 10px 50px rgba(0,0,0,0.02); }
+        body { background: #fff; color: #111; overflow-x: hidden; }
+        .order-container { max-width: 650px; margin: 120px auto; padding: 60px 40px; border: 1px solid #f5f5f5; background: #fff; }
+        
+        /* কাস্টম ব্র্যান্ডিং */
+        .brand-k-order { font-size: 40px; font-weight: 900; font-family: serif; text-align: center; margin-bottom: 40px; }
+        
         .order-header { text-align: center; margin-bottom: 50px; }
-        .order-header h2 { font-weight: 100; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 10px; }
+        .order-header p { font-size: 10px; color: #9E7E45; letter-spacing: 5px; text-transform: uppercase; }
+        .order-header h2 { font-weight: 100; letter-spacing: 10px; text-transform: uppercase; font-size: 24px; margin: 15px 0; }
         
-        .price-badge { display: inline-block; padding: 10px 20px; border: 1px solid var(--gold); color: var(--gold); font-size: 14px; letter-spacing: 2px; }
+        .price-badge { display: inline-block; padding: 12px 30px; border: 1px solid #111; color: #111; font-size: 20px; font-weight: 100; letter-spacing: 3px; }
+
+        .payment-box { background: #fafafa; border: 1px solid #eee; padding: 30px; margin: 40px 0; }
+        .payment-address { font-family: monospace; font-size: 12px; color: #111; margin: 15px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         
-        .payment-box { background: #fcfcfc; border: 1px solid #eee; padding: 30px; margin-bottom: 40px; }
-        .payment-address { font-family: monospace; font-size: 13px; color: #111; margin: 15px 0; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        
-        .input-group { margin-bottom: 25px; }
-        label { display: block; font-size: 11px; color: #888; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        input[type="text"], input[type="email"] { width: 100%; padding: 15px; border: 1px solid #eee; outline: none; transition: 0.3s; background: #fafafa; }
-        input:focus { border-color: var(--gold); background: #fff; }
-        
-        .submit-btn { width: 100%; padding: 20px; background: #111; color: #fff; border: none; font-size: 12px; font-weight: bold; cursor: pointer; letter-spacing: 3px; text-transform: uppercase; margin-top: 30px; transition: 0.4s; }
-        .submit-btn:hover { background: var(--gold); transform: translateY(-3px); }
-        
-        .copy-hint { font-size: 9px; color: var(--gold); cursor: pointer; text-transform: uppercase; border: 1px solid var(--gold); padding: 2px 8px; }
+        .copy-hint { font-size: 8px; color: #9E7E45; cursor: pointer; text-transform: uppercase; border: 1px solid #9E7E45; padding: 3px 10px; transition: 0.3s; }
+        .copy-hint:hover { background: #9E7E45; color: #fff; }
+
+        .requirement-list { text-align: left; margin: 30px 0; padding: 0; list-style: none; }
+        .requirement-list li { font-size: 10px; color: #888; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; }
+        .requirement-list li::before { content: "—"; margin-right: 15px; color: #9E7E45; }
+
+        .submit-btn { width: 100%; padding: 22px; background: #000; color: #fff; border: none; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; cursor: none; transition: 0.5s; margin-top: 20px; }
+        .submit-btn:hover { background: #25D366; } /* WhatsApp Color on Hover */
     </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
     
     <header class="header">
-        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold;">← BACK</button>
-        <div class="logo">A<span>K</span></div>
-        <div style="font-size:10px; letter-spacing:2px; color:var(--gold);">RESERVATION</div>
+        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold; cursor:none;">← BACK</button>
+        <div style="font-size:10px; letter-spacing:3px; color:#aaa;">PRIVATE RESERVATION</div>
     </header>
 
     <div class="order-container">
+        <div class="brand-k-order">K</div>
+        
         <div class="order-header">
-            <p style="font-size: 10px; color: var(--gold); letter-spacing: 5px;">BESPOKE APPLICATION</p>
-            <h2 id="display-plot">SECURE YOUR SPOT</h2>
-            <div id="plot-details" style="font-size: 11px; letter-spacing: 2px; color: #666; margin-bottom: 20px;">LOADING ASSET...</div>
-            <div id="dynamic-price" class="price-badge">$000</div>
+            <p>Bespoke Application</p>
+            <h2 id="display-plot">SECURING ASSET...</h2>
+            <div id="dynamic-price" class="price-badge">$0.00</div>
         </div>
 
         <div class="payment-box">
-            <p style="font-size: 9px; letter-spacing: 2px; color: #888; margin-bottom: 15px;">OFFICIAL RECEIVING ADDRESSES</p>
+            <p style="font-size: 9px; letter-spacing: 2px; color: #888; margin-bottom: 20px; text-transform: uppercase;">Official Receiving Portals</p>
             <div class="payment-address">
                 <span>BINANCE UID: 912221034</span>
                 <span class="copy-hint" onclick="copyText('912221034')">Copy</span>
@@ -56,71 +61,41 @@
             </div>
         </div>
 
-        <div class="input-group">
-            <label>Link to your Channel / Social Profile</label>
-            <input type="text" id="social-link" placeholder="https://youtube.com/@yourprofile">
-        </div>
-        
-        <div class="input-group">
-            <label>Official Contact Email</label>
-            <input type="email" id="cust-email" placeholder="owner@domain.com">
-        </div>
+        <ul class="requirement-list">
+            <li>Lifetime Ownership Rights</li>
+            <li>Permanent Branding Integration</li>
+            <li>Direct Concierge Support</li>
+        </ul>
 
-        <div class="input-group">
-            <label>Transaction Hash / Payment Proof Link</label>
-            <input type="text" id="payment-proof" placeholder="Enter Transaction ID or Image URL">
-        </div>
-
-        <button class="submit-btn" id="submit-btn">SUBMIT APPLICATION</button>
+        <button class="submit-btn" onclick="sendToWhatsApp()">Apply via WhatsApp</button>
+        <p style="text-align:center; font-size:8px; color:#bbb; margin-top:20px; letter-spacing:2px; text-transform:uppercase;">You will send your logo & proof directly to our HQ</p>
     </div>
 
-    <script type="module">
-        import { db, ref, set } from "./firebase-config.js";
-
-        // URL থেকে ডেটা সংগ্রহ করা (যেমন: order.html?g=Gaming&p=5&pr=99)
+    <script>
+        // URL থেকে ডেটা সংগ্রহ (e.g. order.html?s=Gaming&id=5&p=99)
         const params = new URLSearchParams(window.location.search);
-        const realm = params.get('g') || 'Premium';
-        const plotID = params.get('p') || '0';
-        const price = params.get('pr') || '0';
+        const section = params.get('s') || 'Premium Realm';
+        const plotID = params.get('id') || '0';
+        const price = params.get('p') || '0';
 
-        document.getElementById('plot-details').innerText = `${realm.toUpperCase()} REALM | PLOT #${plotID}`;
+        document.getElementById('display-plot').innerText = `${section} #${plotID}`;
         document.getElementById('dynamic-price').innerText = `$${price}`;
 
-        // সাবমিট বাটন লজিক
-        document.getElementById('submit-btn').onclick = () => {
-            const link = document.getElementById('social-link').value;
-            const email = document.getElementById('cust-email').value;
-            const proof = document.getElementById('payment-proof').value;
+        function sendToWhatsApp() {
+            const phone = "8801XXXXXXXXX"; // আপনার হোয়াটসঅ্যাপ নাম্বার এখানে দিন
+            const message = `Hello Aether HQ, I would like to reserve this bespoke plot:%0A%0A` +
+                            `Estate: ${section}%0A` +
+                            `Plot ID: ${plotID}%0A` +
+                            `Investment: $${price}%0A%0A` +
+                            `I have my Logo and Link ready for integration. Please verify my payment.`;
+            
+            window.location.href = `https://wa.me/${phone}?text=${message}`;
+        }
 
-            if(!link || !email || !proof) {
-                alert("Please fulfill all requirements for the elite collective.");
-                return;
-            }
-
-            // Firebase 'pending_orders' এ সেভ করা
-            const orderRef = ref(db, `pending_orders/${realm}/${plotID}`);
-            set(orderRef, {
-                realm,
-                plotID,
-                price,
-                socialLink: link,
-                email: email,
-                paymentProof: proof,
-                timestamp: Date.now(),
-                status: "Pending"
-            }).then(() => {
-                location.href = 'congrats.html'; // সফল হলে অভিনন্দন পেজে যাবে
-            }).catch((err) => {
-                console.error(err);
-                alert("Submission failed. Please contact concierge via chat.");
-            });
-        };
-
-        // অ্যাড্রেস কপি ফাংশন
-        window.copyText = (text) => {
+        function copyText(text) {
             navigator.clipboard.writeText(text);
-            alert("Address copied to clipboard.");
-        };
+            alert("Address copied to secure clipboard.");
+        }
     </script>
     <script src="script.js"></script>
 </body>
