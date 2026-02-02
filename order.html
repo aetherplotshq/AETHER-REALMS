@@ -2,129 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>RESERVE YOUR LEGACY | K</title>
+    <title>RESERVE YOUR LEGACY | K-REALMS</title>
     <link rel="stylesheet" href="style.css">
     <style>
         body { background: #fff; color: #111; }
         .order-container { max-width: 700px; margin: 150px auto; padding: 60px; border: 1px solid #eee; background: #fff; box-shadow: 0 10px 50px rgba(0,0,0,0.02); }
-        
         .order-header { text-align: center; margin-bottom: 50px; }
         .order-header h2 { font-weight: 100; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 10px; }
-        .price-badge { display: inline-block; padding: 10px 20px; background: #f9f9f9; border: 1px solid #9E7E45; color: #9E7E45; font-size: 14px; letter-spacing: 2px; }
-
+        .price-badge { display: inline-block; padding: 10px 20px; border: 1px solid var(--rr-gold); color: var(--rr-gold); font-size: 14px; letter-spacing: 2px; }
         .payment-box { background: #fcfcfc; border: 1px solid #eee; padding: 30px; margin-bottom: 40px; }
-        .payment-box h4 { font-size: 10px; letter-spacing: 3px; color: #999; margin-bottom: 20px; text-transform: uppercase; }
-        .payment-address { font-family: monospace; font-size: 13px; color: #111; margin: 15px 0; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; justify-content: space-between; }
-        .copy-btn { color: #9E7E45; font-size: 10px; cursor: pointer; text-transform: uppercase; }
-
+        .payment-address { font-family: monospace; font-size: 13px; color: #111; margin: 15px 0; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .copy-btn { color: var(--rr-gold); font-size: 9px; cursor: pointer; text-transform: uppercase; border: 1px solid var(--rr-gold); padding: 2px 8px; }
         .input-group { margin-bottom: 25px; }
         label { display: block; font-size: 11px; color: #888; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        input[type="text"], input[type="file"] {
-            width: 100%; padding: 15px; background: #fff; border: 1px solid #eee; color: #111; font-size: 14px; outline: none; transition: 0.3s;
-        }
-        input:focus { border-color: #9E7E45; }
-
-        .submit-btn { 
-            width: 100%; padding: 20px; background: #111; border: none; 
-            color: #fff; font-size: 12px; font-weight: bold; cursor: pointer; letter-spacing: 3px; text-transform: uppercase; margin-top: 30px;
-        }
-        .submit-btn:hover { background: #9E7E45; transition: 0.5s; }
-        
-        /* ডবল K লোগো ছোট ভার্সন */
-        .header-logo { display: flex; flex-direction: column; align-items: center; scale: 0.7; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 15px; border: 1px solid #eee; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--rr-gold); }
+        .submit-btn { width: 100%; padding: 20px; background: #111; color: #fff; border: none; font-size: 12px; font-weight: bold; cursor: pointer; letter-spacing: 3px; text-transform: uppercase; margin-top: 30px; }
+        .submit-btn:hover { background: var(--rr-gold); }
     </style>
 </head>
 <body>
+    <div id="custom-cursor"></div>
     <header class="main-header">
-        <button onclick="history.back()" style="background:none; border:none; cursor:pointer; font-size:10px; letter-spacing:2px;">← BACK</button>
-        <div class="logo-center">
-            <div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div>
-        </div>
+        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; color:var(--rr-gold); font-weight:bold;">← BACK</button>
+        <div class="logo-center"><div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div></div>
         <div></div>
     </header>
 
     <div class="order-container">
         <div class="order-header">
-            <h2>Bespoke Reservation</h2>
-            <div id="plot-details" style="font-size: 12px; letter-spacing: 2px; color: #666; margin-bottom: 15px;">LOADING...</div>
+            <p style="font-size: 10px; color: var(--rr-gold); letter-spacing: 5px;">BESPOKE RESERVATION</p>
+            <h2 id="plot-title">SECURE YOUR SPOT</h2>
+            <div id="plot-details" style="font-size: 11px; letter-spacing: 2px; color: #666; margin-bottom: 20px;">LOADING...</div>
             <div id="dynamic-price" class="price-badge">$0,000</div>
         </div>
 
         <div class="payment-box">
-            <h4>Official Payment Channels</h4>
-            <div class="payment-address">
-                <span>BINANCE UID: 912221034</span>
-                <span class="copy-btn">Copy</span>
-            </div>
-            <div class="payment-address">
-                <span>USDT (TRC20): TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</span>
-                <span class="copy-btn">Copy</span>
-            </div>
+            <div class="payment-address"><span>BINANCE UID: 912221034</span><span class="copy-btn">Copy</span></div>
+            <div class="payment-address"><span>USDT (TRC20): TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</span><span class="copy-btn">Copy</span></div>
         </div>
 
         <div class="input-group">
-            <label id="link-label">Channel / Profile Link (1M+ Followers Required)</label>
-            <input type="text" id="social-link" placeholder="https://youtube.com/c/yourchannel">
+            <label>Channel / Profile Link</label>
+            <input type="text" id="social-link" placeholder="https://youtube.com/c/yourname">
         </div>
-
         <div class="input-group">
-            <label id="proof-label">Ownership Proof (Dashboard Screenshot)</label>
-            <input type="file" id="proof-img" accept="image/*">
+            <label>Verification Proof (Dashboard Screenshot)</label>
+            <input type="file" id="proof-img">
         </div>
-
         <div class="input-group">
-            <label>Your Contact Email (Official)</label>
-            <input type="text" id="cust-email" placeholder="example@domain.com">
+            <label>Official Email</label>
+            <input type="text" id="cust-email" placeholder="owner@domain.com">
         </div>
 
-        <button class="submit-btn" onclick="submitOrder()">SUBMIT APPLICATION</button>
-        
-        <p style="font-size: 10px; color: #aaa; text-align: center; margin-top: 30px; line-height: 1.8;">
-            By submitting, you agree to our elite vetting process. <br>
-            A concierge will contact you within 24 hours after verification.
-        </p>
+        <button class="submit-btn" id="submit-btn">SUBMIT APPLICATION</button>
     </div>
 
+    <script src="script.js"></script>
     <script type="module">
         import { db, ref, set } from "./firebase-config.js";
-
-        // URL থেকে ডাটা নেওয়া
         const params = new URLSearchParams(window.location.search);
-        const g = params.get('g') || "Gaming";
-        const p = params.get('p') || "0";
-        const pr = params.get('pr') || "Auction";
+        const realm = params.get('g');
+        const plotID = params.get('p');
+        const price = params.get('pr');
 
-        // পেজ আপডেট করা
-        document.getElementById('plot-details').innerText = `${g.toUpperCase()} REALM | PLOT #${p}`;
-        document.getElementById('dynamic-price').innerText = pr === "AUCTION" ? "BY AUCTION" : `$${pr}`;
+        document.getElementById('plot-details').innerText = `${realm} REALM | PLOT #${plotID}`;
+        document.getElementById('dynamic-price').innerText = price === "Auction" ? "BY AUCTION" : `$${price}`;
 
-        // মিলিয়নেয়ার ক্লাবের জন্য আলাদা টেক্সট
-        if(g === "Millionaire") {
-            document.getElementById('link-label').innerText = "Business / Profile Link";
-            document.getElementById('proof-label').innerText = "Proof of Assets (Confidential)";
-        }
-
-        window.submitOrder = () => {
+        document.getElementById('submit-btn').onclick = () => {
             const link = document.getElementById('social-link').value;
             const email = document.getElementById('cust-email').value;
+            if(!link || !email) { alert("Please complete the form."); return; }
 
-            if(!link || !email) {
-                alert("Please complete the required fields.");
-                return;
-            }
-
-            // Firebase এ ডাটা পাঠানো
-            set(ref(db, `pending_orders/${g}/${p}`), {
-                realm: g,
-                plotID: p,
-                price: pr,
-                socialLink: link,
-                email: email,
-                timestamp: new Date().toISOString(),
-                status: "Pending Verification"
+            set(ref(db, `pending_orders/${realm}/${plotID}`), {
+                realm, plotID, price, socialLink: link, email, timestamp: Date.now(), status: "Pending"
             }).then(() => {
-                alert("Your bespoke application has been received. Our concierge will contact you soon.");
-                location.href = 'index.html';
+                location.href = 'congrats.html'; // অভিনন্দন পেজে নিয়ে যাবে
             });
         };
     </script>
