@@ -2,50 +2,146 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CUSTOMER SERVICE | K-REALMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONCIERGE SUPPORT | AETHER PLOTS</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: #fff; color: #111; }
+        
+        .support-wrapper {
+            max-width: 800px;
+            margin: 180px auto 100px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .support-header h1 {
+            font-weight: 100;
+            letter-spacing: 15px;
+            text-transform: uppercase;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .support-card {
+            padding: 40px;
+            border: 1px solid #eee;
+            transition: 0.4s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .support-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .support-card h3 {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .support-card p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .email-link {
+            font-weight: bold;
+            color: #111;
+            margin-top: 10px;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .faq-section {
+            margin-top: 100px;
+            text-align: left;
+            border-top: 1px solid #eee;
+            padding-top: 60px;
+        }
+
+        .faq-item {
+            margin-bottom: 30px;
+        }
+
+        .faq-item h4 {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .faq-item p {
+            font-size: 13px;
+            color: #777;
+        }
+    </style>
 </head>
-<body style="background: #fff;">
-    <header class="main-header">
-        <button onclick="history.back()" style="background:none; border:none; cursor:pointer;">← BACK</button>
-        <div class="logo-center"><div class="shield-k" style="position:relative;">K</div></div>
-        <div></div>
+<body>
+    <div id="custom-cursor"></div>
+
+    <header class="header">
+        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold;">← BACK</button>
+        <div class="logo">A<span>K</span></div>
+        <div style="font-size:10px; letter-spacing:2px; color:var(--gold);">SUPPORT HUB</div>
     </header>
 
-    <div style="margin-top:150px; padding: 0 10%; max-width: 900px;">
-        <h1 style="font-weight:100; font-size:40px; letter-spacing:10px;">CUSTOMER SERVICE</h1>
-        
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:50px; margin-top:60px;">
-            <div>
-                <h3 style="font-size:12px; letter-spacing:2px; border-bottom:1px solid #eee; padding-bottom:10px;">ELIGIBILITY CRITERIA</h3>
-                <ul style="font-size:13px; color:#666; padding-left:15px; line-height:2;">
-                    <li>Minimum 1 Million Verified Subscribers/Followers.</li>
-                    <li>Active content creation within the last 30 days.</li>
-                    <li>Brand alignment with our luxury standards.</li>
-                    <li>Ownership proof of the digital asset/logo.</li>
-                </ul>
-            </div>
-            <div>
-                <h3 style="font-size:12px; letter-spacing:2px; border-bottom:1px solid #eee; padding-bottom:10px;">REQUIREMENTS</h3>
-                <ul style="font-size:13px; color:#666; padding-left:15px; line-height:2;">
-                    <li>High-resolution Logo (100x100px recommended).</li>
-                    <li>Verified Channel URL.</li>
-                    <li>Dashboard Screenshot for ownership verification.</li>
-                    <li>Transaction Hash for Plot reservation.</li>
-                </ul>
-            </div>
+    <div class="support-wrapper">
+        <div class="support-header">
+            <h1>How can we assist?</h1>
+            <p style="font-size: 10px; letter-spacing: 5px; color: #999; text-transform: uppercase;">The Aether Plots Concierge is at your service</p>
         </div>
 
-        <div style="margin-top:80px; border-top:1px solid #eee; padding-top:40px; text-align:center;">
-            <p style="font-size:11px; letter-spacing:3px; color:#999;">DIRECT ASSISTANCE</p>
-            <h2 style="font-weight:200; margin:15px 0;">WHATSAPP CONCIERGE</h2>
-            <button class="gold-btn" onclick="window.open('https://wa.me/8801576940717')">START CONVERSATION</button>
-            <p style="margin-top:20px; font-size:12px;">aetherplotshq@gmail.com</p>
+        <div class="support-grid">
+            <div class="support-card">
+                <h3>Direct Inquiry</h3>
+                <p>For official documentation or partnership inquiries.</p>
+                <span class="email-link">aetherplotshq@gmail.com</span>
+            </div>
+
+            <a href="chat.html" class="support-card">
+                <h3>Live Concierge</h3>
+                <p>Real-time assistance for estate acquisition and updates.</p>
+                <span class="email-link" style="color: var(--gold);">OPEN CHAT →</span>
+            </a>
+        </div>
+
+        <div class="faq-section">
+            <h2 style="font-weight: 100; letter-spacing: 5px; margin-bottom: 40px;">FREQUENTLY ASKED</h2>
+            
+            <div class="faq-item">
+                <h4>How do I update my plot logo?</h4>
+                <p>Once your reservation is approved, you can use the Manual Update portal in your dashboard to refresh your brand's presence.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>What is the update fee?</h4>
+                <p>Each information update incurs a nominal processing fee of $9 to maintain the exclusivity of the collective.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Can I resell my plot?</h4>
+                <p>Plots at Aether Plots are permanent legacies. Please contact our concierge via email for transfer of ownership inquiries.</p>
+            </div>
         </div>
     </div>
 
-    <footer style="margin-top:100px; padding:40px; text-align:center; border-top:1px solid #eee; font-size:10px; color:#aaa;">
-        © 2026 K-REALMS. ALL RIGHTS RESERVED.
+    <footer class="footer">
+        © 2026 AETHER PLOTS. DEDICATED TO EXCELLENCE.
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
