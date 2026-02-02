@@ -6,30 +6,31 @@
     <title>RESERVE YOUR LEGACY | K</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background: #fff; color: #111; overflow-x: hidden; }
-        .order-container { max-width: 650px; margin: 120px auto; padding: 60px 40px; border: 1px solid #f5f5f5; background: #fff; }
+        body { background: #fff; color: #111; overflow-x: hidden; font-family: 'Helvetica Neue', sans-serif; }
+        .order-container { max-width: 650px; margin: 100px auto; padding: 60px 40px; border: 1px solid #f5f5f5; background: #fff; }
         
-        /* কাস্টম ব্র্যান্ডিং */
-        .brand-k-order { font-size: 40px; font-weight: 900; font-family: serif; text-align: center; margin-bottom: 40px; }
-        
+        .brand-k-order { font-size: 50px; font-weight: 900; font-family: serif; text-align: center; margin-bottom: 30px; }
         .order-header { text-align: center; margin-bottom: 50px; }
         .order-header p { font-size: 10px; color: #9E7E45; letter-spacing: 5px; text-transform: uppercase; }
         .order-header h2 { font-weight: 100; letter-spacing: 10px; text-transform: uppercase; font-size: 24px; margin: 15px 0; }
         
-        .price-badge { display: inline-block; padding: 12px 30px; border: 1px solid #111; color: #111; font-size: 20px; font-weight: 100; letter-spacing: 3px; }
+        .price-badge { display: inline-block; padding: 12px 30px; border: 1px solid #111; color: #111; font-size: 22px; font-weight: 100; letter-spacing: 3px; }
 
+        /* পেমেন্ট বক্স স্টাইল */
         .payment-box { background: #fafafa; border: 1px solid #eee; padding: 30px; margin: 40px 0; }
-        .payment-address { font-family: monospace; font-size: 12px; color: #111; margin: 15px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .method-title { font-size: 9px; letter-spacing: 2px; color: #888; margin-bottom: 20px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         
-        .copy-hint { font-size: 8px; color: #9E7E45; cursor: pointer; text-transform: uppercase; border: 1px solid #9E7E45; padding: 3px 10px; transition: 0.3s; }
+        .payment-address { font-family: monospace; font-size: 11px; color: #111; margin: 15px 0; display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 12px; border: 1px solid #f0f0f0; }
+        
+        .copy-hint { font-size: 8px; color: #9E7E45; cursor: pointer; text-transform: uppercase; border: 1px solid #9E7E45; padding: 3px 10px; transition: 0.3s; font-family: sans-serif; }
         .copy-hint:hover { background: #9E7E45; color: #fff; }
 
         .requirement-list { text-align: left; margin: 30px 0; padding: 0; list-style: none; }
-        .requirement-list li { font-size: 10px; color: #888; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; }
+        .requirement-list li { font-size: 10px; color: #999; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; }
         .requirement-list li::before { content: "—"; margin-right: 15px; color: #9E7E45; }
 
         .submit-btn { width: 100%; padding: 22px; background: #000; color: #fff; border: none; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; cursor: none; transition: 0.5s; margin-top: 20px; }
-        .submit-btn:hover { background: #25D366; } /* WhatsApp Color on Hover */
+        .submit-btn:hover { background: #25D366; letter-spacing: 6px; }
     </style>
 </head>
 <body>
@@ -37,42 +38,52 @@
     
     <header class="header">
         <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold; cursor:none;">← BACK</button>
-        <div style="font-size:10px; letter-spacing:3px; color:#aaa;">PRIVATE RESERVATION</div>
+        <div style="font-size:10px; letter-spacing:3px; color:#aaa;">ASSET RESERVATION</div>
     </header>
 
     <div class="order-container">
         <div class="brand-k-order">K</div>
         
         <div class="order-header">
-            <p>Bespoke Application</p>
-            <h2 id="display-plot">SECURING ASSET...</h2>
-            <div id="dynamic-price" class="price-badge">$0.00</div>
+            <p>Bespoke Selection</p>
+            <h2 id="display-plot">ESTATE #000</h2>
+            <div id="dynamic-price" class="price-badge">$00</div>
         </div>
 
         <div class="payment-box">
-            <p style="font-size: 9px; letter-spacing: 2px; color: #888; margin-bottom: 20px; text-transform: uppercase;">Official Receiving Portals</p>
+            <div class="method-title">Secure Receiving Addresses</div>
+            
+            <label style="font-size: 8px; color: #bbb; display: block; margin-bottom: 5px;">BINANCE UID</label>
             <div class="payment-address">
-                <span>BINANCE UID: 912221034</span>
+                <span>912221034</span>
                 <span class="copy-hint" onclick="copyText('912221034')">Copy</span>
             </div>
+
+            <label style="font-size: 8px; color: #bbb; display: block; margin-bottom: 5px; margin-top: 15px;">USDT (TRC20)</label>
             <div class="payment-address">
-                <span>USDT (TRC20): TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</span>
+                <span style="font-size: 10px;">TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</span>
                 <span class="copy-hint" onclick="copyText('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">Copy</span>
+            </div>
+
+            <label style="font-size: 8px; color: #bbb; display: block; margin-bottom: 5px; margin-top: 15px;">METAMASK (ETH/ERC20)</label>
+            <div class="payment-address">
+                <span style="font-size: 10px;">0x443792A4884e8e855f954ccEF910778Aff1eb78E</span>
+                <span class="copy-hint" onclick="copyText('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">Copy</span>
             </div>
         </div>
 
         <ul class="requirement-list">
-            <li>Lifetime Ownership Rights</li>
-            <li>Permanent Branding Integration</li>
-            <li>Direct Concierge Support</li>
+            <li>LIFETIME ARCHIVE RIGHTS</li>
+            <li>$9 INFORMATION UPDATE FEE</li>
+            <li>5% RESALE ROYALTY</li>
         </ul>
 
         <button class="submit-btn" onclick="sendToWhatsApp()">Apply via WhatsApp</button>
-        <p style="text-align:center; font-size:8px; color:#bbb; margin-top:20px; letter-spacing:2px; text-transform:uppercase;">You will send your logo & proof directly to our HQ</p>
+        <p style="text-align:center; font-size:8px; color:#bbb; margin-top:20px; letter-spacing:2px; text-transform:uppercase;">Attach your Logo and Proof in Chat</p>
     </div>
 
     <script>
-        // URL থেকে ডেটা সংগ্রহ (e.g. order.html?s=Gaming&id=5&p=99)
+        // URL থেকে প্লট ডিটেইলস নেওয়া
         const params = new URLSearchParams(window.location.search);
         const section = params.get('s') || 'Premium Realm';
         const plotID = params.get('id') || '0';
@@ -82,19 +93,19 @@
         document.getElementById('dynamic-price').innerText = `$${price}`;
 
         function sendToWhatsApp() {
-            const phone = "8801XXXXXXXXX"; // আপনার হোয়াটসঅ্যাপ নাম্বার এখানে দিন
-            const message = `Hello Aether HQ, I would like to reserve this bespoke plot:%0A%0A` +
-                            `Estate: ${section}%0A` +
+            const phone = "8801576940717"; 
+            const message = `Hello Aether HQ, I am ready to secure this asset:%0A%0A` +
+                            `Section: ${section}%0A` +
                             `Plot ID: ${plotID}%0A` +
-                            `Investment: $${price}%0A%0A` +
-                            `I have my Logo and Link ready for integration. Please verify my payment.`;
+                            `Amount: $${price}%0A%0A` +
+                            `I have completed the transfer. Please find my Logo and Link below.`;
             
             window.location.href = `https://wa.me/${phone}?text=${message}`;
         }
 
         function copyText(text) {
             navigator.clipboard.writeText(text);
-            alert("Address copied to secure clipboard.");
+            alert("Secure address copied.");
         }
     </script>
     <script src="script.js"></script>
