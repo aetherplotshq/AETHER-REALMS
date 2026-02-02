@@ -1,106 +1,170 @@
-/* Rolls-Royce Premium Theme - K-REALMS */
+/* AETHER PLOTS - Official Stylesheet
+   Theme: Luxury Gold & Obsidian
+*/
+
 :root {
-    --rr-gold: #9E7E45; /* Signature Gold */
-    --rr-black: #111111;
-    --rr-white: #ffffff;
-    --rr-border: #e5e5e5;
+    --gold: #9E7E45;       /* রাজকীয় গোল্ডেন কালার */
+    --black: #000000;
+    --deep-gray: #111111;
+    --light-gray: #f9f9f9;
+    --border: #eeeeee;
+    --white: #ffffff;
 }
 
-/* Base Setup */
-* { cursor: none !important; box-sizing: border-box; }
-body { 
-    margin: 0; 
-    background: var(--rr-white); 
-    font-family: 'Helvetica Neue', Arial, sans-serif; 
-    overflow-x: hidden; 
+* {
+    box-sizing: border-box;
+    cursor: none !important; /* কাস্টম কার্সরের জন্য ডিফল্ট কার্সর হাইড করা */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* Custom Golden Circle Cursor */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+}
+
+/* ১. কাস্টম মাউস কার্সর */
 #custom-cursor {
-    width: 20px; height: 20px; border: 1.5px solid var(--rr-gold);
-    border-radius: 50%; position: fixed; pointer-events: none;
-    z-index: 9999; transition: transform 0.1s ease;
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    transition: transform 0.15s ease-out, background-color 0.3s ease;
 }
 
-/* Main Header */
-.main-header {
-    height: 100px; border-bottom: 1px solid var(--rr-border); display: flex;
-    align-items: center; justify-content: space-between; padding: 0 60px;
-    position: fixed; top: 0; width: 100%; background: var(--rr-white); z-index: 1000;
+/* ২. রাজকীয় হেডার */
+.header {
+    height: 100px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    z-index: 9000;
+    transition: 0.4s ease;
 }
 
-/* Double K Logo Style */
-.rr-logo-box { 
-    display: flex; flex-direction: column; align-items: center; 
-    border: 1px solid var(--rr-gold); padding: 5px 15px; background: transparent;
-}
-.k-up, .k-down { color: var(--rr-gold); font-size: 28px; font-weight: 200; line-height: 1; }
-.k-down { transform: scaleY(-1); margin-top: -2px; }
-
-/* Map Wrapper */
-.map-wrapper { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    padding: 160px 40px 100px; 
+.logo {
+    font-size: 28px;
+    font-weight: 100;
+    letter-spacing: 8px;
+    color: var(--black);
+    text-decoration: none;
 }
 
-/* 200x200 VIP Section */
-.vip-section { 
-    display: flex; gap: 30px; margin-bottom: 60px; justify-content: center; flex-wrap: wrap; 
+.logo span {
+    color: var(--gold);
+    font-weight: bold;
 }
-.vip-plot {
-    width: 200px; height: 200px; border: 2.5px solid var(--rr-gold);
-    background: var(--rr-white); display: flex; flex-direction: column; 
-    align-items: center; justify-content: center; position: relative;
-    transition: 0.5s; box-shadow: 0 10px 30px rgba(158, 126, 69, 0.05);
-    overflow: hidden;
-}
-.vip-plot:hover { transform: translateY(-5px); background: #fffdf9; }
-.stars { color: var(--rr-gold); font-size: 14px; margin-bottom: 10px; letter-spacing: 3px; }
 
-/* 100x100 Standard Plot Canvas */
+/* ৩. গ্লোবাল বাটন ডিজাইন */
+.btn-download, .submit-btn, .publish-btn {
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    padding: 15px 35px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+    display: inline-block;
+}
+
+.btn-download:hover {
+    background: var(--gold);
+    transform: translateY(-2px);
+}
+
+/* ৪. এস্টেট গ্রিড (Gaming, Social, Millionaire) */
 .canvas-grid {
-    display: grid; 
-    grid-template-columns: repeat(10, 100px); /* Default for 100 plots */
-    gap: 0px; 
-    border: 1px solid var(--rr-border);
+    display: grid;
+    margin: 40px auto;
+    background: var(--white);
 }
+
 .plot-unit {
-    width: 100px; height: 100px; border: 0.5px solid var(--rr-border);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    font-size: 10px; background: var(--rr-white); transition: 0.3s;
+    border: 0.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    transition: 0.3s ease;
     overflow: hidden;
 }
-.plot-unit:hover { border: 1.5px solid var(--rr-gold); z-index: 10; background: #fafafa; }
 
-/* Menu Overlay */
-.menu-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 0;
-    background: #fff; z-index: 2000; transition: 0.6s cubic-bezier(0.6, 0, 0.1, 1);
-    overflow: hidden; display: flex; align-items: center; justify-content: center;
+.plot-unit:hover {
+    border: 1px solid var(--gold);
+    background: #fdfaf5;
+    z-index: 5;
 }
-.menu-overlay.open { height: 100vh; }
-.nav-links ul { list-style: none; padding: 0; text-align: center; }
-.nav-links li { font-size: 2rem; margin: 20px 0; color: #ccc; transition: 0.4s; letter-spacing: 5px; }
-.nav-links li:hover { color: var(--rr-gold); letter-spacing: 10px; }
 
-/* Floating WhatsApp Style Chat Button */
+/* ৫. চ্যাট বাটন (Floating) */
 .floating-chat {
-    position: fixed; bottom: 40px; right: 40px;
-    width: 65px; height: 65px; z-index: 3000;
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    background: var(--black);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    z-index: 8000;
+    transition: 0.3s;
 }
-.floating-chat:hover { transform: scale(1.15) rotate(5deg); }
-.floating-chat img { width: 100%; height: 100%; }
 
-/* Millionaire Page Special Overrides */
-.millionaire-mode { background: #000 !important; }
-.millionaire-mode .plot-unit { background: #050505; border-color: #1a1a1a; color: var(--rr-gold); }
-.millionaire-mode .canvas-grid { grid-template-columns: repeat(15, 100px); } /* Grid for 365 plots */
+.floating-chat:hover {
+    transform: scale(1.1);
+    background: var(--gold);
+}
 
-/* Responsive - Mobile adjustment */
-@media (max-width: 1000px) {
-    .canvas-grid { grid-template-columns: repeat(5, 100px); }
+.floating-chat img {
+    width: 30px;
+    filter: invert(1);
+}
+
+/* ৬. ফুটার সেকশন */
+.footer {
+    background: #000;
+    color: #888;
+    padding: 80px 60px;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 3px;
+    border-top: 1px solid var(--gold);
+}
+
+/* ৭. ফর্ম ও ইনপুট ডিজাইন */
+input, select {
+    border: 1px solid var(--border);
+    padding: 15px;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+input:focus {
+    border-color: var(--gold);
+    outline: none;
+}
+
+/* ৮. রেসপন্সিভনেস (মোবাইলের জন্য) */
+@media (max-width: 768px) {
+    .header { padding: 0 25px; height: 80px; }
+    .logo { font-size: 20px; letter-spacing: 5px; }
+    .canvas-grid { transform: scale(0.8); } /* মোবাইল স্ক্রিনে গ্রিড ফিট করার জন্য */
+    .footer { padding: 40px 20px; }
 }
