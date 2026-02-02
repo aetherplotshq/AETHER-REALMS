@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>K | INSPIRING LEGACY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K | INSPIRING GREATNESS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,29 +13,30 @@
             <p>MENU</p>
         </div>
         
-        <div class="logo-wrapper">
-            <div class="logo-center rr-style">
-                <span class="text-logo">K</span>
-                <img src="white-cat-face.png" class="cat-logo" alt="Cat Face">
+        <div class="logo-center">
+            <div class="rr-logo-box">
+                <span class="k-up">K</span>
+                <span class="k-down">K</span>
             </div>
         </div>
 
         <div class="header-right">
-            <a href="support.html"><span class="search-icon">🔍</span> CUSTOMER SERVICE</a>
+            <a href="support.html">CUSTOMER SERVICE</a>
         </div>
     </header>
 
-    <section class="hero-video-bg">
-        <div class="hero-overlay">
-            <p class="tagline">INSPIRING GREATNESS</p>
-            <h1 class="main-title">THE ELITE 100</h1>
+    <section class="hero-section">
+        <div class="hero-content">
+            <p class="top-tag">INSPIRING GREATNESS</p>
+            <h1>THE ELITE 100</h1>
+            <button class="explore-btn" onclick="toggleMenu()">EXPLORE REALMS</button>
         </div>
     </section>
 
     <div id="menu-overlay" class="menu-overlay">
         <span class="close-overlay" onclick="toggleMenu()">&times;</span>
-        <nav class="nav-content">
-            <small>SELECT REALM</small>
+        <nav class="nav-links">
+            <p>SELECT REALM</p>
             <ul>
                 <li onclick="location.href='dashboard.html?g=FreeFire'">FREE FIRE</li>
                 <li onclick="location.href='dashboard.html?g=PUBGM'">PUBG MOBILE</li>
@@ -51,41 +53,34 @@
     </div>
 
     <footer class="rr-footer">
-        <div class="footer-logo">
-            <p>K-REALMS</p>
-            <small>ELITE PLOTS</small>
-        </div>
-        <hr class="footer-line">
         <div class="footer-grid">
             <div class="footer-col">
-                <a href="dashboard.html">EXPLORE REALMS</a>
-                <a href="support.html">FIND A SPOT</a>
-                <a href="privacy.html">PRIVACY</a>
-                <a href="#">LANGUAGE 🇬🇧</a>
+                <h4>EXPLORE</h4>
+                <a href="dashboard.html">RESERVE A PLOT</a>
+                <a href="support.html">ELIGIBILITY</a>
+                <a href="#">INSPIRING GREATNESS</a>
             </div>
             <div class="footer-col">
+                <h4>LEGAL</h4>
                 <a href="#">COOKIES</a>
-                <a href="#">ELIGIBILITY</a>
-                <a href="support.html">CAREERS</a>
-                <a href="dashboard.html">SITE MAP</a>
+                <a href="#">PRIVACY POLICY</a>
+                <a href="#">TERMS & CONDITIONS</a>
             </div>
             <div class="footer-col">
-                <a href="#">PRESSCLUB</a>
-                <a href="#">REGULATION</a>
+                <h4>COMPANY</h4>
+                <a href="support.html">CONTACT US</a>
+                <a href="#">PRESS CLUB</a>
                 <a href="#">WHISPERS</a>
             </div>
-            <div class="footer-col">
-                <a href="#">LEGAL</a>
-                <a href="#">FAQS</a>
-                <a href="support.html">CONTACT</a>
-                <a href="#">SUSTAINABILITY</a>
+            <div class="footer-col socials">
+                <h4>FOLLOW US</h4>
+                <a href="https://youtube.com/@k_realms">YOUTUBE</a>
+                <a href="https://facebook.com/k_realms">FACEBOOK</a>
+                <a href="https://instagram.com/k_realms">INSTAGRAM</a>
             </div>
-            <div class="footer-socials">
-                <a href="https://youtube.com/@k_realms" class="social-icon">YT</a>
-                <a href="https://facebook.com/k_realms" class="social-icon">FB</a>
-                <a href="https://instagram.com/k_realms" class="social-icon">IG</a>
-                <a href="https://x.com/k_realms" class="social-icon">X</a>
-            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 K-REALMS. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
 
