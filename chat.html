@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CONCIERGE CHAT | K-REALMS</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .chat-container { max-width: 500px; margin: 120px auto; background: #fff; border: 1px solid #eee; height: 70vh; display: flex; flex-direction: column; }
+        #chat-window { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .msg { padding: 10px 15px; border-radius: 15px; max-width: 80%; font-size: 13px; }
+        .msg.received { background: #f1f1f1; align-self: flex-start; }
+        .msg.sent { background: var(--rr-gold); color: #fff; align-self: flex-end; }
+        .chat-input { display: flex; border-top: 1px solid #eee; }
+        .chat-input input { flex: 1; border: none; padding: 20px; outline: none; }
+        .chat-input button { background: #111; color: #fff; border: none; padding: 0 25px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <header class="main-header">
+        <button onclick="history.back()" style="background:none; border:none; color:var(--rr-gold);">← BACK</button>
+        <div style="font-size:10px; letter-spacing:3px;">REAL-TIME CONCIERGE (8H AUTO-DELETE)</div>
+    </header>
+
+    <div class="chat-container">
+        <div id="chat-window"></div>
+        <div class="chat-input">
+            <input type="text" id="msg-input" placeholder="Type your message...">
+            <button onclick="sendMsg()">SEND</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db, ref, push, onValue, serverTimestamp, query, orderByChild, startAt } from "./firebase-config.js";
+
+        const chatWindow = document.getElementById('chat-window');
+        const eightHoursAgo = Date.now() - (8 * 60 * 60 * 1000);
+
+        // ৮ ঘণ্টার মেসেজ লোড করার কুয়েরি
+        const chatRef = query(ref(db, 'public_chat'), orderByChild('timestamp'), startAt(eightHoursAgo));
+
+        onValue(chatRef, (snapshot) => {
+            chatWindow.innerHTML = "";
+            snapshot.forEach((child) => {
+                const data = child.val();
+                const div = document.createElement('div');
+                div.className = `msg ${data.sender === 'me' ? 'sent' : 'received'}`;
+                div.innerText = data.text;
+                chatWindow.appendChild(div);
+            });
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        });
+
+        window.sendMsg = () => {
+            const text = document.getElementById('msg-input').value;
+            if(!text) return;
+            push(ref(db, 'public_chat'), {
+                text: text,
+                timestamp: Date.now(),
+                sender: 'me'
+            });
+            document.getElementById('msg-input').value = "";
+        };
+    </script>
+</body>
+</html>
