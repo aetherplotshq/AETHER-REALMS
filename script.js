@@ -1,19 +1,15 @@
-// Menu Toggle Logic
-window.toggleMenu = () => {
-    const menu = document.getElementById('menu-overlay');
-    menu.classList.toggle('open');
-};
+function toggleMenu() {
+    document.getElementById('menu-overlay').classList.toggle('open');
+}
 
-// Cookie Policy Logic
-window.closeCookie = () => {
-    document.getElementById('cookie-banner').style.display = 'none';
-    localStorage.setItem('cookieAccepted', 'true');
-};
-
-// Check if cookies were already accepted
-document.addEventListener('DOMContentLoaded', () => {
-    if(localStorage.getItem('cookieAccepted')) {
-        const banner = document.getElementById('cookie-banner');
-        if(banner) banner.style.display = 'none';
+// মাউস দিয়ে উপরে উঠালে (Scroll) লোগো ইফেক্ট যদি চান
+window.onscroll = function() {
+    let header = document.querySelector(".main-header");
+    if (window.pageYOffset > 50) {
+        header.style.height = "70px";
+        header.style.boxShadow = "0 10px 30px rgba(0,0,0,0.02)";
+    } else {
+        header.style.height = "90px";
+        header.style.boxShadow = "none";
     }
-});
+};
