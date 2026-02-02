@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MILLIONAIRE CLUB | K</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: #000; color: #fff; }
+        .main-header { background: #000; border-bottom: 1px solid var(--gold); }
+        .main-header button, .k-up, .k-down { color: var(--gold) !important; }
+        .rr-logo-box { border-color: var(--gold); background: #000; }
+        .plot { background: #050505; border: 1px solid #222; color: var(--gold); }
+        .plot:hover { border-color: var(--gold); box-shadow: 0 0 15px var(--gold); }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <button onclick="history.back()">← BACK</button>
+        <div class="logo-center"><div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div></div>
+        <div style="text-align:right; font-size:10px; color:var(--gold);">MILLIONAIRE CLUB: FIXED $9,999</div>
+    </header>
+
+    <div id="map-container"></div>
+
+    <script>
+        const container = document.getElementById('map-container');
+        for(let i=1; i<=100; i++) {
+            const p = document.createElement('div');
+            p.className = "plot";
+            p.innerHTML = `<span>#${i}</span><br><strong>$9,999</strong>`;
+            p.onclick = () => location.href = `order.html?g=Millionaire&p=${i}&pr=9999`;
+            container.appendChild(p);
+        }
+    </script>
+</body>
+</html>
