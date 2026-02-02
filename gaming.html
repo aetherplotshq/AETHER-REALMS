@@ -2,52 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GAMING REALM | K</title>
+    <title>GAMING REALM | K-REALMS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="custom-cursor"></div>
     <header class="main-header">
-        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px;">← BACK</button>
-        <div class="logo-center"><div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div></div>
-        <div id="realm-name" style="color:var(--gold); font-size:10px; letter-spacing:2px;">GAMING REALM</div>
+        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; color:var(--rr-gold);">← BACK</button>
+        <div class="logo-center">
+            <div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div>
+        </div>
+        <div id="realm-name" style="color:var(--rr-gold); font-size:10px; letter-spacing:3px;">GAMING REALM</div>
     </header>
 
-    <div class="map-wrapper">
-        <div class="vip-section" id="vip-plots"></div>
-        <div class="canvas-grid" id="canvas-plots"></div>
+    <div class="map-wrapper" style="display:flex; flex-direction:column; align-items:center; padding-top:160px;">
+        <div class="vip-section">
+            <div class="vip-plot" onclick="location.href='order.html?g=Gaming&p=1&pr=Auction'">
+                <div class="stars">★★★★★</div>
+                <span style="font-size:10px; letter-spacing:2px;">VIP PLOT #1</span>
+                <strong style="margin-top:10px; color:var(--rr-gold);">AUCTION</strong>
+            </div>
+            <div id="dynamic-vips" style="display:contents;"></div>
+        </div>
+        
+        <div class="canvas-grid" id="main-canvas"></div>
     </div>
 
     <script src="script.js"></script>
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const g = params.get('g') || "Gaming";
-        document.getElementById('realm-name').innerText = g.toUpperCase() + " REALM";
-
-        // VIP Plots (1-5)
-        const vipContainer = document.getElementById('vip-plots');
-        for(let i=1; i<=5; i++){
-            const div = document.createElement('div');
-            div.className = 'vip-plot';
-            div.innerHTML = `PLOT #${i}<br><b>AUCTION</b>`;
-            div.onclick = () => location.href=`order.html?g=${g}&p=${i}&pr=Auction`;
-            vipContainer.appendChild(div);
+        const vipDiv = document.getElementById('dynamic-vips');
+        for(let i=2; i<=5; i++){
+            vipDiv.innerHTML += `
+                <div class="vip-plot" onclick="location.href='order.html?g=Gaming&p=${i}&pr=Auction'">
+                    <div class="stars">★★★★★</div>
+                    <span style="font-size:10px; letter-spacing:2px;">VIP PLOT #${i}</span>
+                    <strong style="margin-top:10px; color:var(--rr-gold);">AUCTION</strong>
+                </div>`;
         }
 
-        // Main Plots (1-100)
-        const canvasContainer = document.getElementById('canvas-plots');
+        const canvas = document.getElementById('main-canvas');
         for(let i=1; i<=100; i++){
-            const div = document.createElement('div');
-            div.className = 'plot-unit';
-            let price;
-            if(i <= 20) price = 1299;
-            else {
-                price = 1099 - ((i - 21) * 10);
-                if(price < 150) price = 150;
-            }
-            div.innerHTML = `<span>#${i+5}</span><br><strong>$${price}</strong>`;
-            div.onclick = () => location.href=`order.html?g=${g}&p=${i+5}&pr=${price}`;
-            canvasContainer.appendChild(div);
+            let price = (i <= 20) ? 1299 : (1099 - ((i - 21) * 10));
+            if(price < 150) price = 150;
+            canvas.innerHTML += `
+                <div class="plot-unit" onclick="location.href='order.html?g=Gaming&p=${i+5}&pr=${price}'">
+                    <span style="color:#888;">#${i+5}</span>
+                    <strong style="margin-top:5px;">$${price}</strong>
+                </div>`;
         }
     </script>
 </body>
