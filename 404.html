@@ -1,8 +1,92 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" href="style.css"><title>NOT FOUND | K</title></head>
-<body style="display:flex; align-items:center; justify-content:center; height:100vh; text-align:center;">
-    <div>
-        <h1 style="font-size:80px; font-weight:100; color:var(--gold);">404</h1>
-        <p style="letter-spacing:5px;">THIS REALM DOES NOT EXIST</p>
-        <button class="gold-btn" style="margin-top:30px;" onclick="location.href='index.html'">RETURN TO HOME</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - DOMAIN NOT FOUND | AETHER PLOTS</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: #ffffff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .error-wrapper {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .error-code {
+            font-size: 120px;
+            font-weight: 100;
+            color: var(--gold); /* style.css থেকে গোল্ড কালার নিবে */
+            margin: 0;
+            letter-spacing: 20px;
+            line-height: 1;
+        }
+
+        .error-message {
+            font-size: 12px;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #111;
+            margin: 20px 0 40px 0;
+        }
+
+        .ak-logo-small {
+            font-size: 20px;
+            letter-spacing: 5px;
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .ak-logo-small span {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .back-home-btn {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 18px 45px;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            transition: 0.4s;
+            text-decoration: none;
+        }
+
+        .back-home-btn:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        /* নিচের শ্যাডো ইফেক্ট */
+        .decor-line {
+            width: 50px;
+            height: 1px;
+            background: var(--gold);
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+
+    <div class="error-wrapper">
+        <div class="ak-logo-small">A<span>K</span></div>
+        <h1 class="error-code">404</h1>
+        <div class="decor-line"></div>
+        <p class="error-message">This domain is yet to be discovered</p>
+        <a href="index.html" class="back-home-btn">Return to Archive</a>
     </div>
-</body></html>
+
+    <script src="script.js"></script>
+</body>
+</html>
