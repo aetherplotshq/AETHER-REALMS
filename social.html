@@ -2,28 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SOCIAL REALM | K</title>
+    <title>SOCIAL REALM | K-REALMS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="custom-cursor"></div>
     <header class="main-header">
-        <button onclick="history.back()">← BACK</button>
+        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold;">← BACK</button>
         <div class="logo-center"><div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div></div>
-        <div style="text-align:right; font-size:10px; color:var(--gold);">SOCIAL REALM: FIXED $1,999</div>
+        <div id="realm-name" style="color:var(--gold); font-size:10px; letter-spacing:3px;">SOCIAL DOMAIN</div>
     </header>
 
-    <div id="map-container"></div>
+    <div class="map-wrapper">
+        <h3 style="font-weight:100; letter-spacing:5px; margin-bottom:30px; font-size:14px;">EXCLUSIVE INFLUENCER PLOTS | FIXED $1,999</h3>
+        <div class="canvas-grid" id="social-canvas"></div>
+    </div>
 
+    <script src="script.js"></script>
     <script>
-        const container = document.getElementById('map-container');
-        const g = new URLSearchParams(window.location.search).get('g') || "YouTube";
+        const params = new URLSearchParams(window.location.search);
+        const g = params.get('g') || "Social";
+        document.getElementById('realm-name').innerText = g.toUpperCase() + " DOMAIN";
 
-        for(let i=1; i<=100; i++) {
-            const p = document.createElement('div');
-            p.className = "plot";
-            p.innerHTML = `<span>#${i}</span><br><strong>$1,999</strong>`;
-            p.onclick = () => location.href = `order.html?g=${g}&p=${i}&pr=1999`;
-            container.appendChild(p);
+        const container = document.getElementById('social-canvas');
+        for(let i=1; i<=100; i++){
+            const div = document.createElement('div');
+            div.className = 'plot-unit';
+            div.innerHTML = `<span>#${i}</span><br><strong>$1,999</strong>`;
+            div.onclick = () => location.href=`order.html?g=${g}&p=${i}&pr=1999`;
+            container.appendChild(div);
         }
     </script>
 </body>
