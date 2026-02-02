@@ -2,48 +2,139 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SOCIAL DOMAIN | K-REALMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOCIAL REALM | AETHER PLOTS</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        .map-container { 
+            padding: 160px 20px 100px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        
+        .download-area {
+            background: #fff;
+            padding: 40px;
+            border: 1px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 100px); /* ১০x১০ গ্রিড = ১০০ প্লট */
+            gap: 0;
+            border: 1px solid #eee;
+            margin-top: 30px;
+        }
+
+        .plot-unit {
+            width: 100px;
+            height: 100px;
+            border: 0.5px solid #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: none;
+            transition: 0.2s;
+            position: relative;
+            background: #fff;
+        }
+
+        .plot-unit:hover {
+            border: 1px solid var(--gold);
+            z-index: 10;
+            background: #fdfaf5;
+        }
+
+        .plot-unit img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* স্পেশাল সোশ্যাল ব্যাজ */
+        .social-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 7px;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+    </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
-    <header class="main-header">
-        <button onclick="history.back()" style="background:none; border:none; color:var(--rr-gold); font-weight:bold;">← BACK</button>
-        <div class="logo-center"><div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div></div>
-        <div style="color:var(--rr-gold); font-size:10px; letter-spacing:3px;">SOCIAL DOMAIN</div>
+
+    <header class="header">
+        <button onclick="location.href='index.html'" style="background:none; border:none; letter-spacing:2px; font-weight:bold;">← BACK</button>
+        <div class="logo">A<span>K</span></div>
+        <button onclick="downloadSocialMap()" class="btn-download">DOWNLOAD SOCIAL MAP</button>
     </header>
 
-    <div class="map-wrapper" style="display:flex; flex-direction:column; align-items:center; padding-top:160px;">
-        <div class="vip-section" id="social-vip"></div>
-        <div class="canvas-grid" id="social-canvas"></div>
+    <div class="map-container">
+        <div id="social-capture" class="download-area">
+            <h2 style="font-weight: 100; letter-spacing: 10px; text-transform: uppercase;">Social Realm</h2>
+            <p style="font-size: 10px; color: var(--gold); letter-spacing: 4px; margin-bottom: 30px;">CONNECTING THE ELITE 100</p>
+            
+            <div id="plot-grid" class="canvas-grid">
+                </div>
+        </div>
     </div>
 
     <a href="chat.html" class="floating-chat">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat">
     </a>
 
+    <footer class="footer">
+        © 2026 AETHER PLOTS. SOCIAL NETWORK OF LEGENDS.
+    </footer>
+
     <script type="module">
         import { db, ref, onValue } from "./firebase-config.js";
-        const g = "Social";
-        onValue(ref(db, `sold_plots/${g}`), (snapshot) => {
-            const soldData = snapshot.val() || {};
-            const vDiv = document.getElementById('social-vip');
-            const cDiv = document.getElementById('social-canvas');
-            vDiv.innerHTML = ""; cDiv.innerHTML = "";
 
-            for(let i=1; i<=5; i++){
-                const div = document.createElement('div'); div.className='vip-plot';
-                if(soldData[i]){ div.innerHTML = `<img src="${soldData[i].logo}" style="width:100%; height:100%; object-fit:cover;">`; div.onclick = () => window.open(soldData[i].link, '_blank'); }
-                else { div.innerHTML = `<div class="stars">★★★★★</div><span>VIP #${i}</span><strong>AUCTION</strong>`; div.onclick = () => location.href=`order.html?g=${g}&p=${i}&pr=Auction`; }
-                vDiv.appendChild(div);
-            }
-            for(let i=1; i<=100; i++){
-                const pID = i+5; const div = document.createElement('div'); div.className='plot-unit';
-                if(soldData[pID]){ div.innerHTML = `<img src="${soldData[pID].logo}" style="width:100%; height:100%; object-fit:cover;">`; div.onclick = () => window.open(soldData[pID].link, '_blank'); }
-                else { div.innerHTML = `<span>#${pID}</span><strong>$1,999</strong>`; div.onclick = () => location.href=`order.html?g=${g}&p=${pID}&pr=1999`; }
-                cDiv.appendChild(div);
+        const grid = document.getElementById('plot-grid');
+        const realmName = "Social";
+
+        onValue(ref(db, `sold_plots/${realmName}`), (snapshot) => {
+            const soldData = snapshot.val() || {};
+            grid.innerHTML = "";
+
+            for (let i = 1; i <= 100; i++) {
+                const plotDiv = document.createElement('div');
+                plotDiv.className = 'plot-unit';
+
+                if (soldData[i]) {
+                    plotDiv.innerHTML = `<img src="${soldData[i].logo}" alt="Social Plot ${i}">`;
+                    plotDiv.onclick = () => window.open(soldData[i].link, '_blank');
+                } else {
+                    // আপনার প্রাইসিং রুলস অনুযায়ী
+                    let price = 39; 
+                    plotDiv.innerHTML = `
+                        <span class="social-badge">LIVE</span>
+                        <span style="color:#ccc">#${i}</span>
+                        <strong style="margin-top:5px; color:var(--gold)">$${price}</strong>
+                    `;
+                    plotDiv.onclick = () => location.href = `order.html?g=${realmName}&p=${i}&pr=${price}`;
+                }
+                grid.appendChild(plotDiv);
             }
         });
+
+        window.downloadSocialMap = () => {
+            const area = document.getElementById('social-capture');
+            html2canvas(area, { scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Aether-Social-Realm-Map.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        };
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
