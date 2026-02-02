@@ -3,106 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHER PLOTS | INSPIRING GREATNESS</title>
+    <title>AETHER | K</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* হোম পেজের জন্য বিশেষ এনিমেশন */
-        .hero-section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: #ffffff;
-            overflow: hidden;
+        /* Rolls-Royce Minimalist Aesthetics */
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #fff; font-family: 'Helvetica Neue', sans-serif; }
+        
+        /* The Signature K Logo */
+        .brand-k {
+            position: fixed; top: 40px; left: 50%; transform: translateX(-50%);
+            font-size: 45px; font-weight: 900; letter-spacing: 5px; z-index: 1000;
+            color: #111; font-family: serif; pointer-events: none;
         }
 
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 100;
-            letter-spacing: 25px;
-            text-transform: uppercase;
-            margin: 0;
-            color: #111;
-            animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        .section-container { height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+        
+        .section {
+            height: 100vh; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; text-align: center; scroll-snap-align: start;
+            position: relative; padding: 0 20px;
         }
 
-        .hero-subtitle {
-            font-size: 10px;
-            letter-spacing: 12px;
-            color: var(--gold);
-            margin-top: 20px;
-            text-transform: uppercase;
+        .section h1 {
+            font-size: clamp(30px, 6vw, 60px); font-weight: 100; letter-spacing: 15px;
+            text-transform: uppercase; margin: 15px 0; color: #111;
         }
 
-        @keyframes tracking-in-expand {
-            0% { letter-spacing: -0.5em; opacity: 0; }
-            40% { opacity: 0.6; }
-            100% { opacity: 1; }
+        .section p { font-size: 10px; letter-spacing: 8px; text-transform: uppercase; color: #888; margin-bottom: 20px; }
+
+        .explore-btn {
+            padding: 15px 45px; border: 0.5px solid #111;
+            background: none; cursor: none; font-size: 9px; letter-spacing: 4px;
+            text-transform: uppercase; transition: 0.5s ease;
         }
 
-        .realm-explorer {
-            margin-top: 60px;
-            display: flex;
-            gap: 40px;
-        }
+        .explore-btn:hover { background: #111; color: #fff; letter-spacing: 6px; }
 
-        .realm-btn {
-            text-decoration: none;
-            color: #111;
-            font-size: 11px;
-            letter-spacing: 4px;
-            border-bottom: 1px solid transparent;
-            padding-bottom: 5px;
-            transition: 0.4s;
-            text-transform: uppercase;
+        /* Support Icon */
+        .concierge-icon {
+            position: fixed; bottom: 40px; right: 40px; width: 40px; height: 40px;
+            border: 1px solid #eee; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; z-index: 1000; transition: 0.3s;
         }
+        .concierge-icon img { width: 18px; opacity: 0.5; }
 
-        .realm-btn:hover {
-            color: var(--gold);
-            border-bottom: 1px solid var(--gold);
+        .footer-center {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            font-size: 8px; letter-spacing: 5px; color: #aaa; z-index: 1000; text-transform: uppercase;
         }
     </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
+    <div class="brand-k">K</div>
 
-    <header class="header">
-        <div style="font-size: 10px; letter-spacing: 2px;">ESTABLISHED 2026</div>
-        <div class="logo">A<span>K</span></div>
-        <div>
-            <a href="dashboard.html" style="text-decoration:none; color:#111; font-size:10px; letter-spacing:2px; margin-right:20px;">DASHBOARD</a>
-            <a href="chat.html" style="text-decoration:none; color:var(--gold); font-size:10px; letter-spacing:2px; font-weight:bold;">CONCIERGE</a>
+    <div class="section-container">
+        <div class="section">
+            <p>The Pinnacle of Legacy</p>
+            <h1>Millionaires Club</h1>
+            <button class="explore-btn" onclick="location.href='millionaire.html'">Enter the Vault</button>
         </div>
-    </header>
 
-    <main class="hero-section">
-        <p class="hero-subtitle">Bespoke Digital Estates</p>
-        <h1 class="hero-title">AETHER PLOTS</h1>
-        
-        <div class="realm-explorer">
-            <a href="gaming.html" class="realm-btn">Gaming Realm</a>
-            <a href="social.html" class="realm-btn">Social Realm</a>
-            <a href="millionaire.html" class="realm-btn">Millionaire Club</a>
+        <div class="section">
+            <p>Digital Battlegrounds</p>
+            <h1>Elite Gamers</h1>
+            <button class="explore-btn" onclick="location.href='gaming_hub.html'">Explore Realms</button>
         </div>
-    </main>
 
-    <a href="chat.html" class="floating-chat">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat">
+        <div class="section">
+            <p>The Influence Archive</p>
+            <h1>Social Creators</h1>
+            <button class="explore-btn" onclick="location.href='social.html'">View Estates</button>
+        </div>
+
+        <div class="section">
+            <p>Global Heritage</p>
+            <h1>General Public</h1>
+            <button class="explore-btn" onclick="location.href='public.html'">National Plots</button>
+        </div>
+
+        <div class="section">
+            <p>Mass Sovereignty</p>
+            <h1>People's Grid</h1>
+            <button class="explore-btn" onclick="location.href='peoples_grid.html'">$1 Galaxy</button>
+        </div>
+    </div>
+
+    <a href="support.html" class="concierge-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="S">
     </a>
 
-    <footer class="footer">
-        <div style="margin-bottom: 20px;">
-            <span style="color: var(--gold);">AETHER PLOTS</span> HQ: aetherplotshq@gmail.com
-        </div>
-        © 2026 AETHER PLOTS. INSPIRING GREATNESS. ALL RIGHTS RESERVED.
-    </footer>
+    <div class="footer-center">Inspiring Greatness — Aether Plots</div>
 
     <script src="script.js"></script>
-    <script>
-        // পেজ লোড হওয়ার সময় একটি মার্জিত ওয়েলকাম মেসেজ কনসোলে দেখাবে
-        console.log("Welcome to Aether Plots - Luxury Reimagined.");
-    </script>
 </body>
 </html>
