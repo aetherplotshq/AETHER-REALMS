@@ -2,73 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CONCIERGE CHAT | K</title>
+    <title>THE COLLECTIVE CHAT | K</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background: #fff; color: #111; overflow: hidden; }
+        body { background: #fff; color: #111; overflow: hidden; font-family: 'Helvetica Neue', sans-serif; }
         
-        /* চ্যাট কন্টেইনার */
+        /* চ্যাট ইন্টারফেস */
         .chat-container { 
-            max-width: 500px; margin: 100px auto; 
-            background: #fff; border: 1px solid #f5f5f5; 
-            height: 70vh; display: flex; flex-direction: column;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.03);
+            max-width: 500px; margin: 80px auto; 
+            background: #fff; border: 1px solid #f0f0f0; 
+            height: 80vh; display: flex; flex-direction: column;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.05);
         }
         
         .chat-header {
-            padding: 25px; border-bottom: 1px solid #f5f5f5;
+            padding: 20px; border-bottom: 1px solid #f5f5f5;
             text-align: center; background: #fff;
         }
 
+        .status-dot {
+            width: 8px; height: 8px; background: #9E7E45;
+            border-radius: 50%; display: inline-block; margin-right: 8px;
+            box-shadow: 0 0 10px #9E7E45;
+        }
+
         #chat-window { 
-            flex: 1; overflow-y: auto; padding: 30px; 
-            display: flex; flex-direction: column; gap: 20px;
-            background: #fff;
+            flex: 1; overflow-y: auto; padding: 25px; 
+            display: flex; flex-direction: column; gap: 15px;
+            background: #fafafa;
         }
 
         /* মেসেজ বাবলস */
         .msg { 
-            padding: 15px 20px; font-size: 11px; line-height: 1.6;
-            letter-spacing: 1px; text-transform: uppercase;
-            max-width: 85%; animation: fadeIn 0.5s ease forwards;
+            padding: 12px 18px; font-size: 13px; line-height: 1.5;
+            max-width: 80%; border-radius: 2px; position: relative;
+            animation: slideIn 0.3s ease;
         }
 
-        .received { 
-            background: #f9f9f9; align-self: flex-start; 
-            color: #888; border: 1px solid #eee;
-        }
+        @keyframes slideIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
 
-        .sent { 
-            background: #111; color: #fff; align-self: flex-end; 
-        }
+        .received { background: #fff; border: 1px solid #eee; align-self: flex-start; color: #333; }
+        .sent { background: #111; color: #fff; align-self: flex-end; }
+
+        .msg-time { font-size: 8px; margin-top: 5px; opacity: 0.5; display: block; }
 
         /* ইনপুট এরিয়া */
-        .chat-input-area { 
-            display: flex; padding: 20px; border-top: 1px solid #f5f5f5;
-        }
-
-        .chat-input-area input { 
-            flex: 1; border: none; padding: 15px; 
-            outline: none; font-size: 12px; letter-spacing: 1px;
-        }
-
-        .send-btn { 
-            background: #000; color: #fff; border: none; 
-            padding: 0 30px; cursor: none; font-size: 9px; 
-            letter-spacing: 3px; transition: 0.4s;
-        }
-
+        .chat-input-area { display: flex; padding: 15px; background: #fff; border-top: 1px solid #eee; }
+        .chat-input-area input { flex: 1; border: none; padding: 12px; outline: none; font-size: 13px; }
+        .send-btn { background: #000; color: #fff; border: none; padding: 0 25px; cursor: none; font-size: 10px; letter-spacing: 2px; }
         .send-btn:hover { background: #9E7E45; }
 
-        .status-dot {
-            width: 7px; height: 7px; background: #9E7E45;
-            border-radius: 50%; display: inline-block; margin-right: 8px;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; }
-        }
+        .chat-hint { font-size: 9px; color: #aaa; text-align: center; padding: 10px; letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -76,57 +60,89 @@
     
     <header class="header">
         <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold; cursor:none;">← BACK</button>
-        <div style="font-size:30px; font-weight:900; font-family:serif;">K</div>
-        <div style="font-size:9px; letter-spacing:3px; color:#9E7E45;">SECURE LINE</div>
+        <div style="font-size:25px; font-weight:900; font-family:serif;">K</div>
+        <div style="font-size:9px; letter-spacing:3px; color:#9E7E45;">LIVE HUB</div>
     </header>
 
     <div class="chat-container">
         <div class="chat-header">
             <span class="status-dot"></span>
-            <span style="font-size:9px; letter-spacing:4px; color:#111; text-transform:uppercase;">Private Concierge</span>
+            <span style="font-size:10px; letter-spacing:4px; font-weight:bold;">AETHER COLLECTIVE</span>
         </div>
         
         <div id="chat-window">
-            <div class="msg received">
-                Welcome to the Aether Collective. How may we assist you with your legacy today?
             </div>
-        </div>
+
+        <div class="chat-hint">MESSAGES VANISH EVERY 4 HOURS</div>
 
         <div class="chat-input-area">
-            <input type="text" id="user-msg" placeholder="Type your inquiry..." onkeypress="handleKey(event)">
-            <button class="send-btn" onclick="directToWA()">SEND</button>
+            <input type="text" id="user-msg" placeholder="Share your legacy..." maxlength="200" onkeypress="handleKey(event)">
+            <button class="send-btn" onclick="sendMessage()">SEND</button>
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { db, ref, push, onValue, query, orderByChild, startAt, remove, get } from "./firebase-config.js";
+
+        const chatWindow = document.getElementById('chat-window');
         const inputField = document.getElementById('user-msg');
 
-        function directToWA() {
-            const text = inputField.value.trim();
-            if (text === "") return;
+        // ৪ ঘণ্টা আগের টাইমস্ট্যাম্প বের করা
+        const FOUR_HOURS = 4 * 60 * 60 * 1000;
+        
+        // মেসেজ লোড করা
+        const chatRef = ref(db, 'public_chats');
+        const chatQuery = query(chatRef, orderByChild('timestamp'), startAt(Date.now() - FOUR_HOURS));
 
-            const phoneNumber = "8801XXXXXXXXX"; // আপনার হোয়াটসঅ্যাপ নাম্বার এখানে দিন
-            const encodedMsg = encodeURIComponent("Inquiry from Aether Site: " + text);
-            
-            // সুন্দর ইউজার এক্সপেরিয়েন্সের জন্য চ্যাট উইন্ডোতে মেসেজটি দেখাবে
-            const chatWindow = document.getElementById('chat-window');
-            const msgDiv = document.createElement('div');
-            msgDiv.className = "msg sent";
-            msgDiv.innerText = text;
-            chatWindow.appendChild(msgDiv);
-            
-            inputField.value = "";
+        onValue(chatQuery, (snapshot) => {
+            chatWindow.innerHTML = "";
+            snapshot.forEach((child) => {
+                const data = child.val();
+                displayMessage(data.text, data.senderID === localStorage.getItem('chat_uid') ? 'sent' : 'received', data.timestamp);
+            });
             chatWindow.scrollTop = chatWindow.scrollHeight;
+        });
 
-            // ১ সেকেন্ড পর হোয়াটসঅ্যাপে নিয়ে যাবে
-            setTimeout(() => {
-                window.location.href = `https://wa.me/${phoneNumber}?text=${encodedMsg}`;
-            }, 800);
+        // মেসেজ পাঠানো
+        window.sendMessage = () => {
+            const text = inputField.value.trim();
+            if (!text) return;
+
+            // ইউজারের জন্য একটি ইউনিক আইডি (যদি না থাকে)
+            if (!localStorage.getItem('chat_uid')) {
+                localStorage.setItem('chat_uid', 'user_' + Math.floor(Math.random() * 100000));
+            }
+
+            push(chatRef, {
+                text: text,
+                senderID: localStorage.getItem('chat_uid'),
+                timestamp: Date.now()
+            });
+
+            inputField.value = "";
+        };
+
+        function displayMessage(text, side, time) {
+            const div = document.createElement('div');
+            const date = new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            div.className = `msg ${side}`;
+            div.innerHTML = `${text} <span class="msg-time">${date}</span>`;
+            chatWindow.appendChild(div);
         }
 
-        function handleKey(e) {
-            if (e.key === 'Enter') directToWA();
-        }
+        window.handleKey = (e) => { if (e.key === 'Enter') sendMessage(); };
+
+        // ৪ ঘণ্টার পুরনো চ্যাট ডিলিট করার লজিক (Cleanup)
+        setInterval(() => {
+            const cutoff = Date.now() - FOUR_HOURS;
+            get(chatRef).then((snapshot) => {
+                snapshot.forEach((child) => {
+                    if (child.val().timestamp < cutoff) {
+                        remove(ref(db, `public_chats/${child.key}`));
+                    }
+                });
+            });
+        }, 60000); // প্রতি ১ মিনিটে একবার চেক করবে
     </script>
     <script src="script.js"></script>
 </body>
