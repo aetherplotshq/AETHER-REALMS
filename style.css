@@ -1,71 +1,56 @@
-/* Rolls-Royce Minimalist Theme */
 :root {
     --gold: #9E7E45;
     --pure-white: #ffffff;
-    --rr-grey: #f4f4f4;
-    --rr-black: #111111;
-    --rr-border: #e0e0e0;
+    --black: #111111;
+    --grey: #f9f9f9;
 }
 
 body {
-    background-color: var(--pure-white);
-    color: var(--rr-black);
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    margin: 0; letter-spacing: 1px; line-height: 1.6;
+    margin: 0; background: var(--pure-white); color: var(--black);
+    font-family: 'Helvetica Neue', Arial, sans-serif; letter-spacing: 1px;
 }
 
-/* Header & Dynamic Logo */
+/* Header & Double K Logo */
 .main-header {
-    height: 90px; background: var(--pure-white); border-bottom: 1px solid var(--rr-border);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 50px; position: fixed; top: 0; width: 100%; z-index: 1000;
+    height: 90px; border-bottom: 1px solid #eee; display: flex;
+    align-items: center; justify-content: space-between; padding: 0 50px;
+    position: fixed; top: 0; width: 100%; background: #fff; z-index: 1000;
 }
 
-.logo-wrapper {
-    position: relative; width: 60px; height: 80px;
-    display: flex; align-items: center; justify-content: center; cursor: pointer;
+.rr-logo-box {
+    display: flex; flex-direction: column; align-items: center;
+    border: 1px solid #111; padding: 5px 12px;
 }
 
-.shield-k {
-    font-size: 32px; font-weight: 200; color: var(--rr-black);
-    position: absolute; transition: 0.5s ease;
+.rr-logo-box span { font-size: 22px; font-weight: 300; line-height: 0.8; }
+.k-down { transform: translateY(-2px); }
+
+/* Buttons & Hero */
+.explore-btn {
+    background: none; border: 1px solid #111; padding: 15px 40px;
+    cursor: pointer; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+}
+.explore-btn:hover { background: #111; color: #fff; transition: 0.5s; }
+
+.hero-section {
+    height: 100vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; border-bottom: 1px solid #eee;
 }
 
-.cat-logo-img {
-    width: 45px; opacity: 0; position: absolute;
-    transition: 0.5s ease; transform: scale(0.8);
-}
-
-.logo-wrapper:hover .shield-k { opacity: 0; transform: translateY(-10px); }
-.logo-wrapper:hover .cat-logo-img { opacity: 1; transform: scale(1); }
-
-/* Navigation & Menu */
-.menu-trigger { cursor: pointer; display: flex; align-items: center; gap: 10px; }
-.menu-trigger .bars span { display: block; width: 25px; height: 1px; background: #000; margin: 6px 0; }
-.menu-trigger p { font-size: 10px; font-weight: bold; margin: 0; }
-
+/* Menu Overlay */
 .menu-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 0;
-    background: var(--pure-white); z-index: 2000; overflow: hidden;
-    transition: 0.7s cubic-bezier(0.6, 0.05, 0.01, 0.9);
-    display: flex; align-items: center; justify-content: center;
+    background: #fff; z-index: 2000; transition: 0.6s cubic-bezier(0.6, 0, 0.1, 1);
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
 }
-
 .menu-overlay.open { height: 100vh; }
-.nav-content ul { list-style: none; text-align: center; padding: 0; }
-.nav-content li { font-size: 2.2rem; margin: 15px 0; cursor: pointer; transition: 0.3s; color: #ccc; text-transform: uppercase; font-weight: 100; }
-.nav-content li:hover { color: var(--rr-black); letter-spacing: 10px; }
+.nav-links ul { list-style: none; padding: 0; text-align: center; }
+.nav-links li { font-size: 2.5rem; margin: 20px 0; cursor: pointer; color: #ddd; }
+.nav-links li:hover { color: #111; letter-spacing: 10px; transition: 0.4s; }
 
 /* Footer */
-.rr-footer { background: #000; color: #fff; padding: 80px 50px; margin-top: 100px; }
-.footer-grid { display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 40px; }
-.footer-col a { display: block; color: #fff; text-decoration: none; font-size: 11px; margin-bottom: 12px; font-weight: bold; }
-.footer-socials { display: flex; gap: 20px; }
-
-/* Buttons */
-.gold-btn {
-    background: var(--rr-black); color: #fff; border: none;
-    padding: 15px 40px; font-size: 11px; letter-spacing: 2px;
-    cursor: pointer; text-transform: uppercase;
-}
-.gold-btn:hover { background: var(--gold); transition: 0.4s; }
+.rr-footer { background: #000; color: #fff; padding: 80px 50px; }
+.footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+.footer-col h4 { font-size: 10px; letter-spacing: 3px; margin-bottom: 25px; color: var(--gold); }
+.footer-col a { display: block; color: #fff; text-decoration: none; font-size: 11px; margin-bottom: 15px; }
+.footer-bottom { border-top: 1px solid #222; margin-top: 50px; padding-top: 20px; font-size: 10px; text-align: center; color: #555; }
