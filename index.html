@@ -4,68 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K | THE ARCHIVE</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* আপনার প্রিয় ক্লিন হোয়াইট লাক্সারি থিম */
-        body { margin: 0; padding: 0; background: #fff; color: #000; font-family: 'serif'; overflow-x: hidden; scroll-behavior: smooth; }
+        /* পিওর হোয়াইট লাক্সারি থিম */
+        body { margin: 0; padding: 0; background: #fff; color: #000; font-family: 'serif'; overflow-x: hidden; scroll-behavior: smooth; cursor: none; }
         
-        #custom-cursor { position: fixed; width: 8px; height: 8px; background: #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.1s; }
+        /* রোলস রয়েস কাস্টম কার্সার */
+        #cursor-dot { position: fixed; width: 6px; height: 6px; background: #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); }
+        #cursor-outline { position: fixed; width: 40px; height: 40px; border: 1px solid #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9998; transition: transform 0.3s ease-out; transform: translate(-50%, -50%); opacity: 0.3; }
+        
+        .hover-active #cursor-outline { transform: translate(-50%, -50%) scale(1.8); background: rgba(158, 126, 69, 0.05); opacity: 1; }
 
+        /* লোগো ও নেভিগেশন */
+        .k-logo { position: fixed; top: 40px; left: 50%; transform: translateX(-50%); font-size: 35px; font-weight: 900; z-index: 100; letter-spacing: 5px; }
+
+        /* সেকশন ডিজাইন */
         .section-wrapper { 
             width: 100%; min-height: 100vh; display: flex; flex-direction: column; 
             align-items: center; justify-content: center; text-decoration: none; 
             position: relative; background: #fff; border-bottom: 1px solid #f2f2f2;
-            transition: 0.5s ease;
         }
-
-        .section-wrapper:hover { background: #fafafa; }
 
         .title-box { text-align: center; }
         .title-box h2 { font-size: 40px; letter-spacing: 20px; font-weight: 100; text-transform: uppercase; margin: 0; color: #000; }
         .title-box p { font-size: 9px; letter-spacing: 7px; color: #9E7E45; margin-top: 15px; text-transform: uppercase; }
 
-        /* গেমিং হাব এরিয়া (১০টি গেমের তালিকা) */
-        #gaming-hub { 
-            width: 100%; background: #fff; display: none; padding: 80px 0; 
-            border-bottom: 1px solid #f2f2f2;
-        }
-        .gaming-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 15px; max-width: 1200px; margin: 0 auto; padding: 0 40px;
-        }
-        .game-card { 
-            border: 1px solid #eee; padding: 35px 15px; text-align: center; 
-            color: #000; text-decoration: none; transition: 0.4s; 
-            font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-        }
-        .game-card:hover { border-color: #9E7E45; color: #9E7E45; transform: translateY(-5px); }
+        /* গেমিং হাব */
+        #gaming-hub { width: 100%; background: #fff; display: none; padding: 80px 0; border-bottom: 1px solid #f2f2f2; }
+        .gaming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+        .game-card { border: 1px solid #eee; padding: 30px 10px; text-align: center; color: #000; text-decoration: none; transition: 0.4s; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
+        .game-card:hover { border-color: #9E7E45; background: #fafafa; }
 
-        .k-logo { position: fixed; top: 40px; left: 50%; transform: translateX(-50%); font-size: 40px; font-weight: 900; color: #000; z-index: 100; }
+        /* ফুটার / ইমেইল ও তথ্য সেকশন */
+        .footer-info { 
+            padding: 150px 40px; background: #fff; text-align: center; border-top: 1px solid #f2f2f2;
+        }
+        .email-icon { font-size: 40px; color: #9E7E45; margin-bottom: 30px; display: inline-block; transition: 0.4s; }
+        .email-icon:hover { transform: scale(1.1) rotate(10deg); }
         
-        .indicator { position: absolute; bottom: 40px; font-size: 7px; letter-spacing: 5px; color: #bbb; }
+        .info-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 50px; max-width: 1000px; margin: 60px auto 0; text-align: left;
+        }
+        .info-item h4 { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #9E7E45; margin-bottom: 20px; }
+        .info-item p, .info-item a { font-size: 12px; color: #666; text-decoration: none; line-height: 2; letter-spacing: 1px; }
+        .info-item a:hover { color: #000; }
+
+        .copyright { margin-top: 100px; font-size: 8px; letter-spacing: 5px; color: #bbb; text-transform: uppercase; }
     </style>
 </head>
-<body>
+<body class="">
 
-    <div id="custom-cursor"></div>
-    <div class="k-logo">K</div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
 
-    <a href="millionaires.html" class="section-wrapper">
+    <div class="k-logo hover-target">K</div>
+
+    <a href="millionaires.html" class="section-wrapper hover-target">
         <div class="title-box">
             <h2>Millionaires</h2>
             <p>The Peak of Digital Assets</p>
         </div>
-        <div class="indicator">EXPLORE ARCHIVE</div>
     </a>
 
-    <a href="creators.html" class="section-wrapper">
+    <a href="creators.html" class="section-wrapper hover-target">
         <div class="title-box">
             <h2>Social</h2>
             <p>Influence & Connection</p>
         </div>
     </a>
 
-    <div class="section-wrapper" id="gaming-btn" style="cursor: pointer;">
+    <div class="section-wrapper hover-target" id="gaming-btn">
         <div class="title-box">
             <h2>Gaming</h2>
             <p>World's Top 10 Legends</p>
@@ -74,51 +82,85 @@
 
     <div id="gaming-hub">
         <div class="gaming-grid">
-            <a href="freefire.html" class="game-card">Free Fire</a>
-            <a href="pubg.html" class="game-card">PUBG Mobile</a>
-            <a href="minecraft.html" class="game-card">Minecraft</a>
-            <a href="gtav.html" class="game-card">GTA V</a>
-            <a href="valorant.html" class="game-card">Valorant</a>
-            <a href="cod.html" class="game-card">Call of Duty</a>
-            <a href="lol.html" class="game-card">League of Legends</a>
-            <a href="amongus.html" class="game-card">Among Us</a>
-            <a href="fortnite.html" class="game-card">Fortnite</a>
-            <a href="fifa.html" class="game-card">FIFA 26</a>
+            <a href="freefire.html" class="game-card hover-target">Free Fire</a>
+            <a href="pubg.html" class="game-card hover-target">PUBG Mobile</a>
+            <a href="minecraft.html" class="game-card hover-target">Minecraft</a>
+            <a href="gtav.html" class="game-card hover-target">GTA V</a>
+            <a href="valorant.html" class="game-card hover-target">Valorant</a>
+            <a href="cod.html" class="game-card hover-target">Call of Duty</a>
+            <a href="lol.html" class="game-card hover-target">League of Legends</a>
+            <a href="amongus.html" class="game-card hover-target">Among Us</a>
+            <a href="fortnite.html" class="game-card hover-target">Fortnite</a>
+            <a href="fifa.html" class="game-card hover-target">FIFA 26</a>
         </div>
     </div>
 
-    <a href="peoples.html" class="section-wrapper">
+    <a href="peoples.html" class="section-wrapper hover-target">
         <div class="title-box">
             <h2>People</h2>
             <p>The Sovereign Collective</p>
         </div>
     </a>
 
-    <a href="general.html" class="section-wrapper">
+    <a href="general.html" class="section-wrapper hover-target">
         <div class="title-box">
             <h2>General</h2>
             <p>Public Access Terminal</p>
         </div>
     </a>
 
+    <footer class="footer-info">
+        <div class="email-icon hover-target">✉</div>
+        <div style="font-size: 18px; letter-spacing: 5px; text-transform: uppercase;">Get in Touch</div>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <h4>Inquiries</h4>
+                <a href="mailto:support@aether.com" class="hover-target">support@k-archive.com</a><br>
+                <p>+880 1234 567890</p>
+            </div>
+            <div class="info-item">
+                <h4>Studio</h4>
+                <p>Digital Sovereign Block-100<br>Cyber Estate, Virtual Realm</p>
+            </div>
+            <div class="info-item">
+                <h4>Rules</h4>
+                <p>Limited Plots: 100 per section<br>Update Fee: $9 per request<br>Chat Clear: Every 4 Hours</p>
+            </div>
+        </div>
+
+        <div class="copyright">© 2026 K ARCHIVE STUDIO - ALL RIGHTS RESERVED</div>
+    </footer>
+
     <script>
-        // কার্সার লজিক
-        const cursor = document.getElementById('custom-cursor');
-        document.addEventListener('mousemove', e => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+        const dot = document.getElementById('cursor-dot');
+        const outline = document.getElementById('cursor-outline');
+        const body = document.body;
+
+        // মাউস ট্র্যাকিং
+        document.addEventListener('mousemove', (e) => {
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+            
+            outline.animate({
+                left: `${e.clientX}px`,
+                top: `${e.clientY}px`
+            }, { duration: 400, fill: "forwards" });
+        });
+
+        // হোভার ইফেক্ট
+        const targets = document.querySelectorAll('.hover-target');
+        targets.forEach(t => {
+            t.addEventListener('mouseenter', () => body.classList.add('hover-active'));
+            t.addEventListener('mouseleave', () => body.classList.remove('hover-active'));
         });
 
         // গেমিং ড্রপডাউন
-        document.getElementById('gaming-btn').addEventListener('click', function() {
+        document.getElementById('gaming-btn').onclick = function() {
             const hub = document.getElementById('gaming-hub');
-            if (hub.style.display === "block") {
-                hub.style.display = "none";
-            } else {
-                hub.style.display = "block";
-                hub.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+            hub.style.display = (hub.style.display === "block") ? "none" : "block";
+            if(hub.style.display === "block") hub.scrollIntoView({ behavior: 'smooth' });
+        };
     </script>
 </body>
 </html>
