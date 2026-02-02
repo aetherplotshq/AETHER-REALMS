@@ -2,25 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>K-REALMS | THE ELITE HUB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHER PLOTS | INSPIRING GREATNESS</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* হোম পেজের জন্য বিশেষ এনিমেশন */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 100;
+            letter-spacing: 25px;
+            text-transform: uppercase;
+            margin: 0;
+            color: #111;
+            animation: tracking-in-expand 1.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        }
+
+        .hero-subtitle {
+            font-size: 10px;
+            letter-spacing: 12px;
+            color: var(--gold);
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+
+        @keyframes tracking-in-expand {
+            0% { letter-spacing: -0.5em; opacity: 0; }
+            40% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .realm-explorer {
+            margin-top: 60px;
+            display: flex;
+            gap: 40px;
+        }
+
+        .realm-btn {
+            text-decoration: none;
+            color: #111;
+            font-size: 11px;
+            letter-spacing: 4px;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 5px;
+            transition: 0.4s;
+            text-transform: uppercase;
+        }
+
+        .realm-btn:hover {
+            color: var(--gold);
+            border-bottom: 1px solid var(--gold);
+        }
+    </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
-    <header class="main-header">
-        <div class="menu-trigger" onclick="toggleMenu()" style="font-size:12px; letter-spacing:3px;">MENU</div>
-        <div class="logo-center">
-            <div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div>
+
+    <header class="header">
+        <div style="font-size: 10px; letter-spacing: 2px;">ESTABLISHED 2026</div>
+        <div class="logo">A<span>K</span></div>
+        <div>
+            <a href="dashboard.html" style="text-decoration:none; color:#111; font-size:10px; letter-spacing:2px; margin-right:20px;">DASHBOARD</a>
+            <a href="chat.html" style="text-decoration:none; color:var(--gold); font-size:10px; letter-spacing:2px; font-weight:bold;">CONCIERGE</a>
         </div>
-        <div class="header-right"><a href="support.html" style="color:var(--rr-gold); text-decoration:none; font-size:11px;">CUSTOMER SERVICE</a></div>
     </header>
 
-    <section style="height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
-        <p style="letter-spacing:10px; color:var(--rr-gold); font-size:10px;">INSPIRING GREATNESS</p>
-        <h1 style="font-size:5rem; font-weight:100; letter-spacing:30px; margin:20px 0; color:var(--rr-black);">K-REALMS</h1>
-        <button onclick="toggleMenu()" style="background:none; border:1px solid var(--rr-gold); color:var(--rr-gold); padding:20px 60px; letter-spacing:5px; font-size:10px; font-weight:bold;">EXPLORE MODELS</button>
-    </section>
+    <main class="hero-section">
+        <p class="hero-subtitle">Bespoke Digital Estates</p>
+        <h1 class="hero-title">AETHER PLOTS</h1>
+        
+        <div class="realm-explorer">
+            <a href="gaming.html" class="realm-btn">Gaming Realm</a>
+            <a href="social.html" class="realm-btn">Social Realm</a>
+            <a href="millionaire.html" class="realm-btn">Millionaire Club</a>
+        </div>
+    </main>
+
+    <a href="chat.html" class="floating-chat">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat">
+    </a>
+
+    <footer class="footer">
+        <div style="margin-bottom: 20px;">
+            <span style="color: var(--gold);">AETHER PLOTS</span> HQ: aetherplotshq@gmail.com
+        </div>
+        © 2026 AETHER PLOTS. INSPIRING GREATNESS. ALL RIGHTS RESERVED.
+    </footer>
 
     <script src="script.js"></script>
+    <script>
+        // পেজ লোড হওয়ার সময় একটি মার্জিত ওয়েলকাম মেসেজ কনসোলে দেখাবে
+        console.log("Welcome to Aether Plots - Luxury Reimagined.");
+    </script>
 </body>
 </html>
