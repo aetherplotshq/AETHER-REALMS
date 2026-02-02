@@ -2,129 +2,92 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>THE LEGACY BEGINS | K</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELCOME TO THE LEGACY | K</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        body { 
-            background: #fff; 
-            height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            margin: 0;
-            overflow: hidden;
-        }
+        body { background: #fff; color: #111; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; font-family: 'serif'; }
+        
+        .congrats-card { padding: 50px; max-width: 600px; opacity: 0; transform: translateY(30px); animation: fadeInUp 1.2s ease forwards; }
+        
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-        .congrats-card {
-            text-align: center;
-            padding: 100px 40px;
-            border: 1px solid #f5f5f5;
-            background: #fff;
-            max-width: 700px;
-            position: relative;
-        }
+        .k-logo { font-size: 80px; font-weight: 900; margin-bottom: 20px; }
+        
+        #status-title { font-size: 10px; letter-spacing: 8px; text-transform: uppercase; color: #9E7E45; margin-bottom: 20px; }
+        
+        h1 { font-weight: 100; letter-spacing: 12px; text-transform: uppercase; font-size: 28px; margin-bottom: 20px; }
+        
+        #custom-message { font-size: 14px; line-height: 1.8; color: #666; letter-spacing: 1px; margin-bottom: 40px; }
 
-        /* শুধু K লোগো - রোলস রয়েস স্টাইল */
-        .brand-k-logo {
-            font-size: 60px;
-            font-weight: 900;
-            font-family: serif;
-            letter-spacing: 5px;
-            margin-bottom: 40px;
-            color: #111;
-        }
+        .btn-home { padding: 18px 40px; border: 1px solid #111; background: none; letter-spacing: 4px; font-size: 10px; cursor: none; transition: 0.5s; text-decoration: none; color: #111; }
+        .btn-home:hover { background: #111; color: #fff; }
 
-        h1 {
-            font-weight: 100;
-            letter-spacing: 15px;
-            text-transform: uppercase;
-            font-size: clamp(20px, 4vw, 32px);
-            color: #111;
-            margin-bottom: 25px;
-        }
-
-        .gold-divider {
-            width: 50px;
-            height: 1px;
-            background: #9E7E45; /* আপনার ব্র্যান্ডের গোল্ডেন কালার */
-            margin: 0 auto 40px;
-        }
-
-        p {
-            font-size: 10px;
-            letter-spacing: 4px;
-            line-height: 2.5;
-            color: #888;
-            text-transform: uppercase;
-            margin-bottom: 50px;
-            padding: 0 20px;
-        }
-
-        /* স্টাইলিশ বাটন */
-        .btn-return {
-            background: #000;
-            color: #fff;
-            padding: 18px 50px;
-            text-decoration: none;
-            font-size: 9px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
-            display: inline-block;
-            border: 1px solid #000;
-        }
-
-        .btn-return:hover {
-            background: transparent;
-            color: #111;
-            letter-spacing: 6px;
-        }
+        /* VIP Special Styles */
+        .vip-gold { color: #9E7E45 !important; }
+        .millionaire-black { background: #000 !important; color: #fff !important; }
     </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
 
-    <div class="congrats-card">
-        <div class="brand-k-logo">K</div>
-        <h1>Legend Secured</h1>
-        <div class="gold-divider"></div>
-        <p>Your acquisition request has been formally received. <br> 
-           Our headquarters is now integrating your brand into the <strong>Aether</strong> archives. <br>
-           Welcome to the pinnacle of digital real estate.</p>
-        <a href="index.html" class="btn-return">Return to Hub</a>
+    <div class="congrats-card" id="main-card">
+        <div class="k-logo">K</div>
+        <p id="status-title">RESERVATION SUCCESSFUL</p>
+        <h1 id="main-heading">WELCOME</h1>
+        <p id="custom-message">Your legacy has been etched into the Aether archives.</p>
+        
+        <a href="index.html" class="btn-home">RETURN TO CORE</a>
     </div>
 
-    <script src="script.js"></script>
     <script>
-        // রাজকীয় গোল্ডেন সেলিব্রেশন ইফেক্ট
-        const duration = 4 * 1000;
-        const animationEnd = Date.now() + duration;
+        // URL থেকে সেকশন টাইপ সংগ্রহ করা (e.g. congrats.html?type=vip)
+        const params = new URLSearchParams(window.location.search);
+        const type = params.get('type') || 'standard';
 
-        const interval = setInterval(function() {
-            const timeLeft = animationEnd - Date.now();
+        const title = document.getElementById('status-title');
+        const heading = document.getElementById('main-heading');
+        const msg = document.getElementById('custom-message');
+        const card = document.getElementById('main-card');
+        const body = document.body;
 
-            if (timeLeft <= 0) {
-                return clearInterval(interval);
-            }
+        // সেকশন অনুযায়ী কাস্টমাইজেশন
+        if (type === 'vip') {
+            title.innerText = "ELITE ROYALTY CONFIRMED";
+            heading.innerText = "WELCOME, SOVEREIGN";
+            msg.innerText = "You have secured one of the 5 rarest positions in existence. Your brand now stands among the gods.";
+            heading.classList.add('vip-gold');
+            fireConfetti('#9E7E45'); // গোল্ডেন কনফেটি
+        } 
+        else if (type === 'millionaire') {
+            body.style.background = "#000";
+            body.style.color = "#fff";
+            title.innerText = "MILLIONAIRES CLUB MEMBER";
+            heading.innerText = "A NEW ICON RISES";
+            msg.innerText = "You have joined the ranks of the world's most influential. The collective awaits your influence.";
+            msg.style.color = "#aaa";
+            fireConfetti('#ffffff'); // সাদা কনফেটি
+        }
+        else if (type === 'gaming') {
+            title.innerText = "GAMING REALM ACQUIRED";
+            heading.innerText = "LEGENDARY STATUS";
+            msg.innerText = "Your portal to the gaming universe is now active. Let the conquest begin.";
+            fireConfetti('#ff0000'); // লাল কনফেটি
+        }
+        else {
+            // Standard Congratulations
+            fireConfetti('#9E7E45');
+        }
 
-            const particleCount = 40 * (timeLeft / duration);
-            
-            // বাম পাশ থেকে গোল্ডেন কনফেটি
+        function fireConfetti(color) {
             confetti({
-                particleCount,
+                particleCount: 150,
                 spread: 70,
-                origin: { x: 0, y: 0.6 },
-                colors: ['#9E7E45', '#000000', '#ffffff']
+                origin: { y: 0.6 },
+                colors: [color, '#111111']
             });
-            // ডান পাশ থেকে গোল্ডেন কনফেটি
-            confetti({
-                particleCount,
-                spread: 70,
-                origin: { x: 1, y: 0.6 },
-                colors: ['#9E7E45', '#000000', '#ffffff']
-            });
-        }, 250);
+        }
     </script>
 </body>
 </html>
