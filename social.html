@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SOCIAL REALM | K</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="main-header">
+        <button onclick="history.back()">← BACK</button>
+        <div class="logo-center"><div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div></div>
+        <div style="text-align:right; font-size:10px; color:var(--gold);">SOCIAL REALM: FIXED $1,999</div>
+    </header>
+
+    <div id="map-container"></div>
+
+    <script>
+        const container = document.getElementById('map-container');
+        const g = new URLSearchParams(window.location.search).get('g') || "YouTube";
+
+        for(let i=1; i<=100; i++) {
+            const p = document.createElement('div');
+            p.className = "plot";
+            p.innerHTML = `<span>#${i}</span><br><strong>$1,999</strong>`;
+            p.onclick = () => location.href = `order.html?g=${g}&p=${i}&pr=1999`;
+            container.appendChild(p);
+        }
+    </script>
+</body>
+</html>
