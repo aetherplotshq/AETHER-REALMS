@@ -2,59 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>REALM DASHBOARD | K</title>
+    <title>MEMBER DASHBOARD | AETHER PLOTS</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: #fff; color: #111; }
+        .dashboard-container { max-width: 1100px; margin: 150px auto 50px; padding: 0 20px; }
+        
+        .welcome-header { margin-bottom: 50px; border-left: 3px solid var(--gold); padding-left: 20px; }
+        .welcome-header h2 { font-weight: 100; letter-spacing: 5px; text-transform: uppercase; margin: 0; }
+        .welcome-header p { color: #888; font-size: 11px; letter-spacing: 2px; margin-top: 5px; }
+
+        .member-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        
+        .card { background: #fff; border: 1px solid #eee; padding: 30px; }
+        .card-title { font-size: 10px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 20px; display: block; }
+
+        .plot-inventory { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 15px; }
+        .owned-plot { 
+            aspect-ratio: 1/1; border: 1px solid var(--gold); 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 10px; flex-direction: column; background: #fffdf8;
+        }
+
+        .profile-info { text-align: center; }
+        .avatar-circle { 
+            width: 100px; height: 100px; border: 1px solid var(--gold); 
+            border-radius: 50%; margin: 0 auto 20px; display: flex; 
+            align-items: center; justify-content: center; font-size: 30px; font-weight: 100;
+        }
+
+        .status-badge { 
+            display: inline-block; padding: 5px 15px; background: #000; 
+            color: #fff; font-size: 9px; letter-spacing: 2px; margin-top: 10px; 
+        }
+
+        .action-links { margin-top: 30px; }
+        .action-links a { 
+            display: block; padding: 15px; border-bottom: 1px solid #eee; 
+            text-decoration: none; color: #444; font-size: 12px; transition: 0.3s;
+        }
+        .action-links a:hover { color: var(--gold); padding-left: 25px; }
+    </style>
 </head>
-<body style="background-color: #ffffff;">
-    <header class="main-header">
-        <button onclick="history.back()" style="background:none; border:none; color:black; cursor:pointer; font-size:10px; letter-spacing:2px;">← BACK</button>
-        <div class="logo-center"><div class="shield-k">K</div></div>
-        <div id="price-meter" style="text-align:right; font-family:Arial, sans-serif;">
-            <p style="font-size:10px; color:#9E7E45; margin:0;">CURRENT PRICE: $<span id="current-price">500</span></p>
-            <p style="font-size:9px; color:#999; margin:0;">NEXT INCREASE: PLOT <span id="next-trigger">6</span></p>
-        </div>
+<body>
+    <div id="custom-cursor"></div>
+
+    <header class="header">
+        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold;">← BACK</button>
+        <div class="logo">A<span>K</span></div>
+        <div style="font-size:10px; letter-spacing:2px;">MEMBER ACCESS</div>
     </header>
 
-    <div id="map-container">
+    <div class="dashboard-container">
+        <div class="welcome-header">
+            <h2 id="user-display">Welcome, Member</h2>
+            <p>Managing your legacy at Aether Plots</p>
         </div>
+
+        <div class="member-grid">
+            <div class="card">
+                <span class="card-title">Your Estates</span>
+                <div id="inventory-list" class="plot-inventory">
+                    <div style="color:#ccc; font-size:11px; grid-column: 1/-1;">No plots secured yet.</div>
+                </div>
+                <button onclick="location.href='gaming.html'" class="btn-download" style="margin-top:30px; width:auto;">ACQUIRE NEW PLOT</button>
+            </div>
+
+            <div class="profile-info">
+                <div class="card">
+                    <div class="avatar-circle">A</div>
+                    <div style="font-weight: bold; letter-spacing: 2px; font-size: 14px;">ESTATE OWNER</div>
+                    <div class="status-badge">VERIFIED</div>
+                    
+                    <div class="action-links">
+                        <a href="chat.html">ACCESS CONCIERGE</a>
+                        <a href="manual_update.html">UPDATE PLOT INFO</a>
+                        <a href="index.html" style="border:none; color: #d32f2f;">LOGOUT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="module">
         import { db, ref, onValue } from "./firebase-config.js";
-        const g = new URLSearchParams(window.location.search).get('g') || "FreeFire";
-        
-        // প্রাইসিং লজিক: প্রতি ৫টি প্লটে ২০% বৃদ্ধি
-        onValue(ref(db, 'sales_count/' + g), (snapshot) => {
-            const soldCount = snapshot.val() || 0;
-            const level = Math.floor(soldCount / 5); // প্রতি ৫টি পর পর লেভেল বাড়বে
-            const currentPrice = 500 * Math.pow(1.2, level);
-            const nextTrigger = (level + 1) * 5 + 1;
 
-            document.getElementById('current-price').innerText = currentPrice.toFixed(0);
-            document.getElementById('next-trigger').innerText = nextTrigger;
-        });
-
-        // ১০০টি ফিক্সড সাইজ প্লট তৈরি
-        const container = document.getElementById('map-container');
-        for(let i=1; i<=100; i++) {
-            const plot = document.createElement('div');
-            plot.className = "plot-box";
-            plot.id = `p-${i}`;
-            plot.innerText = i;
-            plot.onclick = () => location.href=`order.html?g=${g}&p=${i}`;
-            container.appendChild(plot);
-        }
-
-        // ডাটাবেস থেকে লোগো লোড করা
-        onValue(ref(db, `live/${g}`), (snap) => {
-            snap.forEach(child => {
-                const data = child.val();
-                const el = document.getElementById('p-' + data.plotID);
-                if(el) {
-                    el.style.padding = "0";
-                    el.innerHTML = `<a href="${data.url}" target="_blank"><img src="${data.img}" style="width:100%; height:100%; object-fit:cover;"></a>`;
-                }
-            });
-        });
+        // এই অংশে ভবিষ্যতে আপনি ইউজার লগইন সিস্টেম যোগ করলে 
+        // তার ইমেইল বা আইডি দিয়ে ডাটা ফিল্টার করতে পারবেন।
+        // আপাতত এটি একটি স্ট্যাটিক প্রিমিয়াম লুক দিচ্ছে।
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
