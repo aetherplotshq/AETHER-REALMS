@@ -6,44 +6,43 @@
     <title>K | THE ARCHIVE</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* রোলস রয়েস ইন্সপায়ার্ড লাক্সারি থিম */
-        body { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'serif'; overflow-x: hidden; scroll-behavior: smooth; }
+        /* আপনার প্রিয় ক্লিন হোয়াইট লাক্সারি থিম */
+        body { margin: 0; padding: 0; background: #fff; color: #000; font-family: 'serif'; overflow-x: hidden; scroll-behavior: smooth; }
         
-        /* কাস্টম কার্সার এবং স্টাইল */
-        #custom-cursor { position: fixed; width: 10px; height: 10px; background: #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: difference; transition: transform 0.2s; }
+        #custom-cursor { position: fixed; width: 8px; height: 8px; background: #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.1s; }
 
-        .section-wrapper { width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; position: relative; transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1); }
+        .section-wrapper { 
+            width: 100%; min-height: 100vh; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; text-decoration: none; 
+            position: relative; background: #fff; border-bottom: 1px solid #f2f2f2;
+            transition: 0.5s ease;
+        }
 
-        /* ৫টি রাজকীয় কালার প্যালেট */
-        .millionaires { background-color: #080808; } /* Obsidian Black */
-        .social { background-color: #0A1221; }       /* Deep Navy */
-        .gaming { background-color: #12081F; }       /* Royal Amethyst */
-        .peoples { background-color: #081C15; }      /* British Racing Green */
-        .general { background-color: #141414; }      /* Graphite Grey */
+        .section-wrapper:hover { background: #fafafa; }
 
         .title-box { text-align: center; }
-        .title-box h2 { font-size: 45px; letter-spacing: 20px; font-weight: 100; text-transform: uppercase; margin: 0; opacity: 0.9; }
-        .title-box p { font-size: 10px; letter-spacing: 8px; color: #9E7E45; margin-top: 15px; text-transform: uppercase; }
+        .title-box h2 { font-size: 40px; letter-spacing: 20px; font-weight: 100; text-transform: uppercase; margin: 0; color: #000; }
+        .title-box p { font-size: 9px; letter-spacing: 7px; color: #9E7E45; margin-top: 15px; text-transform: uppercase; }
 
         /* গেমিং হাব এরিয়া (১০টি গেমের তালিকা) */
         #gaming-hub { 
-            width: 100%; background: #000; display: none; padding: 100px 0; 
-            border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;
+            width: 100%; background: #fff; display: none; padding: 80px 0; 
+            border-bottom: 1px solid #f2f2f2;
         }
         .gaming-grid { 
             display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 40px;
+            gap: 15px; max-width: 1200px; margin: 0 auto; padding: 0 40px;
         }
         .game-card { 
-            border: 1px solid #222; padding: 40px 20px; text-align: center; 
-            color: #fff; text-decoration: none; transition: 0.5s; 
-            font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+            border: 1px solid #eee; padding: 35px 15px; text-align: center; 
+            color: #000; text-decoration: none; transition: 0.4s; 
+            font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
         }
-        .game-card:hover { background: #9E7E45; color: #000; border-color: #9E7E45; transform: scale(1.05); }
+        .game-card:hover { border-color: #9E7E45; color: #9E7E45; transform: translateY(-5px); }
 
-        .k-logo { position: fixed; top: 40px; left: 50%; transform: translateX(-50%); font-size: 40px; font-weight: 900; color: #fff; z-index: 100; letter-spacing: 5px; }
+        .k-logo { position: fixed; top: 40px; left: 50%; transform: translateX(-50%); font-size: 40px; font-weight: 900; color: #000; z-index: 100; }
         
-        .indicator { position: absolute; bottom: 40px; font-size: 7px; letter-spacing: 5px; opacity: 0.4; }
+        .indicator { position: absolute; bottom: 40px; font-size: 7px; letter-spacing: 5px; color: #bbb; }
     </style>
 </head>
 <body>
@@ -51,22 +50,22 @@
     <div id="custom-cursor"></div>
     <div class="k-logo">K</div>
 
-    <a href="millionaires.html" class="section-wrapper millionaires">
+    <a href="millionaires.html" class="section-wrapper">
         <div class="title-box">
             <h2>Millionaires</h2>
             <p>The Peak of Digital Assets</p>
         </div>
-        <div class="indicator">SCROLL TO NAVIGATE</div>
+        <div class="indicator">EXPLORE ARCHIVE</div>
     </a>
 
-    <a href="creators.html" class="section-wrapper social">
+    <a href="creators.html" class="section-wrapper">
         <div class="title-box">
             <h2>Social</h2>
             <p>Influence & Connection</p>
         </div>
     </a>
 
-    <div class="section-wrapper gaming" id="gaming-btn" style="cursor: pointer;">
+    <div class="section-wrapper" id="gaming-btn" style="cursor: pointer;">
         <div class="title-box">
             <h2>Gaming</h2>
             <p>World's Top 10 Legends</p>
@@ -88,14 +87,14 @@
         </div>
     </div>
 
-    <a href="peoples.html" class="section-wrapper peoples">
+    <a href="peoples.html" class="section-wrapper">
         <div class="title-box">
             <h2>People</h2>
             <p>The Sovereign Collective</p>
         </div>
     </a>
 
-    <a href="general.html" class="section-wrapper general">
+    <a href="general.html" class="section-wrapper">
         <div class="title-box">
             <h2>General</h2>
             <p>Public Access Terminal</p>
@@ -103,14 +102,14 @@
     </a>
 
     <script>
-        // কাস্টম কার্সার লজিক
+        // কার্সার লজিক
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // গেমিং হাব খোলার লজিক
+        // গেমিং ড্রপডাউন
         document.getElementById('gaming-btn').addEventListener('click', function() {
             const hub = document.getElementById('gaming-hub');
             if (hub.style.display === "block") {
