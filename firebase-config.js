@@ -1,4 +1,4 @@
-// Firebase SDK modules ইম্পোর্ট করা
+// Firebase SDK modules from CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { 
     getDatabase, 
@@ -14,22 +14,23 @@ import {
     serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-// আপনার Firebase প্রজেক্টের কনফিগারেশন (Firebase Console থেকে সংগ্রহ করুন)
+// Your verified Firebase configuration
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY", // এখানে আপনার API Key বসান
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
+    authDomain: "aether-realms.firebaseapp.com",
+    databaseURL: "https://aether-realms-default-rtdb.firebaseio.com",
+    projectId: "aether-realms",
+    storageBucket: "aether-realms.firebasestorage.app",
+    messagingSenderId: "745970771566",
+    appId: "1:745970771566:web:1b0607362279665074a87f",
+    measurementId: "G-XTRFZJTMEW"
 };
 
-// Firebase ইনিশিয়ালাইজ করা
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// অন্যান্য ফাইলে ব্যবহারের জন্য এক্সপোর্ট করা
+// Exporting for use in all your HTML files
 export { 
     db, 
     ref, 
