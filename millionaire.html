@@ -6,37 +6,48 @@
     <link rel="stylesheet" href="style.css">
     <style>
         body { background: #000; color: #fff; }
-        .main-header { background: #000; border-bottom: 1px solid #222; }
-        .main-header button, .k-up, .k-down { color: var(--gold) !important; }
-        .rr-logo-box { border-color: var(--gold); background: #000; }
-        .plot-unit { background: #050505; border: 0.5px solid #1a1a1a; color: var(--gold); }
-        .plot-unit:hover { border: 1px solid var(--gold); box-shadow: 0 0 20px rgba(158, 126, 69, 0.3); background: #0a0a0a; }
-        #custom-cursor { border-color: #fff; box-shadow: 0 0 10px var(--gold); }
+        .canvas-grid { grid-template-columns: repeat(15, 100px); } /* ৩৬৫টির জন্য বড় গ্রিড */
+        .plot-unit { background: #050505; color: var(--rr-gold); border-color: #1a1a1a; }
     </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
-    <header class="main-header">
-        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold;">← BACK</button>
-        <div class="logo-center"><div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div></div>
-        <div style="color:var(--gold); font-size:10px; letter-spacing:3px;">THE MILLIONAIRE CLUB</div>
+    <header class="main-header" style="background:#000; border-bottom:1px solid #222;">
+        <button onclick="history.back()" style="background:none; border:none; color:var(--rr-gold); font-weight:bold;">← BACK</button>
+        <div class="logo-center"><div class="rr-logo-box" style="border-color:var(--rr-gold);"><span class="k-up" style="color:var(--rr-gold);">K</span><span class="k-down" style="color:var(--rr-gold);">K</span></div></div>
+        <div style="color:var(--rr-gold); font-size:10px; letter-spacing:3px;">THE VAULT (365)</div>
     </header>
 
-    <div class="map-wrapper">
-        <h3 style="font-weight:100; letter-spacing:8px; margin-bottom:40px; color:var(--gold); font-size:16px;">THE ULTIMATE VAULT | $9,999</h3>
-        <div class="canvas-grid" id="vault-canvas"></div>
+    <div class="map-wrapper" style="display:flex; flex-direction:column; align-items:center; padding-top:160px;">
+        <div class="vip-section" id="m-vip"></div>
+        <div class="canvas-grid" id="m-canvas"></div>
     </div>
 
-    <script src="script.js"></script>
-    <script>
-        const container = document.getElementById('vault-canvas');
-        for(let i=1; i<=100; i++){
-            const div = document.createElement('div');
-            div.className = 'plot-unit';
-            div.innerHTML = `<span>#${i}</span><br><strong>$9,999</strong>`;
-            div.onclick = () => location.href=`order.html?g=Millionaire&p=${i}&pr=9999`;
-            container.appendChild(div);
-        }
+    <a href="chat.html" class="floating-chat">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat">
+    </a>
+
+    <script type="module">
+        import { db, ref, onValue } from "./firebase-config.js";
+        onValue(ref(db, `sold_plots/Millionaire`), (snapshot) => {
+            const soldData = snapshot.val() || {};
+            const vDiv = document.getElementById('m-vip');
+            const cDiv = document.getElementById('m-canvas');
+            vDiv.innerHTML = ""; cDiv.innerHTML = "";
+
+            for(let i=1; i<=5; i++){
+                const div = document.createElement('div'); div.className='vip-plot';
+                if(soldData[i]){ div.innerHTML = `<img src="${soldData[i].logo}" style="width:100%; height:100%; object-fit:cover;">`; }
+                else { div.innerHTML = `<div class="stars">★★★★★</div><span>ELITE #${i}</span><strong>RESERVED</strong>`; div.onclick = () => location.href=`order.html?g=Millionaire&p=${i}&pr=Auction`; }
+                vDiv.appendChild(div);
+            }
+            for(let i=1; i<=365; i++){
+                const pID = i+5; const div = document.createElement('div'); div.className='plot-unit';
+                if(soldData[pID]){ div.innerHTML = `<img src="${soldData[pID].logo}" style="width:100%; height:100%; object-fit:cover;">`; }
+                else { div.innerHTML = `<span>#${pID}</span><strong>$9,999</strong>`; div.onclick = () => location.href=`order.html?g=Millionaire&p=${pID}&pr=9999`; }
+                cDiv.appendChild(div);
+            }
+        });
     </script>
 </body>
 </html>
