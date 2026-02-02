@@ -3,138 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAMING REALM | AETHER PLOTS</title>
+    <title>ELITE GAMERS | AETHER REALM</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        .map-container { 
-            padding: 160px 20px 100px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-        }
+        /* গেমিং রিয়েলমের জন্য সাইবার ডার্ক থিম */
+        body { background: #020202; color: #fff; font-family: 'Helvetica Neue', sans-serif; overflow-x: hidden; }
         
-        .download-area {
-            background: #fff;
-            padding: 40px;
-            border: 1px solid #f0f0f0;
-            text-align: center;
+        .header-gaming { text-align: center; margin-top: 60px; padding: 0 20px; }
+        .header-gaming h1 { letter-spacing: 12px; font-weight: 200; font-size: 30px; color: #fff; text-transform: uppercase; }
+        .header-gaming p { font-size: 8px; letter-spacing: 6px; color: #9E7E45; margin-top: 10px; text-transform: uppercase; }
+
+        /* গেমার ম্যাপ গ্রিড */
+        .gaming-map { 
+            width: 1000px; height: 1000px; 
+            margin: 60px auto 100px; display: grid; 
+            grid-template-columns: repeat(10, 1fr);
+            border: 2px solid #111; background: #000;
+            box-shadow: 0 0 100px rgba(158, 126, 69, 0.08);
         }
 
-        .canvas-grid {
-            display: grid;
-            grid-template-columns: repeat(10, 100px); /* ১০x১০ গ্রিড = ১০০ প্লট */
-            gap: 0;
-            border: 1px solid #eee;
-            margin-top: 30px;
+        .plot {
+            width: 100px; height: 100px;
+            border: 1px solid rgba(255,255,255,0.02);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 8px; color: #444; transition: 0.3s;
+            position: relative; cursor: none;
         }
 
-        .plot-unit {
-            width: 100px;
-            height: 100px;
-            border: 0.5px solid #eee;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            cursor: none;
-            transition: 0.2s;
-            position: relative;
-            background: #fff;
+        .plot:hover {
+            background: #9E7E45; color: #fff;
+            border-color: #9E7E45; z-index: 5;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
         }
 
-        .plot-unit:hover {
-            border: 1px solid var(--gold);
-            z-index: 10;
-            background: #fdfaf5;
-        }
+        /* প্রাইসিং টিয়ার লজিক */
+        .tier-edge { border: 1px solid rgba(158, 126, 69, 0.4); background: rgba(158,126,69,0.03); } /* $99 */
+        .tier-mid { background: rgba(255,255,255,0.01); } /* $89 */
+        .tier-locked { background: #0a0a0a; pointer-events: none; opacity: 0.2; } /* Reserved Row */
 
-        .plot-unit img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        /* ফ্লোটিং লাইভ চ্যাট */
+        .floating-chat {
+            position: fixed; bottom: 40px; right: 40px;
+            width: 65px; height: 65px; background: #111;
+            border: 1px solid #9E7E45; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            text-decoration: none; z-index: 1000; transition: 0.4s;
         }
+        .floating-chat:hover { transform: scale(1.1); box-shadow: 0 0 30px #9E7E45; }
 
-        .plot-info {
-            position: absolute;
-            bottom: 5px;
-            font-size: 8px;
-            color: #999;
+        .price-legend { 
+            display: flex; justify-content: center; gap: 40px; 
+            margin-top: 40px; font-size: 9px; letter-spacing: 3px; color: #888;
         }
+        .legend-item b { color: #9E7E45; font-weight: 100; margin-right: 8px; }
     </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
 
     <header class="header">
-        <button onclick="location.href='index.html'" style="background:none; border:none; letter-spacing:2px; font-weight:bold;">← BACK</button>
-        <div class="logo">A<span>K</span></div>
-        <button onclick="downloadGamingMap()" class="btn-download">DOWNLOAD MAP</button>
+        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold; color:#fff; cursor:none;">← BACK</button>
+        <div style="font-size:30px; font-weight:900; font-family:serif; color:#9E7E45;">K</div>
+        <div style="font-size:9px; letter-spacing:4px;">GAMING SECTOR</div>
     </header>
 
-    <div class="map-container">
-        <div id="gaming-capture" class="download-area">
-            <h2 style="font-weight: 100; letter-spacing: 10px; text-transform: uppercase;">Gaming Realm</h2>
-            <p style="font-size: 10px; color: var(--gold); letter-spacing: 4px; margin-bottom: 30px;">100 EXCLUSIVE PLOTS</p>
-            
-            <div id="plot-grid" class="canvas-grid">
-                </div>
-        </div>
+    <div class="header-gaming">
+        <h1>Elite Gamers</h1>
+        <p>The Ultimate Digital Playground</p>
     </div>
 
+    <div class="price-legend">
+        <div class="legend-item"><b>$99</b> FRONTIER LINE</div>
+        <div class="legend-item"><b>$89</b> INNER SECTOR</div>
+        <div class="legend-item"><b>$39</b> CORE DEPOT</div>
+    </div>
+
+    <div class="gaming-map" id="gaming-grid">
+        </div>
+
     <a href="chat.html" class="floating-chat">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat">
+        <span style="font-size: 24px;">🎮</span>
+        <div style="position: absolute; top: 10px; right: 10px; width: 10px; height: 10px; background: #9E7E45; border-radius: 50%; box-shadow: 0 0 10px #9E7E45;"></div>
     </a>
 
-    <footer class="footer">
-        © 2026 AETHER PLOTS. INSPIRING GREATNESS.
-    </footer>
+    <script>
+        const grid = document.getElementById('gaming-grid');
 
-    <script type="module">
-        import { db, ref, onValue } from "./firebase-config.js";
+        for (let i = 1; i <= 100; i++) {
+            const plot = document.createElement('div');
+            plot.classList.add('plot');
 
-        const grid = document.getElementById('plot-grid');
-        const realmName = "Gaming";
+            const row = Math.ceil(i / 10);
+            const col = i % 10 === 0 ? 10 : i % 10;
 
-        // Firebase থেকে ডেটা আনা
-        onValue(ref(db, `sold_plots/${realmName}`), (snapshot) => {
-            const soldData = snapshot.val() || {};
-            grid.innerHTML = "";
+            let price = 39;
+            let status = "Available";
 
-            for (let i = 1; i <= 100; i++) {
-                const plotDiv = document.createElement('div');
-                plotDiv.className = 'plot-unit';
-
-                if (soldData[i]) {
-                    // যদি প্লটটি বিক্রি হয়ে থাকে
-                    plotDiv.innerHTML = `<img src="${soldData[i].logo}" alt="Plot ${i}">`;
-                    plotDiv.onclick = () => window.open(soldData[i].link, '_blank');
-                } else {
-                    // যদি প্লটটি খালি থাকে (আপনার দেওয়া প্রাইস লিস্ট অনুযায়ী)
-                    let price = 39; // বেস প্রাইস
-                    // কর্নার রো এবং অন্যান্য লজিক অনুযায়ী প্রাইস সেট করা যাবে এখানে
-                    
-                    plotDiv.innerHTML = `
-                        <span style="color:#ccc">#${i}</span>
-                        <strong style="margin-top:5px; color:var(--gold)">$${price}</strong>
-                    `;
-                    plotDiv.onclick = () => location.href = `order.html?g=${realmName}&p=${i}&pr=${price}`;
-                }
-                grid.appendChild(plotDiv);
+            // আপনার নিয়ম অনুযায়ী ৪ লেভেলের প্রাইসিং লজিক:
+            // ১. বাইরের ৪ কর্নার রো - $99
+            if (row === 1 || row === 10 || col === 1 || col === 10) {
+                price = 99;
+                plot.classList.add('tier-edge');
             }
-        });
+            // ২. দ্বিতীয় রো - $89
+            else if (row === 2 || row === 9 || col === 2 || col === 9) {
+                price = 89;
+                plot.classList.add('tier-mid');
+            }
+            // ৩. তৃতীয় রো - সংরক্ষিত (বিক্রির জন্য নয়)
+            else if (row === 3 || row === 8 || col === 3 || col === 8) {
+                price = "RESERVED";
+                plot.classList.add('tier-locked');
+                status = "Reserved";
+            }
 
-        // ম্যাপ ডাউনলোড ফাংশন
-        window.downloadGamingMap = () => {
-            const area = document.getElementById('gaming-capture');
-            html2canvas(area, { scale: 2 }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Aether-Plots-Gaming-Map.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        };
+            plot.innerHTML = `<span>G-${i}</span>`;
+
+            if (status === "Available") {
+                plot.onclick = () => {
+                    // অর্ডারিং পেজে টাইপ 'gaming' পাঠিয়ে দেওয়া (স্পেশাল অভিনন্দন পেজের জন্য)
+                    window.location.href = `order.html?s=Elite%20Gamers&id=${i}&p=${price}&type=gaming`;
+                };
+            }
+
+            grid.appendChild(plot);
+        }
     </script>
     <script src="script.js"></script>
 </body>
