@@ -1,15 +1,18 @@
+// Custom Cursor Movement
+const cursor = document.getElementById('custom-cursor');
+document.addEventListener('mousemove', e => {
+    cursor.style.top = e.clientY - 10 + 'px';
+    cursor.style.left = e.clientX - 10 + 'px';
+});
+
+// Menu Toggle Function
 function toggleMenu() {
-    document.getElementById('menu-overlay').classList.toggle('open');
+    const menu = document.getElementById('menu-overlay');
+    if(menu) menu.classList.toggle('open');
 }
 
-// মাউস দিয়ে উপরে উঠালে (Scroll) লোগো ইফেক্ট যদি চান
-window.onscroll = function() {
-    let header = document.querySelector(".main-header");
-    if (window.pageYOffset > 50) {
-        header.style.height = "70px";
-        header.style.boxShadow = "0 10px 30px rgba(0,0,0,0.02)";
-    } else {
-        header.style.height = "90px";
-        header.style.boxShadow = "none";
-    }
-};
+// Hover Effect for Cursor
+document.querySelectorAll('button, li, .plot-unit, .vip-plot').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(2)');
+    el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+});
