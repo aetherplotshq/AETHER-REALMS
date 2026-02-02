@@ -2,61 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CONCIERGE CHAT | AETHER PLOTS</title>
+    <title>CONCIERGE CHAT | K</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background: #fff; }
+        body { background: #fff; color: #111; overflow: hidden; }
+        
+        /* চ্যাট কন্টেইনার */
         .chat-container { 
-            max-width: 600px; margin: 120px auto 50px; 
-            background: #fff; border: 1px solid #eee; 
-            height: 75vh; display: flex; flex-direction: column;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+            max-width: 500px; margin: 100px auto; 
+            background: #fff; border: 1px solid #f5f5f5; 
+            height: 70vh; display: flex; flex-direction: column;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.03);
         }
         
-        #chat-window { 
-            flex: 1; overflow-y: auto; padding: 30px; 
-            display: flex; flex-direction: column; gap: 15px;
-            background: #fafafa;
-        }
-
-        .msg { 
-            padding: 12px 18px; border-radius: 2px; 
-            max-width: 80%; font-size: 13px; line-height: 1.5;
-            position: relative; animation: fadeIn 0.3s ease;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .received { 
-            background: #fff; border: 1px solid #eee; 
-            align-self: flex-start; color: #111; 
-        }
-        .sent { 
-            background: #111; color: #fff; 
-            align-self: flex-end; border: 1px solid #111;
-        }
-        
-        .chat-input-area { 
-            display: flex; border-top: 1px solid #eee; 
-            background: #fff; padding: 10px;
-        }
-        .chat-input-area input { 
-            flex: 1; border: none; padding: 15px 20px; 
-            outline: none; font-size: 14px; 
-        }
-        .send-btn { 
-            background: #000; color: #fff; border: none; 
-            padding: 0 30px; cursor: pointer; font-size: 10px; 
-            letter-spacing: 2px; transition: 0.3s;
-        }
-        .send-btn:hover { background: var(--gold); }
-
         .chat-header {
-            padding: 20px; border-bottom: 1px solid #eee;
+            padding: 25px; border-bottom: 1px solid #f5f5f5;
             text-align: center; background: #fff;
         }
+
+        #chat-window { 
+            flex: 1; overflow-y: auto; padding: 30px; 
+            display: flex; flex-direction: column; gap: 20px;
+            background: #fff;
+        }
+
+        /* মেসেজ বাবলস */
+        .msg { 
+            padding: 15px 20px; font-size: 11px; line-height: 1.6;
+            letter-spacing: 1px; text-transform: uppercase;
+            max-width: 85%; animation: fadeIn 0.5s ease forwards;
+        }
+
+        .received { 
+            background: #f9f9f9; align-self: flex-start; 
+            color: #888; border: 1px solid #eee;
+        }
+
+        .sent { 
+            background: #111; color: #fff; align-self: flex-end; 
+        }
+
+        /* ইনপুট এরিয়া */
+        .chat-input-area { 
+            display: flex; padding: 20px; border-top: 1px solid #f5f5f5;
+        }
+
+        .chat-input-area input { 
+            flex: 1; border: none; padding: 15px; 
+            outline: none; font-size: 12px; letter-spacing: 1px;
+        }
+
+        .send-btn { 
+            background: #000; color: #fff; border: none; 
+            padding: 0 30px; cursor: none; font-size: 9px; 
+            letter-spacing: 3px; transition: 0.4s;
+        }
+
+        .send-btn:hover { background: #9E7E45; }
+
         .status-dot {
-            width: 8px; height: 8px; background: #27ae60;
-            border-radius: 50%; display: inline-block; margin-right: 5px;
+            width: 7px; height: 7px; background: #9E7E45;
+            border-radius: 50%; display: inline-block; margin-right: 8px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; }
         }
     </style>
 </head>
@@ -64,76 +75,58 @@
     <div id="custom-cursor"></div>
     
     <header class="header">
-        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold;">← BACK</button>
-        <div class="logo">A<span>K</span></div>
-        <div style="font-size:10px; letter-spacing:2px; color:var(--gold);">CONCIERGE LIVE</div>
+        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold; cursor:none;">← BACK</button>
+        <div style="font-size:30px; font-weight:900; font-family:serif;">K</div>
+        <div style="font-size:9px; letter-spacing:3px; color:#9E7E45;">SECURE LINE</div>
     </header>
 
     <div class="chat-container">
         <div class="chat-header">
             <span class="status-dot"></span>
-            <span style="font-size:10px; letter-spacing:3px; color:#888;">REAL-TIME COLLECTIVE</span>
+            <span style="font-size:9px; letter-spacing:4px; color:#111; text-transform:uppercase;">Private Concierge</span>
         </div>
         
         <div id="chat-window">
+            <div class="msg received">
+                Welcome to the Aether Collective. How may we assist you with your legacy today?
             </div>
+        </div>
 
         <div class="chat-input-area">
-            <input type="text" id="user-msg" placeholder="Inquire about your legacy..." onkeypress="handleKey(event)">
-            <button class="send-btn" onclick="sendMessage()">SEND</button>
+            <input type="text" id="user-msg" placeholder="Type your inquiry..." onkeypress="handleKey(event)">
+            <button class="send-btn" onclick="directToWA()">SEND</button>
         </div>
     </div>
 
-    <script type="module">
-        import { db, ref, push, onValue, query, orderByChild, startAt } from "./firebase-config.js";
-
-        const chatWindow = document.getElementById('chat-window');
+    <script>
         const inputField = document.getElementById('user-msg');
-        const notificationSound = new Audio('notify.mp3'); 
 
-        // ৮ ঘণ্টা আগের সময় ক্যালকুলেট করা
-        const timeLimit = Date.now() - (8 * 60 * 60 * 1000);
-        const chatQuery = query(ref(db, 'public_chats'), orderByChild('timestamp'), startAt(timeLimit));
-
-        let isInitialLoad = true;
-
-        // চ্যাট লোড করা
-        onValue(chatQuery, (snapshot) => {
-            chatWindow.innerHTML = "";
-            snapshot.forEach((child) => {
-                const data = child.val();
-                const msgDiv = document.createElement('div');
-                msgDiv.className = `msg ${data.sender === 'me' ? 'sent' : 'received'}`;
-                msgDiv.innerText = data.text;
-                chatWindow.appendChild(msgDiv);
-            });
-            
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-
-            // নতুন মেসেজ আসলে সাউন্ড বাজবে
-            if (!isInitialLoad) {
-                notificationSound.play().catch(e => console.log("Audio play deferred"));
-            }
-            isInitialLoad = false;
-        });
-
-        // মেসেজ পাঠানো
-        window.sendMessage = () => {
+        function directToWA() {
             const text = inputField.value.trim();
             if (text === "") return;
 
-            push(ref(db, 'public_chats'), {
-                text: text,
-                sender: 'me',
-                timestamp: Date.now()
-            });
-
+            const phoneNumber = "8801XXXXXXXXX"; // আপনার হোয়াটসঅ্যাপ নাম্বার এখানে দিন
+            const encodedMsg = encodeURIComponent("Inquiry from Aether Site: " + text);
+            
+            // সুন্দর ইউজার এক্সপেরিয়েন্সের জন্য চ্যাট উইন্ডোতে মেসেজটি দেখাবে
+            const chatWindow = document.getElementById('chat-window');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = "msg sent";
+            msgDiv.innerText = text;
+            chatWindow.appendChild(msgDiv);
+            
             inputField.value = "";
-        };
+            chatWindow.scrollTop = chatWindow.scrollHeight;
 
-        window.handleKey = (e) => {
-            if (e.key === 'Enter') sendMessage();
-        };
+            // ১ সেকেন্ড পর হোয়াটসঅ্যাপে নিয়ে যাবে
+            setTimeout(() => {
+                window.location.href = `https://wa.me/${phoneNumber}?text=${encodedMsg}`;
+            }, 800);
+        }
+
+        function handleKey(e) {
+            if (e.key === 'Enter') directToWA();
+        }
     </script>
     <script src="script.js"></script>
 </body>
