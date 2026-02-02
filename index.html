@@ -3,164 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K | THE ARCHIVE</title>
+    <title>K | THE DIGITAL EMPIRE</title>
     <style>
-        /* পিওর হোয়াইট লাক্সারি থিম */
-        body { margin: 0; padding: 0; background: #fff; color: #000; font-family: 'serif'; overflow-x: hidden; scroll-behavior: smooth; cursor: none; }
+        /* রোলস রয়েস ইন্সপায়ার্ড লাক্সারি ডিজাইন */
+        :root { --gold: #9E7E45; --white: #ffffff; --light-grey: #f8f8f8; }
         
-        /* রোলস রয়েস কাস্টম কার্সার */
-        #cursor-dot { position: fixed; width: 6px; height: 6px; background: #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); }
-        #cursor-outline { position: fixed; width: 40px; height: 40px; border: 1px solid #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9998; transition: transform 0.3s ease-out; transform: translate(-50%, -50%); opacity: 0.3; }
-        
-        .hover-active #cursor-outline { transform: translate(-50%, -50%) scale(1.8); background: rgba(158, 126, 69, 0.05); opacity: 1; }
+        body { margin: 0; padding: 0; background: var(--white); color: #000; font-family: 'Times New Roman', serif; overflow-x: hidden; scroll-behavior: smooth; cursor: none; }
 
-        /* লোগো ও নেভিগেশন */
-        .k-logo { position: fixed; top: 40px; left: 50%; transform: translateX(-50%); font-size: 35px; font-weight: 900; z-index: 100; letter-spacing: 5px; }
-
-        /* সেকশন ডিজাইন */
-        .section-wrapper { 
-            width: 100%; min-height: 100vh; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; text-decoration: none; 
-            position: relative; background: #fff; border-bottom: 1px solid #f2f2f2;
+        /* ডবল লোগো কার্সার (K Brand Trail) */
+        #cursor-dot { position: fixed; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        #cursor-outline { 
+            position: fixed; width: 35px; height: 35px; border: 1px solid var(--gold); border-radius: 50%; 
+            pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); 
+            display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--gold); font-weight: bold;
+            transition: width 0.3s, height 0.3s, background 0.3s;
         }
 
-        .title-box { text-align: center; }
-        .title-box h2 { font-size: 40px; letter-spacing: 20px; font-weight: 100; text-transform: uppercase; margin: 0; color: #000; }
-        .title-box p { font-size: 9px; letter-spacing: 7px; color: #9E7E45; margin-top: 15px; text-transform: uppercase; }
+        /* স্ক্রল রিভিল এনিমেশন */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1.2s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* গেমিং হাব */
-        #gaming-hub { width: 100%; background: #fff; display: none; padding: 80px 0; border-bottom: 1px solid #f2f2f2; }
-        .gaming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
-        .game-card { border: 1px solid #eee; padding: 30px 10px; text-align: center; color: #000; text-decoration: none; transition: 0.4s; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
-        .game-card:hover { border-color: #9E7E45; background: #fafafa; }
+        /* নেভিগেশন ও মেইন লোগো */
+        .header { position: fixed; top: 0; width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.9); z-index: 500; }
+        .k-brand { font-size: 30px; font-weight: 900; letter-spacing: 10px; position: relative; }
+        .k-brand span { position: absolute; top: 0; left: 0; opacity: 0.2; transform: translate(5px, 5px); }
 
-        /* ফুটার / ইমেইল ও তথ্য সেকশন */
-        .footer-info { 
-            padding: 150px 40px; background: #fff; text-align: center; border-top: 1px solid #f2f2f2;
-        }
-        .email-icon { font-size: 40px; color: #9E7E45; margin-bottom: 30px; display: inline-block; transition: 0.4s; }
-        .email-icon:hover { transform: scale(1.1) rotate(10deg); }
-        
-        .info-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-            gap: 50px; max-width: 1000px; margin: 60px auto 0; text-align: left;
-        }
-        .info-item h4 { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #9E7E45; margin-bottom: 20px; }
-        .info-item p, .info-item a { font-size: 12px; color: #666; text-decoration: none; line-height: 2; letter-spacing: 1px; }
-        .info-item a:hover { color: #000; }
+        /* হিরো সেকশন */
+        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-bottom: 1px solid var(--light-grey); }
+        .hero h1 { font-size: 60px; font-weight: 100; letter-spacing: 30px; text-transform: uppercase; margin: 0; }
+        .hero p { font-size: 10px; letter-spacing: 10px; color: var(--gold); margin-top: 20px; }
 
-        .copyright { margin-top: 100px; font-size: 8px; letter-spacing: 5px; color: #bbb; text-transform: uppercase; }
+        /* সেকশন কার্ড ডিজাইন */
+        .content-section { padding: 150px 10%; border-bottom: 1px solid var(--light-grey); }
+        .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 80px; }
+        .section-header h2 { font-size: 35px; font-weight: 100; letter-spacing: 15px; text-transform: uppercase; margin: 0; }
+        .price-tag { color: var(--gold); font-size: 11px; letter-spacing: 3px; font-weight: bold; }
+
+        /* গেমিং হাব গ্রিড */
+        .gaming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: #eee; border: 1px solid #eee; margin-top: 50px; }
+        .game-item { background: #fff; padding: 50px 20px; text-align: center; text-decoration: none; color: #000; transition: 0.5s; }
+        .game-item:hover { background: #fafafa; color: var(--gold); }
+
+        /* ইনফরমেশন টেবিল */
+        .info-table { width: 100%; border-collapse: collapse; margin-top: 40px; }
+        .info-table td { padding: 20px; border-bottom: 1px solid #f0f0f0; font-size: 13px; letter-spacing: 1px; }
+        .info-table b { color: var(--gold); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* কাস্টমার সার্ভিস ফুটার */
+        .footer { background: #000; color: #fff; padding: 100px 10%; }
+        .footer h3 { font-size: 20px; letter-spacing: 10px; text-transform: uppercase; margin-bottom: 50px; border-bottom: 1px solid #333; padding-bottom: 20px; }
+        .contact-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; }
+        .submit-list { list-style: none; padding: 0; font-size: 12px; line-height: 2.5; color: #888; letter-spacing: 1px; }
+        .submit-list b { color: #fff; }
+
+        /* হোভার ইফেক্ট */
+        .hover-target:hover ~ #cursor-outline { width: 80px; height: 80px; opacity: 1; background: rgba(158, 126, 69, 0.05); }
     </style>
 </head>
-<body class="">
+<body>
 
     <div id="cursor-dot"></div>
-    <div id="cursor-outline"></div>
+    <div id="cursor-outline">K</div>
 
-    <div class="k-logo hover-target">K</div>
+    <header class="header">
+        <div class="k-brand">K<span>K</span></div>
+    </header>
 
-    <a href="millionaires.html" class="section-wrapper hover-target">
-        <div class="title-box">
+    <section class="hero">
+        <div class="reveal">
+            <h1>The Archive</h1>
+            <p>A DIGITAL SOVEREIGNTY FOR THE ELITE</p>
+        </div>
+    </section>
+
+    <section class="content-section reveal">
+        <div class="section-header">
             <h2>Millionaires</h2>
-            <p>The Peak of Digital Assets</p>
+            <div class="price-tag">BIDDING FROM $7,000</div>
         </div>
-    </a>
+        <table class="info-table">
+            <tr><td><b>Structure</b></td><td>100 Elite Plots (10 Floating VIP + 90 Base Estate)</td></tr>
+            <tr><td><b>Pricing</b></td><td>Starts at $5,999. Decreases by $500 per row downwards.</td></tr>
+            <tr><td><b>Exclusive</b></td><td>Top 10 Ultra-Glowing Plots sold via Bidding.</td></tr>
+            <tr><td><b>Features</b></td><td>Royal Decoration, 4-Hour Clear Live Chat.</td></tr>
+        </table>
+        <a href="millionaires.html" class="game-item hover-target" style="display:block; margin-top:30px; border:1px solid #eee;">ENTER CLUB</a>
+    </section>
 
-    <a href="creators.html" class="section-wrapper hover-target">
-        <div class="title-box">
-            <h2>Social</h2>
-            <p>Influence & Connection</p>
+    <section class="content-section reveal">
+        <div class="section-header">
+            <h2>Gaming Realm</h2>
+            <div class="price-tag">TOP 10 WORLD LEGENDS</div>
         </div>
-    </a>
-
-    <div class="section-wrapper hover-target" id="gaming-btn">
-        <div class="title-box">
-            <h2>Gaming</h2>
-            <p>World's Top 10 Legends</p>
-        </div>
-    </div>
-
-    <div id="gaming-hub">
+        <p style="font-size:12px; letter-spacing:2px; color:#888;">Each game features 105 Limited Plots. VIP Bidding starts at $2,000.</p>
         <div class="gaming-grid">
-            <a href="freefire.html" class="game-card hover-target">Free Fire</a>
-            <a href="pubg.html" class="game-card hover-target">PUBG Mobile</a>
-            <a href="minecraft.html" class="game-card hover-target">Minecraft</a>
-            <a href="gtav.html" class="game-card hover-target">GTA V</a>
-            <a href="valorant.html" class="game-card hover-target">Valorant</a>
-            <a href="cod.html" class="game-card hover-target">Call of Duty</a>
-            <a href="lol.html" class="game-card hover-target">League of Legends</a>
-            <a href="amongus.html" class="game-card hover-target">Among Us</a>
-            <a href="fortnite.html" class="game-card hover-target">Fortnite</a>
-            <a href="fifa.html" class="game-card hover-target">FIFA 26</a>
+            <a href="freefire.html" class="game-item hover-target">FREE FIRE</a>
+            <a href="pubg.html" class="game-item hover-target">PUBG MOBILE</a>
+            <a href="minecraft.html" class="game-item hover-target">MINECRAFT</a>
+            <a href="gtav.html" class="game-item hover-target">GTA V</a>
+            <a href="valorant.html" class="game-item hover-target">VALORANT</a>
+            <a href="cod.html" class="game-item hover-target">CALL OF DUTY</a>
+            <a href="lol.html" class="game-item hover-target">LEAGUE OF LEGENDS</a>
+            <a href="amongus.html" class="game-item hover-target">AMONG US</a>
+            <a href="fortnite.html" class="game-item hover-target">FORTNITE</a>
+            <a href="fifa.html" class="game-item hover-target">FIFA 26</a>
         </div>
-    </div>
+    </section>
 
-    <a href="peoples.html" class="section-wrapper hover-target">
-        <div class="title-box">
-            <h2>People</h2>
-            <p>The Sovereign Collective</p>
+    <section class="content-section reveal">
+        <div class="section-header">
+            <h2>Creators & Nations</h2>
+            <div class="price-tag">GLOBAL NETWORKS</div>
         </div>
-    </a>
+        <table class="info-table">
+            <tr><td><b>Social</b></td><td>100 Plots. Row 1: $1,599. Price drops by $50 per plot up to #50.</td></tr>
+            <tr><td><b>Nations</b></td><td>All Countries. Row 1: $99, Row 2: $89, Row 3: $79. Rest: $49.</td></tr>
+        </table>
+    </section>
 
-    <a href="general.html" class="section-wrapper hover-target">
-        <div class="title-box">
-            <h2>General</h2>
-            <p>Public Access Terminal</p>
+    <section class="content-section reveal" style="background:#fafafa;">
+        <div class="section-header">
+            <h2>1,000,000 Grid</h2>
+            <div class="price-tag">$1 PER PLOT</div>
         </div>
-    </a>
+        <p style="font-size:14px; line-height:2; color:#444;">A massive canvas of one million plots. Secure your territory for just $1. <b>Minimum purchase: 100 Plots.</b> No chat, no rules, pure digital ownership.</p>
+        <a href="million-grid.html" class="game-item hover-target" style="display:inline-block; margin-top:30px; border:1px solid #ddd;">EXPLORE MASSIVE GRID</a>
+    </section>
 
-    <footer class="footer-info">
-        <div class="email-icon hover-target">✉</div>
-        <div style="font-size: 18px; letter-spacing: 5px; text-transform: uppercase;">Get in Touch</div>
-        
-        <div class="info-grid">
-            <div class="info-item">
-                <h4>Inquiries</h4>
-                <a href="mailto:support@aether.com" class="hover-target">support@k-archive.com</a><br>
-                <p>+880 1234 567890</p>
+    <footer class="footer reveal">
+        <h3>Customer Service</h3>
+        <div class="contact-info">
+            <div>
+                <p><b>Inquiries:</b> aetherplotshq@gmail.com</p>
+                <p><b>Hotline:</b> +8801576940717</p>
+                <p style="margin-top:40px; color:#555;">© 2026 K ARCHIVE STUDIO - ROLLS ROYCE INSPIRED ARCHITECTURE</p>
             </div>
-            <div class="info-item">
-                <h4>Studio</h4>
-                <p>Digital Sovereign Block-100<br>Cyber Estate, Virtual Realm</p>
-            </div>
-            <div class="info-item">
-                <h4>Rules</h4>
-                <p>Limited Plots: 100 per section<br>Update Fee: $9 per request<br>Chat Clear: Every 4 Hours</p>
+            <div>
+                <p style="color:var(--gold); font-size:10px; letter-spacing:3px;">SUBMISSION REQUIREMENTS:</p>
+                <ul class="submit-list">
+                    <li>1. <b>Payment Screenshot</b> (Verified Transaction)</li>
+                    <li>2. <b>Owner Image</b> (Transparent or High Res)</li>
+                    <li>3. <b>Brand Name/Link</b> (Website or Social)</li>
+                    <li>4. <b>Plot ID & Section</b> (e.g., Millionaire #25)</li>
+                </ul>
             </div>
         </div>
-
-        <div class="copyright">© 2026 K ARCHIVE STUDIO - ALL RIGHTS RESERVED</div>
     </footer>
 
     <script>
+        // কাস্টম কার্সার লজিক (K লোগো ট্রেইল)
         const dot = document.getElementById('cursor-dot');
         const outline = document.getElementById('cursor-outline');
-        const body = document.body;
-
-        // মাউস ট্র্যাকিং
         document.addEventListener('mousemove', (e) => {
             dot.style.left = e.clientX + 'px';
             dot.style.top = e.clientY + 'px';
-            
-            outline.animate({
-                left: `${e.clientX}px`,
-                top: `${e.clientY}px`
-            }, { duration: 400, fill: "forwards" });
+            outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 600, fill: "forwards" });
         });
 
-        // হোভার ইফেক্ট
-        const targets = document.querySelectorAll('.hover-target');
-        targets.forEach(t => {
-            t.addEventListener('mouseenter', () => body.classList.add('hover-active'));
-            t.addEventListener('mouseleave', () => body.classList.remove('hover-active'));
-        });
-
-        // গেমিং ড্রপডাউন
-        document.getElementById('gaming-btn').onclick = function() {
-            const hub = document.getElementById('gaming-hub');
-            hub.style.display = (hub.style.display === "block") ? "none" : "block";
-            if(hub.style.display === "block") hub.scrollIntoView({ behavior: 'smooth' });
-        };
+        // স্ক্রল রিভিল এনিমেশন লজিক
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // ইনিশিয়াল চেক
     </script>
 </body>
 </html>
