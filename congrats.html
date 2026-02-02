@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CONGRATULATIONS | K-REALMS</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body { background: #fff; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; }
+        .congrats-card { padding: 60px; border: 1px solid var(--rr-gold); max-width: 600px; position: relative; }
+        h1 { font-weight: 100; letter-spacing: 15px; color: var(--rr-black); margin-bottom: 20px; }
+        p { letter-spacing: 3px; color: #888; font-size: 12px; line-height: 2; }
+        .rr-badge { color: var(--rr-gold); font-size: 10px; letter-spacing: 5px; margin-bottom: 30px; display: block; }
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    
+    <div class="congrats-card">
+        <span class="rr-badge">APPLICATION RECEIVED</span>
+        <h1>WELCOME TO THE ELITE</h1>
+        <p>Your bespoke application for <strong>K-REALMS</strong> estate has been successfully submitted. Our private concierge will review your credentials and contact you shortly.</p>
+        <button onclick="location.href='index.html'" style="background:none; border:1px solid #111; padding:15px 40px; margin-top:40px; letter-spacing:3px; cursor:none;">RETURN TO HUB</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // পেজ লোড হতেই গোল্ডেন কনফেটি এনিমেশন
+        var end = Date.now() + (2 * 1000);
+        var colors = ['#9E7E45', '#ffffff', '#111111'];
+
+        (function frame() {
+          confetti({
+            particleCount: 3,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: colors
+          });
+          confetti({
+            particleCount: 3,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: colors
+          });
+
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        }());
+    </script>
+</body>
+</html>
