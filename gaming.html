@@ -2,65 +2,140 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GAMING REALM | K-REALMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMING REALM | AETHER PLOTS</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        .map-container { 
+            padding: 160px 20px 100px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        
+        .download-area {
+            background: #fff;
+            padding: 40px;
+            border: 1px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .canvas-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 100px); /* ১০x১০ গ্রিড = ১০০ প্লট */
+            gap: 0;
+            border: 1px solid #eee;
+            margin-top: 30px;
+        }
+
+        .plot-unit {
+            width: 100px;
+            height: 100px;
+            border: 0.5px solid #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: none;
+            transition: 0.2s;
+            position: relative;
+            background: #fff;
+        }
+
+        .plot-unit:hover {
+            border: 1px solid var(--gold);
+            z-index: 10;
+            background: #fdfaf5;
+        }
+
+        .plot-unit img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .plot-info {
+            position: absolute;
+            bottom: 5px;
+            font-size: 8px;
+            color: #999;
+        }
+    </style>
 </head>
 <body>
     <div id="custom-cursor"></div>
-    <header class="main-header">
-        <button onclick="history.back()" style="background:none; border:none; color:var(--rr-gold); font-weight:bold;">← BACK</button>
-        <div class="logo-center"><div class="rr-logo-box"><span class="k-up">K</span><span class="k-down">K</span></div></div>
-        <div id="realm-name" style="color:var(--rr-gold); font-size:10px; letter-spacing:3px;">GAMING REALM</div>
+
+    <header class="header">
+        <button onclick="location.href='index.html'" style="background:none; border:none; letter-spacing:2px; font-weight:bold;">← BACK</button>
+        <div class="logo">A<span>K</span></div>
+        <button onclick="downloadGamingMap()" class="btn-download">DOWNLOAD MAP</button>
     </header>
 
-    <div class="map-wrapper" style="display:flex; flex-direction:column; align-items:center; padding-top:160px;">
-        <div class="vip-section" id="vip-plots"></div>
-        <div class="canvas-grid" id="canvas-plots"></div>
+    <div class="map-container">
+        <div id="gaming-capture" class="download-area">
+            <h2 style="font-weight: 100; letter-spacing: 10px; text-transform: uppercase;">Gaming Realm</h2>
+            <p style="font-size: 10px; color: var(--gold); letter-spacing: 4px; margin-bottom: 30px;">100 EXCLUSIVE PLOTS</p>
+            
+            <div id="plot-grid" class="canvas-grid">
+                </div>
+        </div>
     </div>
 
     <a href="chat.html" class="floating-chat">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat">
     </a>
 
+    <footer class="footer">
+        © 2026 AETHER PLOTS. INSPIRING GREATNESS.
+    </footer>
+
     <script type="module">
         import { db, ref, onValue } from "./firebase-config.js";
-        const g = new URLSearchParams(window.location.search).get('g') || "Gaming";
-        document.getElementById('realm-name').innerText = g.toUpperCase() + " REALM";
 
-        onValue(ref(db, `sold_plots/${g}`), (snapshot) => {
+        const grid = document.getElementById('plot-grid');
+        const realmName = "Gaming";
+
+        // Firebase থেকে ডেটা আনা
+        onValue(ref(db, `sold_plots/${realmName}`), (snapshot) => {
             const soldData = snapshot.val() || {};
-            const vipDiv = document.getElementById('vip-plots');
-            const canvasDiv = document.getElementById('canvas-plots');
-            
-            vipDiv.innerHTML = ""; canvasDiv.innerHTML = "";
+            grid.innerHTML = "";
 
-            for(let i=1; i<=5; i++){
-                const div = document.createElement('div');
-                div.className = 'vip-plot';
-                if(soldData[i]) {
-                    div.innerHTML = `<img src="${soldData[i].logo}" style="width:100%; height:100%; object-fit:cover;">`;
-                    div.onclick = () => window.open(soldData[i].link, '_blank');
-                } else {
-                    div.innerHTML = `<div class="stars">★★★★★</div><span>VIP #${i}</span><strong>AUCTION</strong>`;
-                    div.onclick = () => location.href=`order.html?g=${g}&p=${i}&pr=Auction`;
-                }
-                vipContainer.appendChild(div);
-            }
+            for (let i = 1; i <= 100; i++) {
+                const plotDiv = document.createElement('div');
+                plotDiv.className = 'plot-unit';
 
-            for(let i=1; i<=100; i++){
-                const pID = i + 5;
-                const div = document.createElement('div'); div.className = 'plot-unit';
-                if(soldData[pID]) {
-                    div.innerHTML = `<img src="${soldData[pID].logo}" style="width:100%; height:100%; object-fit:cover;">`;
-                    div.onclick = () => window.open(soldData[pID].link, '_blank');
+                if (soldData[i]) {
+                    // যদি প্লটটি বিক্রি হয়ে থাকে
+                    plotDiv.innerHTML = `<img src="${soldData[i].logo}" alt="Plot ${i}">`;
+                    plotDiv.onclick = () => window.open(soldData[i].link, '_blank');
                 } else {
-                    let price = (i <= 20) ? 1299 : (1099 - ((i - 21) * 10)); if(price < 150) price = 150;
-                    div.innerHTML = `<span>#${pID}</span><strong>$${price}</strong>`;
-                    div.onclick = () => location.href=`order.html?g=${g}&p=${pID}&pr=${price}`;
+                    // যদি প্লটটি খালি থাকে (আপনার দেওয়া প্রাইস লিস্ট অনুযায়ী)
+                    let price = 39; // বেস প্রাইস
+                    // কর্নার রো এবং অন্যান্য লজিক অনুযায়ী প্রাইস সেট করা যাবে এখানে
+                    
+                    plotDiv.innerHTML = `
+                        <span style="color:#ccc">#${i}</span>
+                        <strong style="margin-top:5px; color:var(--gold)">$${price}</strong>
+                    `;
+                    plotDiv.onclick = () => location.href = `order.html?g=${realmName}&p=${i}&pr=${price}`;
                 }
-                canvasDiv.appendChild(div);
+                grid.appendChild(plotDiv);
             }
         });
+
+        // ম্যাপ ডাউনলোড ফাংশন
+        window.downloadGamingMap = () => {
+            const area = document.getElementById('gaming-capture');
+            html2canvas(area, { scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Aether-Plots-Gaming-Map.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        };
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
