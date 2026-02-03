@@ -3,182 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONCIERGE | AETHER PLOTS</title>
-    <link rel="stylesheet" href="style.css">
+    <title>CONCIERGE | K ARCHIVE</title>
     <style>
-        body { background: #fff; color: #111; font-family: 'Helvetica Neue', sans-serif; overflow-x: hidden; }
+        body { background: #fff; color: #111; font-family: 'Times New Roman', serif; overflow-x: hidden; margin: 0; cursor: none; }
         
-        .support-wrapper {
-            max-width: 900px;
-            margin: 100px auto 100px;
-            padding: 0 40px;
-            text-align: center;
-        }
+        /* কাস্টম কার্সার */
+        #cursor-dot { position: fixed; width: 5px; height: 5px; background: #9E7E45; border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        #cursor-outline { position: fixed; width: 30px; height: 30px; border: 1px solid #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.2s; }
 
-        .brand-k-support {
-            font-size: 60px;
-            font-weight: 900;
-            font-family: serif;
-            margin-bottom: 20px;
-            color: #000;
-        }
+        .header { padding: 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f2f2f2; }
+        .back-btn { background: none; border: none; letter-spacing: 3px; font-size: 10px; cursor: none; text-transform: uppercase; font-weight: bold; }
 
-        .support-header h1 {
-            font-weight: 100;
-            letter-spacing: 15px;
-            text-transform: uppercase;
-            font-size: clamp(24px, 5vw, 32px);
-            margin-bottom: 10px;
-        }
+        .support-wrapper { max-width: 800px; margin: 100px auto; text-align: center; padding: 0 20px; }
+        .brand-k { font-size: 80px; font-weight: 900; margin-bottom: 10px; letter-spacing: 10px; }
+        
+        .support-title { font-size: 24px; letter-spacing: 12px; text-transform: uppercase; font-weight: 100; margin-bottom: 60px; }
 
-        /* সাবমিশন চেকলিস্ট বক্স */
-        .submission-checklist {
-            background: #fafafa;
-            border: 1px solid #eee;
-            padding: 35px;
-            margin: 50px auto;
-            max-width: 550px;
-            text-align: left;
+        /* হোয়াটসঅ্যাপ কার্ড - সাদা কালো */
+        .whatsapp-trigger {
+            display: inline-flex; flex-direction: column; align-items: center;
+            padding: 60px 100px; border: 1px solid #eee; transition: 0.5s;
+            cursor: none; text-decoration: none; color: #000;
         }
+        .whatsapp-trigger:hover { border-color: #9E7E45; background: #fafafa; }
 
-        .checklist-title {
-            font-size: 10px;
-            letter-spacing: 4px;
-            color: #9E7E45;
-            text-transform: uppercase;
-            font-weight: bold;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+        .ws-icon { 
+            width: 60px; height: 60px; margin-bottom: 25px;
+            filter: grayscale(1) brightness(0); /* পিওর সাদা-কালো লোগো */
+            transition: 0.5s; opacity: 0.7;
         }
+        .whatsapp-trigger:hover .ws-icon { opacity: 1; transform: scale(1.1); }
 
-        .checklist-items {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+        .label { font-size: 10px; letter-spacing: 5px; color: #9E7E45; text-transform: uppercase; margin-bottom: 10px; font-weight: bold; }
+        .sub-label { font-size: 12px; color: #888; letter-spacing: 1px; }
 
-        .checklist-items li {
-            font-size: 11px;
-            color: #666;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
+        /* পপ-আপ বক্স (Modal) */
+        #submission-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.98); z-index: 10001; align-items: center; justify-content: center;
         }
+        .modal-content {
+            max-width: 500px; padding: 60px; border: 1px solid #eee; background: #fff;
+            text-align: left; position: relative;
+        }
+        .modal-content h2 { font-size: 14px; letter-spacing: 5px; text-transform: uppercase; border-bottom: 1px solid #9E7E45; padding-bottom: 15px; margin-bottom: 30px; }
+        .modal-content ul { list-style: none; padding: 0; margin-bottom: 40px; }
+        .modal-content li { font-size: 12px; letter-spacing: 1px; margin-bottom: 15px; color: #444; text-transform: uppercase; }
+        .modal-content li::before { content: "— "; color: #9E7E45; }
 
-        .checklist-items li::before {
-            content: "→";
-            margin-right: 15px;
-            color: #9E7E45;
-            font-weight: bold;
+        .chat-now-btn {
+            display: block; width: 100%; padding: 20px; background: #000; color: #fff;
+            text-align: center; text-decoration: none; font-size: 10px; letter-spacing: 4px;
+            text-transform: uppercase; transition: 0.4s;
         }
+        .chat-now-btn:hover { background: #9E7E45; }
+        
+        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 20px; cursor: none; color: #ccc; }
 
-        /* কার্ড গ্রিড */
-        .support-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .support-card {
-            padding: 60px 30px;
-            border: 1px solid #f5f5f5;
-            transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .support-card:hover {
-            border-color: #9E7E45;
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.02);
-        }
-
-        .support-icon {
-            width: 45px;
-            height: 45px;
-            margin-bottom: 30px;
-            filter: grayscale(1);
-            transition: 0.4s;
-        }
-
-        .support-card:hover .support-icon {
-            filter: grayscale(0);
-        }
-
-        .contact-label {
-            font-size: 9px;
-            letter-spacing: 4px;
-            color: #bbb;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .contact-info {
-            font-weight: bold;
-            font-size: 12px;
-            letter-spacing: 1px;
-            color: #111;
-        }
-
-        footer {
-            margin-top: 100px;
-            font-size: 9px;
-            letter-spacing: 6px;
-            color: #ccc;
-            text-transform: uppercase;
-        }
+        footer { margin-top: 100px; font-size: 8px; letter-spacing: 6px; color: #ccc; text-transform: uppercase; }
     </style>
 </head>
 <body>
-    <div id="custom-cursor"></div>
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
 
     <header class="header">
-        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold; cursor:none;">← BACK</button>
-        <div style="font-size:10px; letter-spacing:3px; color:#aaa;">PRIVATE CONCIERGE</div>
+        <button class="back-btn" onclick="history.back()">← Back</button>
+        <div style="font-size:9px; letter-spacing:4px; color:#bbb;">ESTATE CONCIERGE</div>
     </header>
 
     <div class="support-wrapper">
-        <div class="brand-k-support">K</div>
-        <div class="support-header">
-            <h1>HQ Support</h1>
+        <div class="brand-k">K</div>
+        <div class="support-title">HQ Support</div>
+
+        <div class="whatsapp-trigger" id="openModal">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="ws-icon" alt="WhatsApp">
+            <div class="label">Official Concierge</div>
+            <div class="sub-label">Direct Line: +880 1576-940717</div>
         </div>
 
-        <div class="submission-checklist">
-            <div class="checklist-title">Required for Submission</div>
-            <ul class="checklist-items">
+        <div style="margin-top: 50px;">
+            <div class="label" style="color:#ccc;">Official Email</div>
+            <div class="sub-label">aetherplotshq@gmail.com</div>
+        </div>
+
+        <footer>© 2026 K ARCHIVE STUDIO</footer>
+    </div>
+
+    <div id="submission-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">✕</span>
+            <h2>Submission Requirements</h2>
+            <ul>
                 <li>Selected Plot Number & Section</li>
                 <li>Your Official Brand Logo (PNG/SVG)</li>
                 <li>Social Media or Website Link</li>
-                <li>Payment Screenshot (Proof of Transfer)</li>
+                <li>Payment Screenshot (Proof)</li>
             </ul>
+            <a href="https://wa.me/8801576940717?text=Hello HQ, I have prepared my Plot ID, Logo, and Payment Proof. Please integrate my brand." class="chat-now-btn">Start Chat Now</a>
         </div>
-
-        <div class="support-grid">
-            <div class="support-card">
-                <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" class="support-icon" alt="Email">
-                <div class="contact-label">Official Mail</div>
-                <div class="contact-info">aetherplotshq@gmail.com</div>
-            </div>
-
-            <a href="https://wa.me/8801576940717?text=Hello HQ, I am ready with my Plot ID, Logo, and Payment Proof for integration." class="support-card">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="support-icon" alt="WhatsApp">
-                <div class="contact-label">Direct Line</div>
-                <div class="contact-info" style="color:#9E7E45;">+880 1576-940717</div>
-            </a>
-        </div>
-
-        <footer>
-            © 2026 AETHER PLOTS — SINCE 2026
-        </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // কার্সার লজিক
+        const dot = document.getElementById('cursor-dot');
+        const outline = document.getElementById('cursor-outline');
+        document.addEventListener('mousemove', (e) => {
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+            outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+        });
+
+        // পপ-আপ লজিক
+        const modal = document.getElementById('submission-modal');
+        const openBtn = document.getElementById('openModal');
+        const closeBtn = document.getElementById('closeModal');
+
+        openBtn.onclick = () => modal.style.display = "flex";
+        closeBtn.onclick = () => modal.style.display = "none";
+        window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; }
+    </script>
+
 </body>
 </html>
