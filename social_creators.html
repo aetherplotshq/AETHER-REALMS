@@ -1,0 +1,16 @@
+<div class="grid-container" id="social-grid"></div>
+<div id="chat-widget" onclick="location.href='chat.html?realm=Social'">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.825 1.401 5.341 3.605 6.991l-.967 3.445 3.633-1.817c1.121.328 2.308.511 3.53.511 5.523 0 10-4.145 10-9.243S17.523 2 12 2z"/></svg>
+</div>
+
+<script type="module">
+    const grid = document.getElementById('social-grid');
+    for (let i = 1; i <= 100; i++) {
+        const plot = document.createElement('div');
+        plot.className = 'plot';
+        let price = i <= 50 ? 1599 - ((i - 1) * 50) : 1599 - (49 * 50);
+        plot.innerHTML = `#${i}<br>$${price}`;
+        plot.onclick = () => location.href = `order.html?type=Social&id=${i}&price=${price}`;
+        grid.appendChild(plot);
+    }
+</script>
