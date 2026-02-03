@@ -1,20 +1,19 @@
-/* AETHER PLOTS - Official Stylesheet
-   Theme: Luxury Gold & Obsidian
+/* K ARCHIVE STUDIO - Official Stylesheet
+   Theme: Rolls Royce Inspired Minimalism 
 */
 
 :root {
-    --gold: #9E7E45;       /* রাজকীয় গোল্ডেন কালার */
+    --gold: #9E7E45;       /* রাজকীয় গোল্ডেন */
     --black: #000000;
-    --deep-gray: #111111;
-    --light-gray: #f9f9f9;
-    --border: #eeeeee;
+    --deep-gray: #141414;
+    --light-gray: #f2f2f2;
+    --border: #e0e0e0;
     --white: #ffffff;
 }
 
 * {
     box-sizing: border-box;
-    cursor: none !important; /* কাস্টম কার্সরের জন্য ডিফল্ট কার্সর হাইড করা */
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    cursor: none !important; /* ডিফল্ট কার্সর হাইড */
 }
 
 body {
@@ -22,149 +21,185 @@ body {
     padding: 0;
     background-color: var(--white);
     color: var(--black);
+    font-family: 'Times New Roman', serif;
     overflow-x: hidden;
+    line-height: 1.6;
 }
 
-/* ১. কাস্টম মাউস কার্সর */
-#custom-cursor {
-    width: 22px;
-    height: 22px;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
+/* ১. কাস্টম মাউস কার্সর (ডাবল লোগো ইফেক্ট এর বেস) */
+#cursor-dot {
     position: fixed;
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
     pointer-events: none;
     z-index: 10000;
-    transition: transform 0.15s ease-out, background-color 0.3s ease;
+    transform: translate(-50%, -50%);
 }
 
-/* ২. রাজকীয় হেডার */
+#cursor-outline {
+    position: fixed;
+    width: 35px;
+    height: 35px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    color: var(--gold);
+    transition: width 0.3s, height 0.3s, background 0.3s, opacity 0.3s;
+}
+
+/* ২. লাক্সারি হেডার */
 .header {
-    height: 100px;
+    height: 90px;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 60px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--light-gray);
     z-index: 9000;
-    transition: 0.4s ease;
+    letter-spacing: 12px;
 }
 
-.logo {
-    font-size: 28px;
-    font-weight: 100;
-    letter-spacing: 8px;
+.k-brand-logo {
+    font-size: 32px;
+    font-weight: 900;
     color: var(--black);
     text-decoration: none;
+    position: relative;
 }
 
-.logo span {
-    color: var(--gold);
-    font-weight: bold;
+/* ৩. সেকশন রিভিল এনিমেশন */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* ৩. গ্লোবাল বাটন ডিজাইন */
-.btn-download, .submit-btn, .publish-btn {
-    background: var(--black);
-    color: var(--white);
-    border: none;
-    padding: 15px 35px;
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ৪. রাজকীয় বাটন (Hover-able) */
+.btn-luxury {
+    background: none;
+    border: 1px solid var(--border);
+    padding: 18px 45px;
     font-size: 10px;
-    letter-spacing: 3px;
+    letter-spacing: 5px;
     text-transform: uppercase;
-    transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+    color: var(--black);
+    transition: 0.5s;
+    text-decoration: none;
     display: inline-block;
 }
 
-.btn-download:hover {
-    background: var(--gold);
-    transform: translateY(-2px);
+.btn-luxury:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: var(--light-gray);
 }
 
-/* ৪. এস্টেট গ্রিড (Gaming, Social, Millionaire) */
+/* ৫. ক্যানভাস গ্রিড (Plot System) */
 .canvas-grid {
     display: grid;
     margin: 40px auto;
     background: var(--white);
+    border: 1.5px solid var(--black); /* মেইন বর্ডার স্পষ্ট করার জন্য */
 }
 
 .plot-unit {
-    border: 0.5px solid var(--border);
+    border: 1px solid var(--border); /* প্রতিটি প্লটের স্পষ্ট দাগ */
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: 0.3s;
+    font-size: 10px;
     background: var(--white);
-    transition: 0.3s ease;
-    overflow: hidden;
+    position: relative;
 }
 
 .plot-unit:hover {
-    border: 1px solid var(--gold);
-    background: #fdfaf5;
-    z-index: 5;
-}
-
-/* ৫. চ্যাট বাটন (Floating) */
-.floating-chat {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    width: 60px;
-    height: 60px;
-    background: var(--black);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    z-index: 8000;
-    transition: 0.3s;
-}
-
-.floating-chat:hover {
-    transform: scale(1.1);
-    background: var(--gold);
-}
-
-.floating-chat img {
-    width: 30px;
-    filter: invert(1);
-}
-
-/* ৬. ফুটার সেকশন */
-.footer {
     background: #000;
-    color: #888;
-    padding: 80px 60px;
-    text-align: center;
+    color: #fff;
+    z-index: 10;
+    transform: scale(1.05);
+    border-color: #000;
+}
+
+/* ভিআইপি প্লট ইফেক্ট (জ্বলজ্বলে) */
+.vip-glowing {
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 15px rgba(158, 126, 69, 0.3);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 5px rgba(158, 126, 69, 0.2); }
+    to { box-shadow: 0 0 20px rgba(158, 126, 69, 0.6); }
+}
+
+/* ৬. চ্যাট বক্স (স্মার্ট ক্লিনিং চ্যাট) */
+.chat-window {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 350px;
+    height: 450px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    display: none;
+    flex-direction: column;
+    z-index: 9999;
+}
+
+.chat-header {
+    padding: 20px;
+    background: #000;
+    color: #fff;
     font-size: 10px;
     letter-spacing: 3px;
-    border-top: 1px solid var(--gold);
+    text-transform: uppercase;
 }
 
-/* ৭. ফর্ম ও ইনপুট ডিজাইন */
-input, select {
-    border: 1px solid var(--border);
-    padding: 15px;
+/* ৭. ফুটার ডিজাইন */
+.footer-dark {
+    background: #000;
+    color: #fff;
+    padding: 100px 60px;
+    text-align: left;
+}
+
+.footer-dark h4 {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.footer-dark p {
     font-size: 13px;
-    letter-spacing: 1px;
+    color: #777;
+    line-height: 2;
 }
 
-input:focus {
-    border-color: var(--gold);
-    outline: none;
-}
-
-/* ৮. রেসপন্সিভনেস (মোবাইলের জন্য) */
+/* ৮. রেসপন্সিভনেস */
 @media (max-width: 768px) {
-    .header { padding: 0 25px; height: 80px; }
-    .logo { font-size: 20px; letter-spacing: 5px; }
-    .canvas-grid { transform: scale(0.8); } /* মোবাইল স্ক্রিনে গ্রিড ফিট করার জন্য */
-    .footer { padding: 40px 20px; }
+    .header { height: 70px; letter-spacing: 5px; }
+    .k-brand-logo { font-size: 22px; }
+    .footer-dark { padding: 60px 20px; text-align: center; }
 }
