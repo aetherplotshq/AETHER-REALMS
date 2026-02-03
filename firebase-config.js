@@ -1,3 +1,8 @@
+/**
+ * K ARCHIVE - Firebase Core Engine
+ * Handled Sections: Gaming (12 Games), Millionaires, Social, Nations, 1M Grid
+ */
+
 // Firebase SDK modules from CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { 
@@ -26,11 +31,13 @@ const firebaseConfig = {
     measurementId: "G-XTRFZJTMEW"
 };
 
-// Initialize Firebase
+// Initialize Firebase Instance
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Exporting for use in all your HTML files
+/** * Exporting all necessary modules
+ * This will be used in: manual_update.html and all Game Canvas files
+ */
 export { 
     db, 
     ref, 
