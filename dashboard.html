@@ -2,95 +2,130 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MEMBER DASHBOARD | AETHER PLOTS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESTATE DASHBOARD | K ARCHIVE</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background: #fff; color: #111; }
-        .dashboard-container { max-width: 1100px; margin: 150px auto 50px; padding: 0 20px; }
+        body { background: #fff; color: #111; font-family: 'Times New Roman', serif; cursor: none; }
         
-        .welcome-header { margin-bottom: 50px; border-left: 3px solid var(--gold); padding-left: 20px; }
-        .welcome-header h2 { font-weight: 100; letter-spacing: 5px; text-transform: uppercase; margin: 0; }
-        .welcome-header p { color: #888; font-size: 11px; letter-spacing: 2px; margin-top: 5px; }
-
-        .member-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        .dashboard-container { max-width: 1100px; margin: 150px auto 50px; padding: 0 40px; }
         
-        .card { background: #fff; border: 1px solid #eee; padding: 30px; }
-        .card-title { font-size: 10px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 20px; display: block; }
+        /* ডবল কার্সার এলিমেন্ট */
+        #cursor-dot { position: fixed; width: 5px; height: 5px; background: #9E7E45; border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        #cursor-outline { position: fixed; width: 35px; height: 35px; border: 1px solid #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.2s; }
 
-        .plot-inventory { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 15px; }
+        .welcome-header { margin-bottom: 60px; border-left: 2px solid #9E7E45; padding-left: 30px; }
+        .welcome-header h2 { font-weight: 100; letter-spacing: 12px; text-transform: uppercase; margin: 0; font-size: 28px; }
+        .welcome-header p { color: #888; font-size: 10px; letter-spacing: 4px; margin-top: 10px; text-transform: uppercase; }
+
+        .member-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        
+        .card { background: #fff; border: 1px solid #f2f2f2; padding: 40px; position: relative; transition: 0.4s; }
+        .card:hover { border-color: #9E7E45; box-shadow: 0 20px 40px rgba(0,0,0,0.02); }
+        
+        .card-title { font-size: 9px; letter-spacing: 4px; color: #9E7E45; text-transform: uppercase; margin-bottom: 30px; display: block; font-weight: bold; border-bottom: 1px solid #f2f2f2; padding-bottom: 15px; }
+
+        .plot-inventory { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 20px; }
         .owned-plot { 
-            aspect-ratio: 1/1; border: 1px solid var(--gold); 
+            aspect-ratio: 1/1; border: 1px solid #eee; 
             display: flex; align-items: center; justify-content: center; 
-            font-size: 10px; flex-direction: column; background: #fffdf8;
+            font-size: 9px; flex-direction: column; background: #fafafa;
+            transition: 0.3s; letter-spacing: 1px;
         }
+        .owned-plot:hover { background: #000; color: #fff; border-color: #000; transform: translateY(-5px); }
 
         .profile-info { text-align: center; }
         .avatar-circle { 
-            width: 100px; height: 100px; border: 1px solid var(--gold); 
-            border-radius: 50%; margin: 0 auto 20px; display: flex; 
-            align-items: center; justify-content: center; font-size: 30px; font-weight: 100;
+            width: 120px; height: 120px; border: 1px solid #9E7E45; 
+            border-radius: 50%; margin: 0 auto 25px; display: flex; 
+            align-items: center; justify-content: center; font-size: 40px; font-weight: 100;
+            background: #fff; color: #000;
         }
 
         .status-badge { 
-            display: inline-block; padding: 5px 15px; background: #000; 
-            color: #fff; font-size: 9px; letter-spacing: 2px; margin-top: 10px; 
+            display: inline-block; padding: 8px 20px; background: #000; 
+            color: #fff; font-size: 8px; letter-spacing: 3px; margin-top: 15px; text-transform: uppercase;
         }
 
-        .action-links { margin-top: 30px; }
+        .action-links { margin-top: 40px; text-align: left; }
         .action-links a { 
-            display: block; padding: 15px; border-bottom: 1px solid #eee; 
-            text-decoration: none; color: #444; font-size: 12px; transition: 0.3s;
+            display: block; padding: 18px 0; border-bottom: 1px solid #f2f2f2; 
+            text-decoration: none; color: #555; font-size: 11px; transition: 0.3s;
+            letter-spacing: 2px; text-transform: uppercase;
         }
-        .action-links a:hover { color: var(--gold); padding-left: 25px; }
+        .action-links a:hover { color: #9E7E45; padding-left: 15px; border-bottom-color: #9E7E45; }
+
+        .btn-acquire {
+            margin-top: 40px; background: #000; color: #fff; border: none;
+            padding: 20px 40px; font-size: 10px; letter-spacing: 4px;
+            text-transform: uppercase; transition: 0.5s; cursor: none; display: inline-block;
+        }
+        .btn-acquire:hover { background: #9E7E45; }
     </style>
 </head>
 <body>
-    <div id="custom-cursor"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
 
     <header class="header">
-        <button onclick="history.back()" style="background:none; border:none; letter-spacing:2px; font-weight:bold;">← BACK</button>
-        <div class="logo">A<span>K</span></div>
-        <div style="font-size:10px; letter-spacing:2px;">MEMBER ACCESS</div>
+        <button onclick="history.back()" style="background:none; border:none; letter-spacing:3px; font-weight:bold; cursor:none; font-size:10px;">← BACK</button>
+        <div style="font-size:24px; font-weight: 900; letter-spacing: 5px;">K</div>
+        <div style="font-size:9px; letter-spacing:4px; color:#bbb;">PORTAL ACCESS</div>
     </header>
 
     <div class="dashboard-container">
         <div class="welcome-header">
-            <h2 id="user-display">Welcome, Member</h2>
-            <p>Managing your legacy at Aether Plots</p>
+            <h2 id="user-display">The Estate Owner</h2>
+            <p>Managing your digital legacy within the archive</p>
         </div>
 
         <div class="member-grid">
             <div class="card">
-                <span class="card-title">Your Estates</span>
+                <span class="card-title">Your Secured Assets</span>
                 <div id="inventory-list" class="plot-inventory">
-                    <div style="color:#ccc; font-size:11px; grid-column: 1/-1;">No plots secured yet.</div>
+                    <div class="owned-plot">
+                        <span style="color:#9E7E45; margin-bottom: 5px;">#024</span>
+                        <span style="font-size:7px; color:#aaa;">GAMING</span>
+                    </div>
+                    <div class="owned-plot" style="opacity: 0.3; border-style: dashed;">
+                        <span>EMPTY</span>
+                    </div>
                 </div>
-                <button onclick="location.href='gaming.html'" class="btn-download" style="margin-top:30px; width:auto;">ACQUIRE NEW PLOT</button>
+                <a href="index.html#realms" class="btn-acquire">Acquire New Asset</a>
             </div>
 
             <div class="profile-info">
                 <div class="card">
-                    <div class="avatar-circle">A</div>
-                    <div style="font-weight: bold; letter-spacing: 2px; font-size: 14px;">ESTATE OWNER</div>
-                    <div class="status-badge">VERIFIED</div>
+                    <div class="avatar-circle">K</div>
+                    <div style="font-weight: bold; letter-spacing: 3px; font-size: 14px; text-transform: uppercase;">Verified Owner</div>
+                    <div class="status-badge">Elite Member</div>
                     
                     <div class="action-links">
-                        <a href="chat.html">ACCESS CONCIERGE</a>
-                        <a href="manual_update.html">UPDATE PLOT INFO</a>
-                        <a href="index.html" style="border:none; color: #d32f2f;">LOGOUT</a>
+                        <a href="support.html">Private Concierge</a>
+                        <a href="manual_update.html">Request Asset Update</a>
+                        <a href="order.html">Pending Reservations</a>
+                        <a href="index.html" style="border:none; color: #d32f2f; margin-top: 20px;">Sign Out</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        // কার্সার লজিক
+        const dot = document.getElementById('cursor-dot');
+        const outline = document.getElementById('cursor-outline');
+        document.addEventListener('mousemove', (e) => {
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+            outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+        });
+    </script>
     <script type="module">
         import { db, ref, onValue } from "./firebase-config.js";
-
-        // এই অংশে ভবিষ্যতে আপনি ইউজার লগইন সিস্টেম যোগ করলে 
-        // তার ইমেইল বা আইডি দিয়ে ডাটা ফিল্টার করতে পারবেন।
-        // আপাতত এটি একটি স্ট্যাটিক প্রিমিয়াম লুক দিচ্ছে।
+        
+        // এখানে ফিউচারে ইউজার আইডি দিয়ে ফায়ারবেস থেকে ডাটা আনা হবে
+        console.log("K-Archive: Dashboard Real-time Link Ready.");
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
