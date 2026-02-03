@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - DOMAIN NOT FOUND | AETHER PLOTS</title>
+    <title>404 - DOMAIN NOT FOUND | K ARCHIVE</title>
     <link rel="stylesheet" href="style.css">
     <style>
         body {
@@ -14,79 +14,106 @@
             justify-content: center;
             margin: 0;
             overflow: hidden;
+            font-family: 'Times New Roman', serif;
+            cursor: none;
         }
+
+        /* ডবল কার্সার এলিমেন্ট */
+        #cursor-dot { position: fixed; width: 5px; height: 5px; background: #9E7E45; border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        #cursor-outline { position: fixed; width: 35px; height: 35px; border: 1px solid #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.15s; }
 
         .error-wrapper {
             text-align: center;
             padding: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .error-code {
-            font-size: 120px;
+            font-size: 150px;
             font-weight: 100;
-            color: var(--gold); /* style.css থেকে গোল্ড কালার নিবে */
+            color: #9E7E45; 
             margin: 0;
-            letter-spacing: 20px;
+            letter-spacing: 25px;
             line-height: 1;
+            opacity: 0.8;
         }
 
         .error-message {
-            font-size: 12px;
-            letter-spacing: 8px;
+            font-size: 10px;
+            letter-spacing: 10px;
             text-transform: uppercase;
             color: #111;
-            margin: 20px 0 40px 0;
+            margin: 30px 0 50px 0;
+            font-weight: bold;
         }
 
         .ak-logo-small {
-            font-size: 20px;
-            letter-spacing: 5px;
-            margin-bottom: 30px;
+            font-size: 30px;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
             display: block;
-        }
-
-        .ak-logo-small span {
-            color: var(--gold);
-            font-weight: bold;
+            font-weight: 900;
+            color: #000;
         }
 
         .back-home-btn {
             background: #000;
             color: #fff;
             border: none;
-            padding: 18px 45px;
-            font-size: 10px;
-            letter-spacing: 4px;
+            padding: 20px 50px;
+            font-size: 9px;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            transition: 0.4s;
+            transition: 0.5s;
             text-decoration: none;
+            display: inline-block;
         }
 
         .back-home-btn:hover {
-            background: var(--gold);
-            transform: translateY(-3px);
+            background: #9E7E45;
+            letter-spacing: 8px;
         }
 
-        /* নিচের শ্যাডো ইফেক্ট */
         .decor-line {
-            width: 50px;
+            width: 60px;
             height: 1px;
-            background: var(--gold);
-            margin: 20px auto;
+            background: #9E7E45;
+            margin: 10px auto;
         }
     </style>
 </head>
 <body>
-    <div id="custom-cursor"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
 
     <div class="error-wrapper">
-        <div class="ak-logo-small">A<span>K</span></div>
+        <div class="ak-logo-small">K</div>
         <h1 class="error-code">404</h1>
         <div class="decor-line"></div>
-        <p class="error-message">This domain is yet to be discovered</p>
+        <p class="error-message">The requested archive is currently unwritten</p>
         <a href="index.html" class="back-home-btn">Return to Archive</a>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // ডবল কার্সার লজিক
+        const dot = document.getElementById('cursor-dot');
+        const outline = document.getElementById('cursor-outline');
+
+        document.addEventListener('mousemove', (e) => {
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+            
+            outline.animate({
+                left: `${e.clientX}px`,
+                top: `${e.clientY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+    </script>
 </body>
 </html>
