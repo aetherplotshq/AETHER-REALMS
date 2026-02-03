@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MILLIONAIRE ADMIN | K ARCHIVE</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: #fcfcfc; color: #111; font-family: 'Times New Roman', serif; cursor: none; }
+        .admin-wrapper { padding: 120px 40px; max-width: 1200px; margin: 0 auto; }
+        .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 50px; }
+        .stat-box { background: #fff; padding: 30px; border: 1px solid #eee; text-align: center; }
+        .stat-box h3 { color: #9E7E45; font-size: 28px; margin: 10px 0; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #eee; }
+        th { background: #000; color: #fff; padding: 15px; text-align: left; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+        td { padding: 15px; border-bottom: 1px solid #eee; font-size: 12px; }
+        .action-btn { padding: 6px 12px; font-size: 10px; cursor: pointer; border: 1px solid #ddd; background: #fff; }
+        .btn-approve { color: #2e7d32; border-color: #2e7d32; }
+        .btn-delete { color: #d32f2f; border-color: #d32f2f; }
+        #cursor-dot { position: fixed; width: 5px; height: 5px; background: #9E7E45; border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        #cursor-outline { position: fixed; width: 30px; height: 30px; border: 1px solid #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.1s; }
+    </style>
+</head>
+<body>
+    <div id="cursor-dot"></div><div id="cursor-outline"></div>
+    <header class="header" style="position:fixed; width:100%; top:0; background:#fff; z-index:100; border-bottom:1px solid #eee; display:flex; justify-content:space-between; padding:20px 50px;">
+        <div style="font-size:24px; font-weight:900;">K<span>.</span></div>
+        <div style="letter-spacing: 3px; font-size: 10px;">MILLIONAIRE CLUB COMMAND</div>
+    </header>
+
+    <div class="admin-wrapper">
+        <div class="stats-bar">
+            <div class="stat-box"><p>Elite Requests</p><h3 id="total-count">0</h3></div>
+            <div class="stat-box"><p>Pending Review</p><h3 id="pending-count">0</h3></div>
+            <div class="stat-box"><p>Elite Revenue</p><h3 id="revenue-count">$0</h3></div>
+        </div>
+        <table>
+            <thead><tr><th>Plot ID</th><th>Price</th><th>Social Link</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="admin-table-body"></tbody>
+        </table>
+    </div>
+
+    <script type="module">
+        import { db, ref, onValue, update, remove } from "./firebase-config.js";
+        const tableBody = document.getElementById('admin-table-body');
+        const ordersRef = ref(db, 'pending_orders/Millionaire');
+
+        onValue(ordersRef, (snapshot) => {
+            tableBody.innerHTML = "";
+            let total = 0, pending = 0, revenue = 0;
+            snapshot.forEach((plotSnap) => {
+                const data = plotSnap.val();
+                total++;
+                if (data.status === "Pending") pending++;
+                revenue += parseFloat(data.price || 0);
+                tableBody.innerHTML += `<tr>
+                    <td><strong>#${data.plotID}</strong></td><td>$${data.price}</td>
+                    <td><a href="${data.socialLink}" target="_blank" class="action-btn">PROFILE</a></td>
+                    <td>${data.email}</td><td>${data.status}</td>
+                    <td>
+                        <button class="action-btn btn-approve" onclick="manage('${plotSnap.key}', 'Approved')">APPROVE</button>
+                        <button class="action-btn btn-delete" onclick="del('${plotSnap.key}')">DEL</button>
+                    </td></tr>`;
+            });
+            document.getElementById('total-count').innerText = total;
+            document.getElementById('pending-count').innerText = pending;
+            document.getElementById('revenue-count').innerText = '$' + revenue.toLocaleString();
+        });
+
+        window.manage = (i, s) => update(ref(db, `pending_orders/Millionaire/${i}`), { status: s });
+        window.del = (i) => confirm("Erase?") && remove(ref(db, `pending_orders/Millionaire/${i}`));
+        document.addEventListener('mousemove', (e) => {
+            document.getElementById('cursor-dot').style.top = e.clientY+'px'; document.getElementById('cursor-dot').style.left = e.clientX+'px';
+            document.getElementById('cursor-outline').animate({left: e.clientX+'px', top: e.clientY+'px'}, {duration:500, fill:"forwards"});
+        });
+    </script>
+</body>
+</html>
