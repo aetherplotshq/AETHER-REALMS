@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - DOMAIN NOT FOUND | K ARCHIVE</title>
-    <link rel="stylesheet" href="style.css">
+    <title>REDIRECTING... | K ARCHIVE</title>
     <style>
         body {
             background: #ffffff;
@@ -18,73 +17,44 @@
             cursor: none;
         }
 
-        /* ডবল কার্সার এলিমেন্ট */
+        /* Rolls Royce Style Cursor */
         #cursor-dot { position: fixed; width: 5px; height: 5px; background: #9E7E45; border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
         #cursor-outline { position: fixed; width: 35px; height: 35px; border: 1px solid #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.15s; }
 
         .error-wrapper {
             text-align: center;
             padding: 40px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 1s ease forwards;
         }
 
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
+        .k-identity { font-size: 35px; font-weight: 900; letter-spacing: 12px; margin-bottom: 20px; color: #000; }
+        
+        .loader-bar {
+            width: 150px;
+            height: 1px;
+            background: #eee;
+            margin: 30px auto;
+            position: relative;
+            overflow: hidden;
         }
 
-        .error-code {
-            font-size: 150px;
-            font-weight: 100;
-            color: #9E7E45; 
-            margin: 0;
-            letter-spacing: 25px;
-            line-height: 1;
-            opacity: 0.8;
+        .loader-progress {
+            position: absolute;
+            width: 0%;
+            height: 100%;
+            background: #9E7E45;
+            animation: load 2.5s linear forwards;
         }
 
-        .error-message {
-            font-size: 10px;
-            letter-spacing: 10px;
-            text-transform: uppercase;
-            color: #111;
-            margin: 30px 0 50px 0;
-            font-weight: bold;
+        @keyframes load {
+            to { width: 100%; }
         }
 
-        .ak-logo-small {
-            font-size: 30px;
-            letter-spacing: 8px;
-            margin-bottom: 20px;
-            display: block;
-            font-weight: 900;
-            color: #000;
-        }
-
-        .back-home-btn {
-            background: #000;
-            color: #fff;
-            border: none;
-            padding: 20px 50px;
+        .redirect-msg {
             font-size: 9px;
             letter-spacing: 5px;
             text-transform: uppercase;
-            transition: 0.5s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .back-home-btn:hover {
-            background: #9E7E45;
-            letter-spacing: 8px;
-        }
-
-        .decor-line {
-            width: 60px;
-            height: 1px;
-            background: #9E7E45;
-            margin: 10px auto;
+            color: #999;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -93,11 +63,9 @@
     <div id="cursor-outline"></div>
 
     <div class="error-wrapper">
-        <div class="ak-logo-small">K</div>
-        <h1 class="error-code">404</h1>
-        <div class="decor-line"></div>
-        <p class="error-message">The requested archive is currently unwritten</p>
-        <a href="index.html" class="back-home-btn">Return to Archive</a>
+        <div class="k-identity">K</div>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+        <p class="redirect-msg">Resuming your journey to the archive...</p>
     </div>
 
     <script>
@@ -108,12 +76,17 @@
         document.addEventListener('mousemove', (e) => {
             dot.style.left = e.clientX + 'px';
             dot.style.top = e.clientY + 'px';
-            
             outline.animate({
                 left: `${e.clientX}px`,
                 top: `${e.clientY}px`
             }, { duration: 500, fill: "forwards" });
         });
+
+        // অটো-রিডাইরেক্ট লজিক (৩ সেকেন্ড পর)
+        setTimeout(() => {
+            // এটি ইউজারকে মেইন হোমপেজে নিয়ে যাবে
+            window.location.href = "index.html"; 
+        }, 2500);
     </script>
 </body>
 </html>
