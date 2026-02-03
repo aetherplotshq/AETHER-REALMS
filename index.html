@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K | THE DIGITAL EMPIRE</title>
     <style>
-        :root { --gold: #9E7E45; --white: #ffffff; --grey: #f2f2f2; }
+        :root { --gold: #9E7E45; --white: #ffffff; --grey: #f2f2f2; --dark: #000; }
         
         body { margin: 0; padding: 0; background: var(--white); color: #000; font-family: 'Times New Roman', serif; overflow-x: hidden; scroll-behavior: smooth; cursor: none; }
 
-        /* Rolls Royce Style Cursor (Double K) */
+        /* Rolls Royce Style Cursor */
         #cursor-dot { position: fixed; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
         #cursor-outline { 
             position: fixed; width: 30px; height: 30px; border: 1px solid var(--gold); border-radius: 50%; 
@@ -33,20 +33,31 @@
         .section-header h2 { font-size: 32px; font-weight: 100; letter-spacing: 15px; text-transform: uppercase; margin-bottom: 10px; }
         .price-tag { color: var(--gold); font-size: 10px; letter-spacing: 4px; font-weight: bold; }
 
-        /* ১২টি গেমের গ্রিড */
+        /* গেম গ্রিড (১০টি গেম) */
         .gaming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: #eee; border: 1px solid #eee; margin-top: 40px; }
-        .game-item { background: #fff; padding: 45px 15px; text-align: center; text-decoration: none; color: #000; transition: 0.4s; font-size: 11px; letter-spacing: 2px; font-weight: bold; }
+        .game-item { background: #fff; padding: 45px 15px; text-align: center; text-decoration: none; color: #000; transition: 0.4s; font-size: 11px; letter-spacing: 2px; font-weight: bold; cursor: none; }
         .game-item:hover { background: #fafafa; color: var(--gold); }
 
-        .info-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-        .info-table td { padding: 18px; border-bottom: 1px solid #f5f5f5; font-size: 13px; letter-spacing: 0.5px; }
-        .info-table b { color: var(--gold); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
+        /* Support Icon & Popup */
+        .support-trigger { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: #000; color: var(--gold); border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: none; z-index: 1000; font-size: 20px; transition: 0.3s; }
+        .support-trigger:hover { background: var(--gold); color: #000; }
+
+        .popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
+        .support-popup { background: #fff; padding: 50px; max-width: 450px; width: 90%; text-align: center; border: 1px solid var(--gold); }
+        .support-popup h2 { font-size: 20px; letter-spacing: 5px; margin-bottom: 30px; }
+        .support-list { text-align: left; list-style: none; padding: 0; font-size: 13px; line-height: 2.5; margin-bottom: 35px; }
+        .whatsapp-link-btn { display: block; background: #000; color: #fff; text-decoration: none; padding: 15px; font-size: 11px; letter-spacing: 3px; font-weight: bold; transition: 0.3s; }
+        .whatsapp-link-btn:hover { background: var(--gold); }
+
+        /* Copy link style */
+        .copyable { cursor: none; transition: 0.3s; }
+        .copyable:hover { color: var(--gold); }
 
         .footer { background: #000; color: #fff; padding: 100px 10%; }
         .footer h3 { font-size: 18px; letter-spacing: 8px; text-transform: uppercase; margin-bottom: 40px; border-bottom: 1px solid #222; padding-bottom: 20px; }
         .contact-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
-        .submit-list { list-style: none; padding: 0; font-size: 12px; line-height: 2.2; color: #777; }
-        .submit-list b { color: #fff; }
+        
+        .admin-access { margin-top: 50px; font-size: 8px; color: #333; cursor: none; letter-spacing: 2px; }
     </style>
 </head>
 <body>
@@ -67,83 +78,36 @@
 
     <section class="content-section reveal">
         <div class="section-header">
-            <h2>Millionaires Club</h2>
-            <div class="price-tag">VIP BIDDING FROM $7,000</div>
-        </div>
-        <table class="info-table">
-            <tr><td><b>Structure</b></td><td>100 Elite Plots (10 Glowing VIP + 90 Base Estate)</td></tr>
-            <tr><td><b>Pricing</b></td><td>Starts at $5,999. Price drops by $500 per row downwards.</td></tr>
-            <tr><td><b>Status</b></td><td>Full Decoration & 4-Hour Live Chat Encryption.</td></tr>
-        </table>
-        <a href="millionaires.html" class="game-item" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 40px;">ACCESS CLUB</a>
-    </section>
-
-    <section class="content-section reveal">
-        <div class="section-header">
             <h2>Gaming Realm</h2>
-            <div class="price-tag">TOP 12 GLOBAL LEGENDS</div>
+            <div class="price-tag">TOP 10 GLOBAL LEGENDS</div>
         </div>
-        <p style="font-size:12px; color:#888;">105 Plots per game. VIP Bidding starts at $2,000.</p>
+        <p style="font-size:12px; color:#888;">100 Plots per game. Access your territory below.</p>
         <div class="gaming-grid">
-            <a href="freefire.html" class="game-item">FREE FIRE</a>
-            <a href="pubg.html" class="game-item">PUBG MOBILE</a>
-            <a href="minecraft.html" class="game-item">MINECRAFT</a>
-            <a href="gtav.html" class="game-item">GTA V</a>
-            <a href="valorant.html" class="game-item">VALORANT</a>
-            <a href="cod.html" class="game-item">CALL OF DUTY</a>
-            <a href="lol.html" class="game-item">LEAGUE OF LEGENDS</a>
-            <a href="amongus.html" class="game-item">AMONG US</a>
-            <a href="fortnite.html" class="game-item">FORTNITE</a>
-            <a href="fifa.html" class="game-item">FIFA 26</a>
-            <a href="roblox.html" class="game-item">ROBLOX</a>
-            <a href="genshin.html" class="game-item">GENSHIN IMPACT</a>
+            <a href="chat_freefire.html" class="game-item">FREE FIRE</a>
+            <a href="chat_pubg.html" class="game-item">PUBG MOBILE</a>
+            <a href="chat_minecraft.html" class="game-item">MINECRAFT</a>
+            <a href="chat_gtav.html" class="game-item">GTA V</a>
+            <a href="chat_valorant.html" class="game-item">VALORANT</a>
+            <a href="chat_cod.html" class="game-item">CALL OF DUTY</a>
+            <a href="chat_fifa.html" class="game-item">FIFA 26</a>
+            <a href="chat_roblox.html" class="game-item">ROBLOX</a>
+            <a href="chat_genshin.html" class="game-item">GENSHIN IMPACT</a>
+            <a href="chat_amongus.html" class="game-item">AMONG US</a>
         </div>
-    </section>
-
-    <section class="content-section reveal">
-        <div class="section-header">
-            <h2>Social Creators</h2>
-            <div class="price-tag">INFLUENCE ARCHIVE</div>
-        </div>
-        <table class="info-table">
-            <tr><td><b>Capacity</b></td><td>100 Dedicated Plots for Global Influencers.</td></tr>
-            <tr><td><b>Pricing</b></td><td>Plot #1: $1,599. Decreases by $50 per plot until #50.</td></tr>
-        </table>
-        <a href="creators.html" class="game-item" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 40px;">VIEW CREATORS</a>
-    </section>
-
-    <section class="content-section reveal">
-        <div class="section-header">
-            <h2>World Nations</h2>
-            <div class="price-tag">COUNTRY BASED ESTATES</div>
-        </div>
-        <table class="info-table">
-            <tr><td><b>Global</b></td><td>100 Plots for every country in the world.</td></tr>
-            <tr><td><b>Pricing</b></td><td>Row 1: $99 | Row 2: $89 | Row 3: $79 | Rest: $49</td></tr>
-        </table>
-        <a href="nations.html" class="game-item" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 40px;">EXPLORE COUNTRIES</a>
-    </section>
-
-    <section class="content-section reveal" style="background: #fafafa;">
-        <div class="section-header">
-            <h2>1 Million Grid</h2>
-            <div class="price-tag">MASSIVE PUBLIC ACCESS</div>
-        </div>
-        <p style="font-size:14px; line-height:2; color:#555;">One Million plots in a single canvas. <b>Price: $1 per plot.</b> Minimum purchase of 100 plots required. No chat rules, pure digital territory.</p>
-        <a href="million-grid.html" class="game-item" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 40px;">ENTER MASSIVE GRID</a>
     </section>
 
     <footer class="footer reveal">
-        <h3>Customer Service</h3>
+        <h3 onclick="togglePopup()" class="copyable">Customer Service</h3>
         <div class="contact-info">
             <div>
-                <p><b>Email:</b> aetherplotshq@gmail.com</p>
-                <p><b>WhatsApp:</b> +8801576940717</p>
+                <p><b>Email:</b> <span class="copyable" onclick="copyValue('aetherplotshq@gmail.com')">aetherplotshq@gmail.com</span></p>
+                <p><b>WhatsApp:</b> <span class="copyable" onclick="copyValue('+8801576940717')">+8801576940717</span></p>
                 <p style="margin-top:40px; color:#444; font-size: 8px;">© 2026 K ARCHIVE STUDIO - ALL RIGHTS RESERVED</p>
+                <div class="admin-access" onclick="enterAdmin()">ADMIN PANEL ACCESS</div>
             </div>
             <div>
                 <p style="color:var(--gold); font-size:10px; letter-spacing:2px;">REQUIRED FOR SUBMISSION:</p>
-                <ul class="submit-list">
+                <ul style="list-style: none; padding: 0; font-size: 12px; line-height: 2.2; color: #777;">
                     <li>1. <b>Payment Screenshot</b> (Verified)</li>
                     <li>2. <b>Image & Brand Name</b></li>
                     <li>3. <b>Target Link</b> (Social/Web)</li>
@@ -153,14 +117,32 @@
         </div>
     </footer>
 
+    <div class="popup-overlay" id="supportPopup">
+        <div class="support-popup">
+            <h2>SUBMISSION DATA</h2>
+            <ul class="support-list">
+                <li>• Payment Screenshot (Verified)</li>
+                <li>• Image & Brand Name</li>
+                <li>• Target Link (Social/Web)</li>
+                <li>• Plot Number & Section</li>
+            </ul>
+            <a href="https://wa.me/8801576940717" class="whatsapp-link-btn" target="_blank">CONTACT VIA WHATSAPP</a>
+            <button onclick="togglePopup()" style="margin-top:20px; background:none; border:none; color:#999; cursor:none; font-size:10px; letter-spacing:2px;">CLOSE</button>
+        </div>
+    </div>
+
+    <div class="support-trigger" onclick="togglePopup()">?</div>
+
     <script>
         const dot = document.getElementById('cursor-dot');
         const outline = document.getElementById('cursor-outline');
+
         document.addEventListener('mousemove', (e) => {
             dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
             outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
         });
 
+        // Reveal effect on scroll
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -171,6 +153,29 @@
         }
         window.addEventListener("scroll", reveal);
         reveal();
+
+        // Popup logic
+        function togglePopup() {
+            const popup = document.getElementById('supportPopup');
+            popup.style.display = (popup.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        // Copy Function
+        function copyValue(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Copied to clipboard: " + text);
+            });
+        }
+
+        // Admin Access Protection
+        function enterAdmin() {
+            const pass = prompt("Enter Administration Key:");
+            if (pass === "KAWSARahmed22@@") {
+                window.location.href = "admin_dashboard.html";
+            } else {
+                alert("Unauthorized Access Attempt.");
+            }
+        }
     </script>
 </body>
-</html> 
+</html>
