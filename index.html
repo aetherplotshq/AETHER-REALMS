@@ -16,25 +16,26 @@
         .k-identity { font-size: 32px; font-weight: 900; letter-spacing: 12px; color: var(--dark); text-decoration: none; }
 
         /* Payment Hub */
-        .hero { padding: 150px 10% 80px; text-align: center; background: #fff; }
-        .payment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; text-align: left; }
-        .payment-card { padding: 25px; border: 1px solid #eee; background: #fafafa; transition: 0.4s; }
+        .hero { padding: 150px 10% 50px; text-align: center; }
+        .payment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 40px; text-align: left; }
+        .payment-card { padding: 25px; border: 1px solid #eee; background: #fafafa; transition: 0.4s; cursor: none; }
         .payment-card:hover { border-color: var(--gold); background: #fff; }
         .payment-card b { font-size: 10px; color: var(--gold); letter-spacing: 2px; display: block; margin-bottom: 8px; }
         .payment-card code { font-size: 12px; color: #333; word-break: break-all; }
 
-        /* 5 Sections Grid */
-        .archive-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: #eee; border: 1px solid #eee; margin: 50px 10%; }
-        .section-card { background: #fff; padding: 60px 20px; text-align: center; text-decoration: none; color: #000; transition: 0.5s; position: relative; overflow: hidden; }
-        .section-card:hover { background: #000; color: #fff; }
-        .section-card i { font-size: 30px; display: block; margin-bottom: 20px; }
-        .section-card h3 { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; margin: 0; }
-        .section-card span { font-size: 8px; color: var(--gold); letter-spacing: 2px; display: block; margin-top: 10px; opacity: 0.7; }
+        /* Main Sections Container */
+        .sections-container { padding: 50px 10% 100px; }
+        .section-label-main { font-size: 12px; letter-spacing: 10px; color: var(--gold); text-transform: uppercase; display: block; text-align: center; margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+
+        .archive-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .section-card { background: #fff; padding: 80px 20px; text-align: center; text-decoration: none; color: #000; border: 1px solid #eee; transition: 0.5s; }
+        .section-card:hover { background: #000; color: #fff; border-color: #000; transform: translateY(-5px); }
+        .section-card h3 { font-size: 14px; letter-spacing: 4px; text-transform: uppercase; margin: 0; }
+        .section-card p { font-size: 9px; color: var(--gold); letter-spacing: 2px; margin-top: 15px; opacity: 0.8; }
 
         .footer { background: #000; color: #fff; padding: 80px 10%; text-align: center; }
         .copy-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #fff; padding: 12px 30px; font-size: 12px; letter-spacing: 2px; display: none; z-index: 10001; }
-        
-        .support-link { color: var(--gold); text-decoration: none; font-weight: bold; cursor: none; letter-spacing: 2px; }
+        .support-link { color: var(--gold); text-decoration: none; font-weight: bold; letter-spacing: 2px; font-size: 18px; display: block; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -48,63 +49,61 @@
     </header>
 
     <section class="hero">
-        <span style="font-size:10px; letter-spacing:8px; color:var(--gold);">GLOBAL ASSETS</span>
-        <h1 style="letter-spacing:20px; font-weight:100; text-transform:uppercase; margin: 20px 0;">Official Vault</h1>
-        
+        <span style="font-size:10px; letter-spacing:8px; color:var(--gold);">OFFICIAL PAYMENT GATEWAY</span>
         <div class="payment-grid">
             <div class="payment-card" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">
-                <b>METAMASK / ETH</b>
+                <b>METAMASK / ETHEREUM</b>
                 <code>0x443792A4884e8e855f954ccEF910778Aff1eb78E</code>
             </div>
             <div class="payment-card" onclick="copyV('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
-                <b>USDT (TRC20)</b>
+                <b>USDT (TRC20 NETWORK)</b>
                 <code>TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</code>
             </div>
             <div class="payment-card" onclick="copyV('912221034')">
-                <b>INTERNAL UID</b>
+                <b>INTERNAL ID (BINANCE UID)</b>
                 <code>912221034</code>
             </div>
         </div>
     </section>
 
-    <div class="archive-grid">
-        <a href="https://chat.whatsapp.com/JomnLtS0HKY6kNPmE8QzPB" target="_blank" class="section-card">
-            <i>👑</i>
-            <h3>Millionaires Club</h3>
-            <span>Apex Estates</span>
-        </a>
-        <a href="https://chat.whatsapp.com/LZCQvMkdgvQJV624kfoKx1" target="_blank" class="section-card">
-            <i>🎮</i>
-            <h3>Gaming Universe</h3>
-            <span>Virtual Realms</span>
-        </a>
-        <a href="https://chat.whatsapp.com/DPlSSQLlku0KlFa4lrGJaA" target="_blank" class="section-card">
-            <i>🌐</i>
-            <h3>Social Architects</h3>
-            <span>Creator Hub</span>
-        </a>
-        <a href="https://chat.whatsapp.com/EIbNGGqDw9OGjdM8DRyTof" target="_blank" class="section-card">
-            <i>🌍</i>
-            <h3>Nations Grid</h3>
-            <span>Sovereign Borders</span>
-        </a>
-        <a href="https://chat.whatsapp.com/FY0ujQxgqwq6NtJ9jB8fHx" target="_blank" class="section-card">
-            <i>🏛️</i>
-            <h3>General Archive</h3>
-            <span>Heritage Vault</span>
-        </a>
-    </div>
+    <section class="sections-container">
+        <span class="section-label-main">Sovereign Sections</span>
+        
+        <div class="archive-grid">
+            <a href="https://chat.whatsapp.com/JomnLtS0HKY6kNPmE8QzPB" target="_blank" class="section-card">
+                <h3>Millionaires Club</h3>
+                <p>APEX ESTATE VAULT</p>
+            </a>
+            <a href="https://chat.whatsapp.com/LZCQvMkdgvQJV624kfoKx1" target="_blank" class="section-card">
+                <h3>Gaming Universe</h3>
+                <p>VIRTUAL REALM ASSETS</p>
+            </a>
+            <a href="https://chat.whatsapp.com/DPlSSQLlku0KlFa4lrGJaA" target="_blank" class="section-card">
+                <h3>Social Architects</h3>
+                <p>CREATOR INFLUENCE GRID</p>
+            </a>
+            <a href="https://chat.whatsapp.com/EIbNGGqDw9OGjdM8DRyTof" target="_blank" class="section-card">
+                <h3>Nations Grid</h3>
+                <p>GLOBAL SOVEREIGN BORDERS</p>
+            </a>
+            <a href="https://chat.whatsapp.com/FY0ujQxgqwq6NtJ9jB8fHx" target="_blank" class="section-card">
+                <h3>General Archive</h3>
+                <p>HERITAGE DATA CENTER</p>
+            </a>
+        </div>
+    </section>
 
     <footer class="footer">
-        <p style="font-size:10px; letter-spacing:5px; opacity:0.5;">CONCIERGE SERVICE</p>
-        <p onclick="copyV('+8801576940717')" class="support-link">+8801576940717</p>
+        <p style="font-size:10px; letter-spacing:5px; opacity:0.5;">CONCIERGE & SUPPORT</p>
+        <span onclick="copyV('+8801576940717')" class="support-link">+8801576940717</span>
+        <p style="font-size: 9px; opacity: 0.3; margin-top: 10px;">(Click to copy support number)</p>
+        
         <div style="margin-top:50px; font-size:9px; opacity:0.3; letter-spacing:2px;">
             © 2026 K ARCHIVE. ALL RIGHTS RESERVED.
         </div>
     </footer>
 
     <script>
-        // Smooth Cursor
         document.addEventListener('mousemove', (e) => {
             document.getElementById('cursor-dot').style.left = e.clientX + 'px';
             document.getElementById('cursor-dot').style.top = e.clientY + 'px';
@@ -113,7 +112,6 @@
             }, { duration: 500, fill: "forwards" });
         });
 
-        // Smart Copy Function
         function copyV(text) {
             navigator.clipboard.writeText(text).then(() => {
                 const toast = document.getElementById('toast');
