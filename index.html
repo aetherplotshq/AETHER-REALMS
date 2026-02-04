@@ -6,111 +6,28 @@
     <title>K ARCHIVE | THE SOVEREIGN ESTATE</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Rolls-Royce Specific Refinements */
-        header {
-            background: transparent !important;
-            border: none !important;
-            transition: 0.5s;
-        }
-        header.scrolled {
-            background: rgba(255,255,255,0.95) !important;
-            backdrop-filter: blur(10px);
-            height: 70px;
-        }
+        /* ১. RR লোগো ও হেডার */
+        .header { background: transparent; transition: 0.8s; position: fixed; width: 100%; top: 0; z-index: 9000; height: 110px; display: flex; align-items: center; justify-content: center; }
+        header.scrolled { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); height: 80px; }
+        .k-brand { font-size: 26px; font-weight: 100; letter-spacing: 18px; color: var(--black); text-transform: uppercase; }
 
-        .rr-logo-wrap {
-            text-align: center;
-            padding: 20px;
-        }
-        .rr-box {
-            border: 1px solid var(--black);
-            padding: 4px 12px;
-            font-size: 20px;
-            display: inline-block;
-            margin-bottom: 5px;
-            font-weight: 200;
-        }
-        .rr-text {
-            font-size: 9px;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-        }
+        /* ২. লাক্সারি পেমেন্ট সাইডবার (একপাশে সাজানো) */
+        .vault-sidebar { position: absolute; left: 5%; bottom: 10%; text-align: left; z-index: 100; max-width: 300px; border-left: 0.5px solid var(--gold); padding-left: 20px; }
+        .vault-sidebar b { font-size: 8px; letter-spacing: 4px; color: var(--gold); display: block; margin-top: 15px; }
+        .vault-sidebar code { font-size: 11px; color: #888; cursor: none; }
 
-        /* Full Screen Sections */
-        .rr-section {
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            background: #fff;
-            border-bottom: 1px solid #f2f2f2;
-        }
+        /* ৩. কাস্টমার সার্ভিস ফ্লোটিং আইকন (সব পেজে থাকবে) */
+        .concierge-hub { position: fixed; bottom: 40px; right: 40px; z-index: 9999; display: flex; flex-direction: column; align-items: center; }
+        .concierge-circle { width: 60px; height: 60px; border: 0.5px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: white; transition: 0.4s; }
+        .concierge-circle:hover { background: var(--black); }
+        .concierge-circle svg { fill: var(--gold); width: 25px; }
 
-        /* Hover Target Text Animation */
-        .reveal-text {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .rr-section.active .reveal-text {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .rr-title {
-            font-size: 45px;
-            font-weight: 100;
-            letter-spacing: 20px;
-            text-transform: uppercase;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .rr-subtitle {
-            font-size: 10px;
-            letter-spacing: 8px;
-            color: var(--gold);
-            text-transform: uppercase;
-        }
-
-        /* Minimalist Buttons */
-        .rr-cta-wrap {
-            margin-top: 40px;
-            display: flex;
-            gap: 20px;
-        }
-        .rr-btn {
-            padding: 15px 45px;
-            border: 0.5px solid var(--black);
-            text-decoration: none;
-            color: var(--black);
-            font-size: 10px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            transition: 0.5s;
-        }
-        .rr-btn:hover {
-            background: var(--black);
-            color: var(--white);
-        }
-
-        /* Payment Hub Grid - Refined */
-        .payment-grid-rr {
-            display: flex;
-            gap: 20px;
-            margin-top: 50px;
-            max-width: 90%;
-        }
-        .p-item {
-            padding: 20px;
-            border: 0.5px solid #eee;
-            text-align: left;
-            min-width: 250px;
-        }
+        /* ৪. সেকশন স্টাইল */
+        .rr-section { height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: #fff; padding: 0 10%; position: relative; }
+        .reveal-text { opacity: 0; transform: translateY(30px); transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .rr-section.active .reveal-text { opacity: 1; transform: translateY(0); }
+        .rr-title { font-size: 45px; font-weight: 100; letter-spacing: 25px; text-transform: uppercase; margin: 20px 0; }
+        .rr-desc { font-size: 11px; letter-spacing: 3px; color: #666; max-width: 700px; line-height: 2; }
     </style>
 </head>
 <body>
@@ -119,100 +36,85 @@
     <div id="cursor-outline"></div>
 
     <header class="header">
-        <div class="rr-logo-wrap hover-target">
-            <div class="rr-box">K</div>
-            <div class="rr-text">Archive Studio</div>
-        </div>
+        <div class="k-brand hover-target">K ARCHIVE</div>
     </header>
 
+    <div class="concierge-hub">
+        <a href="https://wa.me/8801576940717" target="_blank" class="concierge-circle hover-target">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+        </a>
+        <span style="font-size: 8px; letter-spacing: 3px; margin-top: 10px; color: var(--gold);">CONCIERGE</span>
+    </div>
+
     <section class="rr-section active">
-        <span class="rr-subtitle reveal-text">The Sovereign Collection</span>
-        <h1 class="rr-title reveal-text hover-target">The Vault</h1>
+        <div class="vault-sidebar reveal-text">
+            <b>METAMASK / ETH</b>
+            <code class="hover-target" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">0x44379...b78E</code>
+            <b>USDT (TRC20)</b>
+            <code class="hover-target" onclick="copyV('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">TTapBkT...8Ws6</code>
+            <b>BINANCE UID</b>
+            <code class="hover-target" onclick="copyV('912221034')">912221034</code>
+        </div>
         
-        <div class="payment-grid-rr reveal-text">
-            <div class="p-item hover-target" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">
-                <b style="font-size: 8px; color: var(--gold); letter-spacing: 2px;">METAMASK / ETH</b><br>
-                <code style="font-size: 11px;">0x44379...b78E</code>
-            </div>
-            <div class="p-item hover-target" onclick="copyV('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
-                <b style="font-size: 8px; color: var(--gold); letter-spacing: 2px;">USDT (TRC20)</b><br>
-                <code style="font-size: 11px;">TTapBkT...8Ws6</code>
-            </div>
-            <div class="p-item hover-target" onclick="copyV('912221034')">
-                <b style="font-size: 8px; color: var(--gold); letter-spacing: 2px;">BINANCE UID</b><br>
-                <code style="font-size: 11px;">912221034</code>
-            </div>
-        </div>
+        <span style="font-size: 10px; letter-spacing: 12px; color: var(--gold);" class="reveal-text">DIGITAL HERITAGE</span>
+        <h1 class="rr-title reveal-text hover-target">The Vault</h1>
+        <p class="rr-desc reveal-text">Secure your sovereign plot within the K ARCHIVE. A timeless investment in the digital architecture of the future.</p>
     </section>
 
     <section class="rr-section">
-        <span class="rr-subtitle reveal-text">Elite Estates</span>
         <h2 class="rr-title reveal-text hover-target">Millionaires Club</h2>
-        <div class="rr-cta-wrap reveal-text">
-            <a href="millionaires.html" class="rr-btn hover-target">Configure Estate</a>
-            <a href="https://chat.whatsapp.com/JomnLtS0HKY6kNPmE8QzPB" target="_blank" class="rr-btn hover-target" style="border-color: var(--gold); color: var(--gold);">Concierge</a>
-        </div>
-    </section>
-
-    <section class="rr-section" style="background: #f9f9f9;">
-        <span class="rr-subtitle reveal-text">Digital Realms</span>
-        <h2 class="rr-title reveal-text hover-target">Gaming Universe</h2>
-        <div class="rr-cta-wrap reveal-text">
-            <a href="gaming.html" class="rr-btn hover-target">Explore Realms</a>
-            <a href="https://chat.whatsapp.com/LZCQvMkdgvQJV624kfoKx1" target="_blank" class="rr-btn hover-target" style="border-color: var(--gold); color: var(--gold);">Communal Hub</a>
+        <p class="rr-desc reveal-text">Elite ownership of 100 bespoke plots. Featuring legacy bidding and dynamic floor pricing for the sovereign elite.</p>
+        <div style="margin-top: 30px;" class="reveal-text">
+            <a href="millionaires.html" class="rr-btn hover-target">CONFIGURE ESTATE</a>
         </div>
     </section>
 
     <section class="rr-section">
-        <span class="rr-subtitle reveal-text">Influence Grids</span>
-        <h2 class="rr-title reveal-text hover-target">Social Architects</h2>
-        <div class="rr-cta-wrap reveal-text">
-            <a href="creators.html" class="rr-btn hover-target">View Grid</a>
-            <a href="https://chat.whatsapp.com/DPlSSQLlku0KlFa4lrGJaA" target="_blank" class="rr-btn hover-target" style="border-color: var(--gold); color: var(--gold);">Direct Dialogue</a>
+        <h2 class="rr-title reveal-text hover-target">Gaming Realms</h2>
+        <p class="rr-desc reveal-text">Acquire territory in the world's most prominent digital arenas. From Free Fire to Valorant, your legacy starts here.</p>
+        <div style="margin-top: 30px;" class="reveal-text">
+            <a href="gaming.html" class="rr-btn hover-target">EXPLORE REALMS</a>
         </div>
     </section>
 
-    <section class="rr-section" style="background: #f9f9f9;">
-        <span class="rr-subtitle reveal-text">National Borders</span>
-        <h2 class="rr-title reveal-text hover-target">People's Grid</h2>
-        <div class="rr-cta-wrap reveal-text">
-            <a href="nations.html" class="rr-btn hover-target">World Map</a>
+    <section class="rr-section" style="background: #fafafa; height: auto; padding: 150px 10%;">
+        <span style="font-size: 10px; letter-spacing: 8px; color: var(--gold);" class="reveal-text">ACQUISITION PROCESS</span>
+        <h2 class="rr-title reveal-text">Owner Requirements</h2>
+        <div class="rr-desc reveal-text" style="text-align: left; margin-top: 50px;">
+            <p style="margin-bottom: 20px;">To finalize your digital asset ownership, the following documentation must be submitted to the Concierge:</p>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 15px; border-bottom: 0.5px solid #ddd; padding-bottom: 10px;">1. Valid Plot ID from your chosen grid.</li>
+                <li style="margin-bottom: 15px; border-bottom: 0.5px solid #ddd; padding-bottom: 10px;">2. High-Resolution Brand Logo or Personal Emblem.</li>
+                <li style="margin-bottom: 15px; border-bottom: 0.5px solid #ddd; padding-bottom: 10px;">3. Transaction Hash (Payment Proof) from The Vault.</li>
+                <li style="margin-bottom: 15px; border-bottom: 0.5px solid #ddd; padding-bottom: 10px;">4. Preferred Redirect Link or Social Identity.</li>
+            </ul>
         </div>
     </section>
 
-    <section class="rr-section">
-        <span class="rr-subtitle reveal-text">The Atomic Grid</span>
-        <h2 class="rr-title reveal-text hover-target">General Public</h2>
-        <div class="rr-cta-wrap reveal-text">
-            <a href="million-grid.html" class="rr-btn hover-target">Mass Acquisition</a>
-        </div>
-    </section>
-
-    <footer class="footer-dark">
-        <p class="reveal-text">THE K ARCHIVE CONCIERGE</p>
-        <h3 onclick="copyV('+8801576940717')" class="hover-target reveal-text" style="color:var(--gold); letter-spacing:5px; margin: 20px 0; cursor: none;">+8801576940717</h3>
+    <footer class="footer-dark" style="padding: 100px 0;">
+        <span style="font-size: 9px; letter-spacing: 5px; opacity: 0.5;">DIRECT ASSISTANCE</span>
+        <h2 onclick="copyV('+8801576940717')" class="hover-target" style="color:var(--gold); letter-spacing:8px; margin-top: 20px; font-size: 24px;">+8801576940717</h2>
+        <p style="font-size: 8px; opacity: 0.3; margin-top: 50px;">© 2026 K ARCHIVE STUDIO. CRAFTED FOR EXCELLENCE.</p>
     </footer>
 
     <script src="script.js"></script>
     <script>
-        // Scroll Logic for Rolls-Royce Feel
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('.rr-section');
             const header = document.querySelector('header');
-            
             if (window.scrollY > 50) header.classList.add('scrolled');
             else header.classList.remove('scrolled');
 
             sections.forEach(sec => {
                 const top = window.scrollY;
-                const offset = sec.offsetTop - 300;
+                const offset = sec.offsetTop - 400;
                 if (top >= offset) sec.classList.add('active');
             });
         });
 
         function copyV(text) {
             navigator.clipboard.writeText(text);
-            notifyElite("DATA SECURED");
+            notifyElite("COPIED TO CLIPBOARD");
         }
     </script>
 </body>
