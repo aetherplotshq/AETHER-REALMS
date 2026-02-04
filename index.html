@@ -8,49 +8,58 @@
         :root { --gold: #9E7E45; --white: #ffffff; --dark: #050505; --grey: #f4f4f4; }
         body { margin: 0; padding: 0; background: var(--white); color: var(--dark); font-family: 'Times New Roman', serif; overflow-x: hidden; scroll-behavior: smooth; cursor: none; }
 
-        /* Custom Cursor - Refined */
-        #cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        /* Custom Cursor - Refined Fix */
+        #cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); }
         #cursor-outline { 
             position: fixed; width: 15px; height: 15px; 
-            border: 1px solid rgba(158, 126, 69, 0.5); border-radius: 50%; pointer-events: none; z-index: 9999; 
-            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s, border 0.3s; 
+            border: 1px solid rgba(158, 126, 69, 0.5); border-radius: 50%; pointer-events: none; z-index: 99998; 
+            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s; 
         }
-        body.hover-target #cursor-outline { width: 50px; height: 50px; background: rgba(158, 126, 69, 0.05); border: 0.5px solid var(--gold); }
+        body.hover-target #cursor-outline { width: 45px; height: 45px; background: rgba(158, 126, 69, 0.1); border-color: var(--gold); }
 
-        /* Header & Logo */
-        .header { position: fixed; top: 0; width: 100%; height: 90px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 0.5px solid #eee; }
-        .k-identity { font-size: 32px; font-weight: 100; letter-spacing: 12px; color: var(--dark); text-transform: uppercase; }
+        /* Logo - K on Top, Archive Studio Below */
+        .header { position: fixed; top: 0; width: 100%; height: 120px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); z-index: 1000; }
+        .logo-wrap { text-align: center; }
+        .k-logo { font-size: 40px; font-weight: 100; letter-spacing: 10px; margin: 0; line-height: 1; }
+        .logo-sub { font-size: 8px; letter-spacing: 5px; text-transform: uppercase; margin-top: 5px; color: var(--gold); }
 
-        /* Payment Vault Trigger (Top Left) */
-        .vault-btn { position: fixed; top: 35px; left: 40px; z-index: 1100; font-size: 10px; letter-spacing: 3px; border-bottom: 1px solid var(--gold); color: var(--gold); text-decoration: none; transition: 0.3s; }
-        .vault-btn:hover { color: var(--dark); border-color: var(--dark); }
+        /* Vault Button (Top Left) */
+        .vault-btn { position: fixed; top: 40px; left: 40px; z-index: 2000; font-size: 10px; letter-spacing: 3px; border-bottom: 1px solid var(--gold); color: var(--gold); text-decoration: none; }
 
-        /* Modal Style */
-        #payment-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 10005; align-items: center; justify-content: center; }
-        .modal-box { width: 380px; padding: 40px; border: 1px solid var(--gold); background: #fff; text-align: left; }
-        .modal-box h3 { font-size: 14px; letter-spacing: 5px; margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        /* Payment Modal - Cursor Visible Fix */
+        #payment-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 90000; align-items: center; justify-content: center; }
+        .modal-box { width: 380px; padding: 40px; border: 1px solid var(--gold); background: #fff; position: relative; z-index: 90001; }
         .addr-item { margin-bottom: 20px; }
         .addr-item b { font-size: 9px; letter-spacing: 2px; color: var(--gold); display: block; margin-bottom: 5px; }
-        .addr-item code { display: block; background: var(--grey); padding: 12px; font-size: 11px; border: 0.5px solid #ddd; word-break: break-all; }
+        .addr-item code { display: block; background: var(--grey); padding: 12px; font-size: 10px; border: 0.5px solid #ddd; word-break: break-all; cursor: pointer; }
 
         /* Sections */
         .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .content-section { padding: 120px 10%; border-bottom: 1px solid #f0f0f0; }
-        .reveal { opacity: 0; transform: translateY(30px); transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
+        .content-section { padding: 100px 10%; border-bottom: 1px solid #f0f0f0; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .section-label { font-size: 9px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; display: block; }
-        .section-title { font-size: 30px; font-weight: 100; letter-spacing: 12px; text-transform: uppercase; margin-bottom: 20px; }
+        .section-title { font-size: 28px; font-weight: 100; letter-spacing: 10px; text-transform: uppercase; margin-bottom: 20px; }
 
-        /* Gaming Grid */
-        .gaming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: #eee; border: 1px solid #eee; margin: 30px 0; }
-        .game-link { background: #fff; padding: 30px 10px; text-align: center; text-decoration: none; color: #888; font-size: 10px; letter-spacing: 2px; transition: 0.4s; }
+        /* Gaming Grid - 5x2 Refined */
+        .gaming-grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 1px; background: #eee; border: 1px solid #eee; margin: 30px 0; 
+        }
+        .game-link { background: #fff; padding: 25px 5px; text-align: center; text-decoration: none; color: #888; font-size: 9px; letter-spacing: 1px; transition: 0.3s; }
         .game-link:hover { background: var(--dark); color: #fff; }
 
-        /* Luxury Button */
-        .luxury-btn { display: inline-block; border: 1px solid var(--dark); padding: 15px 45px; text-decoration: none; color: var(--dark); font-size: 10px; letter-spacing: 4px; transition: 0.4s; margin-top: 20px; }
+        /* Buttons */
+        .luxury-btn { display: inline-block; border: 1px solid var(--dark); padding: 14px 35px; text-decoration: none; color: var(--dark); font-size: 9px; letter-spacing: 3px; transition: 0.3s; margin-top: 15px; }
         .luxury-btn:hover { background: var(--dark); color: #fff; }
 
-        /* Floating WhatsApp */
+        /* Footer Protocol Info */
+        .footer { background: #000; color: #fff; padding: 80px 10%; }
+        .protocol-box { border-top: 1px solid #333; padding-top: 40px; margin-top: 40px; max-width: 500px; }
+        .protocol-box h4 { color: var(--gold); letter-spacing: 5px; font-size: 12px; margin-bottom: 20px; }
+        .protocol-list { list-style: none; padding: 0; font-size: 10px; letter-spacing: 2px; line-height: 2.5; opacity: 0.7; }
+        
         .float-ws { position: fixed; bottom: 35px; right: 35px; width: 55px; height: 55px; background: var(--dark); border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; }
         .float-ws svg { fill: var(--gold); width: 24px; }
     </style>
@@ -63,13 +72,16 @@
     <a href="javascript:void(0)" class="vault-btn interactive" onclick="toggleModal(true)">THE VAULT (PAYMENT)</a>
 
     <header class="header">
-        <div class="k-identity">K ARCHIVE</div>
+        <div class="logo-wrap">
+            <h1 class="k-logo">K</h1>
+            <p class="logo-sub">ARCHIVE STUDIO</p>
+        </div>
     </header>
 
     <div id="payment-modal">
         <div class="modal-box">
             <span style="float:right; cursor:pointer;" class="interactive" onclick="toggleModal(false)">✕</span>
-            <h3>THE VAULT</h3>
+            <h3 style="font-size: 12px; letter-spacing: 4px;">SECURE PAYMENTS</h3>
             <div class="addr-item">
                 <b>ETH (METAMASK)</b>
                 <code class="interactive" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">0x443792A4884e8e855f954ccEF910778Aff1eb78E</code>
@@ -85,61 +97,75 @@
         </div>
     </div>
 
-    <a href="https://wa.me/8801576940717?text=PROTOCOL_READY" target="_blank" class="float-ws interactive">
+    <a href="https://wa.me/8801576940717" target="_blank" class="float-ws interactive">
         <svg viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
     </a>
 
     <section class="hero">
         <div class="reveal active">
-            <h1 style="letter-spacing: 25px; font-weight: 100; text-transform: uppercase;">The Archive</h1>
-            <p style="letter-spacing: 8px; font-size: 9px; color: var(--gold);">SECURED DIGITAL HERITAGE</p>
+            <h1 style="letter-spacing: 20px; font-weight: 100; text-transform: uppercase;">The Archive</h1>
+            <p style="letter-spacing: 8px; font-size: 9px; color: var(--gold);">SOVEREIGN DIGITAL ESTATES</p>
         </div>
     </section>
 
     <section class="content-section reveal">
-        <span class="section-label">Section 01</span>
+        <span class="section-label">01</span>
         <h2 class="section-title">Millionaires Club</h2>
-        <p style="font-size: 12px; letter-spacing: 2px; color: #888; max-width: 600px;">100 limited plots for the architects of wealth. Exclusive corner row pricing from $99.</p>
         <a href="https://wa.me/8801576940717?text=Join_Millionaires_Club" target="_blank" class="luxury-btn interactive">JOIN WHATSAPP GROUP</a>
-        <a href="millionaires.html" target="_blank" class="luxury-btn interactive" style="margin-left: 10px; border-color: #ddd;">ENTER CANVAS</a>
+        <a href="millionaires.html" class="luxury-btn interactive" style="margin-left: 10px; border-color: #ddd;">ENTER CANVAS</a>
     </section>
 
     <section class="content-section reveal">
-        <span class="section-label">Section 02</span>
+        <span class="section-label">02</span>
         <h2 class="section-title">Gaming Realm</h2>
         <div class="gaming-grid">
-            <a href="https://wa.me/8801576940717?text=FreeFire_Plot" target="_blank" class="game-link interactive">FREE FIRE</a>
-            <a href="https://wa.me/8801576940717?text=PUBG_Plot" target="_blank" class="game-link interactive">PUBG MOBILE</a>
-            <a href="https://wa.me/8801576940717?text=Minecraft_Plot" target="_blank" class="game-link interactive">MINECRAFT</a>
-            <a href="https://wa.me/8801576940717?text=GTAV_Plot" target="_blank" class="game-link interactive">GTA V</a>
-            <a href="https://wa.me/8801576940717?text=Valorant_Plot" target="_blank" class="game-link interactive">VALORANT</a>
-            <a href="https://wa.me/8801576940717?text=COD_Plot" target="_blank" class="game-link interactive">CALL OF DUTY</a>
-            <a href="https://wa.me/8801576940717?text=FIFA_Plot" target="_blank" class="game-link interactive">FIFA 26</a>
-            <a href="https://wa.me/8801576940717?text=Roblox_Plot" target="_blank" class="game-link interactive">ROBLOX</a>
-            <a href="https://wa.me/8801576940717?text=Genshin_Plot" target="_blank" class="game-link interactive">GENSHIN</a>
-            <a href="https://wa.me/8801576940717?text=AmongUs_Plot" target="_blank" class="game-link interactive">AMONG US</a>
+            <a href="https://wa.me/8801576940717?text=FreeFire" target="_blank" class="game-link interactive">FREE FIRE</a>
+            <a href="https://wa.me/8801576940717?text=PUBG" target="_blank" class="game-link interactive">PUBG MOBILE</a>
+            <a href="https://wa.me/8801576940717?text=Minecraft" target="_blank" class="game-link interactive">MINECRAFT</a>
+            <a href="https://wa.me/8801576940717?text=GTAV" target="_blank" class="game-link interactive">GTA V</a>
+            <a href="https://wa.me/8801576940717?text=Valorant" target="_blank" class="game-link interactive">VALORANT</a>
+            <a href="https://wa.me/8801576940717?text=COD" target="_blank" class="game-link interactive">CALL OF DUTY</a>
+            <a href="https://wa.me/8801576940717?text=FIFA" target="_blank" class="game-link interactive">FIFA 26</a>
+            <a href="https://wa.me/8801576940717?text=Roblox" target="_blank" class="game-link interactive">ROBLOX</a>
+            <a href="https://wa.me/8801576940717?text=Genshin" target="_blank" class="game-link interactive">GENSHIN</a>
+            <a href="https://wa.me/8801576940717?text=AmongUs" target="_blank" class="game-link interactive">AMONG US</a>
         </div>
-        <a href="gaming.html" target="_blank" class="luxury-btn interactive" style="width: 100%; text-align: center; box-sizing: border-box;">ENTER GAMING CANVAS</a>
+        <a href="https://wa.me/8801576940717?text=Join_Gaming_Group" target="_blank" class="luxury-btn interactive">JOIN WHATSAPP GROUP</a>
+        <a href="gaming.html" class="luxury-btn interactive" style="margin-left: 10px; border-color: #ddd;">ENTER GAMING CANVAS</a>
     </section>
 
     <section class="content-section reveal">
-        <span class="section-label">Section 03</span>
+        <span class="section-label">03</span>
         <h2 class="section-title">Social Creators</h2>
-        <p style="font-size: 12px; letter-spacing: 2px; color: #888;">100 bespoke plots for world-class creators and influencers.</p>
-        <a href="https://wa.me/8801576940717?text=Join_Creators_Grid" target="_blank" class="luxury-btn interactive">JOIN WHATSAPP GROUP</a>
-        <a href="creators.html" target="_blank" class="luxury-btn interactive" style="margin-left: 10px; border-color: #ddd;">ENTER CANVAS</a>
+        <a href="https://wa.me/8801576940717?text=Join_Creators_Group" target="_blank" class="luxury-btn interactive">JOIN WHATSAPP GROUP</a>
+        <a href="creators.html" class="luxury-btn interactive" style="margin-left: 10px; border-color: #ddd;">ENTER CANVAS</a>
     </section>
 
     <section class="content-section reveal">
-        <span class="section-label">Section 04</span>
+        <span class="section-label">04</span>
         <h2 class="section-title">People's Grid</h2>
-        <p style="font-size: 12px; letter-spacing: 2px; color: #888;">National heritage estates. Secure your border identifier.</p>
-        <a href="https://wa.me/8801576940717?text=Join_Peoples_Grid" target="_blank" class="luxury-btn interactive">JOIN WHATSAPP GROUP</a>
-        <a href="nations.html" target="_blank" class="luxury-btn interactive" style="margin-left: 10px; border-color: #ddd;">ENTER CANVAS</a>
+        <a href="https://wa.me/8801576940717?text=Join_Nations_Group" target="_blank" class="luxury-btn interactive">JOIN WHATSAPP GROUP</a>
+        <a href="nations.html" class="luxury-btn interactive" style="margin-left: 10px; border-color: #ddd;">ENTER CANVAS</a>
     </section>
 
-    <footer class="footer" style="background: #000; color: #fff; padding: 80px 10%; font-size: 10px; letter-spacing: 2px;">
-        <p>© 2026 K ARCHIVE. ALL RIGHTS RESERVED.</p>
+    <section class="content-section reveal">
+        <span class="section-label">05</span>
+        <h2 class="section-title">General Public</h2>
+        <a href="https://wa.me/8801576940717?text=Join_Public_Group" target="_blank" class="luxury-btn interactive">JOIN WHATSAPP GROUP</a>
+        <a href="public.html" class="luxury-btn interactive" style="margin-left: 10px; border-color: #ddd;">ENTER CANVAS</a>
+    </section>
+
+    <footer class="footer">
+        <div class="protocol-box">
+            <h4>ACQUISITION PROTOCOL</h4>
+            <ul class="protocol-list">
+                <li>• VERIFIED PLOT ID & SECTION</li>
+                <li>• BRAND EMBLEM (HIGH-RES PNG)</li>
+                <li>• TRANSACTION HASH (PROOF OF PAYMENT)</li>
+                <li>• OFFICIAL DESTINATION URL</li>
+            </ul>
+        </div>
+        <p style="margin-top: 60px; font-size: 8px; opacity: 0.3; letter-spacing: 5px;">© 2026 K ARCHIVE STUDIO. ALL RIGHTS RESERVED.</p>
     </footer>
 
     <script>
@@ -171,11 +197,7 @@
 
         function copyV(text) {
             navigator.clipboard.writeText(text);
-            const feedback = document.createElement('div');
-            feedback.innerText = "ADDRESS COPIED";
-            feedback.style = "position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:var(--gold); color:#fff; padding:10px 20px; font-size:10px; z-index:20000; letter-spacing:2px;";
-            document.body.appendChild(feedback);
-            setTimeout(() => feedback.remove(), 2000);
+            alert("SECURED: ADDRESS COPIED");
         }
     </script>
 </body>
