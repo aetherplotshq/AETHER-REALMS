@@ -5,157 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K ARCHIVE | THE SOVEREIGN ESTATE</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Horizontal Snap Logic */
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        .master-slider {
-            display: flex;
-            width: 500vw; /* ৫টি সেকশন */
-            height: 100vh;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            -ms-overflow-style: none;  /* Hide scrollbar */
-            scrollbar-width: none;
-        }
-        .master-slider::-webkit-scrollbar { display: none; }
-
-        .slide {
-            width: 100vw;
-            height: 100vh;
-            scroll-snap-align: start;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            padding: 0 10%;
-        }
-
-        /* Fixed UI Elements */
-        .vault-trigger {
-            position: fixed; top: 45px; right: 50px; z-index: 1000;
-            font-size: 9px; letter-spacing: 4px; border-bottom: 1px solid #000;
-            padding-bottom: 5px; cursor: pointer;
-        }
-
-        .game-tags-grid {
-            display: flex; flex-wrap: wrap; justify-content: center;
-            gap: 15px; margin: 30px 0; max-width: 700px;
-        }
-        .game-tag {
-            font-size: 10px; letter-spacing: 2px; border: 0.5px solid #eee;
-            padding: 8px 15px; color: #888; text-transform: uppercase;
-        }
-
-        .protocol-info {
-            background: #000; color: #fff; width: 100%;
-        }
-    </style>
 </head>
 <body>
 
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
 
+    <div class="concierge-hub hover-target" id="openConcierge">
+        <div class="concierge-text">CUSTOMER SERVICE<br><span>24/7 ONLINE SUPPORT</span></div>
+        <div class="concierge-circle">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+        </div>
+    </div>
+
     <header class="header">
-        <div class="logo-wrap">
+        <div class="logo-wrap hover-target">
             <h1 class="glaze-logo">K</h1>
             <p class="logo-sub">ARCHIVE STUDIO</p>
         </div>
     </header>
 
-    <div class="vault-trigger hover-target" onclick="togglePayment()">THE VAULT</div>
-
-    <div class="concierge-hub hover-target" onclick="window.location.href='https://wa.me/8801576940717'">
-        <div class="concierge-circle">
-            <svg width="20" viewBox="0 0 24 24" fill="#9E7E45"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
-        </div>
-        <div class="concierge-text">CUSTOMER SERVICE<br>24/7 ONLINE</div>
-    </div>
-
-    <main class="master-slider">
-        
-        <section class="slide">
-            <span class="subtitle">COLLECTION 01</span>
-            <h2 class="rr-title">Millionaires Club</h2>
-            <p class="rr-desc">100 sovereign plots for the global elite. Strategic corner rows priced at $99. Digital heritage redefined.</p>
-            <a href="millionaires.html" class="luxury-btn hover-target">ENTER ESTATE</a>
-        </section>
-
-        <section class="slide" style="background: #fafafa;">
-            <span class="subtitle">COLLECTION 02</span>
-            <h2 class="rr-title">Gaming Universe</h2>
-            <div class="game-tags-grid">
-                <span class="game-tag">Free Fire</span><span class="game-tag">PUBG Mobile</span>
-                <span class="game-tag">GTA V</span><span class="game-tag">Minecraft</span>
-                <span class="game-tag">Valorant</span><span class="game-tag">Call of Duty</span>
-                <span class="game-tag">Roblox</span><span class="game-tag">FIFA 26</span>
-                <span class="game-tag">Genshin</span><span class="game-tag">Among Us</span>
-            </div>
-            <p class="rr-desc">1,100 high-performance territories across 10 global digital arenas.</p>
-            <a href="gaming.html" class="luxury-btn hover-target">VISIT REALMS</a>
-        </section>
-
-        <section class="slide">
-            <span class="subtitle">COLLECTION 03</span>
-            <h2 class="rr-title">Social Creators</h2>
-            <p class="rr-desc">Bespoke identity plots for the masters of influence. Secure your brand's immutable coordinate.</p>
-            <a href="creators.html" class="luxury-btn hover-target">EXPLORE GRID</a>
-        </section>
-
-        <section class="slide" style="background: #fafafa;">
-            <span class="subtitle">COLLECTION 04</span>
-            <h2 class="rr-title">People's Grid</h2>
-            <p class="rr-desc">A national heritage project. Claim your territory within the sovereign digital borders.</p>
-            <a href="nations.html" class="luxury-btn hover-target">VIEW NATIONS</a>
-        </section>
-
-        <section class="slide protocol-info">
-            <h2 class="rr-title" style="color: var(--gold); letter-spacing: 15px;">ACQUISITION</h2>
-            <div style="text-align: left; font-size: 11px; letter-spacing: 3px; border-top: 1px solid #333; padding-top: 30px; line-height: 2.5;">
-                <p>1. IDENTIFY PLOT ID & SECTION</p>
-                <p>2. COMPLETE SECURE PAYMENT VIA VAULT</p>
-                <p>3. SUBMIT BRAND EMBLEM (PNG FORMAT)</p>
-                <p>4. NOTIFY CONCIERGE WITH TX-HASH</p>
-            </div>
-            <p style="margin-top: 80px; font-size: 8px; letter-spacing: 5px; opacity: 0.4;">© 2026 K ARCHIVE STUDIO</p>
-        </section>
-
-    </main>
-
-    <div id="payment-modal">
-        <div class="pay-content">
-            <span style="float:right; cursor:pointer; font-size: 20px;" onclick="togglePayment()">✕</span>
-            <h3 style="font-size: 14px; letter-spacing: 6px; margin-bottom: 30px; border-bottom: 1px solid var(--gold); padding-bottom: 10px;">THE VAULT</h3>
-            
-            <div class="pay-item">
-                <b style="font-size: 9px; letter-spacing: 3px; color: var(--gold);">ETH (METAMASK)</b>
+    <section class="rr-section reveal">
+        <div class="vault-sidebar">
+            <div class="vault-item">
+                <b>METAMASK / ETHEREUM</b>
                 <code class="hover-target" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">0x443792A4884e8e855f954ccEF910778Aff1eb78E</code>
             </div>
-            
-            <div class="pay-item" style="margin-top: 25px;">
-                <b style="font-size: 9px; letter-spacing: 3px; color: var(--gold);">USDT (TRC20)</b>
+            <div class="vault-item">
+                <b>USDT (TRC20 NETWORK)</b>
                 <code class="hover-target" onclick="copyV('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</code>
             </div>
-            
-            <div class="pay-item" style="margin-top: 25px;">
-                <b style="font-size: 9px; letter-spacing: 3px; color: var(--gold);">BINANCE UID</b>
+            <div class="vault-item">
+                <b>BINANCE UID</b>
                 <code class="hover-target" onclick="copyV('912221034')">912221034</code>
             </div>
+        </div>
+        <span class="subtitle">PREMIUM ASSETS</span>
+        <h2 class="rr-title hover-target">The Vault</h2>
+        <p class="rr-desc">Access the sovereign storage of digital identifiers. Secure, immutable, and timeless heritage for the elite class.</p>
+    </section>
+
+    <section class="rr-section reveal">
+        <h2 class="rr-title hover-target">Millionaires Club</h2>
+        <p class="rr-desc">The apex of ownership. 100 limited plots featuring dynamic pricing and sovereign status for the architects of wealth.</p>
+        <a href="millionaires.html" class="luxury-btn hover-target">Enter Estate</a>
+    </section>
+
+    <section class="rr-section reveal" style="background: #fafafa;">
+        <h2 class="rr-title hover-target">Gaming Universe</h2>
+        <div class="game-list-preview">
+            FREE FIRE • PUBG MOBILE • GTA V • MINECRAFT • VALORANT • CALL OF DUTY • ROBLOX • FIFA 26 • GENSHIN IMPACT • AMONG US
+        </div>
+        <p class="rr-desc" style="margin-top: 20px;">1,100 high-performance estates across the world's top 10 digital arenas.</p>
+        <a href="gaming.html" class="luxury-btn hover-target">Visit Realms</a>
+    </section>
+
+    <section class="rr-section reveal">
+        <h2 class="rr-title hover-target">Social Creators</h2>
+        <p class="rr-desc">100 bespoke plots for the masters of influence. Secure your identity within the K ARCHIVE social grid.</p>
+        <a href="creators.html" class="luxury-btn hover-target">Explore Grid</a>
+    </section>
+
+    <section class="rr-section reveal" style="background: #fafafa;">
+        <h2 class="rr-title hover-target">People's Grid</h2>
+        <p class="rr-desc">A national heritage collection. Explore sovereign borders and claim your territory on the global map.</p>
+        <a href="nations.html" class="luxury-btn hover-target">View Nations</a>
+    </section>
+
+    <footer class="footer-dark reveal">
+        <h2 style="color: var(--gold); letter-spacing: 15px; margin-bottom: 50px;">ACQUISITION PROTOCOL</h2>
+        <div class="protocol-box">
+            <p>To finalize your digital asset ownership, submit to the Concierge:</p>
+            <ul>
+                <li>• VERIFIED PLOT ID & SECTION</li>
+                <li>• BRAND EMBLEM (HIGH-RES PNG)</li>
+                <li>• TRANSACTION HASH (PROOF)</li>
+                <li>• OFFICIAL DESTINATION URL</li>
+            </ul>
+        </div>
+        <p style="margin-top: 100px; opacity: 0.3;">© 2026 K ARCHIVE STUDIO | ALL RIGHTS RESERVED</p>
+    </footer>
+
+    <div id="submission-modal">
+        <div class="modal-content">
+            <span class="close-btn hover-target" id="closeConcierge">✕</span>
+            <h3>ARCHIVE SUBMISSION</h3>
+            <p>Ensure you have your Plot ID, Brand Logo, and Payment Hash ready for the secure desk.</p>
+            <a href="javascript:void(0)" onclick="contactConcierge()" class="luxury-btn hover-target" style="background:#000; color:#fff; width:100%; border:none; text-align:center;">Initiate Secure Chat</a>
         </div>
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Modal Logic
-        function togglePayment() {
-            const m = document.getElementById('payment-modal');
-            m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-        // Horizontal Drag/Scroll Hint: কাস্টমার মাউস বা টাচ দিয়ে ডানে-বামে স্লাইড করতে পারবে।
-    </script>
 </body>
 </html>
