@@ -6,124 +6,213 @@
     <title>K ARCHIVE | THE SOVEREIGN ESTATE</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* এক্সট্রা স্টাইল যা ইনডেক্সের জন্য প্রয়োজন */
-        .reveal { opacity: 0; transform: translateY(50px); transition: 1s cubic-bezier(0.19, 1, 0.22, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        
-        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .hero h1 { font-size: 60px; font-weight: 100; letter-spacing: 30px; margin-bottom: 20px; }
-
-        .payment-hub { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 80%; margin: 50px auto; }
-        .wallet-card { padding: 30px; border: 1px solid var(--light-gray); text-align: left; transition: 0.4s; }
-        .wallet-card:hover { border-color: var(--gold); background: #fafafa; }
-        .wallet-card b { font-size: 10px; color: var(--gold); letter-spacing: 3px; display: block; margin-bottom: 10px; }
-        .wallet-card code { font-size: 13px; color: #444; word-break: break-all; }
-
-        .estate-section { padding: 150px 10%; border-bottom: 1px solid var(--light-gray); text-align: center; }
-        .estate-label { font-size: 10px; letter-spacing: 10px; color: var(--gold); text-transform: uppercase; margin-bottom: 25px; display: block; }
-        .estate-title { font-size: 42px; font-weight: 200; letter-spacing: 18px; text-transform: uppercase; margin-bottom: 40px; }
-
-        .btn-luxury { 
-            padding: 22px 50px; border: 1px solid var(--black); color: var(--black); 
-            text-decoration: none; font-size: 11px; letter-spacing: 5px; text-transform: uppercase; 
-            transition: 0.5s; display: inline-block; margin: 10px;
+        /* Rolls-Royce Specific Refinements */
+        header {
+            background: transparent !important;
+            border: none !important;
+            transition: 0.5s;
         }
-        .btn-luxury:hover { background: var(--black); color: var(--white); }
-        .btn-gold { border-color: var(--gold); color: var(--gold); }
+        header.scrolled {
+            background: rgba(255,255,255,0.95) !important;
+            backdrop-filter: blur(10px);
+            height: 70px;
+        }
+
+        .rr-logo-wrap {
+            text-align: center;
+            padding: 20px;
+        }
+        .rr-box {
+            border: 1px solid var(--black);
+            padding: 4px 12px;
+            font-size: 20px;
+            display: inline-block;
+            margin-bottom: 5px;
+            font-weight: 200;
+        }
+        .rr-text {
+            font-size: 9px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+        }
+
+        /* Full Screen Sections */
+        .rr-section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            border-bottom: 1px solid #f2f2f2;
+        }
+
+        /* Hover Target Text Animation */
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .rr-section.active .reveal-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rr-title {
+            font-size: 45px;
+            font-weight: 100;
+            letter-spacing: 20px;
+            text-transform: uppercase;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .rr-subtitle {
+            font-size: 10px;
+            letter-spacing: 8px;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        /* Minimalist Buttons */
+        .rr-cta-wrap {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+        }
+        .rr-btn {
+            padding: 15px 45px;
+            border: 0.5px solid var(--black);
+            text-decoration: none;
+            color: var(--black);
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            transition: 0.5s;
+        }
+        .rr-btn:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* Payment Hub Grid - Refined */
+        .payment-grid-rr {
+            display: flex;
+            gap: 20px;
+            margin-top: 50px;
+            max-width: 90%;
+        }
+        .p-item {
+            padding: 20px;
+            border: 0.5px solid #eee;
+            text-align: left;
+            min-width: 250px;
+        }
     </style>
 </head>
 <body>
 
     <div id="cursor-dot"></div>
-    <div id="cursor-outline">K</div>
+    <div id="cursor-outline"></div>
 
     <header class="header">
-        <a href="index.html" class="k-brand-logo">K ARCHIVE</a>
+        <div class="rr-logo-wrap hover-target">
+            <div class="rr-box">K</div>
+            <div class="rr-text">Archive Studio</div>
+        </div>
     </header>
 
-    <a href="https://wa.me/8801576940717" class="permanent-ws" target="_blank">
-        <svg viewBox="0 0 24 24" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.553 4.197 1.603 6.02L0 24l6.115-1.604a11.803 11.803 0 005.93 1.599h.005c6.635 0 12.05-5.414 12.05-12.051 0-3.21-1.248-6.228-3.511-8.491z"/></svg>
-    </a>
-
-    <section class="hero reveal active">
-        <span class="estate-label">Official Acquisition Hub</span>
-        <h1>THE VAULT</h1>
+    <section class="rr-section active">
+        <span class="rr-subtitle reveal-text">The Sovereign Collection</span>
+        <h1 class="rr-title reveal-text hover-target">The Vault</h1>
         
-        <div class="payment-hub">
-            <div class="wallet-card" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">
-                <b>METAMASK / ETHEREUM</b>
-                <code>0x443792A4884e8e855f954ccEF910778Aff1eb78E</code>
+        <div class="payment-grid-rr reveal-text">
+            <div class="p-item hover-target" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">
+                <b style="font-size: 8px; color: var(--gold); letter-spacing: 2px;">METAMASK / ETH</b><br>
+                <code style="font-size: 11px;">0x44379...b78E</code>
             </div>
-            <div class="wallet-card" onclick="copyV('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
-                <b>USDT (TRC20 NETWORK)</b>
-                <code>TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</code>
+            <div class="p-item hover-target" onclick="copyV('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
+                <b style="font-size: 8px; color: var(--gold); letter-spacing: 2px;">USDT (TRC20)</b><br>
+                <code style="font-size: 11px;">TTapBkT...8Ws6</code>
             </div>
-            <div class="wallet-card" onclick="copyV('912221034')">
-                <b>BINANCE INTERNAL ID (UID)</b>
-                <code>912221034</code>
+            <div class="p-item hover-target" onclick="copyV('912221034')">
+                <b style="font-size: 8px; color: var(--gold); letter-spacing: 2px;">BINANCE UID</b><br>
+                <code style="font-size: 11px;">912221034</code>
             </div>
-        </div>
-        <p style="font-size: 9px; letter-spacing: 3px; opacity: 0.5;">CLICK TO COPY IDENTIFIER</p>
-    </section>
-
-    <section class="estate-section reveal">
-        <span class="estate-label">10 VIP + 90 Heritage Plots</span>
-        <h2 class="estate-title">Millionaires Club</h2>
-        <div class="btn-group">
-            <a href="millionaires.html" class="btn-luxury">Enter Canvas</a>
-            <a href="https://chat.whatsapp.com/JomnLtS0HKY6kNPmE8QzPB" target="_blank" class="btn-luxury btn-gold">Private Vault Chat</a>
         </div>
     </section>
 
-    <section class="estate-section reveal" style="background:#fafafa;">
-        <span class="estate-label">10 Realms • 1100 Estates</span>
-        <h2 class="estate-title">Gaming Universe</h2>
-        <div class="btn-group">
-            <a href="gaming.html" class="btn-luxury">Explore Realms</a>
-            <a href="https://chat.whatsapp.com/LZCQvMkdgvQJV624kfoKx1" target="_blank" class="btn-luxury btn-gold">Gaming Chat</a>
+    <section class="rr-section">
+        <span class="rr-subtitle reveal-text">Elite Estates</span>
+        <h2 class="rr-title reveal-text hover-target">Millionaires Club</h2>
+        <div class="rr-cta-wrap reveal-text">
+            <a href="millionaires.html" class="rr-btn hover-target">Configure Estate</a>
+            <a href="https://chat.whatsapp.com/JomnLtS0HKY6kNPmE8QzPB" target="_blank" class="rr-btn hover-target" style="border-color: var(--gold); color: var(--gold);">Concierge</a>
         </div>
     </section>
 
-    <section class="estate-section reveal">
-        <span class="estate-label">100 Architect Plots</span>
-        <h2 class="estate-title">Social Creators</h2>
-        <div class="btn-group">
-            <a href="creators.html" class="btn-luxury">View Architects</a>
-            <a href="https://chat.whatsapp.com/DPlSSQLlku0KlFa4lrGJaA" target="_blank" class="btn-luxury btn-gold">Direct Chat</a>
+    <section class="rr-section" style="background: #f9f9f9;">
+        <span class="rr-subtitle reveal-text">Digital Realms</span>
+        <h2 class="rr-title reveal-text hover-target">Gaming Universe</h2>
+        <div class="rr-cta-wrap reveal-text">
+            <a href="gaming.html" class="rr-btn hover-target">Explore Realms</a>
+            <a href="https://chat.whatsapp.com/LZCQvMkdgvQJV624kfoKx1" target="_blank" class="rr-btn hover-target" style="border-color: var(--gold); color: var(--gold);">Communal Hub</a>
         </div>
     </section>
 
-    <section class="estate-section reveal" style="background:#fafafa;">
-        <span class="estate-label">Global Sovereign Borders</span>
-        <h2 class="estate-title">People's Grid</h2>
-        <div class="btn-group">
-            <a href="nations.html" class="btn-luxury">Map Canvas</a>
-            </div>
+    <section class="rr-section">
+        <span class="rr-subtitle reveal-text">Influence Grids</span>
+        <h2 class="rr-title reveal-text hover-target">Social Architects</h2>
+        <div class="rr-cta-wrap reveal-text">
+            <a href="creators.html" class="rr-btn hover-target">View Grid</a>
+            <a href="https://chat.whatsapp.com/DPlSSQLlku0KlFa4lrGJaA" target="_blank" class="rr-btn hover-target" style="border-color: var(--gold); color: var(--gold);">Direct Dialogue</a>
+        </div>
     </section>
 
-    <section class="estate-section reveal">
-        <span class="estate-label">1,000,000 Atomic Units</span>
-        <h2 class="estate-title">General Public</h2>
-        <div class="btn-group">
-            <a href="million-grid.html" class="btn-luxury">Access Grid</a>
+    <section class="rr-section" style="background: #f9f9f9;">
+        <span class="rr-subtitle reveal-text">National Borders</span>
+        <h2 class="rr-title reveal-text hover-target">People's Grid</h2>
+        <div class="rr-cta-wrap reveal-text">
+            <a href="nations.html" class="rr-btn hover-target">World Map</a>
+        </div>
+    </section>
+
+    <section class="rr-section">
+        <span class="rr-subtitle reveal-text">The Atomic Grid</span>
+        <h2 class="rr-title reveal-text hover-target">General Public</h2>
+        <div class="rr-cta-wrap reveal-text">
+            <a href="million-grid.html" class="rr-btn hover-target">Mass Acquisition</a>
         </div>
     </section>
 
     <footer class="footer-dark">
-        <p>CONCIERGE & SUPPORT</p>
-        <h2 onclick="copyV('+8801576940717')" style="color:var(--gold); letter-spacing:5px; margin: 30px 0; font-size: 24px;">+8801576940717</h2>
-        <div style="opacity: 0.3; margin-top: 60px;">
-            © 2026 K ARCHIVE. CRAFTED FOR THE SOVEREIGN ELITE.
-        </div>
+        <p class="reveal-text">THE K ARCHIVE CONCIERGE</p>
+        <h3 onclick="copyV('+8801576940717')" class="hover-target reveal-text" style="color:var(--gold); letter-spacing:5px; margin: 20px 0; cursor: none;">+8801576940717</h3>
     </footer>
 
     <script src="script.js"></script>
     <script>
-        // ওয়ান-ক্লিক কপি ফাংশন
-        function copyV(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                notifyElite("IDENTITY COPIED TO CLOISTER");
+        // Scroll Logic for Rolls-Royce Feel
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.rr-section');
+            const header = document.querySelector('header');
+            
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+
+            sections.forEach(sec => {
+                const top = window.scrollY;
+                const offset = sec.offsetTop - 300;
+                if (top >= offset) sec.classList.add('active');
             });
+        });
+
+        function copyV(text) {
+            navigator.clipboard.writeText(text);
+            notifyElite("DATA SECURED");
         }
     </script>
 </body>
