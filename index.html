@@ -1,179 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K ARCHIVE | THE SOVEREIGN ESTATE</title>
-    <style>
-        :root { --gold: #9E7E45; --white: #ffffff; --dark: #050505; --grey: #f9f9f9; }
-        body { margin: 0; padding: 0; background: var(--white); color: var(--dark); font-family: 'Times New Roman', serif; overflow-x: hidden; scroll-behavior: smooth; cursor: none; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K ARCHIVE | THE SOVEREIGN ESTATE</title>
+    <style>
+        :root { --gold: #9E7E45; --white: #ffffff; --dark: #050505; --grey: #f9f9f9; }
+        body { margin: 0; padding: 0; background: var(--white); color: var(--dark); font-family: 'Times New Roman', serif; overflow-x: hidden; scroll-behavior: smooth; cursor: none; }
 
-        /* K Logo Animation & Style */
-        .k-identity { font-size: 42px; font-weight: 900; letter-spacing: 15px; position: relative; color: var(--dark); display: inline-block; transition: 0.3s; }
-        .k-identity span { position: absolute; top: 0; left: 0; color: var(--gold); opacity: 0.3; transform: translate(4px, 4px); z-index: -1; }
+        /* K Logo Animation & Style */
+        .k-identity { font-size: 42px; font-weight: 900; letter-spacing: 15px; position: relative; color: var(--dark); display: inline-block; transition: 0.3s; }
+        .k-identity span { position: absolute; top: 0; left: 0; color: var(--gold); opacity: 0.3; transform: translate(4px, 4px); z-index: -1; }
 
-        /* Custom Cursor - Smart Interaction */
-        #cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
-        #cursor-outline { 
-            position: fixed; width: 20px; height: 20px; /* ছোট সাইজ */
-            border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; 
-            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s; 
-        }
+        /* Custom Cursor - Smart Interaction */
+        #cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        #cursor-outline { 
+            position: fixed; width: 20px; height: 20px; /* ছোট সাইজ */
+            border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; 
+            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s; 
+        }
 
-        /* Hover Effect for Cursor */
-        .hover-target #cursor-outline { width: 60px; height: 60px; background: rgba(158, 126, 69, 0.1); border-width: 0.5px; }
+        /* Hover Effect for Cursor */
+        .hover-target #cursor-outline { width: 60px; height: 60px; background: rgba(158, 126, 69, 0.1); border-width: 0.5px; }
 
-        /* Layout */
-        .header { position: fixed; top: 0; width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #eee; }
-        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .content-section { padding: 120px 10%; border-bottom: 1px solid var(--grey); }
-        
-        /* Typography */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .section-label { font-size: 10px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; margin-bottom: 15px; display: block; }
-        .section-title { font-size: 32px; font-weight: 100; letter-spacing: 15px; text-transform: uppercase; margin-bottom: 25px; }
-        
-        /* Information Card (দাম ছাড়া) */
-        .info-card { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; letter-spacing: 1px; }
-        .info-card td { padding: 15px 0; border-bottom: 1px solid #f9f9f9; color: #666; }
-        .info-card b { color: var(--dark); text-transform: uppercase; font-size: 10px; letter-spacing: 2px; padding-right: 20px; }
+        /* Layout */
+        .header { position: fixed; top: 0; width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #eee; }
+        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .content-section { padding: 120px 10%; border-bottom: 1px solid var(--grey); }
+        
+        /* Typography */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .section-label { font-size: 10px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; margin-bottom: 15px; display: block; }
+        .section-title { font-size: 32px; font-weight: 100; letter-spacing: 15px; text-transform: uppercase; margin-bottom: 25px; }
+        
+        /* Information Card (দাম ছাড়া) */
+        .info-card { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; letter-spacing: 1px; }
+        .info-card td { padding: 15px 0; border-bottom: 1px solid #f9f9f9; color: #666; }
+        .info-card b { color: var(--dark); text-transform: uppercase; font-size: 10px; letter-spacing: 2px; padding-right: 20px; }
 
-        /* Grid for Games */
-        .gaming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: #eee; border: 1px solid #eee; margin-top: 40px; }
-        .game-link { background: #fff; padding: 40px 10px; text-align: center; text-decoration: none; color: #000; font-size: 11px; letter-spacing: 3px; font-weight: bold; transition: 0.4s; }
-        .game-link:hover { background: #000; color: #fff; }
+        /* Grid for Games */
+        .gaming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: #eee; border: 1px solid #eee; margin-top: 40px; }
+        .game-link { background: #fff; padding: 40px 10px; text-align: center; text-decoration: none; color: #000; font-size: 11px; letter-spacing: 3px; font-weight: bold; transition: 0.4s; }
+        .game-link:hover { background: #000; color: #fff; }
 
-        /* Floating Support (Permanent WhatsApp) */
-        .float-ws { position: fixed; bottom: 35px; right: 35px; width: 60px; height: 60px; background: #000; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; transition: 0.4s; }
-        .float-ws svg { fill: var(--gold); width: 28px; }
-        .float-ws:hover { background: var(--gold); transform: scale(1.1); }
-        .float-ws:hover svg { fill: #fff; }
+        /* Floating Support (Permanent WhatsApp) */
+        .float-ws { position: fixed; bottom: 35px; right: 35px; width: 60px; height: 60px; background: #000; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; transition: 0.4s; }
+        .float-ws svg { fill: var(--gold); width: 28px; }
+        .float-ws:hover { background: var(--gold); transform: scale(1.1); }
+        .float-ws:hover svg { fill: #fff; }
 
-        .footer { background: #000; color: #fff; padding: 100px 10%; font-size: 11px; letter-spacing: 2px; }
-        .copy-trigger { color: var(--gold); font-weight: bold; }
-    </style>
+        .footer { background: #000; color: #fff; padding: 100px 10%; font-size: 11px; letter-spacing: 2px; }
+        .copy-trigger { color: var(--gold); font-weight: bold; }
+    </style>
 </head>
 <body class="luxury-theme">
 
-    <div id="cursor-dot"></div>
-    <div id="cursor-outline"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
 
-    <header class="header">
-        <div class="k-identity interactive">K<span>K</span></div>
-    </header>
+    <header class="header">
+        <div class="k-identity interactive">K<span>K</span></div>
+    </header>
 
-    <a href="https://wa.me/8801576940717" target="_blank" class="float-ws interactive">
-        <svg viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
-    </a>
+    <a href="https://wa.me/8801576940717" target="_blank" class="float-ws interactive">
+        <svg viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
+    </a>
 
-    <section class="hero">
-        <div class="reveal active">
-            <h1 class="interactive" style="letter-spacing: 30px; font-weight: 100; text-transform: uppercase; margin: 0;">The Archive</h1>
-            <p style="letter-spacing: 10px; font-size: 10px; color: var(--gold); margin-top: 20px;">PRECISION. HERITAGE. ETERNITY.</p>
-        </div>
-    </section>
+    <section class="hero">
+        <div class="reveal active">
+            <h1 class="interactive" style="letter-spacing: 30px; font-weight: 100; text-transform: uppercase; margin: 0;">The Archive</h1>
+            <p style="letter-spacing: 10px; font-size: 10px; color: var(--gold); margin-top: 20px;">PRECISION. HERITAGE. ETERNITY.</p>
+        </div>
+    </section>
 
-    <section class="content-section reveal">
-        <span class="section-label">Apex Tier</span>
-        <h2 class="section-title interactive">Millionaires Club</h2>
-        <table class="info-card">
-            <tr><td><b>Allocation</b></td><td>100 Elite Estates (Including VIP Glowing Units)</td></tr>
-            <tr><td><b>Privilege</b></td><td>Access to 4-Hour Encrypted Direct HQ Concierge.</td></tr>
-        </table>
-        <a href="order_club.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">RESERVE ESTATE</a>
-    </section>
+    <section class="content-section reveal">
+        <span class="section-label">Apex Tier</span>
+        <h2 class="section-title interactive">Millionaires Club</h2>
+        <table class="info-card">
+            <tr><td><b>Allocation</b></td><td>100 Elite Estates (Including VIP Glowing Units)</td></tr>
+            <tr><td><b>Privilege</b></td><td>Access to 4-Hour Encrypted Direct HQ Concierge.</td></tr>
+        </table>
+        <a href="order_club.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">RESERVE ESTATE</a>
+    </section>
 
-    <section class="content-section reveal">
-        <span class="section-label">Virtual Sovereignty</span>
-        <h2 class="section-title interactive">Gaming Realm</h2>
-        <table class="info-card">
-            <tr><td><b>Availability</b></td><td>10 Globally Recognized Realms | 105 Plots per Realm</td></tr>
-            <tr><td><b>Features</b></td><td>Peer-to-Peer Branding & Identifier Recognition.</td></tr>
-        </table>
-        <div class="gaming-grid">
-            <a href="order_gaming.html?game=freefire" class="game-link interactive">FREE FIRE</a>
-            <a href="order_gaming.html?game=pubg" class="game-link interactive">PUBG MOBILE</a>
-            <a href="order_gaming.html?game=minecraft" class="game-link interactive">MINECRAFT</a>
-            <a href="order_gaming.html?game=gtav" class="game-link interactive">GTA V</a>
-            <a href="order_gaming.html?game=valorant" class="game-link interactive">VALORANT</a>
-            <a href="order_gaming.html?game=cod" class="game-link interactive">CALL OF DUTY</a>
-            <a href="order_gaming.html?game=fifa" class="game-link interactive">FIFA 26</a>
-            <a href="order_gaming.html?game=roblox" class="game-link interactive">ROBLOX</a>
-            <a href="order_gaming.html?game=genshin" class="game-link interactive">GENSHIN</a>
-            <a href="order_gaming.html?game=amongus" class="game-link interactive">AMONG US</a>
-        </div>
-    </section>
+    <section class="content-section reveal">
+        <span class="section-label">Virtual Sovereignty</span>
+        <h2 class="section-title interactive">Gaming Realm</h2>
+        <table class="info-card">
+            <tr><td><b>Availability</b></td><td>10 Globally Recognized Realms | 105 Plots per Realm</td></tr>
+            <tr><td><b>Features</b></td><td>Peer-to-Peer Branding & Identifier Recognition.</td></tr>
+        </table>
+        <div class="gaming-grid">
+            <a href="order_gaming.html?game=freefire" class="game-link interactive">FREE FIRE</a>
+            <a href="order_gaming.html?game=pubg" class="game-link interactive">PUBG MOBILE</a>
+            <a href="order_gaming.html?game=minecraft" class="game-link interactive">MINECRAFT</a>
+            <a href="order_gaming.html?game=gtav" class="game-link interactive">GTA V</a>
+            <a href="order_gaming.html?game=valorant" class="game-link interactive">VALORANT</a>
+            <a href="order_gaming.html?game=cod" class="game-link interactive">CALL OF DUTY</a>
+            <a href="order_gaming.html?game=fifa" class="game-link interactive">FIFA 26</a>
+            <a href="order_gaming.html?game=roblox" class="game-link interactive">ROBLOX</a>
+            <a href="order_gaming.html?game=genshin" class="game-link interactive">GENSHIN</a>
+            <a href="order_gaming.html?game=amongus" class="game-link interactive">AMONG US</a>
+        </div>
+    </section>
 
-    <section class="content-section reveal">
-        <span class="section-label">Cultural Architects</span>
-        <h2 class="section-title interactive">Social Creators</h2>
-        <table class="info-card">
-            <tr><td><b>Capacity</b></td><td>100 Exclusive Creator Plots for Influence Branding</td></tr>
-            <tr><td><b>Asset Type</b></td><td>Direct Social/Web URL Integration.</td></tr>
-        </table>
-        <a href="order_social.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">CLAIM IDENTITY</a>
-    </section>
+    <section class="content-section reveal">
+        <span class="section-label">Cultural Architects</span>
+        <h2 class="section-title interactive">Social Creators</h2>
+        <table class="info-card">
+            <tr><td><b>Capacity</b></td><td>100 Exclusive Creator Plots for Influence Branding</td></tr>
+            <tr><td><b>Asset Type</b></td><td>Direct Social/Web URL Integration.</td></tr>
+        </table>
+        <a href="order_social.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">CLAIM IDENTITY</a>
+    </section>
 
-    <section class="content-section reveal">
-        <span class="section-label">Global Estates</span>
-        <h2 class="section-title interactive">Nations Grid</h2>
-        <table class="info-card">
-            <tr><td><b>Scale</b></td><td>100 Unique Border-Defined Plots per Sovereign Nation</td></tr>
-            <tr><td><b>Design</b></td><td>Tier-Based Geographic Hierarchy.</td></tr>
-        </table>
-        <a href="order_nations.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">EXPLORE BORDERS</a>
-    </section>
+    <section class="content-section reveal">
+        <span class="section-label">Global Estates</span>
+        <h2 class="section-title interactive">Nations Grid</h2>
+        <table class="info-card">
+            <tr><td><b>Scale</b></td><td>100 Unique Border-Defined Plots per Sovereign Nation</td></tr>
+            <tr><td><b>Design</b></td><td>Tier-Based Geographic Hierarchy.</td></tr>
+        </table>
+        <a href="order_nations.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">EXPLORE BORDERS</a>
+    </section>
 
-    <footer class="footer">
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px;">
-            <div>
-                <p><b>EMAIL:</b> <span class="copy-trigger interactive" onclick="copyV('aetherplotshq@gmail.com')">aetherplotshq@gmail.com</span></p>
-                <p><b>WHATSAPP:</b> <span class="copy-trigger interactive" onclick="copyV('+8801576940717')">+8801576940717</span></p>
-            </div>
-            <div style="text-align:right; opacity:0.3; font-size:9px;">
-                <p>© 2026 K ARCHIVE. ALL RIGHTS RESERVED.</p>
-                <a href="admin_panel.html" class="interactive" style="color:#fff; text-decoration:none;">ADMIN</a> | <a href="update_panel.html" class="interactive" style="color:#fff; text-decoration:none;">UPDATES</a>
-            </div>
-        </div>
-    </footer>
+    <footer class="footer">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px;">
+            <div>
+                <p><b>EMAIL:</b> <span class="copy-trigger interactive" onclick="copyV('aetherplotshq@gmail.com')">aetherplotshq@gmail.com</span></p>
+                <p><b>WHATSAPP:</b> <span class="copy-trigger interactive" onclick="copyV('+8801576940717')">+8801576940717</span></p>
+            </div>
+            <div style="text-align:right; opacity:0.3; font-size:9px;">
+                <p>© 2026 K ARCHIVE. ALL RIGHTS RESERVED.</p>
+                <a href="admin_panel.html" class="interactive" style="color:#fff; text-decoration:none;">ADMIN</a> | <a href="update_panel.html" class="interactive" style="color:#fff; text-decoration:none;">UPDATES</a>
+            </div>
+        </div>
+    </footer>
 
-    <script>
-        const dot = document.getElementById('cursor-dot');
-        const outline = document.getElementById('cursor-outline');
+    <script>
+        const dot = document.getElementById('cursor-dot');
+        const outline = document.getElementById('cursor-outline');
 
-        // Cursor Movement
-        document.addEventListener('mousemove', (e) => {
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
-            outline.animate({
-                left: e.clientX + 'px', top: e.clientY + 'px'
-            }, { duration: 400, fill: "forwards" });
-        });
+        // Cursor Movement
+        document.addEventListener('mousemove', (e) => {
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+            outline.animate({
+                left: e.clientX + 'px', top: e.clientY + 'px'
+            }, { duration: 400, fill: "forwards" });
+        });
 
-        // Hover Effect Logic
-        document.querySelectorAll('.interactive, .game-link, a, .copy-trigger').forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                document.body.classList.add('hover-target');
-            });
-            item.addEventListener('mouseleave', () => {
-                document.body.classList.remove('hover-target');
-            });
-        });
+        // Hover Effect Logic
+        document.querySelectorAll('.interactive, .game-link, a, .copy-trigger').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                document.body.classList.add('hover-target');
+            });
+            item.addEventListener('mouseleave', () => {
+                document.body.classList.remove('hover-target');
+            });
+        });
 
-        // Scroll Reveal
-        function reveal() {
-            document.querySelectorAll(".reveal").forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
-            });
-        }
-        window.addEventListener("scroll", reveal);
-        reveal();
+        // Scroll Reveal
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
 
-        function copyV(text) {
-            navigator.clipboard.writeText(text);
-            alert("Copied: " + text);
-        }
-    </script>
+        function copyV(text) {
+            navigator.clipboard.writeText(text);
+            alert("Copied: " + text);
+        }
+    </script>
 </body>
-</html>
+</html>   index.html   style.css   script.js   সবকিছু ঠিক থাকবে শুধু ফাইল তিনভাগের বিভক্ত হবে যাতে করে একটা ফাইলে প্রেসার কম যায়
