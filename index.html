@@ -5,183 +5,150 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K ARCHIVE | THE SOVEREIGN ESTATE</title>
     <style>
-        :root { --gold: #9E7E45; --white: #ffffff; --dark: #050505; --grey: #f4f4f4; }
+        :root { --gold: #9E7E45; --white: #ffffff; --dark: #050505; --grey: #f9f9f9; }
         body { margin: 0; padding: 0; background: var(--white); color: var(--dark); font-family: 'Times New Roman', serif; overflow-x: hidden; scroll-behavior: smooth; cursor: none; }
 
-        /* K Logo Identity */
-        .k-identity { font-size: 42px; font-weight: 900; letter-spacing: 15px; position: relative; color: var(--dark); display: inline-block; }
+        /* K Logo */
+        .k-identity { font-size: 42px; font-weight: 900; letter-spacing: 15px; position: relative; color: var(--dark); display: inline-block; text-decoration: none; }
         .k-identity span { position: absolute; top: 0; left: 0; color: var(--gold); opacity: 0.3; transform: translate(4px, 4px); z-index: -1; }
 
-        /* Rolls-Royce Inspired Cursor */
-        #cursor-dot { position: fixed; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
-        #cursor-outline { 
-            position: fixed; width: 30px; height: 30px; border: 1px solid rgba(158, 126, 69, 0.4); border-radius: 50%; 
-            pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); 
-            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), height 0.4s cubic-bezier(0.23, 1, 0.32, 1), border 0.4s; 
-        }
+        /* Custom Cursor */
+        #cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        #cursor-outline { position: fixed; width: 40px; height: 40px; border: 0.5px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.1s; }
 
-        /* Subtle Expansion on Hover */
-        body.cursor-active #cursor-outline { width: 55px; height: 55px; border: 1px solid var(--gold); background: rgba(158, 126, 69, 0.03); }
-
-        /* Layout Structure */
-        .header { position: fixed; top: 0; width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.9); backdrop-filter: blur(15px); z-index: 1000; border-bottom: 1px solid #f0f0f0; }
+        /* Layout */
+        .header { position: fixed; top: 0; width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #eee; }
         .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .content-section { padding: 140px 10%; border-bottom: 1px solid var(--grey); }
-        
-        /* Typography & Reveal */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .content-section { padding: 120px 10%; border-bottom: 1px solid var(--grey); }
+
+        /* Official Payment Box (Home Page) */
+        .payment-hub { background: #fafafa; border: 1px solid #eee; padding: 40px; margin-top: 50px; text-align: left; }
+        .wallet-item { margin-bottom: 25px; cursor: none; transition: 0.3s; }
+        .wallet-item:hover { transform: translateX(10px); }
+        .wallet-item b { font-size: 10px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 5px; }
+        .wallet-item code { font-size: 14px; color: #333; word-break: break-all; }
+
+        /* Typography & Buttons */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        .section-label { font-size: 10px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; margin-bottom: 20px; display: block; }
-        .section-title { font-size: 34px; font-weight: 100; letter-spacing: 12px; text-transform: uppercase; margin-bottom: 30px; }
+        .section-label { font-size: 10px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; margin-bottom: 15px; display: block; }
+        .section-title { font-size: 32px; font-weight: 100; letter-spacing: 15px; text-transform: uppercase; margin-bottom: 25px; }
+        .game-link { background: #fff; padding: 20px 40px; text-align: center; text-decoration: none; color: #000; border: 1px solid #ddd; font-size: 11px; letter-spacing: 3px; font-weight: bold; transition: 0.4s; display: inline-block; }
+        .game-link:hover { background: #000; color: #fff; border-color: #000; }
+
+        .gaming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: #eee; border: 1px solid #eee; margin-top: 40px; }
+        .support-btn { position: fixed; bottom: 35px; right: 35px; width: 55px; height: 55px; background: #000; color: var(--gold); border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; transition: 0.4s; font-size: 20px; }
         
-        /* Info Display */
-        .logic-card { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
-        .logic-card td { padding: 15px 0; border-bottom: 1px solid #f5f5f5; color: #444; }
-        .logic-card b { color: var(--gold); text-transform: uppercase; font-size: 9px; letter-spacing: 2px; display: block; margin-bottom: 4px; }
-
-        /* 5x2 Gaming Grid */
-        .gaming-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: #eee; border: 1px solid #eee; margin-top: 50px; }
-        .game-link { background: #fff; padding: 45px 10px; text-align: center; text-decoration: none; color: #000; font-size: 10px; letter-spacing: 3px; font-weight: bold; transition: 0.4s ease; }
-        .game-link:hover { background: #000; color: #fff; }
-
-        /* General Button */
-        .btn-entry { display: inline-block; margin-top: 40px; padding: 18px 60px; border: 1px solid #ddd; text-decoration: none; color: #000; font-size: 10px; letter-spacing: 4px; font-weight: bold; transition: 0.4s; }
-        .btn-entry:hover { border-color: var(--gold); color: var(--gold); }
-
-        .footer { background: #000; color: #fff; padding: 100px 10%; font-size: 12px; letter-spacing: 1px; }
-
-        @media (max-width: 900px) { .gaming-grid { grid-template-columns: repeat(2, 1fr); } }
+        .footer { background: #000; color: #fff; padding: 80px 10%; }
+        .copy-success { position: fixed; top: 20px; right: 20px; background: var(--gold); color: white; padding: 10px 20px; font-size: 12px; display: none; z-index: 10001; }
     </style>
 </head>
 <body>
 
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
+    <div id="copy-toast" class="copy-success">COPIED TO CLOISTER</div>
 
     <header class="header">
-        <div class="k-identity hover-link">K<span>K</span></div>
+        <a href="index.html" class="k-identity">K<span>K</span></a>
     </header>
+
+    <div class="support-btn" onclick="togglePopup()">?</div>
 
     <section class="hero">
         <div class="reveal active">
-            <h1 class="hover-link" style="letter-spacing: 25px; font-weight: 100; text-transform: uppercase;">The Archive</h1>
-            <p style="letter-spacing: 8px; font-size: 10px; color: var(--gold); margin-top: 25px;">PRECISION. HERITAGE. ETERNITY.</p>
+            <h1 style="letter-spacing: 30px; font-weight: 100; text-transform: uppercase; margin: 0;">The Archive</h1>
+            <p style="letter-spacing: 10px; font-size: 10px; color: var(--gold); margin-top: 20px;">PRECISION. HERITAGE. ETERNITY.</p>
+            
+            <div class="payment-hub">
+                <div class="wallet-item" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">
+                    <b>Ethereum / USDT (ERC20)</b>
+                    <code>0x443792A4884e8e855f954ccEF910778Aff1eb78E</code>
+                </div>
+                <div class="wallet-item" onclick="copyV('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
+                    <b>USDT (TRC20)</b>
+                    <code>TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</code>
+                </div>
+                <div class="wallet-item" onclick="copyV('912221034')">
+                    <b>Internal Identifier (UID)</b>
+                    <code>912221034</code>
+                </div>
+                <p style="font-size: 9px; color: #999; letter-spacing: 2px;">* CLICK ANY ADDRESS TO COPY</p>
+            </div>
         </div>
     </section>
 
     <section class="content-section reveal">
         <span class="section-label">Apex Tier</span>
-        <h2 class="section-title hover-link">Millionaires Club</h2>
-        <table class="logic-card">
-            <tr><td><b>Registry</b></td><td>100 Elite Estates for Global Sovereigns</td></tr>
-            <tr><td><b>Identity</b></td><td>Custom Branding & Secured Asset Verification</td></tr>
-        </table>
-        <a href="order_club.html" class="btn-entry hover-link">ACCESS CLOISTER</a>
+        <h2 class="section-title">Millionaires Club</h2>
+        <a href="millionaires.html" class="game-link">ACCESS CLOISTER</a>
     </section>
 
     <section class="content-section reveal">
         <span class="section-label">Virtual Sovereignty</span>
-        <h2 class="section-title hover-link">Gaming Realm</h2>
-        <table class="logic-card">
-            <tr><td><b>Universe</b></td><td>10 Iconic Games | 1010 Total Estates</td></tr>
-            <tr><td><b>Structure</b></td><td>Elite Sovereign Seats & Strategic Assets</td></tr>
-        </table>
+        <h2 class="section-title">Gaming Realm</h2>
         <div class="gaming-grid">
-            <a href="order_gaming.html?game=ff" class="game-link hover-link">FREE FIRE</a>
-            <a href="order_gaming.html?game=pubg" class="game-link hover-link">PUBG</a>
-            <a href="order_gaming.html?game=mc" class="game-link hover-link">MINECRAFT</a>
-            <a href="order_gaming.html?game=gta" class="game-link hover-link">GTA V</a>
-            <a href="order_gaming.html?game=val" class="game-link hover-link">VALORANT</a>
-            <a href="order_gaming.html?game=cod" class="game-link hover-link">COD</a>
-            <a href="order_gaming.html?game=fifa" class="game-link hover-link">FIFA 26</a>
-            <a href="order_gaming.html?game=rblx" class="game-link hover-link">ROBLOX</a>
-            <a href="order_gaming.html?game=gen" class="game-link hover-link">GENSHIN</a>
-            <a href="order_gaming.html?game=amg" class="game-link hover-link">AMONG US</a>
+            <a href="gaming_freefire.html" class="game-link">FREE FIRE</a>
+            <a href="gaming_pubg.html" class="game-link">PUBG MOBILE</a>
+            <a href="gaming_minecraft.html" class="game-link">MINECRAFT</a>
+            <a href="gaming_gtav.html" class="game-link">GTA V</a>
+            <a href="gaming_valorant.html" class="game-link">VALORANT</a>
         </div>
     </section>
 
-    <section class="content-section reveal">
-        <span class="section-label">Cultural Architects</span>
-        <h2 class="section-title hover-link">Social Creators</h2>
-        <table class="logic-card">
-            <tr><td><b>Capacity</b></td><td>100 High-Influence Creator Estates</td></tr>
-            <tr><td><b>Focus</b></td><td>Personal Brand Integration & Digital Legacy</td></tr>
-        </table>
-        <a href="order_social.html" class="btn-entry hover-link">VIEW ARCHITECTS</a>
-    </section>
-
-    <section class="content-section reveal">
-        <span class="section-label">Global Estates</span>
-        <h2 class="section-title hover-link">People's Grid</h2>
-        <table class="logic-card">
-            <tr><td><b>Scale</b></td><td>100 Sovereign Units per Nation Territory</td></tr>
-            <tr><td><b>Geography</b></td><td>Border-Based Geographic Asset Allocation</td></tr>
-        </table>
-        <a href="order_nations.html" class="btn-entry hover-link">EXPLORE BORDERS</a>
-    </section>
-
-    <section class="content-section reveal" style="background: #fafafa;">
-        <span class="section-label">Massive Canvas</span>
-        <h2 class="section-title hover-link">General Public</h2>
-        <table class="logic-card">
-            <tr><td><b>Unit Count</b></td><td>1,000,000 Atomic Digital Plots</td></tr>
-            <tr><td><b>Acquisition</b></td><td>Standardized Entry-Level Digital Assets</td></tr>
-        </table>
-        <a href="order_public.html" class="btn-entry hover-link">ENTER GRID</a>
-    </section>
-
     <footer class="footer">
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px;">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px;">
             <div>
-                <p><b>EMAIL:</b> <span class="hover-link" style="color:var(--gold);">aetherplotshq@gmail.com</span></p>
-                <p><b>WHATSAPP:</b> <span class="hover-link" style="color:var(--gold);">+8801576940717</span></p>
+                <p><b>WHATSAPP SERVICE:</b> <span style="color:var(--gold); cursor:none;" onclick="copyV('+8801576940717')">+8801576940717</span></p>
+                <p style="font-size: 9px; opacity: 0.5;">ONE CLICK TO COPY CONTACT</p>
             </div>
-            <div style="text-align:right; opacity:0.4; font-size:10px;">
-                <p>© 2026 K ARCHIVE. ESTABLISHED FOR ETERNITY.</p>
-                <p><a href="admin.html" style="color:#fff; text-decoration:none;">MANAGEMENT</a></p>
+            <div style="text-align:right; opacity:0.3; font-size:9px;">
+                <p>© 2026 K ARCHIVE. ALL RIGHTS RESERVED.</p>
+                <a href="dashboard.html" style="color:#fff; text-decoration:none;">DASHBOARD</a>
             </div>
         </div>
     </footer>
 
+    <div id="supportOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.98); z-index:9000; justify-content:center; align-items:center;">
+        <div style="text-align:center; max-width:400px; padding:40px; border:1px solid #eee;">
+            <h2 style="letter-spacing:5px;">OFFICIAL CONCIERGE</h2>
+            <p style="font-size: 12px; margin-bottom: 30px;">For manual verification and custom identity updates.</p>
+            <a href="https://wa.me/8801576940717" target="_blank" class="game-link" style="border:1px solid #000; padding:15px 40px; display: block;">CONTACT WHATSAPP</a>
+            <p onclick="togglePopup()" style="margin-top:20px; font-size:10px; cursor:none; opacity:0.5;">DISMISS</p>
+        </div>
+    </div>
+
     <script>
-        // Rolls-Royce Style Cursor Logic
-        const dot = document.getElementById('cursor-dot');
-        const outline = document.getElementById('cursor-outline');
-
+        // Cursor Logic
         document.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
-
-            dot.style.left = `${posX}px`;
-            dot.style.top = `${posY}px`;
-
-            // Outline follows with a slight delay for luxury feel
-            outline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
+            document.getElementById('cursor-dot').style.left = e.clientX + 'px';
+            document.getElementById('cursor-dot').style.top = e.clientY + 'px';
+            document.getElementById('cursor-outline').animate({
+                left: e.clientX + 'px', top: e.clientY + 'px'
             }, { duration: 500, fill: "forwards" });
         });
 
-        // Smart Hover Growth (Selective)
-        const targets = document.querySelectorAll('.hover-link, a, .k-identity');
-        targets.forEach(t => {
-            t.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
-            t.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
-        });
+        // Copy Function with Toast
+        function copyV(text) {
+            navigator.clipboard.writeText(text);
+            const toast = document.getElementById('copy-toast');
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        }
 
-        // Scroll Reveal Logic
-        function revealSections() {
-            const reveals = document.querySelectorAll(".reveal");
-            reveals.forEach(r => {
-                let windowHeight = window.innerHeight;
-                let elementTop = r.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
-                    r.classList.add("active");
-                }
+        // Reveal Animation
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
             });
         }
-        window.addEventListener("scroll", revealSections);
-        revealSections();
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        function togglePopup() {
+            const overlay = document.getElementById('supportOverlay');
+            overlay.style.display = (overlay.style.display === 'flex') ? 'none' : 'flex';
+        }
     </script>
 </body>
 </html>
