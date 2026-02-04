@@ -1,253 +1,179 @@
-body { margin: 0; padding: 0; background: var(--white); color: var(--dark); font-family: 'Times New Roman', serif; overflow-x: hidden; scroll-behavior: smooth; cursor: none; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K ARCHIVE | THE SOVEREIGN ESTATE</title>
+    <style>
+        :root { --gold: #9E7E45; --white: #ffffff; --dark: #050505; --grey: #f9f9f9; }
+        body { margin: 0; padding: 0; background: var(--white); color: var(--dark); font-family: 'Times New Roman', serif; overflow-x: hidden; scroll-behavior: smooth; cursor: none; }
 
-/* K Logo Animation & Style */
-        .k-identity { font-size: 42px; font-weight: 900; letter-spacing: 15px; position: relative; color: var(--dark); display: inline-block; }
-        .k-identity { font-size: 42px; font-weight: 900; letter-spacing: 15px; position: relative; color: var(--dark); display: inline-block; transition: 0.3s; }
-.k-identity span { position: absolute; top: 0; left: 0; color: var(--gold); opacity: 0.3; transform: translate(4px, 4px); z-index: -1; }
+        /* K Logo Animation & Style */
+        .k-identity { font-size: 42px; font-weight: 900; letter-spacing: 15px; position: relative; color: var(--dark); display: inline-block; transition: 0.3s; }
+        .k-identity span { position: absolute; top: 0; left: 0; color: var(--gold); opacity: 0.3; transform: translate(4px, 4px); z-index: -1; }
 
-        /* Custom Cursor */
-        /* Custom Cursor - Smart Interaction */
-#cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
-        #cursor-outline { position: fixed; width: 40px; height: 40px; border: 0.5px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.1s; }
-        #cursor-outline { 
-            position: fixed; width: 20px; height: 20px; /* ছোট সাইজ */
-            border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; 
-            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s; 
-        }
+        /* Custom Cursor - Smart Interaction */
+        #cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        #cursor-outline { 
+            position: fixed; width: 20px; height: 20px; /* ছোট সাইজ */
+            border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; 
+            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s; 
+        }
 
-        /* Hover Effect for Cursor */
-        .hover-target #cursor-outline { width: 60px; height: 60px; background: rgba(158, 126, 69, 0.1); border-width: 0.5px; }
+        /* Hover Effect for Cursor */
+        .hover-target #cursor-outline { width: 60px; height: 60px; background: rgba(158, 126, 69, 0.1); border-width: 0.5px; }
 
-/* Layout */
-.header { position: fixed; top: 0; width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #eee; }
-@@ -27,146 +34,134 @@
-.section-label { font-size: 10px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; margin-bottom: 15px; display: block; }
-.section-title { font-size: 32px; font-weight: 100; letter-spacing: 15px; text-transform: uppercase; margin-bottom: 25px; }
+        /* Layout */
+        .header { position: fixed; top: 0; width: 100%; height: 100px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #eee; }
+        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .content-section { padding: 120px 10%; border-bottom: 1px solid var(--grey); }
+        
+        /* Typography */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .section-label { font-size: 10px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; margin-bottom: 15px; display: block; }
+        .section-title { font-size: 32px; font-weight: 100; letter-spacing: 15px; text-transform: uppercase; margin-bottom: 25px; }
+        
+        /* Information Card (দাম ছাড়া) */
+        .info-card { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; letter-spacing: 1px; }
+        .info-card td { padding: 15px 0; border-bottom: 1px solid #f9f9f9; color: #666; }
+        .info-card b { color: var(--dark); text-transform: uppercase; font-size: 10px; letter-spacing: 2px; padding-right: 20px; }
 
-        /* Pricing Table Style */
-        .logic-card { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 13px; letter-spacing: 1px; }
-        .logic-card td { padding: 20px; border-bottom: 1px solid #f0f0f0; line-height: 1.6; }
-        .logic-card b { color: var(--gold); text-transform: uppercase; font-size: 10px; letter-spacing: 2px; }
-        /* Information Card (দাম ছাড়া) */
-        .info-card { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; letter-spacing: 1px; }
-        .info-card td { padding: 15px 0; border-bottom: 1px solid #f9f9f9; color: #666; }
-        .info-card b { color: var(--dark); text-transform: uppercase; font-size: 10px; letter-spacing: 2px; padding-right: 20px; }
+        /* Grid for Games */
+        .gaming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: #eee; border: 1px solid #eee; margin-top: 40px; }
+        .game-link { background: #fff; padding: 40px 10px; text-align: center; text-decoration: none; color: #000; font-size: 11px; letter-spacing: 3px; font-weight: bold; transition: 0.4s; }
+        .game-link:hover { background: #000; color: #fff; }
 
-/* Grid for Games */
-.gaming-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: #eee; border: 1px solid #eee; margin-top: 40px; }
-.game-link { background: #fff; padding: 40px 10px; text-align: center; text-decoration: none; color: #000; font-size: 11px; letter-spacing: 3px; font-weight: bold; transition: 0.4s; }
-.game-link:hover { background: #000; color: #fff; }
+        /* Floating Support (Permanent WhatsApp) */
+        .float-ws { position: fixed; bottom: 35px; right: 35px; width: 60px; height: 60px; background: #000; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; transition: 0.4s; }
+        .float-ws svg { fill: var(--gold); width: 28px; }
+        .float-ws:hover { background: var(--gold); transform: scale(1.1); }
+        .float-ws:hover svg { fill: #fff; }
 
-        /* Floating Support */
-        .support-btn { position: fixed; bottom: 35px; right: 35px; width: 55px; height: 55px; background: #000; color: var(--gold); border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; cursor: none; transition: 0.4s; }
-        .support-btn:hover { background: var(--gold); color: #fff; transform: rotate(90deg); }
-        /* Floating Support (Permanent WhatsApp) */
-        .float-ws { position: fixed; bottom: 35px; right: 35px; width: 60px; height: 60px; background: #000; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; transition: 0.4s; }
-        .float-ws svg { fill: var(--gold); width: 28px; }
-        .float-ws:hover { background: var(--gold); transform: scale(1.1); }
-        .float-ws:hover svg { fill: #fff; }
-
-        .footer { background: #000; color: #fff; padding: 100px 10%; }
-        .copy-trigger { color: var(--gold); cursor: none; font-weight: bold; }
-        .footer { background: #000; color: #fff; padding: 100px 10%; font-size: 11px; letter-spacing: 2px; }
-        .copy-trigger { color: var(--gold); font-weight: bold; }
-</style>
+        .footer { background: #000; color: #fff; padding: 100px 10%; font-size: 11px; letter-spacing: 2px; }
+        .copy-trigger { color: var(--gold); font-weight: bold; }
+    </style>
 </head>
-<body>
 <body class="luxury-theme">
 
-<div id="cursor-dot"></div>
-<div id="cursor-outline"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
 
-<header class="header">
-        <div class="k-identity">K<span>K</span></div>
-        <div class="k-identity interactive">K<span>K</span></div>
-</header>
+    <header class="header">
+        <div class="k-identity interactive">K<span>K</span></div>
+    </header>
 
-    <div class="support-btn" onclick="togglePopup()">?</div>
-    <a href="https://wa.me/8801576940717" target="_blank" class="float-ws interactive">
-        <svg viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
-    </a>
+    <a href="https://wa.me/8801576940717" target="_blank" class="float-ws interactive">
+        <svg viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
+    </a>
 
-<section class="hero">
-<div class="reveal active">
-            <h1 style="letter-spacing: 30px; font-weight: 100; text-transform: uppercase; margin: 0;">The Archive</h1>
-            <h1 class="interactive" style="letter-spacing: 30px; font-weight: 100; text-transform: uppercase; margin: 0;">The Archive</h1>
-<p style="letter-spacing: 10px; font-size: 10px; color: var(--gold); margin-top: 20px;">PRECISION. HERITAGE. ETERNITY.</p>
-</div>
-</section>
+    <section class="hero">
+        <div class="reveal active">
+            <h1 class="interactive" style="letter-spacing: 30px; font-weight: 100; text-transform: uppercase; margin: 0;">The Archive</h1>
+            <p style="letter-spacing: 10px; font-size: 10px; color: var(--gold); margin-top: 20px;">PRECISION. HERITAGE. ETERNITY.</p>
+        </div>
+    </section>
 
-<section class="content-section reveal">
-<span class="section-label">Apex Tier</span>
-        <h2 class="section-title">Millionaires Club</h2>
-        <table class="logic-card">
-            <tr><td><b>Allocation</b></td><td>100 Elite Estates (10 Glowing VIP + 90 Heritage Plots)</td></tr>
-            <tr><td><b>Pricing Logic</b></td><td>VIP Bidding from $7,000+. Heritage plots start at $5,999, decreasing by $500 per row downwards.</td></tr>
-            <tr><td><b>Interaction</b></td><td>Encrypted 4-Hour Live Chat Enabled.</td></tr>
-        <h2 class="section-title interactive">Millionaires Club</h2>
-        <table class="info-card">
-            <tr><td><b>Allocation</b></td><td>100 Elite Estates (Including VIP Glowing Units)</td></tr>
-            <tr><td><b>Privilege</b></td><td>Access to 4-Hour Encrypted Direct HQ Concierge.</td></tr>
-</table>
-        <a href="millionaires.html" class="game-link" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">ACCESS CLOISTER</a>
-        <a href="order_club.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">RESERVE ESTATE</a>
-</section>
+    <section class="content-section reveal">
+        <span class="section-label">Apex Tier</span>
+        <h2 class="section-title interactive">Millionaires Club</h2>
+        <table class="info-card">
+            <tr><td><b>Allocation</b></td><td>100 Elite Estates (Including VIP Glowing Units)</td></tr>
+            <tr><td><b>Privilege</b></td><td>Access to 4-Hour Encrypted Direct HQ Concierge.</td></tr>
+        </table>
+        <a href="order_club.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">RESERVE ESTATE</a>
+    </section>
 
-<section class="content-section reveal">
-<span class="section-label">Virtual Sovereignty</span>
-        <h2 class="section-title">Gaming Realm</h2>
-        <table class="logic-card">
-            <tr><td><b>Universe</b></td><td>10 Iconic Games | 105 Plots per Realm</td></tr>
-            <tr><td><b>Pricing Logic</b></td><td>Top 5 VIP Bidding ($2,000+). Base plots start at $99 (bottom row), increasing by $30 per row upwards.</td></tr>
-            <tr><td><b>Interaction</b></td><td>Peer-to-Peer Plot Identifier Chat.</td></tr>
-        <h2 class="section-title interactive">Gaming Realm</h2>
-        <table class="info-card">
-            <tr><td><b>Availability</b></td><td>10 Globally Recognized Realms | 105 Plots per Realm</td></tr>
-            <tr><td><b>Features</b></td><td>Peer-to-Peer Branding & Identifier Recognition.</td></tr>
-</table>
-<div class="gaming-grid">
-            <a href="chat_freefire.html" class="game-link">FREE FIRE</a>
-            <a href="chat_pubg.html" class="game-link">PUBG MOBILE</a>
-            <a href="chat_minecraft.html" class="game-link">MINECRAFT</a>
-            <a href="chat_gtav.html" class="game-link">GTA V</a>
-            <a href="chat_valorant.html" class="game-link">VALORANT</a>
-            <a href="chat_cod.html" class="game-link">CALL OF DUTY</a>
-            <a href="chat_fifa.html" class="game-link">FIFA 26</a>
-            <a href="chat_roblox.html" class="game-link">ROBLOX</a>
-            <a href="chat_genshin.html" class="game-link">GENSHIN</a>
-            <a href="chat_amongus.html" class="game-link">AMONG US</a>
-            <a href="order_gaming.html?game=freefire" class="game-link interactive">FREE FIRE</a>
-            <a href="order_gaming.html?game=pubg" class="game-link interactive">PUBG MOBILE</a>
-            <a href="order_gaming.html?game=minecraft" class="game-link interactive">MINECRAFT</a>
-            <a href="order_gaming.html?game=gtav" class="game-link interactive">GTA V</a>
-            <a href="order_gaming.html?game=valorant" class="game-link interactive">VALORANT</a>
-            <a href="order_gaming.html?game=cod" class="game-link interactive">CALL OF DUTY</a>
-            <a href="order_gaming.html?game=fifa" class="game-link interactive">FIFA 26</a>
-            <a href="order_gaming.html?game=roblox" class="game-link interactive">ROBLOX</a>
-            <a href="order_gaming.html?game=genshin" class="game-link interactive">GENSHIN</a>
-            <a href="order_gaming.html?game=amongus" class="game-link interactive">AMONG US</a>
-</div>
-</section>
+    <section class="content-section reveal">
+        <span class="section-label">Virtual Sovereignty</span>
+        <h2 class="section-title interactive">Gaming Realm</h2>
+        <table class="info-card">
+            <tr><td><b>Availability</b></td><td>10 Globally Recognized Realms | 105 Plots per Realm</td></tr>
+            <tr><td><b>Features</b></td><td>Peer-to-Peer Branding & Identifier Recognition.</td></tr>
+        </table>
+        <div class="gaming-grid">
+            <a href="order_gaming.html?game=freefire" class="game-link interactive">FREE FIRE</a>
+            <a href="order_gaming.html?game=pubg" class="game-link interactive">PUBG MOBILE</a>
+            <a href="order_gaming.html?game=minecraft" class="game-link interactive">MINECRAFT</a>
+            <a href="order_gaming.html?game=gtav" class="game-link interactive">GTA V</a>
+            <a href="order_gaming.html?game=valorant" class="game-link interactive">VALORANT</a>
+            <a href="order_gaming.html?game=cod" class="game-link interactive">CALL OF DUTY</a>
+            <a href="order_gaming.html?game=fifa" class="game-link interactive">FIFA 26</a>
+            <a href="order_gaming.html?game=roblox" class="game-link interactive">ROBLOX</a>
+            <a href="order_gaming.html?game=genshin" class="game-link interactive">GENSHIN</a>
+            <a href="order_gaming.html?game=amongus" class="game-link interactive">AMONG US</a>
+        </div>
+    </section>
 
-<section class="content-section reveal">
-<span class="section-label">Cultural Architects</span>
-        <h2 class="section-title">Social Creators</h2>
-        <table class="logic-card">
-            <tr><td><b>Capacity</b></td><td>100 Dedicated Creator Estates</td></tr>
-            <tr><td><b>Pricing Logic</b></td><td>Plot #1: $1,599. Value drops by $50 per plot until #50. Plots #51-100 remain fixed at Plot #50's valuation.</td></tr>
-            <tr><td><b>Interaction</b></td><td>Influence Direct Chat Enabled.</td></tr>
-        <h2 class="section-title interactive">Social Creators</h2>
-        <table class="info-card">
-            <tr><td><b>Capacity</b></td><td>100 Exclusive Creator Plots for Influence Branding</td></tr>
-            <tr><td><b>Asset Type</b></td><td>Direct Social/Web URL Integration.</td></tr>
-</table>
-        <a href="creators.html" class="game-link" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">VIEW ARCHITECTS</a>
-        <a href="order_social.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">CLAIM IDENTITY</a>
-</section>
+    <section class="content-section reveal">
+        <span class="section-label">Cultural Architects</span>
+        <h2 class="section-title interactive">Social Creators</h2>
+        <table class="info-card">
+            <tr><td><b>Capacity</b></td><td>100 Exclusive Creator Plots for Influence Branding</td></tr>
+            <tr><td><b>Asset Type</b></td><td>Direct Social/Web URL Integration.</td></tr>
+        </table>
+        <a href="order_social.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">CLAIM IDENTITY</a>
+    </section>
 
-<section class="content-section reveal">
-<span class="section-label">Global Estates</span>
-        <h2 class="section-title">Nations Grid</h2>
-        <table class="logic-card">
-            <tr><td><b>Scale</b></td><td>100 Unique Plots per Sovereign Nation</td></tr>
-            <tr><td><b>Pricing Logic</b></td><td>Primary Borders: $99 | Tier 2 Sides: $89 | Tier 3 Sides: $79 | Central Commons: $49 Fixed.</td></tr>
-            <tr><td><b>Interaction</b></td><td>Visual Directory Only.</td></tr>
-        <h2 class="section-title interactive">Nations Grid</h2>
-        <table class="info-card">
-            <tr><td><b>Scale</b></td><td>100 Unique Border-Defined Plots per Sovereign Nation</td></tr>
-            <tr><td><b>Design</b></td><td>Tier-Based Geographic Hierarchy.</td></tr>
-</table>
-        <a href="nations.html" class="game-link" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">EXPLORE BORDERS</a>
-    </section>
+    <section class="content-section reveal">
+        <span class="section-label">Global Estates</span>
+        <h2 class="section-title interactive">Nations Grid</h2>
+        <table class="info-card">
+            <tr><td><b>Scale</b></td><td>100 Unique Border-Defined Plots per Sovereign Nation</td></tr>
+            <tr><td><b>Design</b></td><td>Tier-Based Geographic Hierarchy.</td></tr>
+        </table>
+        <a href="order_nations.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">EXPLORE BORDERS</a>
+    </section>
 
-    <section class="content-section reveal" style="background: #fafafa;">
-        <span class="section-label">Massive Canvas</span>
-        <h2 class="section-title">1 Million Grid</h2>
-        <table class="logic-card">
-            <tr><td><b>Unit Count</b></td><td>1,000,000 Atomic Plots</td></tr>
-            <tr><td><b>Pricing Logic</b></td><td>$1 Per Unit. Minimum Acquisition: 100 Plots per Transaction.</td></tr>
-            <tr><td><b>Interaction</b></td><td>Public Ledger Only.</td></tr>
-        </table>
-        <a href="million-grid.html" class="game-link" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">ENTER MASSIVE EXPENSE</a>
-        <a href="order_nations.html" class="game-link interactive" style="display:inline-block; margin-top:30px; border:1px solid #ddd; padding: 15px 50px;">EXPLORE BORDERS</a>
-</section>
+    <footer class="footer">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px;">
+            <div>
+                <p><b>EMAIL:</b> <span class="copy-trigger interactive" onclick="copyV('aetherplotshq@gmail.com')">aetherplotshq@gmail.com</span></p>
+                <p><b>WHATSAPP:</b> <span class="copy-trigger interactive" onclick="copyV('+8801576940717')">+8801576940717</span></p>
+            </div>
+            <div style="text-align:right; opacity:0.3; font-size:9px;">
+                <p>© 2026 K ARCHIVE. ALL RIGHTS RESERVED.</p>
+                <a href="admin_panel.html" class="interactive" style="color:#fff; text-decoration:none;">ADMIN</a> | <a href="update_panel.html" class="interactive" style="color:#fff; text-decoration:none;">UPDATES</a>
+            </div>
+        </div>
+    </footer>
 
-<footer class="footer">
-<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px;">
-<div>
-                <p><b>EMAIL:</b> <span class="copy-trigger" onclick="copyV('aetherplotshq@gmail.com')">aetherplotshq@gmail.com</span></p>
-                <p><b>WHATSAPP:</b> <span class="copy-trigger" onclick="copyV('+8801576940717')">+8801576940717</span></p>
-                <p><b>EMAIL:</b> <span class="copy-trigger interactive" onclick="copyV('aetherplotshq@gmail.com')">aetherplotshq@gmail.com</span></p>
-                <p><b>WHATSAPP:</b> <span class="copy-trigger interactive" onclick="copyV('+8801576940717')">+8801576940717</span></p>
-</div>
-<div style="text-align:right; opacity:0.3; font-size:9px;">
-<p>© 2026 K ARCHIVE. ALL RIGHTS RESERVED.</p>
-                <a href="admin_panel.html" style="color:#fff; text-decoration:none;">ADMIN</a> | <a href="update_panel.html" style="color:#fff; text-decoration:none;">UPDATES</a>
-                <a href="admin_panel.html" class="interactive" style="color:#fff; text-decoration:none;">ADMIN</a> | <a href="update_panel.html" class="interactive" style="color:#fff; text-decoration:none;">UPDATES</a>
-</div>
-</div>
-</footer>
+    <script>
+        const dot = document.getElementById('cursor-dot');
+        const outline = document.getElementById('cursor-outline');
 
-    <div id="supportOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.98); z-index:9000; justify-content:center; align-items:center;">
-        <div style="text-align:center; max-width:400px; padding:40px; border:1px solid #eee;">
-            <h2 style="letter-spacing:5px;">ACQUISITION PROTOCOL</h2>
-            <ul style="text-align:left; font-size:13px; line-height:2.5; list-style:none; padding:0; margin:30px 0;">
-                <li>1. <b>Verified Payment Screenshot</b></li>
-                <li>2. <b>Image & Brand Identity</b></li>
-                <li>3. <b>Destination URL</b></li>
-                <li>4. <b>Plot & Section Identifier</b></li>
-            </ul>
-            <a href="https://wa.me/8801576940717" target="_blank" class="game-link" style="border:1px solid #000; padding:15px 40px;">CONTACT CONCIERGE</a>
-            <p onclick="togglePopup()" style="margin-top:20px; font-size:10px; cursor:none; opacity:0.5;">DISMISS</p>
-        </div>
-    </div>
+        // Cursor Movement
+        document.addEventListener('mousemove', (e) => {
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+            outline.animate({
+                left: e.clientX + 'px', top: e.clientY + 'px'
+            }, { duration: 400, fill: "forwards" });
+        });
 
-<script>
-        // Cursor
-        const dot = document.getElementById('cursor-dot');
-        const outline = document.getElementById('cursor-outline');
+        // Hover Effect Logic
+        document.querySelectorAll('.interactive, .game-link, a, .copy-trigger').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                document.body.classList.add('hover-target');
+            });
+            item.addEventListener('mouseleave', () => {
+                document.body.classList.remove('hover-target');
+            });
+        });
 
-        // Cursor Movement
-document.addEventListener('mousemove', (e) => {
-            document.getElementById('cursor-dot').style.left = e.clientX + 'px';
-            document.getElementById('cursor-dot').style.top = e.clientY + 'px';
-            document.getElementById('cursor-outline').animate({
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
-            outline.animate({
-left: e.clientX + 'px', top: e.clientY + 'px'
-            }, { duration: 500, fill: "forwards" });
-            }, { duration: 400, fill: "forwards" });
-});
+        // Scroll Reveal
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
 
-        // Reveal
-        // Hover Effect Logic
-        document.querySelectorAll('.interactive, .game-link, a, .copy-trigger').forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                document.body.classList.add('hover-target');
-            });
-            item.addEventListener('mouseleave', () => {
-                document.body.classList.remove('hover-target');
-            });
-        });
-
-        // Scroll Reveal
-function reveal() {
-document.querySelectorAll(".reveal").forEach(el => {
-if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
-@@ -175,14 +170,9 @@ <h2 style="letter-spacing:5px;">ACQUISITION PROTOCOL</h2>
-window.addEventListener("scroll", reveal);
-reveal();
-
-        function togglePopup() {
-            const overlay = document.getElementById('supportOverlay');
-            overlay.style.display = (overlay.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-function copyV(text) {
-navigator.clipboard.writeText(text);
-            alert("Copied to clipboard.");
-            alert("Copied: " + text);
-}
-</script>
+        function copyV(text) {
+            navigator.clipboard.writeText(text);
+            alert("Copied: " + text);
+        }
+    </script>
 </body>
+</html>
