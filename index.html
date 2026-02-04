@@ -44,17 +44,17 @@
         .game-link { background: #fff; padding: 40px 10px; text-align: center; text-decoration: none; color: #000; font-size: 11px; letter-spacing: 3px; font-weight: bold; transition: 0.4s; }
         .game-link:hover { background: #000; color: #fff; }
 
-        /* Floating Support (Permanent WhatsApp - Right) */
+        /* Floating Support (Right) */
         .float-ws { position: fixed; bottom: 35px; right: 35px; width: 60px; height: 60px; background: #000; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; transition: 0.4s; }
         .float-ws svg { fill: var(--gold); width: 28px; }
         .float-ws:hover { background: var(--gold); transform: scale(1.1); }
         .float-ws:hover svg { fill: #fff; }
 
-        /* New Customer Support Logo (Left Side) */
-        .support-left { position: fixed; bottom: 35px; left: 35px; width: 60px; height: 60px; background: #000; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; transition: 0.4s; }
-        .support-left svg { fill: var(--gold); width: 28px; }
-        .support-left:hover { background: var(--gold); transform: scale(1.1); }
-        .support-left:hover svg { fill: #fff; }
+        /* Customer Support Logo (Left Side) - New Link */
+        .support-hq-left { position: fixed; bottom: 35px; left: 35px; width: 60px; height: 60px; background: #000; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; transition: 0.4s; }
+        .support-hq-left svg { fill: var(--gold); width: 28px; }
+        .support-hq-left:hover { background: var(--gold); transform: scale(1.1); }
+        .support-hq-left:hover svg { fill: #fff; }
 
         .footer { background: #000; color: #fff; padding: 100px 10%; font-size: 11px; letter-spacing: 2px; }
         .copy-trigger { color: var(--gold); font-weight: bold; }
@@ -69,7 +69,7 @@
         <div class="k-identity interactive">K<span>K</span></div>
     </header>
 
-    <a href="https://wa.me/8801576940717" target="_blank" class="support-left interactive">
+    <a href="https://wa.me/8801576940717" target="_blank" class="support-hq-left interactive">
         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
     </a>
 
@@ -162,7 +162,7 @@
         });
 
         // Hover Effect Logic
-        document.querySelectorAll('.interactive, .game-link, a, .copy-trigger, .support-left').forEach(item => {
+        document.querySelectorAll('.interactive, .game-link, a, .copy-trigger, .support-hq-left').forEach(item => {
             item.addEventListener('mouseenter', () => {
                 document.body.classList.add('hover-target');
             });
