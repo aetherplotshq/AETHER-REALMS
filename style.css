@@ -4,10 +4,10 @@
 
 :root {
     --gold: #9E7E45;       /* রাজকীয় গোল্ডেন */
-    --black: #000000;
+    --black: #050505;
     --deep-gray: #141414;
-    --light-gray: #f2f2f2;
-    --border: #e0e0e0;
+    --light-gray: #f8f8f8;
+    --border: #eeeeee;
     --white: #ffffff;
 }
 
@@ -26,11 +26,11 @@ body {
     line-height: 1.6;
 }
 
-/* ১. কাস্টম মাউস কার্সর */
+/* ১. কাস্টম মাউস কার্সর (Rolls-Royce Feel) */
 #cursor-dot {
     position: fixed;
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     background: var(--gold);
     border-radius: 50%;
     pointer-events: none;
@@ -40,19 +40,27 @@ body {
 
 #cursor-outline {
     position: fixed;
-    width: 35px;
-    height: 35px;
-    border: 1px solid var(--gold);
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(158, 126, 69, 0.4);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s, background 0.3s, opacity 0.3s;
+    transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), height 0.4s cubic-bezier(0.23, 1, 0.32, 1), background 0.4s;
+}
+
+/* কার্সর হোভার ইফেক্ট */
+body.cursor-active #cursor-outline {
+    width: 55px;
+    height: 55px;
+    border-color: var(--gold);
+    background: rgba(158, 126, 69, 0.03);
 }
 
 /* ২. লাক্সারি হেডার */
 .header {
-    height: 90px;
+    height: 100px;
     width: 100%;
     position: fixed;
     top: 0;
@@ -64,7 +72,6 @@ body {
     backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--light-gray);
     z-index: 9000;
-    letter-spacing: 12px;
 }
 
 .k-brand-logo {
@@ -72,14 +79,14 @@ body {
     font-weight: 900;
     color: var(--black);
     text-decoration: none;
-    letter-spacing: 10px;
+    letter-spacing: 15px;
 }
 
-/* ৩. পার্মানেন্ট ফ্লোটিং হোয়াটসঅ্যাপ বাটন */
+/* ৩. পার্মানেন্ট ফ্লোটিং হোয়াটসঅ্যাপ বাটন */
 .permanent-ws {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 35px;
+    right: 35px;
     width: 60px;
     height: 60px;
     background: var(--black);
@@ -91,16 +98,17 @@ body {
     z-index: 10005;
     text-decoration: none;
     transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 .permanent-ws:hover {
-    transform: scale(1.1) rotate(5deg);
+    transform: rotate(90deg) scale(1.1);
     background: var(--gold);
 }
 
 .permanent-ws svg {
     fill: var(--gold);
+    width: 25px;
+    height: 25px;
     transition: 0.3s;
 }
 
@@ -108,37 +116,39 @@ body {
     fill: var(--white);
 }
 
-/* ৪. অর্ডার ফর্ম কন্টেইনার (Order Pages) */
+/* ৪. অর্ডার ফর্ম কন্টেইনার */
 .order-container {
-    max-width: 500px;
+    max-width: 550px;
     width: 90%;
-    margin: 120px auto;
-    padding: 60px 40px;
-    border: 1px solid var(--light-gray);
+    margin: 150px auto;
+    padding: 80px 50px;
+    border: 1px solid var(--border);
     text-align: center;
     background: var(--white);
 }
 
 .price-badge {
     display: inline-block;
-    padding: 15px 40px;
+    padding: 15px 45px;
     border: 1px solid var(--black);
-    font-size: 28px;
-    margin: 30px 0;
-    letter-spacing: 3px;
+    font-size: 24px;
+    margin: 35px 0;
+    letter-spacing: 5px;
     font-weight: 100;
+    color: var(--gold);
 }
 
-input {
+input, select {
     width: 100%;
-    padding: 18px;
-    margin: 12px 0;
+    padding: 20px;
+    margin: 15px 0;
     border: 1px solid #eee;
     outline: none;
     box-sizing: border-box;
     font-family: 'Times New Roman', serif;
     background: #fafafa;
-    font-size: 14px;
+    font-size: 13px;
+    letter-spacing: 1px;
     transition: 0.3s;
 }
 
@@ -152,58 +162,59 @@ input:focus {
     padding: 22px;
     background: var(--black);
     color: var(--white);
-    border: none;
-    letter-spacing: 5px;
+    border: 1px solid var(--black);
+    letter-spacing: 6px;
     text-transform: uppercase;
     font-weight: bold;
-    margin-top: 20px;
-    transition: 0.5s;
+    margin-top: 30px;
+    transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .submit-btn:hover {
     background: var(--gold);
-}
-
-/* ৫. ক্যানভাস গ্রিড (Plot System) */
-.canvas-grid {
-    display: grid;
-    margin: 40px auto;
-    background: var(--white);
-    border: 1.5px solid var(--black);
-}
-
-.plot-unit {
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.3s;
-    font-size: 10px;
-    background: var(--white);
-    position: relative;
-}
-
-.plot-unit:hover {
-    background: var(--black);
+    border-color: var(--gold);
     color: var(--white);
-    z-index: 10;
-    transform: scale(1.05);
+}
+
+/* ৫. গেমিং গ্রিড এবং অন্যান্য গ্রিড সিস্টেম */
+.grid-parent {
+    display: grid;
+    gap: 1px;
+    background: #eee;
+    border: 1px solid #eee;
+    margin-top: 50px;
+}
+
+.grid-item {
+    background: #fff;
+    padding: 40px 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    transition: 0.4s;
+}
+
+.grid-item:hover {
+    background: #000;
+    color: #fff;
 }
 
 /* ৬. ফুটার */
 .footer-dark {
     background: var(--black);
     color: var(--white);
-    padding: 80px 40px;
+    padding: 100px 10%;
     text-align: center;
-    font-size: 10px;
-    letter-spacing: 5px;
+    font-size: 9px;
+    letter-spacing: 8px;
     text-transform: uppercase;
+    opacity: 0.9;
 }
 
 /* রেসপন্সিভনেস */
 @media (max-width: 768px) {
-    .header { height: 70px; letter-spacing: 6px; }
-    .order-container { padding: 40px 20px; margin-top: 100px; }
-    .permanent-ws { width: 50px; height: 50px; bottom: 20px; right: 20px; }
+    .header { height: 80px; }
+    .k-brand-logo { font-size: 24px; letter-spacing: 8px; }
+    .order-container { padding: 50px 25px; margin-top: 120px; }
+    .permanent-ws { width: 55px; height: 55px; bottom: 25px; right: 25px; }
 }
