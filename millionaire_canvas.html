@@ -8,175 +8,176 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root { --gold: #9E7E45; --binance: #F3BA2F; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Arial', sans-serif; overflow-x: hidden; }
 
         /* Navigation */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); box-sizing: border-box; border-bottom: 1px solid #222; }
-        .nav-left { display: flex; gap: 10px; }
-        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 18px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-decoration: none; text-transform: uppercase; transition: 0.3s; }
-        .nav-btn:hover { background: #fff; color: #000; }
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.8); box-sizing: border-box; }
+        .nav-btn { background: none; border: 1px solid #555; color: #fff; padding: 8px 15px; font-size: 10px; cursor: pointer; text-decoration: none; text-transform: uppercase; }
 
-        /* Glowing Header */
-        .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; }
+        /* Header */
+        .header-area { text-align: center; padding-top: 100px; padding-bottom: 20px; background: #002b36; }
         .section-name { 
-            font-size: clamp(30px, 6vw, 75px); letter-spacing: 12px; text-transform: uppercase; font-weight: 900;
-            background: linear-gradient(90deg, #ff0000, #ffcc00, #00ffcc, #00a2ff, #ae00ff, #ff0000);
-            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shine 4s linear infinite; filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
+            font-size: 50px; letter-spacing: 10px; text-transform: uppercase; font-weight: 900;
+            color: transparent; -webkit-text-stroke: 1px #fff; background: linear-gradient(to bottom, #fff, #999);
+            -webkit-background-clip: text;
         }
-        @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid Layout */
-        .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
-        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 48px; padding: 20px; }
-        .row { display: flex; justify-content: center; gap: 12px; }
+        /* Grid System with Horizontal Color Sections */
+        .grid-wrapper { display: flex; flex-direction: column; width: 100%; }
+        
+        /* প্রতিটি রো-এর জন্য আলাদা ব্যাকগ্রাউন্ড কালার সেকশন */
+        .row-section { 
+            width: 100%; display: flex; justify-content: center; padding: 35px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .row-container { display: flex; gap: 12px; }
 
+        /* Plot Styling */
         .plot { 
-            background: #050505; border: 1.5px solid var(--r-col); display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; transition: 0.4s; position: relative; cursor: pointer;
-            box-shadow: inset 0 0 15px var(--r-col);
+            background: rgba(0,0,0,0.3); border: 1.5px solid rgba(255,215,0,0.5); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            transition: 0.3s; position: relative; cursor: pointer;
         }
-        .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 50; }
-        .lg { width: 135px; height: 135px; } 
+        .plot:hover { transform: scale(1.05); border-color: #fff; background: rgba(255,255,255,0.1); }
+        
+        .lg { width: 130px; height: 130px; } 
         .std { width: 90px; height: 90px; }
 
-        .crown { position: absolute; top: -45px; font-size: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
-        .owner-tag { position: absolute; bottom: -32px; font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; font-weight: bold; }
+        .owner-tag { position: absolute; bottom: -28px; font-size: 9px; color: #eee; text-transform: uppercase; font-weight: bold; width: 100%; text-align: center; letter-spacing: 1px; }
 
-        /* Modals */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background:#fff; color:#000; padding:45px; width:420px; text-align:center; border-radius: 4px; }
-        .card input { width:100%; padding: 15px; margin: 15px 0; border: 1px solid #ddd; font-family: serif; font-size: 16px; outline: none; box-sizing: border-box; }
-        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; font-weight:bold; cursor:pointer; text-transform: uppercase; }
-
-        /* Binance Style Celebration Screen */
+        /* Celebration Overlay (Binance Theme) */
         #celeb-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: var(--binance); display: none; z-index: 10000; 
             align-items: center; justify-content: center; flex-direction: column; text-align: center;
-            color: #181A20; /* Binance Dark Text */
+            color: #000;
         }
 
-        .info-box { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; color: #000; }
+        /* Final Modal */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:none; align-items:center; justify-content:center; z-index:9999; }
+        .card { background:#fff; color:#000; padding:40px; width:400px; text-align:center; border-radius: 8px; }
+        .buy-btn { background:#000; color:#fff; padding:15px; width:100%; border:none; font-weight:bold; cursor:pointer; margin-top: 10px; }
 
-        /* Footer */
-        .footer-copyright { text-align: center; padding: 60px; font-size: 11px; color: #555; line-height: 1.8; border-top: 1px solid #111; width: 80%; margin-top: 50px; letter-spacing: 1px; }
+        /* Copyright Footer */
+        .footer { text-align: center; padding: 40px; font-size: 11px; color: #777; background: #000; line-height: 1.6; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
-        <div class="nav-left">
-            <a href="index.html" class="nav-btn">← HOME</a>
-            <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
-        </div>
-        <div style="color: var(--gold); font-size: 11px; letter-spacing: 2px; font-weight: bold;">SOLD: 0 | LEFT: 100</div>
+        <a href="index.html" class="nav-btn">← HOME</a>
+        <div style="font-weight: bold; color: var(--gold);">MILLIONAIRES CLUB</div>
+        <button class="nav-btn" onclick="downloadMap()">MAP DOWNLOAD</button>
     </div>
 
     <div class="header-area">
         <h1 class="section-name">Millionaires Club</h1>
     </div>
 
-    <div class="grid-container">
-        <div id="capture-area"></div>
-        <div class="footer-copyright">
-            K-Archive Millionaires Club © 2026. All rights reserved. <br>
-            I am not responsible for the content of external sites. <br>
-            Images and brand logos featured on this canvas are © of their respective owners.
+    <div id="capture-area" class="grid-wrapper">
         </div>
+
+    <div class="footer">
+        K-Archive Millionaires Club © 2026. All rights reserved. <br>
+        I am not responsible for the content of external sites. <br>
+        Images and brand logos featured on this canvas are © of their respective owners.
     </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 3px;">RESERVATION</h2>
-            <input type="number" id="plot-id-field" placeholder="PLOT NO (1-100)">
-            <input type="text" id="brand-name-field" placeholder="YOUR BRAND NAME">
-            <button class="buy-btn" onclick="submitBooking()">SUBMIT & BUY</button>
-            <p onclick="closeModals()" style="font-size: 10px; cursor: pointer; margin-top: 20px; opacity: 0.5;">[ CANCEL ]</p>
+            <h3>PLOT RESERVATION</h3>
+            <input type="text" id="brand-name-field" placeholder="YOUR BRAND NAME" style="width:100%; padding:12px; margin:15px 0; border:1px solid #ccc;">
+            <input type="hidden" id="plot-id-field">
+            <button class="buy-btn" onclick="confirmPurchase()">SUBMIT & BUY</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:15px;">[ CLOSE ]</p>
         </div>
     </div>
 
     <div id="celeb-overlay">
-        <h1 style="font-size: 55px; letter-spacing: 10px; margin: 0;">CONGRATS!</h1>
-        <div style="height: 2px; width: 100px; background: #000; margin: 20px 0;"></div>
-        <h2 id="celeb-brand-name" style="font-size: 35px; letter-spacing: 5px; margin: 0;"></h2>
-        <p style="font-size: 12px; letter-spacing: 4px; font-weight: bold; margin-top: 20px;">ACQUISITION SUCCESSFUL</p>
+        <h1 style="font-size: 50px; margin: 0;">CONGRATULATIONS!</h1>
+        <h2 id="celeb-brand" style="font-size: 30px; margin: 10px 0; text-decoration: underline;"></h2>
+        <p style="font-weight: bold; letter-spacing: 2px;">WELCOME TO THE ELITE CLUB</p>
     </div>
 
     <div id="final-modal" class="modal">
         <div class="card" style="text-align: left;">
-            <h2 style="text-align: center; letter-spacing: 2px;">NEXT STEPS</h2>
-            <div class="info-box">
-                <b>Provide the following to Support:</b><br>
-                1. Payment Proof (Screenshot/TXID)<br>
-                2. Brand Name & Plot Number<br>
-                3. High-Quality Brand Logo<br>
-                4. Website Redirect Link
-            </div>
-            <button class="buy-btn" style="background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">WHATSAPP SUPPORT</button>
-            <button class="buy-btn" style="background:#333; margin-top: 10px;" onclick="location.reload()">FINISH</button>
+            <h2 style="text-align:center;">NEXT STEPS</h2>
+            <p style="font-size:13px; background:#f4f4f4; padding:15px; border-left:4px solid var(--gold);">
+                1. Send Payment Proof (SS/TXID)<br>
+                2. Send High-Quality Logo<br>
+                3. Send Redirect Link<br>
+                4. Mention Plot # & Brand Name
+            </p>
+            <button class="buy-btn" style="background:#25D366;" onclick="window.open('https://wa.me/8801576940717')">WHATSAPP SUPPORT</button>
+            <button class="buy-btn" onclick="location.reload()">BACK TO CANVAS</button>
         </div>
     </div>
 
     <script>
-        const capture = document.getElementById('capture-area');
-        const rowsPrices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        const rowColors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
+        const wrapper = document.getElementById('capture-area');
+        // আপনার ছবি অনুযায়ী ধাপে ধাপে কালার কোড
+        const rowColors = [
+            '#0e4b5a', '#2d6a6d', '#6e8a7d', '#b5a68c', '#d99a6c', 
+            '#c2614a', '#a63d3d', '#7d2a3a', '#4d1c31', '#2d142c'
+        ];
+        const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
 
         for (let r = 0; r < 10; r++) {
-            const rowEl = document.createElement('div');
-            rowEl.className = 'row';
+            const section = document.createElement('div');
+            section.className = 'row-section';
+            section.style.backgroundColor = rowColors[r];
+
+            const container = document.createElement('div');
+            container.className = 'row-container';
+
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
-                const size = (r === 0) ? 'lg' : 'std';
-                plot.className = `plot ${size}`;
-                plot.style.setProperty('--r-col', rowColors[r]);
-
-                if(r === 0) { plot.innerHTML = `<span class="crown">👑</span>`; }
-                plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
-                plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${rowsPrices[r]}</span>`;
-                plot.innerHTML += `<span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
+                plot.className = `plot ${r === 0 ? 'lg' : 'std'}`;
+                
+                plot.innerHTML = `
+                    <span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.5;">#${id}</span>
+                    <span style="font-weight:bold; font-size:11px;">$${prices[r]}</span>
+                    <span class="owner-tag" id="tag-${id}">AVAILABLE</span>
+                `;
 
                 plot.onclick = () => {
                     document.getElementById('order-modal').style.display = 'flex';
                     document.getElementById('plot-id-field').value = id;
                 };
-                rowEl.appendChild(plot);
+                container.appendChild(plot);
             }
-            capture.appendChild(rowEl);
+            section.appendChild(container);
+            wrapper.appendChild(section);
         }
 
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-        function submitBooking() {
-            const id = document.getElementById('plot-id-field').value;
+        function confirmPurchase() {
             const name = document.getElementById('brand-name-field').value;
+            const id = document.getElementById('plot-id-field').value;
+            if(!name) return alert("Enter Brand Name");
 
-            if(!id || !name) return alert("All fields are required!");
-
-            // ১. বাইনান্স থিম অভিনন্দন শুরু
             document.getElementById('order-modal').style.display = 'none';
             const celeb = document.getElementById('celeb-overlay');
-            document.getElementById('celeb-brand-name').innerText = name.toUpperCase();
+            document.getElementById('celeb-brand').innerText = name.toUpperCase();
             celeb.style.display = 'flex';
 
-            // ২. দুই পাশ থেকে রঙিন কনফেটি
-            const duration = 2000; // ২ সেকেন্ড রঙিন কাগজ
-            const end = Date.now() + duration;
-            const colors = ['#000000', '#ffffff', '#F3BA2F']; // ব্ল্যাক, হোয়াইট, বাইনান্স ইয়েলো
+            // দুই পাশ থেকে রঙিন কনফেটি ছিটানো
+            const end = Date.now() + 2500;
+            const colors = ['#ffffff', '#ffcc00', '#000000'];
 
             (function frame() {
-                confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: colors });
-                confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: colors });
+                confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: colors });
+                confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: colors });
                 if (Date.now() < end) requestAnimationFrame(frame);
             }());
 
-            // ৩. মেইন পেজে নাম আপডেট
-            const tag = document.getElementById(`tag-${id}`);
-            if(tag) tag.innerText = name.toUpperCase();
+            // নাম আপডেট
+            document.getElementById(`tag-${id}`).innerText = name.toUpperCase();
 
-            // ৪. ২ সেকেন্ড পর ফাইনাল পপ-আপ
+            // ২ সেকেন্ড পর পপ আপ শো
             setTimeout(() => {
                 celeb.style.display = 'none';
                 document.getElementById('final-modal').style.display = 'flex';
@@ -184,8 +185,8 @@
         }
 
         function downloadMap() {
-            html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
-                let link = document.createElement('a');
+            html2canvas(document.getElementById('capture-area'), { scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
                 link.download = 'Millionaires_Club_Canvas.png';
                 link.href = canvas.toDataURL();
                 link.click();
