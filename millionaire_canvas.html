@@ -10,174 +10,169 @@
         :root { --gold: #9E7E45; --white: #fff; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
 
-        /* Navigation */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); box-sizing: border-box; border-bottom: 1px solid #1a1a1a; }
-        .nav-left { display: flex; gap: 15px; }
-        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 20px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-decoration: none; text-transform: uppercase; transition: 0.3s; }
+        /* Top Bar */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); box-sizing: border-box; border-bottom: 1px solid #222; }
+        .nav-left { display: flex; gap: 10px; }
+        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 18px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-decoration: none; text-transform: uppercase; transition: 0.3s; }
         .nav-btn:hover { background: #fff; color: #000; }
-        .counter-box { font-size: 11px; letter-spacing: 2px; color: var(--gold); font-weight: bold; }
+        .counter { color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; }
 
-        /* Glowing Section Name */
-        .header-area { text-align: center; padding-top: 130px; margin-bottom: 30px; }
+        /* Glowing Header */
+        .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; }
         .section-name { 
-            font-size: clamp(30px, 6vw, 70px); letter-spacing: 15px; text-transform: uppercase; 
-            font-weight: 900;
+            font-size: clamp(30px, 6vw, 75px); letter-spacing: 12px; text-transform: uppercase; font-weight: 900;
             background: linear-gradient(90deg, #ff0000, #ffcc00, #00ffcc, #00a2ff, #ae00ff, #ff0000);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
-            filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.5));
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite; filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid Layout */
-        .grid-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 50px; }
-        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 40px; }
-        .row-container { display: flex; justify-content: center; gap: 10px; width: 100%; }
+        /* Grid */
+        .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 100px; }
+        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 20px; }
+        .row { display: flex; justify-content: center; gap: 12px; }
 
         /* Plot Styling */
         .plot { 
-            background: #050505; display: flex; flex-direction: column; align-items: center; 
-            justify-content: center; transition: 0.4s; position: relative; cursor: pointer;
-            box-shadow: inset 0 0 15px var(--row-color);
-            border: 2px solid var(--row-color);
+            background: #050505; border: 1.5px solid var(--r-col); display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; transition: 0.4s; position: relative; cursor: pointer;
+            box-shadow: inset 0 0 15px var(--r-col);
         }
-        .plot:hover { transform: scale(1.1); z-index: 100; border-color: #fff; }
+        .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 50; }
 
-        /* Sizes: 1st row special, others uniform */
-        .size-lg { width: 145px; height: 145px; margin-bottom: 25px; }
-        .size-standard { width: 90px; height: 90px; }
+        /* Dynamic Sizes */
+        .lg { width: 150px; height: 150px; margin-bottom: 30px; }
+        .std { width: 90px; height: 90px; }
 
         /* Crown & Stars (Outside) */
-        .crown { position: absolute; top: -45px; font-size: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
-        .stars { position: absolute; bottom: -28px; color: var(--gold); font-size: 20px; letter-spacing: 4px; }
+        .crown { position: absolute; top: -50px; font-size: 60px; filter: drop-shadow(0 0 10px var(--gold)); }
+        .stars { position: absolute; bottom: -30px; color: var(--gold); font-size: 22px; letter-spacing: 5px; white-space: nowrap; }
 
-        /* Modals */
-        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background:#fff; color:#000; padding:50px; width:450px; text-align:center; border-radius: 4px; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
-        .card input { width:100%; padding:15px; margin:15px 0; border:1px solid #ddd; font-family:serif; font-size: 16px; outline: none; }
-        .btn-black { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; text-transform:uppercase; cursor:pointer; font-weight:bold; transition: 0.3s; }
-        .btn-black:hover { background: var(--gold); }
-        
-        .support-box { text-align: left; background: #f4f4f4; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; color: #333; }
+        /* Plot Name Display */
+        .owner-tag { position: absolute; bottom: -20px; font-size: 9px; color: #fff; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; }
 
-        /* Footer Copyright */
-        .footer-text { text-align: center; padding: 50px; font-size: 11px; color: #444; line-height: 1.8; border-top: 1px solid #111; width: 85%; margin-top: 50px; }
+        /* Overlays */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
+        .card { background:#fff; color:#000; padding:50px; width:450px; text-align:center; border-radius: 4px; }
+        .card input { width:100%; padding: 15px; margin: 15px 0; border: 1px solid #ddd; font-family: serif; font-size: 16px; outline: none; box-sizing: border-box; }
+        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; font-weight:bold; cursor:pointer; }
+        .info-box { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 60px; font-size: 11px; color: #444; border-top: 1px solid #111; width: 80%; margin-top: 50px; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
         <div class="nav-left">
-            <a href="index.html" class="nav-btn">← BACK TO HOME</a>
+            <a href="index.html" class="nav-btn">← HOME</a>
             <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
         </div>
-        <div class="counter-box">SOLD: 0 | LEFT: 100</div>
+        <div class="counter">SOLD: 0 | LEFT: 100</div>
     </div>
 
     <div class="header-area">
         <h1 class="section-name">Millionaires Club</h1>
     </div>
 
-    <div class="grid-wrapper">
+    <div class="grid-container">
         <div id="capture-area"></div>
-
-        <div class="footer-text">
+        
+        <div class="footer">
             K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved. <br>
             We are not responsible for the content of external websites. <br>
-            Images and brand logos featured on this canvas are © of their respective owners.
+            Brand logos and images on this canvas are © of their respective owners.
         </div>
     </div>
 
-    <div id="buy-modal" class="overlay">
+    <div id="order-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing:4px; font-weight:100;">PLOT RESERVATION</h2>
-            <input type="number" id="plot-no-input" placeholder="ENTER PLOT NUMBER (1-100)">
-            <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME">
-            <button class="btn-black" onclick="processOrder()">RESERVE & BUY</button>
-            <p onclick="closeModal()" style="font-size:10px; cursor:pointer; margin-top:20px; opacity: 0.5;">[ CANCEL ]</p>
+            <h2 style="letter-spacing: 3px; font-weight: 100;">NEW ACQUISITION</h2>
+            <input type="number" id="plot-id-field" placeholder="PLOT NO (1-100)">
+            <input type="text" id="brand-name-field" placeholder="YOUR BRAND NAME">
+            <button class="buy-btn" onclick="submitOrder()">SUBMIT & PAY</button>
+            <p onclick="closeModals()" style="font-size: 10px; cursor: pointer; margin-top: 20px; opacity: 0.5;">[ CANCEL ]</p>
         </div>
     </div>
 
-    <div id="support-modal" class="overlay">
+    <div id="final-modal" class="modal">
         <div class="card" style="text-align: left;">
             <h2 style="text-align: center; letter-spacing: 2px;">CONGRATULATIONS!</h2>
-            <p style="text-align: center; color: var(--gold); font-size: 14px;" id="success-msg"></p>
-            
-            <div class="support-box">
-                <b>TO COMPLETE BRANDING, SEND US:</b><br>
-                • Your Transaction ID / Payment Screenshot<br>
-                • Your High-Resolution Brand Logo/Image<br>
-                • The Website Link for Redirect<br>
-                • Mention Plot Number & Brand Name
+            <div class="info-box">
+                <b>PLEASE SEND THE FOLLOWING TO SUPPORT:</b><br>
+                1. Payment Screenshot / Transaction ID<br>
+                2. Brand Name & Plot Number<br>
+                3. Your Brand Logo (High Quality)<br>
+                4. Target Link (Redirect URL)
             </div>
-            
-            <button class="btn-black" style="background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">SEND TO WHATSAPP</button>
-            <button class="btn-black" onclick="location.reload()" style="margin-top:10px; background:#333;">BACK TO CANVAS</button>
+            <button class="buy-btn" style="background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">WHATSAPP SUPPORT</button>
+            <button class="buy-btn" style="background:#333; margin-top: 10px;" onclick="location.reload()">FINISH</button>
         </div>
     </div>
 
     <script>
-        const grid = document.getElementById('capture-area');
-        const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        const colors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
-        
+        const capture = document.getElementById('capture-area');
+        const rowsPrices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
+        const rowColors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
+
+        // Generate Plots
         for (let r = 0; r < 10; r++) {
-            const rowDiv = document.createElement('div');
-            rowDiv.className = 'row-container';
+            const rowEl = document.createElement('div');
+            rowEl.className = 'row';
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
                 
-                // Size Logic: Row 1 is LG, all others are Standard
-                let sizeClass = (r === 0) ? 'size-lg' : 'size-standard';
-                plot.className = `plot ${sizeClass}`;
-                plot.style.setProperty('--row-color', colors[r]);
+                // Row 1 is LG, Others are Std
+                const size = (r === 0) ? 'lg' : 'std';
+                plot.className = `plot ${size}`;
+                plot.style.setProperty('--r-col', rowColors[r]);
+                plot.id = `plot-box-${id}`;
 
-                if(r === 0) plot.innerHTML = `<span class="crown">👑</span><span class="stars">★★★★★</span>`;
-                
+                if(r === 0) {
+                    plot.innerHTML = `<span class="crown">👑</span><span class="stars">★★★★★</span>`;
+                }
+
                 plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
-                plot.innerHTML += `<span style="font-size:10px; font-weight:bold; color: #eee;">$${prices[r]}</span>`;
+                plot.innerHTML += `<span style="font-size:11px; font-weight:bold; letter-spacing:1px;">$${rowsPrices[r]}</span>`;
                 
-                // পরামর্শের অংশ: কাস্টমারের নাম দেখানোর জন্য নিচের সেকশন (এখন খালি থাকবে)
-                plot.innerHTML += `<span class="owner-name" style="position:absolute; bottom:5px; font-size:7px; color:var(--gold); text-transform:uppercase;"></span>`;
+                // Name Placeholder (পরামর্শ অনুযায়ী কাস্টমারের নাম এখানে আসবে)
+                plot.innerHTML += `<span class="owner-tag" id="owner-${id}">AVAILABLE</span>`;
 
                 plot.onclick = () => {
-                    document.getElementById('buy-modal').style.display = 'flex';
-                    document.getElementById('plot-no-input').value = id;
+                    document.getElementById('order-modal').style.display = 'flex';
+                    document.getElementById('plot-id-field').value = id;
                 };
-                rowDiv.appendChild(plot);
+                rowEl.appendChild(plot);
             }
-            grid.appendChild(rowDiv);
+            capture.appendChild(rowEl);
         }
 
-        function closeModal() { document.querySelectorAll('.overlay').forEach(e => e.style.display = 'none'); }
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-        function processOrder() {
-            const pNo = document.getElementById('plot-no-input').value;
-            const bName = document.getElementById('brand-input').value;
+        function submitOrder() {
+            const id = document.getElementById('plot-id-field').value;
+            const name = document.getElementById('brand-name-field').value;
 
-            if(!pNo || !bName) return alert("Please provide both Plot No and Brand Name!");
+            if(!id || !name) return alert("All fields are required!");
 
-            // Instant Celebration with White Confetti
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#ffffff', '#f0f0f0', '#cccccc']
-            });
+            // Instant White Confetti
+            confetti({ particleCount: 180, spread: 80, origin: { y: 0.6 }, colors: ['#ffffff', '#dddddd', '#bbbbbb'] });
 
-            // Show support modal immediately
-            document.getElementById('buy-modal').style.display = 'none';
-            document.getElementById('support-modal').style.display = 'flex';
-            document.getElementById('success-msg').innerText = `${bName.toUpperCase()} - PLOT #${pNo} RESERVED`;
+            // Update Plot name instantly for visual feedback
+            const tag = document.getElementById(`owner-${id}`);
+            if(tag) tag.innerText = name.toUpperCase();
+
+            // Switch Modal
+            document.getElementById('order-modal').style.display = 'none';
+            document.getElementById('final-modal').style.display = 'flex';
         }
 
         function downloadMap() {
-            html2canvas(grid, { backgroundColor: "#000", scale: 2 }).then(canvas => {
+            html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = 'K_Archive_Map.png';
+                link.download = 'K_Archive_Map_Final.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
