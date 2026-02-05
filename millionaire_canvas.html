@@ -28,8 +28,8 @@
         @keyframes shine { to { background-position: 200% center; } }
 
         /* Grid */
-        .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 100px; }
-        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px; }
+        .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
+        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 20px; } /* গ্যাপ বাড়ানো হয়েছে যাতে নাম স্পষ্ট দেখা যায় */
         .row { display: flex; justify-content: center; gap: 12px; }
 
         /* Plot Styling */
@@ -40,15 +40,15 @@
         }
         .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 50; }
 
-        /* Dynamic Sizes */
-        .lg { width: 135px; height: 135px; margin-bottom: 25px; } /* হালকা ছোট করা হয়েছে */
+        /* Sizes */
+        .lg { width: 135px; height: 135px; } 
         .std { width: 90px; height: 90px; }
 
         /* Crown (Outside) */
         .crown { position: absolute; top: -45px; font-size: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
 
-        /* Plot Name Display */
-        .owner-tag { position: absolute; bottom: -20px; font-size: 9px; color: #fff; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; }
+        /* Plot Name Display (নিচে গ্যাপ দিয়ে সেট করা) */
+        .owner-tag { position: absolute; bottom: -30px; font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; font-weight: bold; }
 
         /* Overlays */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
@@ -57,11 +57,8 @@
         .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; font-weight:bold; cursor:pointer; text-transform: uppercase; }
         .info-box { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; }
 
-        /* Celebration Screen */
+        /* Celebration Screen (Full Black Background) */
         #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
-
-        /* Footer */
-        .footer { text-align: center; padding: 60px; font-size: 11px; color: #444; border-top: 1px solid #111; width: 80%; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -80,25 +77,25 @@
 
     <div class="grid-container">
         <div id="capture-area"></div>
-        <div class="footer">
-            K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved. <br>
-            We are not responsible for the content of external websites.
+        <div style="text-align: center; padding: 60px; font-size: 11px; color: #444; border-top: 1px solid #111; width: 80%; margin-top: 50px;">
+            K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved.
         </div>
     </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 3px; font-weight: 100;">RESERVATION</h2>
+            <h2 style="letter-spacing: 3px;">RESERVATION</h2>
             <input type="number" id="plot-id-field" placeholder="PLOT NO (1-100)">
-            <input type="text" id="brand-name-field" placeholder="ENTER BRAND NAME">
-            <button class="buy-btn" onclick="startProcess()">CONFIRM & RESERVE</button>
+            <input type="text" id="brand-name-field" placeholder="YOUR BRAND NAME">
+            <button class="buy-btn" onclick="processSelection()">SUBMIT & BUY</button>
             <p onclick="closeModals()" style="font-size: 10px; cursor: pointer; margin-top: 20px; opacity: 0.5;">[ CANCEL ]</p>
         </div>
     </div>
 
     <div id="celeb-overlay">
-        <h1 id="brand-welcome" style="font-size: 45px; letter-spacing: 8px; color: #fff;"></h1>
-        <p style="font-size: 18px; color: var(--gold); letter-spacing: 5px;">CONGRATULATIONS ON YOUR ACQUISITION!</p>
+        <h1 style="font-size: 50px; letter-spacing: 10px; color: #fff; margin-bottom: 10px;">CONGRATULATIONS!</h1>
+        <h2 id="celeb-brand-name" style="font-size: 30px; letter-spacing: 5px; color: var(--gold); border-top: 1px solid #333; padding-top: 20px;"></h2>
+        <p style="font-size: 14px; letter-spacing: 3px; color: #666; margin-top: 20px;">ACQUISITION PROCESS INITIATED</p>
     </div>
 
     <div id="final-modal" class="modal">
@@ -131,13 +128,13 @@
                 plot.className = `plot ${size}`;
                 plot.style.setProperty('--r-col', rowColors[r]);
 
-                if(r === 0) {
-                    plot.innerHTML = `<span class="crown">👑</span>`; // ফাইভ স্টার রিমুভ করা হয়েছে
-                }
+                if(r === 0) { plot.innerHTML = `<span class="crown">👑</span>`; }
 
                 plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
                 plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${rowsPrices[r]}</span>`;
-                plot.innerHTML += `<span class="owner-tag" id="owner-${id}">AVAILABLE</span>`;
+                
+                // নাম দেখানোর ট্যাগ (AVAILABLE লেখা থাকবে শুরুতে)
+                plot.innerHTML += `<span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
 
                 plot.onclick = () => {
                     document.getElementById('order-modal').style.display = 'flex';
@@ -150,27 +147,36 @@
 
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-        function startProcess() {
+        function processSelection() {
             const id = document.getElementById('plot-id-field').value;
             const name = document.getElementById('brand-name-field').value;
 
-            if(!id || !name) return alert("All fields are required!");
+            if(!id || !name) return alert("Fill Plot No and Brand Name!");
 
-            // ১. ইনস্ট্যান্ট হোয়াইট কনফেটি ও অভিনন্দন
+            // ১. ইনস্ট্যান্ট অভিনন্দন স্ক্রিন ও ব্র্যান্ড নেম দেখানো
             document.getElementById('order-modal').style.display = 'none';
-            const celeb = document.getElementById('celeb-overlay');
-            celeb.style.display = 'flex';
-            document.getElementById('brand-welcome').innerText = `WELCOME, ${name.toUpperCase()}!`;
+            const celebOverlay = document.getElementById('celeb-overlay');
+            document.getElementById('celeb-brand-name').innerText = name.toUpperCase();
+            celebOverlay.style.display = 'flex';
 
-            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#ffffff', '#eeeeee', '#cccccc'] });
+            // ২. দুই পাশ থেকে সাদা কাগজ ছিটানো (Confetti)
+            const duration = 3000;
+            const end = Date.now() + duration;
+            const whiteColors = ['#ffffff', '#f0f0f0', '#dddddd'];
 
-            // ২. প্লটের নিচে নাম আপডেট
-            const tag = document.getElementById(`owner-${id}`);
-            if(tag) tag.innerText = name.toUpperCase();
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: whiteColors });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: whiteColors });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
 
-            // ৩. ৩ সেকেন্ড পর সাপোর্ট পপ-আপ
+            // ৩. মেইন ক্যানভাসে নাম আপডেট করা
+            const ownerTag = document.getElementById(`tag-${id}`);
+            if(ownerTag) ownerTag.innerText = name.toUpperCase();
+
+            // ৪. ৩ সেকেন্ড পর ফাইনাল পপ-আপ
             setTimeout(() => {
-                celeb.style.display = 'none';
+                celebOverlay.style.display = 'none';
                 document.getElementById('final-modal').style.display = 'flex';
             }, 3000);
         }
