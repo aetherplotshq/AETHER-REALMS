@@ -10,10 +10,10 @@
         :root { --gold: #9E7E45; --binance: #F3BA2F; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Arial', sans-serif; overflow-x: hidden; }
 
-        /* Navigation - Download button moved left for visibility */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); border-bottom: 1px solid #222; }
-        .nav-btn { background: none; border: 1px solid #555; color: #fff; padding: 8px 25px; font-size: 11px; cursor: pointer; text-transform: uppercase; margin-right: 20px; }
-        .counter-box { font-size: 12px; letter-spacing: 2px; font-weight: bold; color: var(--gold); }
+        /* Navigation - Counter moved to Right-Middle */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); border-bottom: 1px solid #222; }
+        .nav-btn { background: none; border: 1px solid #555; color: #fff; padding: 8px 25px; font-size: 11px; cursor: pointer; text-transform: uppercase; }
+        .counter-box { font-size: 12px; letter-spacing: 2px; font-weight: bold; color: var(--gold); margin-right: 40px; } /* ডান থেকে হালকা বামে সরানো */
 
         /* Multi-color Video Effect Title */
         .header-area { text-align: center; padding-top: 110px; padding-bottom: 40px; }
@@ -25,44 +25,31 @@
             -webkit-text-fill-color: transparent;
             animation: colorVideo 4s linear infinite;
         }
-        @keyframes colorVideo {
-            to { background-position: 200% center; }
-        }
+        @keyframes colorVideo { to { background-position: 200% center; } }
 
-        /* Grid - Large, Glowing & Growing Plots */
+        /* Grid - Glowing Plots */
         .grid-wrapper { display: flex; flex-direction: column; width: 100%; }
         .row-section { width: 100%; display: flex; justify-content: center; padding: 50px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .row-container { display: flex; gap: 18px; }
 
         .plot { 
-            width: 130px; height: 130px; 
-            background: rgba(0,0,0,0.7); 
-            border: 2px solid var(--p-color); 
-            box-shadow: 0 0 15px var(--p-color);
+            width: 130px; height: 130px; background: rgba(0,0,0,0.7); border: 2px solid var(--p-color); box-shadow: 0 0 15px var(--p-color);
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            transition: 0.3s all cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            position: relative; cursor: pointer;
+            transition: 0.3s all ease; position: relative; cursor: pointer;
         }
-        .plot:hover { 
-            transform: scale(1.15); 
-            box-shadow: 0 0 40px var(--p-color); 
-            z-index: 10; 
-            border-color: #fff;
-            filter: brightness(1.3);
-        }
-        .owner-tag { position: absolute; bottom: -35px; font-size: 10px; color: #fff; text-transform: uppercase; font-weight: bold; width: 100%; text-align: center; letter-spacing: 1px; }
+        .plot:hover { transform: scale(1.15); box-shadow: 0 0 40px var(--p-color); z-index: 10; border-color: #fff; }
+        .owner-tag { position: absolute; bottom: -35px; font-size: 10px; color: #fff; text-transform: uppercase; font-weight: bold; width: 100%; text-align: center; }
 
-        /* Black & White Support Icon */
-        .support-icon { 
-            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
-            background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 0 20px rgba(255,255,255,0.3); cursor: pointer; z-index: 5000; filter: grayscale(1); 
-        }
+        /* Celebration Screen (Congrats) */
+        #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; color: var(--binance); }
+
+        /* Support Icon */
+        .support-icon { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; filter: grayscale(1); z-index: 5000; cursor: pointer; }
 
         /* Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.97); display:none; align-items:center; justify-content:center; z-index:9999; }
         .card { background:#fff; color:#000; padding:40px; width:430px; text-align:center; border-radius: 4px; }
-        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; font-weight:bold; cursor:pointer; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; }
+        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; font-weight:bold; cursor:pointer; text-transform: uppercase; margin-top: 15px; }
 
         .footer { text-align: center; padding: 80px; font-size: 11px; color: #555; background: #000; border-top: 1px solid #111; line-height: 2; }
     </style>
@@ -92,25 +79,28 @@
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 2px;">SECURE YOUR PLOT</h2>
-            <input type="text" id="brand-input" placeholder="YOUR BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; font-size:16px; outline:none;">
+            <h2>RESERVE PLOT</h2>
+            <input type="text" id="brand-input" placeholder="YOUR BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; outline:none;">
             <input type="hidden" id="plot-id-val">
-            <button class="buy-btn" onclick="startCelebration()">SUBMIT & RESERVE</button>
-            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:20px; opacity: 0.5;">[ CANCEL ]</p>
+            <button class="buy-btn" onclick="startProcess()">SUBMIT & BUY</button>
         </div>
+    </div>
+
+    <div id="celeb-overlay">
+        <h1 style="font-size: 60px; margin: 0; letter-spacing: -2px;">CONGRATS!</h1>
+        <h2 id="display-brand" style="font-size: 30px; color: #fff;"></h2>
+        <p style="letter-spacing: 5px; color: #888;">RESERVATION SUCCESSFUL</p>
     </div>
 
     <div id="final-modal" class="modal">
         <div class="card" style="text-align: left;">
             <h2 style="text-align: center;">FINAL STEPS</h2>
             <div style="background: #f4f4f4; padding: 25px; margin: 20px 0; border-left: 6px solid #000; font-size: 14px; line-height: 2;">
-                <b>Please send the following to Support:</b><br>
                 1. Transaction Proof (Screenshot)<br>
-                2. Brand Name & Selected Plot Number<br>
-                3. Brand Logo (High Quality PNG)<br>
-                4. Redirect URL for your Plot
+                2. Brand Name & Plot Number<br>
+                3. Logo (PNG) & URL
             </div>
-            <button class="buy-btn" style="background:#000;" onclick="window.open('https://wa.me/8801576940717')">WHATSAPP SUPPORT</button>
+            <button class="buy-btn" onclick="window.open('https://wa.me/8801576940717')">WHATSAPP SUPPORT</button>
             <button class="buy-btn" style="background:#666;" onclick="location.reload()">BACK TO CANVAS</button>
         </div>
     </div>
@@ -127,49 +117,47 @@
             section.style.backgroundColor = rowColors[r];
             const container = document.createElement('div');
             container.className = 'row-container';
-
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
                 plot.className = 'plot';
                 plot.style.setProperty('--p-color', rowColors[r]); 
-                
-                plot.innerHTML = `
-                    <span style="position:absolute; top:8px; left:10px; font-size:9px; opacity:0.5;">#${id}</span>
-                    <span style="font-weight:bold; font-size:16px; letter-spacing:1px;">$${prices[r]}</span>
-                    <span class="owner-tag" id="tag-${id}">AVAILABLE</span>
-                `;
-                plot.onclick = () => {
-                    document.getElementById('order-modal').style.display = 'flex';
-                    document.getElementById('plot-id-val').value = id;
-                };
+                plot.innerHTML = `<span style="position:absolute; top:8px; left:10px; font-size:9px; opacity:0.5;">#${id}</span><span style="font-weight:bold; font-size:16px;">$${prices[r]}</span><span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
+                plot.onclick = () => { document.getElementById('order-modal').style.display = 'flex'; document.getElementById('plot-id-val').value = id; };
                 container.appendChild(plot);
             }
             section.appendChild(container);
             wrapper.appendChild(section);
         }
 
-        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-
-        function startCelebration() {
+        function startProcess() {
             const name = document.getElementById('brand-input').value;
             const id = document.getElementById('plot-id-val').value;
             if(!name) return alert("Enter brand name!");
 
-            // কোনো ওয়েটিং বা স্ক্রিন কালার চেঞ্জ ছাড়া সরাসরি পপ-আপ
             document.getElementById('order-modal').style.display = 'none';
+            document.getElementById('display-brand').innerText = name.toUpperCase();
+            
+            // সেলিব্রেশন ও রঙিন কাগজ
+            const celeb = document.getElementById('celeb-overlay');
+            celeb.style.display = 'flex';
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+
             document.getElementById(`tag-${id}`).innerText = name.toUpperCase();
             sold++;
             document.getElementById('sold-count').innerText = sold;
             document.getElementById('left-count').innerText = 100 - sold;
-            
-            document.getElementById('final-modal').style.display = 'flex';
+
+            setTimeout(() => {
+                celeb.style.display = 'none';
+                document.getElementById('final-modal').style.display = 'flex';
+            }, 2000);
         }
 
         function downloadMap() {
-            html2canvas(wrapper, { scale: 1.5, backgroundColor: "#000" }).then(canvas => {
+            html2canvas(wrapper).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Millionaires_Club_Map.png';
+                link.download = 'Millionaires_Club.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
