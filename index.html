@@ -8,60 +8,71 @@
         :root { 
             --black: #000000; 
             --white: #ffffff; 
-            --grey: #919191;
-            --light-grey: #f8f8f8;
+            --gold: #9E7E45;
+            --silver: #C0C0C0;
+            --light-grey: #f2f2f2;
         }
 
-        /* Rolls-Royce Minimalist Scroll */
         html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
         body { 
             margin: 0; padding: 0; background: var(--white); color: var(--black); 
             font-family: 'Times New Roman', serif; overflow-x: hidden; cursor: none; 
         }
 
-        /* RR Style Hollow Circle Cursor (No Dot) */
+        /* Rolls-Royce Minimalist Cursor */
         #cursor-outline { 
-            position: fixed; width: 12px; height: 12px; border: 0.8px solid rgba(0,0,0,0.5); 
-            border-radius: 50%; pointer-events: none; z-index: 9999; 
-            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s, border 0.3s;
+            position: fixed; width: 10px; height: 10px; border: 0.5px solid rgba(0,0,0,0.8); 
+            border-radius: 50%; pointer-events: none; z-index: 10000; 
+            transform: translate(-50%, -50%); transition: all 0.3s ease-out;
         }
-        /* Hover Effect for Interactive Elements */
-        .hover-active #cursor-outline { 
-            width: 45px; height: 45px; background: rgba(0,0,0,0.02); border-color: var(--black); 
+        .hover-active #cursor-outline { width: 40px; height: 40px; background: rgba(0,0,0,0.03); }
+
+        /* Navigation & Logo */
+        .nav-bar {
+            position: fixed; top: 0; width: 100%; height: 160px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 2000; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
         }
 
-        /* পেমেন্ট গেটওয়ে - উপরে বাম পাশে (Full Address) */
-        .top-payment {
-            position: fixed; top: 30px; left: 40px; z-index: 2500;
-            display: flex; flex-direction: column; gap: 12px;
+        .buy-trigger {
+            position: absolute; left: 50px; top: 70px; font-size: 10px; 
+            letter-spacing: 4px; font-weight: bold; border-bottom: 1px solid var(--black); 
+            cursor: pointer; transition: 0.3s;
         }
-        .pay-link {
-            font-size: 10px; letter-spacing: 1px; color: var(--black); text-decoration: none;
-            cursor: pointer; transition: 0.3s; opacity: 0.7; font-weight: bold;
-        }
-        .pay-link:hover { opacity: 1; border-bottom: 0.5px solid var(--black); }
 
-        /* RR Style Logo (White/Silver with Shadow, No Box) */
-        .header { 
-            position: fixed; top: 0; width: 100%; height: 180px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            z-index: 1000; pointer-events: none;
-        }
-        .company-name { font-size: 11px; letter-spacing: 10px; margin-bottom: 15px; color: var(--black); text-transform: uppercase; font-weight: bold; }
-        .rr-logo-wrap {
-            position: relative; width: 70px; height: 80px; pointer-events: auto;
+        .rr-logo-container {
+            position: relative; width: 50px; height: 60px; pointer-events: auto;
         }
         .k-char {
-            font-size: 60px; font-weight: 900; position: absolute;
-            color: var(--white);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1), 0 0 15px rgba(0,0,0,0.05);
-            -webkit-text-stroke: 0.3px #555;
-            line-height: 1;
+            font-size: 55px; font-weight: 900; position: absolute;
+            background: linear-gradient(135deg, var(--silver) 0%, var(--gold) 50%, #444 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 3px 5px rgba(0,0,0,0.25)); line-height: 1;
         }
         .k-front { top: 0; left: 0; z-index: 2; }
-        .k-back { top: 12px; left: 12px; opacity: 0.25; z-index: 1; }
+        .k-back { top: 10px; left: 10px; opacity: 0.3; z-index: 1; }
+        .brand-title { font-size: 11px; letter-spacing: 12px; font-weight: bold; margin-top: 15px; color: var(--black); }
 
-        /* সেকশন লেআউট */
+        /* Payment Drawer */
+        #payment-drawer {
+            position: fixed; top: 0; left: -100%; width: 380px; height: 100vh;
+            background: var(--white); border-right: 1px solid #eee; z-index: 3000;
+            transition: 0.7s cubic-bezier(0.19, 1, 0.22, 1); padding: 80px 50px;
+        }
+        #payment-drawer.open { left: 0; }
+        .pay-item { margin-bottom: 40px; cursor: pointer; }
+        .pay-item h4 { font-size: 9px; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; text-transform: uppercase; }
+        .pay-item p { font-size: 11px; word-break: break-all; margin: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; color: #333; }
+
+        /* Support Button (Bottom Left) */
+        .support-btn { 
+            position: fixed; bottom: 40px; left: 40px; width: 45px; height: 45px; 
+            border: 0.5px solid var(--black); border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; z-index: 2500; background: #fff;
+        }
+        .support-btn svg { fill: var(--black); width: 20px; }
+
+        /* Sections Design */
         .snap-section { 
             height: 100vh; width: 100%; scroll-snap-align: start; 
             display: flex; flex-direction: column; justify-content: center; 
@@ -70,148 +81,129 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .label { font-size: 10px; letter-spacing: 10px; color: var(--grey); text-transform: uppercase; margin-bottom: 25px; }
-        .title { font-size: 38px; font-weight: 100; letter-spacing: 18px; text-transform: uppercase; margin-bottom: 30px; }
-        .desc { font-size: 13px; letter-spacing: 2px; color: var(--black); max-width: 650px; line-height: 2; margin-bottom: 45px; opacity: 0.7; }
+        .label { font-size: 9px; letter-spacing: 10px; color: #888; text-transform: uppercase; margin-bottom: 25px; }
+        .title { font-size: 34px; font-weight: 100; letter-spacing: 20px; text-transform: uppercase; margin-bottom: 35px; }
         
-        /* Interactive Buttons */
-        .btn-enter { padding: 20px 80px; border: 0.5px solid var(--black); text-decoration: none; color: var(--black); font-size: 11px; letter-spacing: 5px; transition: 0.5s; text-transform: uppercase; }
+        .btn-enter { padding: 18px 80px; border: 0.5px solid var(--black); text-decoration: none; color: var(--black); font-size: 10px; letter-spacing: 6px; transition: 0.4s; text-transform: uppercase; }
         .btn-enter:hover { background: var(--black); color: var(--white); }
 
-        /* সাপোর্ট লোগো - নিচে বাম পাশে */
-        .support-btn { 
-            position: fixed; bottom: 40px; left: 40px; width: 45px; height: 45px; 
-            border: 0.5px solid var(--black); border-radius: 50%; display: flex; 
-            align-items: center; justify-content: center; z-index: 2500; background: var(--white);
-            transition: 0.3s;
+        /* Footer Grid Design */
+        .footer { 
+            background: var(--white); padding: 120px 8%; scroll-snap-align: end; 
+            border-top: 1px solid #f0f0f0; display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
         }
-        .support-btn svg { fill: var(--black); width: 20px; transition: 0.3s; }
-        .support-btn:hover { background: var(--black); }
-        .support-btn:hover svg { fill: var(--white); }
+        .footer-left h3 { font-size: 14px; letter-spacing: 6px; margin-bottom: 40px; }
+        .gov-item { margin-bottom: 30px; font-size: 12px; line-height: 1.8; letter-spacing: 1px; }
+        .gov-item b { color: var(--black); display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; }
 
-        /* ফুটার */
-        .footer { background: var(--white); padding: 140px 10%; font-size: 11px; letter-spacing: 2px; color: var(--black); line-height: 2.8; scroll-snap-align: end; border-top: 1px solid var(--light-grey); }
-        .info-box { border-left: 1px solid var(--black); padding-left: 35px; margin: 50px 0; }
+        .footer-right { border-left: 1px solid #eee; padding-left: 50px; }
+        .step-box { margin-bottom: 30px; }
+        .step-num { font-family: serif; font-style: italic; font-size: 20px; color: var(--gold); margin-right: 15px; }
+        .step-text { font-size: 11px; letter-spacing: 1px; color: #555; }
+        
+        .copyright { grid-column: 1 / -1; margin-top: 80px; font-size: 10px; letter-spacing: 3px; opacity: 0.6; text-align: center; border-top: 1px solid #fafafa; padding-top: 40px; }
+
     </style>
 </head>
 <body>
 
     <div id="cursor-outline"></div>
 
-    <div class="top-payment">
-        <div class="pay-link interactive" onclick="copyV('912221034')">BINANCE UID: 912221034 (KAWSAR6700)</div>
-        <div class="pay-link interactive" onclick="copyV('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">USDT TRC20: TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</div>
-        <div class="pay-link interactive" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">METAMASK: 0x443792A4884e8e855f954ccEF910778Aff1eb78E</div>
+    <header class="nav-bar">
+        <div class="buy-trigger interactive" onclick="toggleDrawer()">ACQUISITION</div>
+        <div class="rr-logo-container interactive">
+            <span class="k-char k-front">K</span>
+            <span class="k-char k-back">K</span>
+        </div>
+        <div class="brand-title">K ARCHIVE</div>
+    </header>
+
+    <div id="payment-drawer">
+        <h2 style="letter-spacing: 5px; font-size: 13px; margin-bottom: 60px; font-weight: bold;">SECURE ACQUISITION</h2>
+        <div class="pay-item interactive" onclick="copyV('912221034')">
+            <h4>BINANCE UID (User: KAWSAR6700)</h4>
+            <p>912221034</p>
+        </div>
+        <div class="pay-item interactive" onclick="copyV('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
+            <h4>USDT TRC20</h4>
+            <p>TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</p>
+        </div>
+        <div class="pay-item interactive" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">
+            <h4>METAMASK (ETH/BNB)</h4>
+            <p>0x443792A4884e8e855f954ccEF910778Aff1eb78E</p>
+        </div>
+        <button onclick="toggleDrawer()" style="margin-top: 40px; border: none; background: none; cursor: pointer; letter-spacing: 3px; font-size: 9px; border-bottom: 1px solid #000; padding: 5px 0;">[ CLOSE ]</button>
     </div>
 
     <a href="https://wa.me/8801576940717" target="_blank" class="support-btn interactive">
         <svg viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
     </a>
 
-    <header class="header">
-        <div class="company-name">K ARCHIVE</div>
-        <div class="rr-logo-wrap interactive">
-            <span class="k-char k-front">K</span>
-            <span class="k-char k-back">K</span>
-        </div>
-    </header>
-
-    <section class="snap-section">
-        <div class="reveal active">
-            <span class="label">Elite Tier</span>
-            <h2 class="title">Millionaires Club</h2>
-            <p class="desc">Reserved for the world's most prominent figures. High-intensity glowing estates in the most prestigious coordinates of the archive.</p>
-            <a href="millionaire_canvas.html" class="btn-enter interactive">ENTER ESTATE</a>
-        </div>
-    </section>
-
-    <section class="snap-section">
-        <div class="reveal">
-            <span class="label">Architects of Culture</span>
-            <h2 class="title">Social Creators</h2>
-            <p class="desc">Exclusive heritage for creators with 1M+ followers and 6 months of verified monetization history. Secure your influence.</p>
-            <a href="creator_canvas.html" class="btn-enter interactive">CLAIM SPACE</a>
-        </div>
-    </section>
-
-    <section class="snap-section">
-        <div class="reveal">
-            <span class="label">Pro Sovereignty</span>
-            <h2 class="title">Gaming Realm</h2>
-            <p class="desc">A competitive grid for the world's top gamers. Tiered positioning allows you to dominate the virtual landscape.</p>
-            <a href="gaming_canvas.html" class="btn-enter interactive">VIEW PLOTS</a>
-        </div>
-    </section>
-
-    <section class="snap-section">
-        <div class="reveal">
-            <span class="label">Global Borders</span>
-            <h2 class="title">Nations Grid</h2>
-            <p class="desc">A monumental collection of 195,000 plots. Exactly 1,000 plots are allocated per nation for global identification.</p>
-            <a href="nations_canvas.html" class="btn-enter interactive">EXPLORE NATIONS</a>
-        </div>
-    </section>
-
-    <section class="snap-section">
-        <div class="reveal">
-            <span class="label">Universal Canvas</span>
-            <h2 class="title">1 Million Pixels</h2>
-            <p class="desc">High-density pixel branding. Minimum acquisition thresholds apply for premium display and banner scaling.</p>
-            <a href="million_pixel_canvas.html" class="btn-enter interactive">ACQUIRE PIXELS</a>
-        </div>
-    </section>
-
-    <section class="snap-section">
-        <div class="reveal">
-            <span class="label">Infinite Depth</span>
-            <h2 class="title">1 Billion Pixels</h2>
-            <p class="desc">Precision meets scale. Unlimited acquisition allowed for massive branding. Minimum commitment of $500 applies.</p>
-            <a href="billion_pixel_canvas.html" class="btn-enter interactive">RESERVE FRACTION</a>
-        </div>
-    </section>
-
-    <section class="snap-section">
-        <div class="reveal">
-            <span class="label">The Horizon</span>
-            <h2 class="title">1 Trillion Pixels</h2>
-            <p class="desc">The absolute boundary of the archive. Secure your eternal space in the largest digital estate ever created. Minimum commitment $1,000.</p>
-            <a href="trillion_pixel_canvas.html" class="btn-enter interactive">SECURE DOMAIN</a>
-        </div>
-    </section>
+    <section class="snap-section"><div class="reveal active"><span class="label">Pinnacle</span><h2 class="title">Millionaires Club</h2><a href="millionaire_canvas.html" class="btn-enter interactive">Enter Estate</a></div></section>
+    <section class="snap-section"><div class="reveal"><span class="label">Architects</span><h2 class="title">Social Creators</h2><a href="creator_canvas.html" class="btn-enter interactive">Claim Space</a></div></section>
+    <section class="snap-section"><div class="reveal"><span class="label">Sovereignty</span><h2 class="title">Gaming Realm</h2><a href="gaming_canvas.html" class="btn-enter interactive">View Rank</a></div></section>
+    <section class="snap-section"><div class="reveal"><span class="label">Global Borders</span><h2 class="title">Nations Grid</h2><a href="nations_canvas.html" class="btn-enter interactive">Explore Nations</a></div></section>
+    <section class="snap-section"><div class="reveal"><span class="label">Universal</span><h2 class="title">1 Million Pixels</h2><a href="million_pixel_canvas.html" class="btn-enter interactive">Acquire</a></div></section>
+    <section class="snap-section"><div class="reveal"><span class="label">Scale</span><h2 class="title">1 Billion Pixels</h2><a href="billion_pixel_canvas.html" class="btn-enter interactive">Reserve</a></div></section>
+    <section class="snap-section"><div class="reveal"><span class="label">Eternal</span><h2 class="title">1 Trillion Pixels</h2><a href="trillion_pixel_canvas.html" class="btn-enter interactive">Secure</a></div></section>
 
     <footer class="footer">
-        <div class="reveal">
-            <h3 style="letter-spacing: 6px; font-weight: 100;">ESTATE GOVERNANCE</h3>
-            <div class="info-box">
-                <p><b>• RENEWAL POLICY:</b> A <b>Single Lifetime Renewal</b> fee of $365 is mandatory. Once fulfilled, your estate remains live forever without further cost.</p>
-                <p><b>• DATA MODIFICATION:</b> Any update to media assets or destination URLs incurs a standard <b>$7 administration fee</b>.</p>
-                <p><b>• DEPLOYMENT:</b> Submit your <b>Transaction ID</b>, <b>4K Media Link</b>, and <b>Redirect URL</b> to our support team. Verified in 2-4 hours.</p>
+        <div class="footer-left reveal">
+            <h3>ESTATE GOVERNANCE</h3>
+            <div class="gov-item">
+                <b>• Renewal Policy</b>
+                A single lifetime renewal fee of $365 is mandatory. Once fulfilled, your estate remains live forever without any further cost.
             </div>
-            <p style="opacity: 0.5; margin-top: 80px;">© 2026 K ARCHIVE. OWNED BY <b>KAWSAR</b>. ALL RIGHTS RESERVED.</p>
+            <div class="gov-item">
+                <b>• Data Modification</b>
+                Any update to media assets, links, or destination URLs incurs a standard administrative processing fee of $7.
+            </div>
+            <div class="gov-item">
+                <b>• Service Hours</b>
+                Global concierge active 24 hours during Thursday, Friday, and Saturday. (Full Weekend Coverage).
+            </div>
+        </div>
+
+        <div class="footer-right reveal">
+            <h3 style="font-size: 14px; letter-spacing: 6px; margin-bottom: 40px;">ACQUISITION STEPS</h3>
+            <div class="step-box">
+                <span class="step-num">01</span>
+                <span class="step-text">Complete payment via the Acquisition menu (Binance/USDT/MetaMask).</span>
+            </div>
+            <div class="step-box">
+                <span class="step-num">02</span>
+                <span class="step-text">Gather your Transaction ID, High-Resolution 4K Media, and Redirect URL.</span>
+            </div>
+            <div class="step-box">
+                <span class="step-num">03</span>
+                <span class="step-text">Send all details to our WhatsApp Support for manual verification.</span>
+            </div>
+            <div class="step-box">
+                <span class="step-num">04</span>
+                <span class="step-text">Estate activation will be live-synced within 2-4 hours after approval.</span>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2026 K ARCHIVE. OWNED BY <b>KAWSAR</b>. ALL RIGHTS RESERVED.
         </div>
     </footer>
 
     <script>
-        // মাউস পয়েন্টার মুভমেন্ট
         const outline = document.getElementById('cursor-outline');
         document.addEventListener('mousemove', (e) => {
             outline.style.left = e.clientX + 'px';
             outline.style.top = e.clientY + 'px';
         });
 
-        // ইন্টারেক্টিভ এলিমেন্টে হোভার ইফেক্ট
-        document.querySelectorAll('.interactive, .btn-enter, .pay-link, .support-btn').forEach(el => {
+        function toggleDrawer() { document.getElementById('payment-drawer').classList.toggle('open'); }
+        function copyV(text) { navigator.clipboard.writeText(text); alert("Copied to clipboard: " + text); }
+
+        document.querySelectorAll('.interactive').forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
         });
 
-        // কপি ফাংশন
-        function copyV(text) {
-            navigator.clipboard.writeText(text);
-            alert("Copied to clipboard: " + text);
-        }
-
-        // স্ক্রল রিভিল এনিমেশন
         window.addEventListener("scroll", () => {
             document.querySelectorAll(".reveal").forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight * 0.85) el.classList.add("active");
