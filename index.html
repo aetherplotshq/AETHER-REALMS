@@ -8,95 +8,100 @@
         :root { 
             --black: #000000; 
             --white: #ffffff; 
-            --grey: #757575;
-            --light-grey: #f2f2f2;
+            --grey: #919191;
+            --light-grey: #f8f8f8;
         }
 
-        /* Rolls-Royce Minimalist Layout */
+        /* Rolls-Royce Minimalist Scroll */
         html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
         body { 
             margin: 0; padding: 0; background: var(--white); color: var(--black); 
             font-family: 'Times New Roman', serif; overflow-x: hidden; cursor: none; 
         }
 
-        /* আল্ট্রা-স্মল মাউস পয়েন্টার (RR Style) */
-        #cursor-dot { position: fixed; width: 4px; height: 4px; background: var(--black); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
-        #cursor-outline { position: fixed; width: 20px; height: 20px; border: 0.5px solid rgba(0,0,0,0.2); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: all 0.2s ease-out; }
-        .hover-target #cursor-outline { width: 40px; height: 40px; background: rgba(0,0,0,0.05); border-color: var(--black); }
+        /* RR Style Hollow Circle Cursor (No Dot) */
+        #cursor-outline { 
+            position: fixed; width: 12px; height: 12px; border: 0.8px solid rgba(0,0,0,0.5); 
+            border-radius: 50%; pointer-events: none; z-index: 9999; 
+            transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s, border 0.3s;
+        }
+        /* Hover Effect for Interactive Elements */
+        .hover-active #cursor-outline { 
+            width: 45px; height: 45px; background: rgba(0,0,0,0.02); border-color: var(--black); 
+        }
 
-        /* পেমেন্ট গেটওয়ে - উপরে বাম পাশে (Black & White) */
+        /* পেমেন্ট গেটওয়ে - উপরে বাম পাশে (Full Address) */
         .top-payment {
             position: fixed; top: 30px; left: 40px; z-index: 2500;
-            display: flex; flex-direction: column; gap: 15px;
+            display: flex; flex-direction: column; gap: 12px;
         }
         .pay-link {
-            font-size: 10px; letter-spacing: 2px; color: var(--black); text-decoration: none;
-            cursor: pointer; transition: 0.3s; opacity: 0.6;
+            font-size: 10px; letter-spacing: 1px; color: var(--black); text-decoration: none;
+            cursor: pointer; transition: 0.3s; opacity: 0.7; font-weight: bold;
         }
-        .pay-link:hover { opacity: 1; border-bottom: 1px solid var(--black); }
+        .pay-link:hover { opacity: 1; border-bottom: 0.5px solid var(--black); }
 
-        /* RR স্টাইল লোগো (Double K - Silver/Black Effect) */
+        /* RR Style Logo (White/Silver with Shadow, No Box) */
         .header { 
-            position: fixed; top: 0; width: 100%; height: 160px; 
+            position: fixed; top: 0; width: 100%; height: 180px; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             z-index: 1000; pointer-events: none;
         }
-        .rr-logo-container {
-            position: relative; width: 60px; height: 80px; pointer-events: auto;
+        .company-name { font-size: 11px; letter-spacing: 10px; margin-bottom: 15px; color: var(--black); text-transform: uppercase; font-weight: bold; }
+        .rr-logo-wrap {
+            position: relative; width: 70px; height: 80px; pointer-events: auto;
         }
         .k-char {
-            font-size: 55px; font-weight: 900; position: absolute;
-            color: var(--black);
-            filter: drop-shadow(1px 2px 4px rgba(0,0,0,0.1));
+            font-size: 60px; font-weight: 900; position: absolute;
+            color: var(--white);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1), 0 0 15px rgba(0,0,0,0.05);
+            -webkit-text-stroke: 0.3px #555;
             line-height: 1;
         }
         .k-front { top: 0; left: 0; z-index: 2; }
-        .k-back { top: 12px; left: 12px; opacity: 0.2; z-index: 1; }
-        .owner-tag { font-size: 9px; letter-spacing: 10px; margin-top: 10px; color: var(--black); text-transform: uppercase; font-weight: bold; }
+        .k-back { top: 12px; left: 12px; opacity: 0.25; z-index: 1; }
 
-        /* সেকশন ডিজাইন */
+        /* সেকশন লেআউট */
         .snap-section { 
             height: 100vh; width: 100%; scroll-snap-align: start; 
             display: flex; flex-direction: column; justify-content: center; 
             align-items: center; text-align: center; padding: 0 15%; box-sizing: border-box; 
-            background: var(--white);
         }
         .reveal { opacity: 0; transform: translateY(30px); transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         .label { font-size: 10px; letter-spacing: 10px; color: var(--grey); text-transform: uppercase; margin-bottom: 25px; }
-        .title { font-size: 36px; font-weight: 100; letter-spacing: 15px; text-transform: uppercase; margin-bottom: 30px; }
-        .desc { font-size: 12px; letter-spacing: 2px; color: var(--black); max-width: 600px; line-height: 2; margin-bottom: 40px; opacity: 0.8; }
+        .title { font-size: 38px; font-weight: 100; letter-spacing: 18px; text-transform: uppercase; margin-bottom: 30px; }
+        .desc { font-size: 13px; letter-spacing: 2px; color: var(--black); max-width: 650px; line-height: 2; margin-bottom: 45px; opacity: 0.7; }
         
-        .btn-enter { padding: 18px 70px; border: 0.5px solid var(--black); text-decoration: none; color: var(--black); font-size: 10px; letter-spacing: 5px; transition: 0.5s; background: transparent; text-transform: uppercase; }
+        /* Interactive Buttons */
+        .btn-enter { padding: 20px 80px; border: 0.5px solid var(--black); text-decoration: none; color: var(--black); font-size: 11px; letter-spacing: 5px; transition: 0.5s; text-transform: uppercase; }
         .btn-enter:hover { background: var(--black); color: var(--white); }
 
-        /* ফুটার */
-        .footer { background: var(--white); padding: 120px 10%; font-size: 11px; letter-spacing: 2px; color: var(--black); line-height: 2.8; scroll-snap-align: end; border-top: 1px solid var(--light-grey); }
-        .info-box { border-left: 1px solid var(--black); padding-left: 30px; margin: 40px 0; }
-
-        /* কাস্টমার সাপোর্ট লোগো - নিচে বাম পাশে */
+        /* সাপোর্ট লোগো - নিচে বাম পাশে */
         .support-btn { 
             position: fixed; bottom: 40px; left: 40px; width: 45px; height: 45px; 
             border: 0.5px solid var(--black); border-radius: 50%; display: flex; 
-            align-items: center; justify-content: center; z-index: 2500; background: #fff;
+            align-items: center; justify-content: center; z-index: 2500; background: var(--white);
             transition: 0.3s;
         }
-        .support-btn:hover { background: var(--black); }
-        .support-btn:hover svg { fill: #fff; }
         .support-btn svg { fill: var(--black); width: 20px; transition: 0.3s; }
+        .support-btn:hover { background: var(--black); }
+        .support-btn:hover svg { fill: var(--white); }
 
+        /* ফুটার */
+        .footer { background: var(--white); padding: 140px 10%; font-size: 11px; letter-spacing: 2px; color: var(--black); line-height: 2.8; scroll-snap-align: end; border-top: 1px solid var(--light-grey); }
+        .info-box { border-left: 1px solid var(--black); padding-left: 35px; margin: 50px 0; }
     </style>
 </head>
 <body>
 
-    <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
 
     <div class="top-payment">
-        <div class="pay-link interactive" onclick="copyV('KAWSAR6700')">BINANCE UID: KAWSAR6700</div>
-        <div class="pay-link interactive" onclick="copyV('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">USDT (TRC20): TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</div>
-        <div class="pay-link interactive" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">METAMASK: 0x443792A4...78E</div>
+        <div class="pay-link interactive" onclick="copyV('912221034')">BINANCE UID: 912221034 (KAWSAR6700)</div>
+        <div class="pay-link interactive" onclick="copyV('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">USDT TRC20: TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</div>
+        <div class="pay-link interactive" onclick="copyV('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">METAMASK: 0x443792A4884e8e855f954ccEF910778Aff1eb78E</div>
     </div>
 
     <a href="https://wa.me/8801576940717" target="_blank" class="support-btn interactive">
@@ -104,36 +109,45 @@
     </a>
 
     <header class="header">
-        <div class="rr-logo-container interactive">
+        <div class="company-name">K ARCHIVE</div>
+        <div class="rr-logo-wrap interactive">
             <span class="k-char k-front">K</span>
             <span class="k-char k-back">K</span>
         </div>
-        <div class="owner-tag">KAWSAR</div>
     </header>
 
     <section class="snap-section">
         <div class="reveal active">
-            <span class="label">The Pinnacle</span>
+            <span class="label">Elite Tier</span>
             <h2 class="title">Millionaires Club</h2>
-            <p class="desc">The ultimate mark of sovereignty. Reserved only for the global elite. Experience the height of virtual luxury with our premium glowing estates.</p>
-            <a href="millionaire_canvas.html" class="btn-enter interactive">RESERVE ESTATE</a>
+            <p class="desc">Reserved for the world's most prominent figures. High-intensity glowing estates in the most prestigious coordinates of the archive.</p>
+            <a href="millionaire_canvas.html" class="btn-enter interactive">ENTER ESTATE</a>
         </div>
     </section>
 
     <section class="snap-section">
         <div class="reveal">
-            <span class="label">Architects of Influence</span>
+            <span class="label">Architects of Culture</span>
             <h2 class="title">Social Creators</h2>
-            <p class="desc">A digital heritage for cultural leaders. Membership requires 1M+ followers and a 6-month established monetization history.</p>
-            <a href="creator_canvas.html" class="btn-enter interactive">JOIN REALM</a>
+            <p class="desc">Exclusive heritage for creators with 1M+ followers and 6 months of verified monetization history. Secure your influence.</p>
+            <a href="creator_canvas.html" class="btn-enter interactive">CLAIM SPACE</a>
         </div>
     </section>
 
     <section class="snap-section">
         <div class="reveal">
-            <span class="label">Sovereign Borders</span>
+            <span class="label">Pro Sovereignty</span>
+            <h2 class="title">Gaming Realm</h2>
+            <p class="desc">A competitive grid for the world's top gamers. Tiered positioning allows you to dominate the virtual landscape.</p>
+            <a href="gaming_canvas.html" class="btn-enter interactive">VIEW PLOTS</a>
+        </div>
+    </section>
+
+    <section class="snap-section">
+        <div class="reveal">
+            <span class="label">Global Borders</span>
             <h2 class="title">Nations Grid</h2>
-            <p class="desc">A global canvas of 195,000 plots. Each sovereign nation is strictly allocated 1,000 plots for geographic identification.</p>
+            <p class="desc">A monumental collection of 195,000 plots. Exactly 1,000 plots are allocated per nation for global identification.</p>
             <a href="nations_canvas.html" class="btn-enter interactive">EXPLORE NATIONS</a>
         </div>
     </section>
@@ -142,8 +156,8 @@
         <div class="reveal">
             <span class="label">Universal Canvas</span>
             <h2 class="title">1 Million Pixels</h2>
-            <p class="desc">A high-density pixel grid for large-scale visual branding. Minimum acquisition thresholds apply for premium display status.</p>
-            <a href="million_pixel_canvas.html" class="btn-enter interactive">ACQUIRE SPACE</a>
+            <p class="desc">High-density pixel branding. Minimum acquisition thresholds apply for premium display and banner scaling.</p>
+            <a href="million_pixel_canvas.html" class="btn-enter interactive">ACQUIRE PIXELS</a>
         </div>
     </section>
 
@@ -151,62 +165,58 @@
         <div class="reveal">
             <span class="label">Infinite Depth</span>
             <h2 class="title">1 Billion Pixels</h2>
-            <p class="desc">No limits on vision. A massive high-resolution canvas where precision meets scale. Minimum funding threshold of $500 applies.</p>
+            <p class="desc">Precision meets scale. Unlimited acquisition allowed for massive branding. Minimum commitment of $500 applies.</p>
             <a href="billion_pixel_canvas.html" class="btn-enter interactive">RESERVE FRACTION</a>
         </div>
     </section>
 
     <section class="snap-section">
         <div class="reveal">
-            <span class="label">Eternal Horizon</span>
+            <span class="label">The Horizon</span>
             <h2 class="title">1 Trillion Pixels</h2>
-            <p class="desc">The largest pixelated estate in existence. Reserved for mega-conglomerates. Requires a minimum commitment of $1,000.</p>
+            <p class="desc">The absolute boundary of the archive. Secure your eternal space in the largest digital estate ever created. Minimum commitment $1,000.</p>
             <a href="trillion_pixel_canvas.html" class="btn-enter interactive">SECURE DOMAIN</a>
         </div>
     </section>
 
     <footer class="footer">
         <div class="reveal">
-            <h3 style="letter-spacing: 5px; color: var(--black); margin-bottom: 40px; font-weight: 100;">ESTATE GOVERNANCE</h3>
-            
+            <h3 style="letter-spacing: 6px; font-weight: 100;">ESTATE GOVERNANCE</h3>
             <div class="info-box">
-                <p><b>• LIFETIME STATUS:</b> One-time review fee for permanent online presence.</p>
-                <p><b>• RENEWAL POLICY:</b> A <b>Single Lifetime Renewal</b> fee of $365 is mandatory. After this, no further renewal is ever required.</p>
-                <p><b>• UPDATES:</b> Modification to media or redirect URLs incurs a processing fee of <b>$7</b>.</p>
-                <p><b>• CONCIERGE:</b> Submit your <b>Transaction ID</b>, <b>4K Media</b>, and <b>URL</b> to our support team. Deployment takes 2-4 hours.</p>
+                <p><b>• RENEWAL POLICY:</b> A <b>Single Lifetime Renewal</b> fee of $365 is mandatory. Once fulfilled, your estate remains live forever without further cost.</p>
+                <p><b>• DATA MODIFICATION:</b> Any update to media assets or destination URLs incurs a standard <b>$7 administration fee</b>.</p>
+                <p><b>• DEPLOYMENT:</b> Submit your <b>Transaction ID</b>, <b>4K Media Link</b>, and <b>Redirect URL</b> to our support team. Verified in 2-4 hours.</p>
             </div>
-
-            <p style="margin-top: 50px; opacity: 0.6;">© 2026 K ARCHIVE. OWNED BY <b>KAWSAR</b>. ALL RIGHTS RESERVED.</p>
+            <p style="opacity: 0.5; margin-top: 80px;">© 2026 K ARCHIVE. OWNED BY <b>KAWSAR</b>. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
 
     <script>
-        const dot = document.getElementById('cursor-dot');
+        // মাউস পয়েন্টার মুভমেন্ট
         const outline = document.getElementById('cursor-outline');
-
         document.addEventListener('mousemove', (e) => {
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
-            outline.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 400, fill: "forwards" });
+            outline.style.left = e.clientX + 'px';
+            outline.style.top = e.clientY + 'px';
         });
 
-        document.querySelectorAll('.interactive').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('hover-target'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('hover-target'));
+        // ইন্টারেক্টিভ এলিমেন্টে হোভার ইফেক্ট
+        document.querySelectorAll('.interactive, .btn-enter, .pay-link, .support-btn').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
         });
 
+        // কপি ফাংশন
         function copyV(text) {
             navigator.clipboard.writeText(text);
             alert("Copied to clipboard: " + text);
         }
 
-        const reveal = () => {
+        // স্ক্রল রিভিল এনিমেশন
+        window.addEventListener("scroll", () => {
             document.querySelectorAll(".reveal").forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight * 0.85) el.classList.add("active");
             });
-        };
-        window.addEventListener("scroll", reveal);
-        reveal();
+        });
     </script>
 </body>
 </html>
