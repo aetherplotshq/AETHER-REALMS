@@ -10,60 +10,57 @@
         :root { --gold: #9E7E45; --binance: #F3BA2F; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Arial', sans-serif; overflow-x: hidden; }
 
-        /* Navigation - Download button moved left */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); border-bottom: 1px solid #222; }
-        .nav-btn { background: none; border: 1px solid #555; color: #fff; padding: 8px 25px; font-size: 11px; cursor: pointer; text-transform: uppercase; margin-right: 20px; }
+        /* Navigation - Button moved left */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); border-bottom: 1px solid #222; }
         .counter-box { font-size: 12px; letter-spacing: 2px; font-weight: bold; color: var(--gold); }
+        .nav-btn { background: none; border: 1px solid #555; color: #fff; padding: 8px 18px; font-size: 10px; cursor: pointer; text-transform: uppercase; margin-right: 15px; }
 
-        /* Glowing Animated Title */
+        /* Multi-Color Video Style Animated Title */
         .header-area { text-align: center; padding-top: 110px; padding-bottom: 40px; }
         .section-name { 
-            font-size: 50px; letter-spacing: 12px; text-transform: uppercase; font-weight: 900; 
-            color: #fff; text-shadow: 0 0 10px #fff, 0 0 20px var(--gold), 0 0 30px var(--gold);
-            animation: textGlow 2s ease-in-out infinite alternate;
+            font-size: 55px; letter-spacing: 12px; text-transform: uppercase; font-weight: 900;
+            background: linear-gradient(90deg, #0e4b5a, #6e8a7d, #d99a6c, #a63d3d, #4d1c31, #0e4b5a);
+            background-size: 400% 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: moveGradient 8s linear infinite;
         }
-        @keyframes textGlow { from { text-shadow: 0 0 10px #fff, 0 0 20px var(--gold); } to { text-shadow: 0 0 20px #fff, 0 0 40px var(--gold), 0 0 60px var(--gold); } }
+        @keyframes moveGradient { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 
-        /* Grid - Large & Glowing Border Animation */
+        /* Grid - Glowing & Growing Plots */
         .grid-wrapper { display: flex; flex-direction: column; width: 100%; }
         .row-section { width: 100%; display: flex; justify-content: center; padding: 50px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .row-container { display: flex; gap: 18px; }
 
         .plot { 
-            width: 130px; height: 130px; background: rgba(0,0,0,0.7); 
+            width: 130px; height: 130px; background: rgba(0,0,0,0.6); 
             border: 2px solid var(--p-color); 
             box-shadow: 0 0 10px var(--p-color);
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            transition: 0.3s all ease; position: relative; cursor: pointer;
-            animation: borderPulse 3s infinite;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            position: relative; cursor: pointer;
         }
-        @keyframes borderPulse { 
-            0% { box-shadow: 0 0 5px var(--p-color); } 
-            50% { box-shadow: 0 0 20px var(--p-color); } 
-            100% { box-shadow: 0 0 5px var(--p-color); } 
+        .plot:hover { 
+            transform: scale(1.15); 
+            box-shadow: 0 0 35px var(--p-color), inset 0 0 15px var(--p-color); 
+            z-index: 10; border-color: #fff; 
         }
-        .plot:hover { transform: scale(1.15); box-shadow: 0 0 40px var(--p-color); z-index: 10; border-color: #fff; }
         .owner-tag { position: absolute; bottom: -35px; font-size: 10px; color: #fff; text-transform: uppercase; font-weight: bold; width: 100%; text-align: center; }
 
-        /* Instant Celebration Screen */
+        /* Celebration Screen */
         #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--binance); display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; color: #000; }
-
-        /* Support Icon (Sada-Kalo) */
-        .support-icon { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; filter: grayscale(1); z-index: 5000; cursor: pointer; }
 
         /* Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.97); display:none; align-items:center; justify-content:center; z-index:9999; }
         .card { background:#fff; color:#000; padding:40px; width:430px; text-align:center; border-radius: 4px; }
-        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; font-weight:bold; cursor:pointer; text-transform: uppercase; margin-top: 15px; }
+        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; font-weight:bold; cursor:pointer; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; }
 
-        .footer { text-align: center; padding: 80px; font-size: 11px; color: #555; background: #000; line-height: 2; }
+        .footer { text-align: center; padding: 80px; font-size: 11px; color: #555; background: #000; border-top: 1px solid #111; line-height: 2; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
-        <button class="nav-btn" onclick="downloadMap()">EXPORT MAP</button>
         <div class="counter-box">SOLD: <span id="sold-count">0</span> | LEFT: <span id="left-count">100</span></div>
+        <button class="nav-btn" onclick="downloadMap()">EXPORT MAP</button>
     </div>
 
     <div class="header-area">
@@ -72,40 +69,37 @@
 
     <div id="capture-area" class="grid-wrapper"></div>
 
-    <div class="support-icon" onclick="window.open('https://wa.me/8801576940717')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" style="filter: brightness(0);" alt="Support">
-    </div>
-
     <div class="footer">
-        K-Archive Millionaires Club © 2026. All rights reserved. <br>
-        I am not responsible for the content of external sites.
+        K-Archive Millionaires Club © 2026. All rights reserved.
     </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2>RESERVE YOUR PLOT</h2>
-            <input type="text" id="brand-input" placeholder="BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; outline:none;">
+            <h2 style="letter-spacing: 2px;">SECURE YOUR PLOT</h2>
+            <input type="text" id="brand-input" placeholder="YOUR BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; font-size:16px; outline:none;">
             <input type="hidden" id="plot-id-val">
-            <button class="buy-btn" onclick="instantCelebration()">SUBMIT & BUY</button>
+            <button class="buy-btn" onclick="startCelebration()">SUBMIT & BUY</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:20px; opacity: 0.5;">[ CANCEL ]</p>
         </div>
     </div>
 
     <div id="celeb-overlay">
-        <h1 style="font-size: 70px; margin: 0; font-weight: 900;">CONGRATS!</h1>
-        <h2 id="display-brand" style="font-size: 40px; margin: 15px 0;"></h2>
-        <p style="letter-spacing: 5px; font-weight: bold;">MEMBERSHIP ACTIVATED</p>
+        <h1 style="font-size: 65px; margin: 0; font-weight: 900; letter-spacing: -2px;">CONGRATS!</h1>
+        <h2 id="display-brand" style="font-size: 35px; margin: 20px 0; letter-spacing: 5px; font-weight: 900;"></h2>
+        <p style="letter-spacing: 5px; font-weight: bold; font-size: 13px; opacity: 0.8;">MEMBERSHIP ACTIVATED</p>
     </div>
 
     <div id="final-modal" class="modal">
         <div class="card" style="text-align: left;">
-            <h2 style="text-align: center;">NEXT STEPS</h2>
-            <div style="background: #f4f4f4; padding: 20px; border-left: 5px solid #000; font-size: 14px;">
-                1. Transaction Screenshot<br>
-                2. Brand Logo (PNG)<br>
-                3. Redirect Link/URL
+            <h2 style="text-align: center;">FINAL STEPS</h2>
+            <div style="background: #f4f4f4; padding: 25px; margin: 20px 0; border-left: 6px solid #000; font-size: 14px; line-height: 2;">
+                <b>Please send the following to Support:</b><br>
+                1. Transaction Proof (Screenshot)<br>
+                2. Brand Name & Plot Number<br>
+                3. Logo (PNG) & Redirect URL
             </div>
             <button class="buy-btn" onclick="window.open('https://wa.me/8801576940717')">WHATSAPP SUPPORT</button>
-            <button class="buy-btn" style="background:#666;" onclick="location.reload()">FINISH</button>
+            <button class="buy-btn" style="background:#666;" onclick="location.reload()">BACK TO CANVAS</button>
         </div>
     </div>
 
@@ -121,33 +115,54 @@
             section.style.backgroundColor = rowColors[r];
             const container = document.createElement('div');
             container.className = 'row-container';
+
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
                 plot.className = 'plot';
                 plot.style.setProperty('--p-color', rowColors[r]);
-                plot.innerHTML = `<span style="position:absolute; top:8px; left:10px; font-size:9px; opacity:0.5;">#${id}</span><span style="font-weight:bold; font-size:16px;">$${prices[r]}</span><span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
-                plot.onclick = () => { document.getElementById('order-modal').style.display = 'flex'; document.getElementById('plot-id-val').value = id; };
+                
+                plot.innerHTML = `
+                    <span style="position:absolute; top:8px; left:10px; font-size:9px; opacity:0.5;">#${id}</span>
+                    <span style="font-weight:bold; font-size:16px;">$${prices[r]}</span>
+                    <span class="owner-tag" id="tag-${id}">AVAILABLE</span>
+                `;
+                plot.onclick = () => {
+                    document.getElementById('order-modal').style.display = 'flex';
+                    document.getElementById('plot-id-val').value = id;
+                };
                 container.appendChild(plot);
             }
             section.appendChild(container);
             wrapper.appendChild(section);
         }
 
-        function instantCelebration() {
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+
+        function startCelebration() {
             const name = document.getElementById('brand-input').value;
             const id = document.getElementById('plot-id-val').value;
             if(!name) return;
 
             document.getElementById('order-modal').style.display = 'none';
+            const celeb = document.getElementById('celeb-overlay');
             document.getElementById('display-brand').innerText = name.toUpperCase();
-            document.getElementById('celeb-overlay').style.display = 'flex';
+            celeb.style.display = 'flex';
 
-            // Instant Multi-Side Confetti
-            const colors = ['#ffffff', '#000000', '#F3BA2F'];
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: colors });
-            confetti({ particleCount: 80, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
-            confetti({ particleCount: 80, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+            // চতুর্দিক থেকে ক্যানভাস কালারে কনফেটি ইফেক্ট
+            const duration = 2000;
+            const animationEnd = Date.now() + duration;
+
+            (function frame() {
+                // স্ক্রিনের ৪টি কোণা ও দিক থেকে ক্যানভাসের সব কালার দিয়ে কনফেটি
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.8 }, colors: rowColors });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.8 }, colors: rowColors });
+                confetti({ particleCount: 5, angle: 90, spread: 100, origin: { x: 0.5, y: 0 }, colors: rowColors });
+                
+                if (Date.now() < animationEnd) {
+                    requestAnimationFrame(frame);
+                }
+            }());
 
             document.getElementById(`tag-${id}`).innerText = name.toUpperCase();
             sold++;
@@ -155,15 +170,15 @@
             document.getElementById('left-count').innerText = 100 - sold;
 
             setTimeout(() => {
-                document.getElementById('celeb-overlay').style.display = 'none';
+                celeb.style.display = 'none';
                 document.getElementById('final-modal').style.display = 'flex';
             }, 2500);
         }
 
         function downloadMap() {
-            html2canvas(wrapper).then(canvas => {
+            html2canvas(wrapper, { scale: 1.5, backgroundColor: "#000" }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Millionaires_Club.png';
+                link.download = 'Millionaires_Club_Canvas.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
