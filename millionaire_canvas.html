@@ -29,7 +29,7 @@
 
         /* Grid */
         .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
-        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 20px; } /* গ্যাপ বাড়ানো হয়েছে যাতে নাম স্পষ্ট দেখা যায় */
+        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 20px; }
         .row { display: flex; justify-content: center; gap: 12px; }
 
         /* Plot Styling */
@@ -39,26 +39,24 @@
             box-shadow: inset 0 0 15px var(--r-col);
         }
         .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 50; }
-
-        /* Sizes */
         .lg { width: 135px; height: 135px; } 
         .std { width: 90px; height: 90px; }
 
-        /* Crown (Outside) */
         .crown { position: absolute; top: -45px; font-size: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
-
-        /* Plot Name Display (নিচে গ্যাপ দিয়ে সেট করা) */
         .owner-tag { position: absolute; bottom: -30px; font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; font-weight: bold; }
 
-        /* Overlays */
+        /* Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
         .card { background:#fff; color:#000; padding:45px; width:420px; text-align:center; border-radius: 4px; }
         .card input { width:100%; padding: 15px; margin: 15px 0; border: 1px solid #ddd; font-family: serif; font-size: 16px; outline: none; box-sizing: border-box; }
         .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; font-weight:bold; cursor:pointer; text-transform: uppercase; }
         .info-box { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; }
 
-        /* Celebration Screen (Full Black Background) */
+        /* Celebration Screen */
         #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+
+        /* Footer Copyright */
+        .footer-copyright { text-align: center; padding: 60px; font-size: 11px; color: #555; line-height: 1.8; border-top: 1px solid #111; width: 80%; margin-top: 50px; letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -77,8 +75,11 @@
 
     <div class="grid-container">
         <div id="capture-area"></div>
-        <div style="text-align: center; padding: 60px; font-size: 11px; color: #444; border-top: 1px solid #111; width: 80%; margin-top: 50px;">
-            K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved.
+        
+        <div class="footer-copyright">
+            K-Archive Millionaires Club © 2026. All rights reserved. <br>
+            I am not responsible for the content of external sites. <br>
+            Images and brand logos featured on this canvas are © of their respective owners.
         </div>
     </div>
 
@@ -87,20 +88,20 @@
             <h2 style="letter-spacing: 3px;">RESERVATION</h2>
             <input type="number" id="plot-id-field" placeholder="PLOT NO (1-100)">
             <input type="text" id="brand-name-field" placeholder="YOUR BRAND NAME">
-            <button class="buy-btn" onclick="processSelection()">SUBMIT & BUY</button>
+            <button class="buy-btn" onclick="processOrder()">SUBMIT & BUY</button>
             <p onclick="closeModals()" style="font-size: 10px; cursor: pointer; margin-top: 20px; opacity: 0.5;">[ CANCEL ]</p>
         </div>
     </div>
 
     <div id="celeb-overlay">
-        <h1 style="font-size: 50px; letter-spacing: 10px; color: #fff; margin-bottom: 10px;">CONGRATULATIONS!</h1>
-        <h2 id="celeb-brand-name" style="font-size: 30px; letter-spacing: 5px; color: var(--gold); border-top: 1px solid #333; padding-top: 20px;"></h2>
-        <p style="font-size: 14px; letter-spacing: 3px; color: #666; margin-top: 20px;">ACQUISITION PROCESS INITIATED</p>
+        <h1 style="font-size: 50px; letter-spacing: 10px; color: #fff;">CONGRATULATIONS!</h1>
+        <h2 id="celeb-brand-name" style="font-size: 30px; letter-spacing: 5px; color: var(--gold); border-top: 1px solid #333; padding-top: 20px; margin-top: 20px;"></h2>
+        <p style="font-size: 14px; letter-spacing: 3px; color: #666; margin-top: 20px;">YOU ARE NOW PART OF THE CLUB</p>
     </div>
 
     <div id="final-modal" class="modal">
         <div class="card" style="text-align: left;">
-            <h2 style="text-align: center; letter-spacing: 2px;">NEXT STEPS</h2>
+            <h2 style="text-align: center; letter-spacing: 2px;">WHAT'S NEXT?</h2>
             <div class="info-box">
                 <b>Please provide these to Customer Service:</b><br>
                 1. Payment Proof (Transaction ID/Screenshot)<br>
@@ -132,8 +133,6 @@
 
                 plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
                 plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${rowsPrices[r]}</span>`;
-                
-                // নাম দেখানোর ট্যাগ (AVAILABLE লেখা থাকবে শুরুতে)
                 plot.innerHTML += `<span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
 
                 plot.onclick = () => {
@@ -147,34 +146,49 @@
 
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-        function processSelection() {
+        function processOrder() {
             const id = document.getElementById('plot-id-field').value;
             const name = document.getElementById('brand-name-field').value;
 
             if(!id || !name) return alert("Fill Plot No and Brand Name!");
 
-            // ১. ইনস্ট্যান্ট অভিনন্দন স্ক্রিন ও ব্র্যান্ড নেম দেখানো
             document.getElementById('order-modal').style.display = 'none';
             const celebOverlay = document.getElementById('celeb-overlay');
             document.getElementById('celeb-brand-name').innerText = name.toUpperCase();
             celebOverlay.style.display = 'flex';
 
-            // ২. দুই পাশ থেকে সাদা কাগজ ছিটানো (Confetti)
+            // --- কনফেটি ফিক্স: দুই পাশ থেকে রঙিন কাগজ ---
             const duration = 3000;
-            const end = Date.now() + duration;
-            const whiteColors = ['#ffffff', '#f0f0f0', '#dddddd'];
+            const animationEnd = Date.now() + duration;
+            const colors = ['#ffffff', '#C0C0C0', '#9E7E45']; // সাদা, সিলভার এবং গোল্ডেন
 
             (function frame() {
-                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: whiteColors });
-                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: whiteColors });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
+                // বাম পাশ থেকে উড়ানো
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0, y: 0.6 },
+                    colors: colors
+                });
+                // ডান পাশ থেকে উড়ানো
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1, y: 0.6 },
+                    colors: colors
+                });
 
-            // ৩. মেইন ক্যানভাসে নাম আপডেট করা
+                if (Date.now() < animationEnd) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+            // --- ফিক্স শেষ ---
+
             const ownerTag = document.getElementById(`tag-${id}`);
             if(ownerTag) ownerTag.innerText = name.toUpperCase();
 
-            // ৪. ৩ সেকেন্ড পর ফাইনাল পপ-আপ
             setTimeout(() => {
                 celebOverlay.style.display = 'none';
                 document.getElementById('final-modal').style.display = 'flex';
@@ -184,7 +198,7 @@
         function downloadMap() {
             html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = 'K_Archive_Map.png';
+                link.download = 'Millionaires_Club_Map.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
