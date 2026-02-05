@@ -8,8 +8,7 @@
         :root { 
             --black: #000000; 
             --white: #ffffff; 
-            --gold: #9E7E45;
-            --silver: #C0C0C0;
+            --grey: #888888;
         }
 
         html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
@@ -18,15 +17,15 @@
             font-family: 'Times New Roman', serif; overflow-x: hidden; cursor: none; 
         }
 
-        /* Fast & Responsive Cursor */
+        /* Fast & Responsive Cursor (Fixed Speed) */
         #cursor-outline { 
-            position: fixed; width: 10px; height: 10px; border: 0.8px solid rgba(0,0,0,1); 
+            position: fixed; width: 10px; height: 10px; border: 1px solid var(--black); 
             border-radius: 50%; pointer-events: none; z-index: 10000; 
-            transform: translate(-50%, -50%); /* Transition removed for instant movement */
+            transform: translate(-50%, -50%); 
         }
         .hover-active #cursor-outline { width: 45px; height: 45px; background: rgba(0,0,0,0.02); transition: width 0.3s; }
 
-        /* Navigation & Luxury Brand Header */
+        /* Navigation & Black Logo Header */
         .nav-bar {
             position: fixed; top: 0; width: 100%; height: 180px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -44,12 +43,11 @@
         }
         .k-char {
             font-size: 55px; font-weight: 900; position: absolute;
-            background: linear-gradient(135deg, var(--silver), var(--gold), #444);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(2px 3px 5px rgba(0,0,0,0.25)); line-height: 1;
+            color: var(--black); /* Pure Black Logo */
+            line-height: 1;
         }
         .k-front { top: 0; left: 0; z-index: 2; }
-        .k-back { top: 10px; left: 10px; opacity: 0.3; z-index: 1; }
+        .k-back { top: 10px; left: 10px; opacity: 0.15; z-index: 1; }
         
         .brand-subtitle { font-size: 11px; letter-spacing: 14px; font-weight: 300; margin-top: 15px; color: var(--black); text-transform: uppercase; }
 
@@ -61,8 +59,8 @@
         }
         #payment-drawer.open { left: 0; }
         .pay-item { margin-bottom: 40px; cursor: pointer; }
-        .pay-item h4 { font-size: 9px; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; text-transform: uppercase; }
-        .pay-item p { font-size: 11px; word-break: break-all; margin: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; color: #333; }
+        .pay-item h4 { font-size: 9px; letter-spacing: 2px; color: var(--grey); margin-bottom: 8px; text-transform: uppercase; }
+        .pay-item p { font-size: 11px; word-break: break-all; margin: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; color: #000; font-weight: bold; }
 
         /* Sections */
         .snap-section { 
@@ -99,7 +97,7 @@
 
         .footer-right { border-left: 1px solid #eee; padding-left: 50px; }
         .step-box { margin-bottom: 30px; }
-        .step-num { font-family: serif; font-style: italic; font-size: 20px; color: var(--gold); margin-right: 15px; }
+        .step-num { font-family: serif; font-style: italic; font-size: 20px; color: var(--black); margin-right: 15px; }
         .step-text { font-size: 11px; letter-spacing: 1px; color: #555; }
         
         .copyright { grid-column: 1 / -1; margin-top: 80px; font-size: 10px; letter-spacing: 4px; opacity: 0.6; text-align: center; border-top: 1px solid #fafafa; padding-top: 40px; }
@@ -156,7 +154,7 @@
     <footer class="footer">
         <div class="footer-left reveal">
             <h3>ESTATE GOVERNANCE</h3>
-            <div class="gov-item"><b>• Renewal Policy</b>One-time lifetime renewal fee of $365. No recurring costs ever.</div>
+            <div class="gov-item"><b>• Renewal Policy</b>One-time lifetime renewal fee of $365 is mandatory. No recurring costs ever.</div>
             <div class="gov-item"><b>• Data Modification</b>$7 administrative fee for media or link updates.</div>
             <div class="gov-item"><b>• Service Window</b>Concierge active 24h: Thursday, Friday, Saturday.</div>
         </div>
@@ -166,32 +164,4 @@
             <div class="step-box"><span class="step-num">01</span><span class="step-text">Complete payment via the Acquisition Drawer.</span></div>
             <div class="step-box"><span class="step-num">02</span><span class="step-text">Gather Transaction ID, 4K Media, and Target URL.</span></div>
             <div class="step-box"><span class="step-num">03</span><span class="step-text">Submit assets to WhatsApp Support for verification.</span></div>
-            <div class="step-box"><span class="step-num">04</span><span class="step-text">Live sync completed within 2-4 hours post-approval.</span></div>
-        </div>
-
-        <div class="copyright">© 2026 K ARCHIVE. OWNED BY <b>KAWSAR</b>. ALL RIGHTS RESERVED.</div>
-    </footer>
-
-    <script>
-        const outline = document.getElementById('cursor-outline');
-        document.addEventListener('mousemove', (e) => {
-            outline.style.left = e.clientX + 'px';
-            outline.style.top = e.clientY + 'px';
-        });
-
-        function toggleDrawer() { document.getElementById('payment-drawer').classList.toggle('open'); }
-        function copyV(text) { navigator.clipboard.writeText(text); alert("Copied: " + text); }
-
-        document.querySelectorAll('.interactive').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
-        });
-
-        window.addEventListener("scroll", () => {
-            document.querySelectorAll(".reveal").forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight * 0.85) el.classList.add("active");
-            });
-        });
-    </script>
-</body>
-</html>
+            <div class="step-box"><span
