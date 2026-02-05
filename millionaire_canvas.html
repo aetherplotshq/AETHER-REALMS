@@ -10,51 +10,54 @@
         :root { --gold: #9E7E45; --binance: #F3BA2F; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Arial', sans-serif; overflow-x: hidden; }
 
-        /* Navigation & Counter */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); box-sizing: border-box; border-bottom: 1px solid #222; }
+        /* Navigation */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); border-bottom: 1px solid #222; }
         .counter-box { font-size: 12px; letter-spacing: 2px; font-weight: bold; color: var(--gold); }
-        .nav-btn { background: none; border: 1px solid #555; color: #fff; padding: 8px 15px; font-size: 10px; cursor: pointer; text-decoration: none; text-transform: uppercase; }
+        .nav-btn { background: none; border: 1px solid #555; color: #fff; padding: 8px 15px; font-size: 10px; cursor: pointer; text-transform: uppercase; }
 
         /* Header */
-        .header-area { text-align: center; padding-top: 100px; padding-bottom: 30px; background: #0e4b5a; }
-        .section-name { font-size: 45px; letter-spacing: 8px; text-transform: uppercase; font-weight: 900; color: #fff; }
+        .header-area { text-align: center; padding-top: 110px; padding-bottom: 40px; }
+        .section-name { font-size: 50px; letter-spacing: 12px; text-transform: uppercase; font-weight: 900; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
 
-        /* Grid - All Plots Same Size */
+        /* Grid - All Plots Large & Glowing */
         .grid-wrapper { display: flex; flex-direction: column; width: 100%; }
-        .row-section { width: 100%; display: flex; justify-content: center; padding: 40px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .row-container { display: flex; gap: 15px; }
+        .row-section { width: 100%; display: flex; justify-content: center; padding: 50px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .row-container { display: flex; gap: 18px; }
 
         .plot { 
-            width: 95px; height: 95px; /* All same size as requested */
-            background: rgba(0,0,0,0.4); border: 1.5px solid rgba(255,255,255,0.2); 
+            width: 130px; height: 130px; /* আপনার চাহিদা মতো সব বড় সাইজ */
+            background: rgba(0,0,0,0.6); 
+            border: 2px solid var(--p-color); /* ডাইনামিক কালার */
+            box-shadow: 0 0 15px var(--p-color); /* উজ্জ্বল জ্বলজ্বলে ইফেক্ট */
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             transition: 0.3s; position: relative; cursor: pointer;
         }
-        .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 10; }
-        .owner-tag { position: absolute; bottom: -30px; font-size: 9px; color: #fff; text-transform: uppercase; font-weight: bold; width: 100%; text-align: center; }
+        .plot:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--p-color); z-index: 10; border-color: #fff; }
+        .owner-tag { position: absolute; bottom: -35px; font-size: 10px; color: #fff; text-transform: uppercase; font-weight: bold; width: 100%; text-align: center; letter-spacing: 1px; }
 
-        /* Binance Celebration Screen */
-        #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--binance); display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; color: #000; }
+        /* Support Icon (Sada-Kalo) */
+        .support-icon { 
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
+            background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            box-shadow: 0 0 20px rgba(255,255,255,0.3); cursor: pointer; z-index: 5000; filter: grayscale(1); /* সাদা-কালো করা হয়েছে */
+        }
+
+        /* Celebration Screen */
+        #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--binance); display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; color: #000; }
 
         /* Modals */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.96); display:none; align-items:center; justify-content:center; z-index:9999; }
-        .card { background:#fff; color:#000; padding:40px; width:420px; text-align:center; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .buy-btn { background:#000; color:#fff; padding:16px; width:100%; border:none; font-weight:bold; cursor:pointer; text-transform: uppercase; letter-spacing: 2px; }
-        
-        .info-list { text-align: left; background: #f9f9f9; padding: 20px; margin: 20px 0; border-left: 5px solid var(--binance); font-size: 13px; line-height: 1.8; }
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.97); display:none; align-items:center; justify-content:center; z-index:9999; }
+        .card { background:#fff; color:#000; padding:40px; width:430px; text-align:center; border-radius: 4px; }
+        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; font-weight:bold; cursor:pointer; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; }
 
-        /* Floating Support Logo */
-        .support-icon { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 5000; transition: 0.3s; }
-        .support-icon:hover { transform: scale(1.1); }
-
-        .footer { text-align: center; padding: 60px; font-size: 11px; color: #666; background: #000; border-top: 1px solid #111; line-height: 1.8; }
+        .footer { text-align: center; padding: 80px; font-size: 11px; color: #555; background: #000; border-top: 1px solid #111; line-height: 2; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
         <div class="counter-box">SOLD: <span id="sold-count">0</span> | LEFT: <span id="left-count">100</span></div>
-        <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
+        <button class="nav-btn" onclick="downloadMap()">EXPORT MAP</button>
     </div>
 
     <div class="header-area">
@@ -64,7 +67,7 @@
     <div id="capture-area" class="grid-wrapper"></div>
 
     <div class="support-icon" onclick="window.open('https://wa.me/8801576940717')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" alt="Support">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" style="filter: brightness(0);" alt="Support">
     </div>
 
     <div class="footer">
@@ -75,32 +78,32 @@
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 2px;">RESERVE PLOT</h2>
-            <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ccc; font-size:16px; box-sizing: border-box;">
+            <h2 style="letter-spacing: 2px;">SECURE YOUR PLOT</h2>
+            <input type="text" id="brand-input" placeholder="YOUR BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; font-size:16px; outline:none;">
             <input type="hidden" id="plot-id-val">
-            <button class="buy-btn" onclick="executeOrder()">SUBMIT & BUY</button>
-            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:20px; opacity: 0.5;">[ CLOSE ]</p>
+            <button class="buy-btn" onclick="startCelebration()">SUBMIT & RESERVE</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:20px; opacity: 0.5;">[ CANCEL ]</p>
         </div>
     </div>
 
     <div id="celeb-overlay">
-        <h1 style="font-size: 60px; margin: 0; font-weight: 900;">CONGRATS!</h1>
-        <h2 id="display-brand" style="font-size: 35px; margin: 15px 0; border-bottom: 2px solid #000; padding-bottom: 10px;"></h2>
-        <p style="letter-spacing: 4px; font-weight: bold; font-size: 14px;">ACQUISITION IN PROCESS...</p>
+        <h1 style="font-size: 65px; margin: 0; font-weight: 900; letter-spacing: -2px;">CONGRATS!</h1>
+        <h2 id="display-brand" style="font-size: 35px; margin: 20px 0; letter-spacing: 5px;"></h2>
+        <p style="letter-spacing: 5px; font-weight: bold; font-size: 13px; opacity: 0.7;">MEMBERSHIP ACTIVATED</p>
     </div>
 
     <div id="final-modal" class="modal">
         <div class="card" style="text-align: left;">
             <h2 style="text-align: center;">FINAL STEPS</h2>
-            <div class="info-list">
-                <b>Please submit these to our Support:</b><br>
-                • 1. Payment Screenshot or Transaction ID<br>
-                • 2. Your Brand Name & Plot Number (#)<br>
-                • 3. High-Resolution Logo (PNG/SVG)<br>
-                • 4. Link/URL for your Plot Redirect
+            <div style="background: #f4f4f4; padding: 25px; margin: 20px 0; border-left: 6px solid #000; font-size: 14px; line-height: 2;">
+                <b>Please send the following to Support:</b><br>
+                1. Transaction Proof (Screenshot)<br>
+                2. Brand Name & Selected Plot Number<br>
+                3. Brand Logo (High Quality PNG)<br>
+                4. Redirect URL for your Plot
             </div>
-            <button class="buy-btn" style="background:#25D366;" onclick="window.open('https://wa.me/8801576940717')">CONTACT VIA WHATSAPP</button>
-            <button class="buy-btn" style="background:#333; margin-top:10px;" onclick="location.reload()">BACK TO CANVAS</button>
+            <button class="buy-btn" style="background:#000;" onclick="window.open('https://wa.me/8801576940717')">WHATSAPP SUPPORT</button>
+            <button class="buy-btn" style="background:#666;" onclick="location.reload()">BACK TO CANVAS</button>
         </div>
     </div>
 
@@ -122,9 +125,11 @@
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
                 plot.className = 'plot';
+                plot.style.setProperty('--p-color', rowColors[r]); // প্লটের বর্ডার কালার সেট
+                
                 plot.innerHTML = `
-                    <span style="position:absolute; top:6px; left:8px; font-size:8px; opacity:0.4;">#${id}</span>
-                    <span style="font-weight:bold; font-size:12px;">$${prices[r]}</span>
+                    <span style="position:absolute; top:8px; left:10px; font-size:9px; opacity:0.5;">#${id}</span>
+                    <span style="font-weight:bold; font-size:16px; letter-spacing:1px;">$${prices[r]}</span>
                     <span class="owner-tag" id="tag-${id}">AVAILABLE</span>
                 `;
                 plot.onclick = () => {
@@ -139,36 +144,34 @@
 
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-        function executeOrder() {
+        function startCelebration() {
             const name = document.getElementById('brand-input').value;
             const id = document.getElementById('plot-id-val').value;
-            if(!name) return alert("Please enter brand name!");
+            if(!name) return alert("Enter brand name!");
 
-            // ১. বাইনান্স থিম ও অভিনন্দন সাথে সাথে
+            // ইনস্ট্যান্ট চেঞ্জ: বাইনান্স কালার ও অভিনন্দন স্ক্রিন একই সাথে
             document.getElementById('order-modal').style.display = 'none';
             const celeb = document.getElementById('celeb-overlay');
             document.getElementById('display-brand').innerText = name.toUpperCase();
             celeb.style.display = 'flex';
 
-            // ২. সাথে সাথে দুই পাশ থেকে রঙিন কনফেটি (Time Adjusted)
-            const duration = 2500;
-            const animationEnd = Date.now() + duration;
-            const confettiColors = ['#000000', '#ffffff', '#F3BA2F'];
+            // একই মুহূর্তে দুই পাশ থেকে রঙিন কাগজ (Confetti)
+            const confettiColors = ['#000000', '#ffffff', '#F3BA2F', '#9E7E45'];
+            const end = Date.now() + 2500;
 
             (function frame() {
-                confetti({ particleCount: 8, angle: 60, spread: 60, origin: { x: 0, y: 0.65 }, colors: confettiColors });
-                confetti({ particleCount: 8, angle: 120, spread: 60, origin: { x: 1, y: 0.65 }, colors: confettiColors });
-                if (Date.now() < animationEnd) requestAnimationFrame(frame);
+                confetti({ particleCount: 10, angle: 60, spread: 65, origin: { x: 0, y: 0.7 }, colors: confettiColors });
+                confetti({ particleCount: 10, angle: 120, spread: 65, origin: { x: 1, y: 0.7 }, colors: confettiColors });
+                if (Date.now() < end) requestAnimationFrame(frame);
             }());
 
-            // ৩. মেইন পেজ আপডেট
+            // ডাটা আপডেট
             document.getElementById(`tag-${id}`).innerText = name.toUpperCase();
-            document.getElementById(`tag-${id}`).style.color = "#F3BA2F";
             sold++;
             document.getElementById('sold-count').innerText = sold;
             document.getElementById('left-count').innerText = 100 - sold;
 
-            // ৪. ২.৫ সেকেন্ড পর ফাইনাল পপ আপ
+            // ২.৫ সেকেন্ড পর ফাইনাল পপ আপ
             setTimeout(() => {
                 celeb.style.display = 'none';
                 document.getElementById('final-modal').style.display = 'flex';
@@ -176,9 +179,9 @@
         }
 
         function downloadMap() {
-            html2canvas(wrapper, { scale: 2 }).then(canvas => {
+            html2canvas(wrapper, { scale: 1.5, backgroundColor: "#000" }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'K_Archive_Map.png';
+                link.download = 'Millionaires_Club_Final.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
