@@ -7,53 +7,61 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --gold: #9E7E45; --black: #000; --white: #fff; }
+        :root { --gold: #9E7E45; --silver: #C0C0C0; --black: #000; --white: #fff; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; cursor: default; }
 
-        /* Header & Nav */
+        /* Navigation */
         .canvas-nav { position: fixed; top: 0; width: 100%; padding: 25px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); z-index: 1000; box-sizing: border-box; border-bottom: 0.5px solid #222; }
         .nav-btn { background: none; border: 0.5px solid #444; color: #fff; padding: 10px 20px; font-size: 10px; letter-spacing: 2px; text-decoration: none; transition: 0.3s; cursor: pointer; }
         .nav-btn:hover { background: #fff; color: #000; }
 
-        /* Top Title */
-        .header-area { text-align: center; padding-top: 130px; margin-bottom: 10px; }
-        .limited-tag { font-size: 10px; color: var(--gold); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        /* Title Area & Live Counter */
+        .header-area { text-align: center; padding-top: 130px; margin-bottom: 20px; }
+        .limited-tag { font-size: 11px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; }
+        .live-counter { color: #fff; font-weight: bold; margin-left: 15px; border-left: 1px solid #444; padding-left: 15px; }
+        
         .section-name { 
             font-size: clamp(30px, 6vw, 60px); letter-spacing: 15px; text-transform: uppercase; 
-            font-weight: 100; color: #fff; text-shadow: 0 0 20px rgba(158, 126, 69, 0.4);
+            font-weight: 100; color: #fff; transition: 0.6s ease; cursor: crosshair; margin-top: 15px;
+        }
+        .section-name:hover { 
+            color: var(--gold);
+            text-shadow: 2px 2px 10px rgba(158, 126, 69, 0.8), -2px -2px 10px var(--silver);
+            background: linear-gradient(to right, var(--gold), var(--silver), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Grid Wrapper & Positioning */
-        .grid-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 80vh; padding-bottom: 100px; }
+        /* Grid - Perfectly Centered */
+        .grid-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; padding-bottom: 100px; }
         #capture-area { 
             display: grid; 
-            grid-template-columns: repeat(10, auto); 
+            grid-template-columns: repeat(10, 95px); /* নিখুঁত মিডল অ্যালাইনমেন্টের জন্য ফিক্সড কলাম */
             gap: 12px; 
             padding: 40px; 
-            background: #000; 
-            justify-content: center; /* মিডলে চাপিয়ে আনার জন্য */
+            background: #000;
+            justify-content: center;
         }
 
-        /* Plot Styling & Fire Effects */
+        /* Plot Styling */
         .plot { 
             width: 85px; height: 85px; background: #050505; border: 1.5px solid #1a1a1a; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             transition: 0.4s; position: relative; cursor: pointer;
-            box-shadow: inset 0 0 15px var(--glow-color); /* ডাউনলোডে কালার নিশ্চিত করতে */
+            box-shadow: inset 0 0 15px var(--glow-color);
         }
 
-        /* VIP Row 0 - Adjusted Size & Spacing */
-        .plot.row-0 { width: 130px; height: 130px; border-width: 2px; border-color: var(--gold); }
+        /* VIP Plots - Row 0 (Centered in the 10-col grid) */
+        .plot.row-0 { 
+            width: 130px; height: 130px; border-width: 2px; border-color: var(--gold);
+            grid-column: span 1; justify-self: center;
+        }
         
-        /* Stars Underneath (Layering) */
         .vip-content-wrapper { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-        .crown-icon { font-size: 35px; z-index: 2; position: relative; }
-        .vip-stars { 
-            position: absolute; bottom: 15px; color: var(--gold); font-size: 16px; 
-            letter-spacing: 3px; z-index: 1; opacity: 0.8; /* ছবির নিচে থাকবে */
-        }
+        .crown-icon { font-size: 35px; z-index: 5; }
+        .vip-stars { position: absolute; bottom: 15px; color: var(--gold); font-size: 16px; letter-spacing: 3px; z-index: 1; opacity: 0.7; }
 
-        /* Dynamic Glow per Price Row */
+        /* Price Row Colors */
         .row-0 { --glow-color: #9E7E45; } .row-1 { --glow-color: #ffffff; }
         .row-2 { --glow-color: #00ffcc; } .row-3 { --glow-color: #00a2ff; }
         .row-4 { --glow-color: #ff0055; } .row-5 { --glow-color: #ffcc00; }
@@ -62,13 +70,16 @@
 
         .plot:hover { transform: scale(1.1); z-index: 10; border-color: #fff !important; }
 
-        /* Modals */
+        /* Modals & Overlays */
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background:#fff; color:#000; padding:60px; width:500px; text-align:center; box-shadow: 0 0 50px rgba(158,126,69,0.3); }
+        .card { background:#fff; color:#000; padding:60px; width:500px; text-align:center; transition: 0.5s; }
         .card input { width:100%; padding:15px; margin:10px 0; border:1px solid #ddd; font-family:serif; outline: none; }
         .btn-black { background:#000; color:#fff; padding:20px; width:100%; border:none; letter-spacing:5px; text-transform:uppercase; cursor:pointer; }
         
-        .info-box { text-align: left; background: #f4f4f4; padding: 25px; margin: 25px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; }
+        /* Blackout for Confetti */
+        .blackout-bg { background: #000 !important; color: #fff !important; border: 1px solid #333; }
+
+        .info-box { text-align: left; background: #f4f4f4; padding: 25px; margin: 25px 0; border-left: 5px solid var(--gold); font-size: 13px; color: #333; }
     </style>
 </head>
 <body>
@@ -78,11 +89,15 @@
             <a href="index.html" class="nav-btn">← RETURN</a>
             <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
         </div>
-        <div style="font-size: 11px; color: var(--gold); letter-spacing: 2px;">STATUS: LIMITED EDITION | REMAINING: 100</div>
+        <div class="nav-btn" style="border:none; cursor:default;">
+            STATUS: <span style="color:var(--gold);">LIMITED EDITION</span>
+        </div>
     </header>
 
     <div class="header-area">
-        <span class="limited-tag">Exclusive Access</span>
+        <span class="limited-tag">Exclusive Access 
+            <span class="live-counter">SOLD: 0 | REMAINING: 100</span>
+        </span>
         <h1 class="section-name">Millionaires Club</h1>
     </div>
 
@@ -91,31 +106,30 @@
     </div>
 
     <div id="buy-modal" class="overlay">
-        <div class="card">
-            <h2 style="letter-spacing:5px; font-weight:100;">ACQUISITION</h2>
-            <p id="plot-label" style="font-size:10px; color:var(--gold); margin-bottom:20px;"></p>
-            <input type="text" id="user-brand" placeholder="BRAND NAME / USERNAME">
-            <input type="email" id="user-mail" placeholder="EMAIL ADDRESS">
-            <button class="btn-black" onclick="startCelebration()">CONFIRM PURCHASE</button>
-            <br><br>
-            <button onclick="closeModals()" style="background:none; border:none; font-size:10px; cursor:pointer;">[ CANCEL ]</button>
+        <div class="card" id="modal-card">
+            <div id="form-content">
+                <h2 style="letter-spacing:5px; font-weight:100;">ACQUISITION</h2>
+                <p id="plot-label" style="font-size:10px; color:var(--gold); margin-bottom:20px;"></p>
+                <input type="text" id="user-brand" placeholder="BRAND NAME / USERNAME">
+                <input type="email" id="user-mail" placeholder="EMAIL ADDRESS">
+                <button class="btn-black" onclick="startCelebration()">CONFIRM PURCHASE</button>
+                <br><br>
+                <button onclick="closeModals()" style="background:none; border:none; font-size:10px; cursor:pointer;">[ CANCEL ]</button>
+            </div>
         </div>
     </div>
 
     <div id="success-popup" class="overlay">
         <div class="card" style="max-width: 600px;">
             <div style="font-size:60px; font-weight:900;">K</div>
-            <p style="letter-spacing:5px; color:var(--gold); font-size:10px;">LEGACY VERIFIED</p>
             <h2 id="congrats-text" style="font-weight:100; margin: 20px 0;"></h2>
-            
             <div class="info-box">
-                <b>NEXT STEPS TO GO LIVE:</b><br>
-                1. Submit Payment Screenshot/TXID<br>
-                2. Provide Your Brand Image/Logo<br>
-                3. Provide Redirect URL/Link<br>
-                4. Email: <span id="saved-mail" style="font-weight:bold;"></span>
+                <b>SUBMIT TO SUPPORT:</b><br>
+                • Payment Screenshot & TXID<br>
+                • Your High-Res Brand Image<br>
+                • Destination URL Link<br>
+                • Registered Email: <span id="saved-mail"></span>
             </div>
-
             <div style="display:flex; gap:10px;">
                 <button class="btn-black" style="flex:2; background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">CONTACT SUPPORT</button>
                 <button class="btn-black" style="flex:1; background:#333;" onclick="location.reload()">BACK</button>
@@ -127,7 +141,6 @@
         const grid = document.getElementById('capture-area');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
 
-        // Grid Generation
         for (let i = 0; i < 100; i++) {
             const row = Math.floor(i / 10);
             const price = prices[row];
@@ -135,19 +148,14 @@
             plot.className = `plot row-${row}`;
 
             if (row === 0) {
-                plot.innerHTML = `
-                    <div class="vip-content-wrapper">
-                        <span class="crown-icon">👑</span>
-                        <span class="vip-stars">★★★★★</span>
-                    </div>`;
+                plot.innerHTML = `<div class="vip-content-wrapper"><span class="crown-icon">👑</span><span class="vip-stars">★★★★★</span></div>`;
             }
-
             plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${i+1}</span>`;
             plot.innerHTML += `<span style="font-size:10px; z-index:3;">$${price}</span>`;
             
             plot.onclick = () => {
                 document.getElementById('buy-modal').style.display = 'flex';
-                document.getElementById('plot-label').innerText = `PLOT #${i+1} SELECTION`;
+                document.getElementById('plot-label').innerText = `RESERVING PLOT #${i+1}`;
             };
             grid.appendChild(plot);
         }
@@ -157,39 +165,29 @@
         function startCelebration() {
             const name = document.getElementById('user-brand').value;
             const email = document.getElementById('user-mail').value;
-            if(!name || !email) return alert("Please fill details");
+            if(!name || !email) return alert("Fill details");
 
-            // Close Step 1, Show Congrats inside Modal
-            const modal = document.querySelector('#buy-modal .card');
-            modal.innerHTML = `
-                <h1 style="letter-spacing:5px;">CONGRATULATIONS!</h1>
-                <p style="color:var(--gold); letter-spacing:2px;">${name.toUpperCase()} IS NOW PART OF THE LEGACY</p>
-            `;
+            const card = document.getElementById('modal-card');
+            card.classList.add('blackout-bg');
+            card.innerHTML = `<h1 style="letter-spacing:10px; font-weight:100;">CONGRATULATIONS</h1><p style="color:var(--gold);">${name.toUpperCase()}</p>`;
 
-            // Double Sided Confetti
-            confetti({ particleCount: 200, spread: 70, origin: { x: 0, y: 0.7 }, colors: ['#9E7E45', '#fff'] });
-            confetti({ particleCount: 200, spread: 70, origin: { x: 1, y: 0.7 }, colors: ['#9E7E45', '#fff'] });
+            // Exploding Confetti on Black Background
+            confetti({ particleCount: 250, spread: 100, origin: { x: 0, y: 0.6 }, colors: ['#9E7E45', '#C0C0C0', '#fff'] });
+            confetti({ particleCount: 250, spread: 100, origin: { x: 1, y: 0.6 }, colors: ['#9E7E45', '#C0C0C0', '#fff'] });
 
-            // Step 2: Transition to Support Info
             setTimeout(() => {
                 document.getElementById('buy-modal').style.display = 'none';
                 document.getElementById('success-popup').style.display = 'flex';
-                document.getElementById('congrats-text').innerText = `WELCOME TO THE CLUB, ${name.toUpperCase()}`;
+                document.getElementById('congrats-text').innerText = `WELCOME, ${name.toUpperCase()}`;
                 document.getElementById('saved-mail').innerText = email;
             }, 3000);
         }
 
         function downloadMap() {
-            html2canvas(document.querySelector("#capture-area"), {
-                backgroundColor: "#000",
-                scale: 2,
-                logging: false,
-                useCORS: true,
-                allowTaint: true
-            }).then(canvas => {
+            html2canvas(grid, { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = 'Millionaires_Club_Canvas.png';
-                link.href = canvas.toDataURL("image/png");
+                link.download = 'K_Archive_Map.png';
+                link.href = canvas.toDataURL();
                 link.click();
             });
         }
