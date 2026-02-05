@@ -3,168 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MILLIONAIRES CLUB | THE SOVEREIGN ESTATE</title>
+    <title>MILLIONAIRES CLUB | K ARCHIVE</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root { --gold: #9E7E45; --black: #000; --white: #fff; }
-        
-        body { margin: 0; background: #000; color: var(--white); font-family: 'Times New Roman', serif; overflow-x: hidden; cursor: none; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; cursor: none; overflow-x: hidden; }
 
         /* Custom Cursor */
         #cursor-dot { position: fixed; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
-        #cursor-outline { position: fixed; width: 40px; height: 40px; border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.15s; }
+        #cursor-outline { position: fixed; width: 40px; height: 40px; border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.1s; }
 
-        /* UI Header */
-        .canvas-header { position: fixed; top: 0; width: 100%; padding: 20px 40px; background: rgba(0,0,0,0.9); z-index: 1000; border-bottom: 0.5px solid #222; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box;}
-        .brand-title { letter-spacing: 10px; font-weight: 100; font-size: 18px; text-transform: uppercase; }
-        .stats-bar { font-size: 10px; letter-spacing: 2px; color: var(--gold); }
-        .top-nav { display: flex; gap: 20px; }
-        .nav-btn { background: none; border: 0.5px solid #444; color: #fff; padding: 10px 15px; font-size: 9px; letter-spacing: 2px; cursor: none; transition: 0.3s; text-decoration: none; }
-        .nav-btn:hover { background: var(--gold); color: #000; border-color: var(--gold); }
+        /* Top Header */
+        .canvas-nav { position: fixed; top: 0; width: 100%; padding: 30px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); z-index: 1000; box-sizing: border-box; border-bottom: 0.5px solid #222; }
+        .back-link { color: #fff; text-decoration: none; font-size: 11px; letter-spacing: 3px; border: 1px solid #444; padding: 10px 20px; transition: 0.3s; }
+        .back-link:hover { background: #fff; color: #000; }
+        .counter-box { font-size: 11px; letter-spacing: 2px; color: var(--gold); }
 
-        /* Grid Layout */
-        .grid-wrapper { padding: 150px 20px 100px; display: flex; justify-content: center; }
-        #capture-area { display: grid; grid-template-columns: repeat(10, 100px); gap: 12px; background: #000; padding: 20px; border: 1px solid #111; }
-
-        /* Plot Styling & Intensity */
-        .plot { width: 100px; height: 100px; background: #080808; border: 0.5px solid #222; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); position: relative; }
+        /* Grid Setup */
+        .main-wrapper { padding: 160px 20px 100px; display: flex; flex-direction: column; align-items: center; }
+        .section-name { font-size: 35px; letter-spacing: 20px; text-transform: uppercase; margin-bottom: 50px; font-weight: 100; color: var(--white); }
         
-        /* Row 1: VIP (Larger & Brightest) */
-        .row-vip { width: 110px; height: 110px; border: 1px solid var(--gold); box-shadow: 0 0 30px rgba(158, 126, 69, 0.4); z-index: 5; }
-        .crown { font-size: 20px; margin-bottom: 5px; }
-        .stars { color: var(--gold); font-size: 7px; letter-spacing: 2px; }
+        .grid-container { display: grid; grid-template-columns: repeat(10, auto); gap: 15px; justify-content: center; }
 
-        /* Lighting effects based on rows */
-        .plot.row-1 { box-shadow: inset 0 0 20px rgba(158, 126, 69, 0.5); } /* $7000 - Gold */
-        .plot.row-2 { border-color: #fff; box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2); } /* $5000 - Diamond */
-        .plot.row-3 { border-color: #00ff88; box-shadow: inset 0 0 12px rgba(0, 255, 136, 0.15); } /* $4900 - Emerald */
-        .plot.row-4 { border-color: #0088ff; box-shadow: inset 0 0 10px rgba(0, 136, 255, 0.15); } /* $4700 - Sapphire */
+        /* Plot Styling */
+        .plot { width: 90px; height: 90px; background: #0a0a0a; border: 1px solid #222; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1); position: relative; }
+        
+        /* VIP - Row 1 (Extra Large) */
+        .plot.row-0 { width: 140px; height: 140px; border: 2px solid var(--gold); box-shadow: 0 0 40px rgba(158, 126, 69, 0.5); }
+        .vip-stars { color: var(--gold); font-size: 18px; margin-top: 5px; letter-spacing: 3px; }
+        .crown-icon { font-size: 35px; margin-bottom: 5px; }
 
-        .plot:hover { transform: scale(1.15); z-index: 100; border-color: #fff; box-shadow: 0 0 50px rgba(255,255,255,0.2); }
-        .plot-id { font-size: 7px; color: #444; position: absolute; top: 5px; left: 5px; }
-        .plot-price { font-size: 10px; letter-spacing: 1px; color: #888; margin-top: 10px; }
+        /* Dynamic Row Colors */
+        .row-0 { border-color: #9E7E45; box-shadow: inset 0 0 20px rgba(158,126,69,0.3); } /* Gold */
+        .row-1 { border-color: #ffffff; box-shadow: inset 0 0 15px rgba(255,255,255,0.2); } /* Diamond */
+        .row-2 { border-color: #00ffcc; box-shadow: inset 0 0 15px rgba(0,255,204,0.15); } /* Green/Emerald */
+        .row-3 { border-color: #00a2ff; box-shadow: inset 0 0 15px rgba(0,162,255,0.15); } /* Blue */
+        .row-4 { border-color: #ff0055; box-shadow: inset 0 0 15px rgba(255,0,85,0.15); } /* Red/Ruby */
+        .row-5 { border-color: #ffcc00; box-shadow: inset 0 0 15px rgba(255,204,0,0.1); }
+        .row-6 { border-color: #ae00ff; box-shadow: inset 0 0 15px rgba(174,0,255,0.1); }
+        .row-7 { border-color: #00ff44; box-shadow: inset 0 0 15px rgba(0,255,68,0.1); }
+        .row-8 { border-color: #ff6600; box-shadow: inset 0 0 15px rgba(255,102,0,0.1); }
+        .row-9 { border-color: #555555; box-shadow: inset 0 0 15px rgba(85,85,85,0.1); }
 
-        /* Popups */
-        #buy-modal, #congrats-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); display: none; align-items: center; justify-content: center; z-index: 5000; text-align: center; }
-        .card { background: #fff; color: #000; padding: 60px; width: 500px; position: relative; }
-        .card input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #eee; font-family: serif; }
-        .submit-btn { width: 100%; padding: 20px; background: #000; color: #fff; border: none; letter-spacing: 5px; text-transform: uppercase; cursor: none; margin-top: 20px; }
+        .plot:hover { transform: scale(1.2); z-index: 100; border-color: #fff; cursor: none; }
+        .p-id { position: absolute; top: 5px; left: 8px; font-size: 8px; color: #444; }
+        .p-price { font-size: 11px; margin-top: 5px; font-weight: bold; letter-spacing: 1px; }
+
+        /* Modal & Success UI */
+        #modal-overlay, #success-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
+        .card { background:#fff; color:#000; padding:60px; width:550px; text-align:center; }
+        .card input { width:100%; padding:15px; margin:10px 0; border:1px solid #ddd; font-family:serif; box-sizing: border-box; }
+        .btn-black { background:#000; color:#fff; padding:20px; width:100%; border:none; letter-spacing:5px; text-transform:uppercase; cursor:none; margin-top:20px; }
+        
+        .info-list { text-align: left; font-size: 12px; line-height: 1.8; color: #555; background: #f9f9f9; padding: 20px; border-left: 3px solid var(--gold); margin: 30px 0; }
         
         /* Floating Support */
-        .support-trigger { position: fixed; bottom: 40px; right: 40px; width: 60px; height: 60px; background: #000; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; }
-        .support-trigger svg { fill: var(--gold); width: 25px; }
+        .support-fab { position: fixed; bottom: 40px; right: 40px; width: 60px; height: 60px; background: #000; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 5000; }
+        .support-fab svg { fill: var(--gold); width: 25px; }
     </style>
 </head>
 <body>
 
     <div id="cursor-dot"></div><div id="cursor-outline"></div>
 
-    <header class="canvas-header">
-        <div class="top-nav">
-            <a href="index.html" class="nav-btn">← BACK TO HOME</a>
-            <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
-        </div>
-        <div class="brand-title">Millionaires Club</div>
-        <div class="stats-bar">
-            STATUS: <span id="sold-count">12</span> PURCHASED | <span id="remain-count">88</span> AVAILABLE
+    <header class="canvas-nav">
+        <a href="index.html" class="back-link">← RETURN TO ARCHIVE</a>
+        <div class="counter-box">
+            ALLOCATED: <span id="sold-val">0</span> | REMAINING: <span id="left-val">100</span>
         </div>
     </header>
 
-    <div class="grid-wrapper">
-        <div id="capture-area">
-            </div>
+    <div class="main-wrapper">
+        <h1 class="section-name">Millionaires Club</h1>
+        <div class="grid-container" id="pixel-grid"></div>
     </div>
 
-    <div id="buy-modal">
+    <div id="modal-overlay">
         <div class="card">
-            <div style="font-size:40px; font-weight:900; margin-bottom:20px;">K</div>
-            <p style="font-size:9px; letter-spacing:5px; color:var(--gold);">ACQUISITION FORM</p>
-            <h2 id="modal-title" style="font-weight:100; letter-spacing:3px;"></h2>
-            <input type="text" id="username" placeholder="BRAND NAME / IDENTITY">
-            <input type="email" id="useremail" placeholder="OFFICIAL EMAIL">
-            <button class="submit-btn" onclick="confirmPurchase()">RESERVE NOW</button>
+            <h2 style="letter-spacing:10px; font-weight:100;">ACQUISITION</h2>
+            <p id="plot-info" style="font-size:10px; color:var(--gold); margin-bottom:30px;"></p>
+            <input type="text" id="user-name" placeholder="BRAND NAME / USERNAME">
+            <input type="email" id="user-email" placeholder="YOUR EMAIL ADDRESS">
+            <button class="btn-black" onclick="submitPurchase()">CONFIRM RESERVATION</button>
             <br><br>
-            <button onclick="closeModal()" style="background:none; border:none; font-size:10px; letter-spacing:2px; cursor:none;">[ CANCEL ]</button>
+            <button onclick="closeModal()" style="background:none; border:none; font-size:10px; cursor:none;">[ CLOSE ]</button>
         </div>
     </div>
 
-    <div id="congrats-screen" style="background:#fff; color:#000;">
-        <div style="max-width: 600px;">
-            <div style="font-size: 100px; font-weight: 900; color:#000;">K</div>
-            <p style="font-size: 10px; letter-spacing: 10px; color: #9E7E45;">RESERVATION VERIFIED</p>
-            <h1 style="font-weight: 100; letter-spacing: 15px; font-size: 32px;">ETERNALIZED</h1>
-            <p id="congrats-msg" style="font-size: 14px; line-height: 2; color: #666; letter-spacing: 2px; text-transform: uppercase; margin: 40px 0;"></p>
-            <button class="nav-btn" style="color:#000; border-color:#000; padding:20px 50px;" onclick="location.reload()">RETURN TO CANVAS</button>
+    <div id="success-overlay">
+        <div class="card" style="max-width: 650px;">
+            <div style="font-size:80px; font-weight:900;">K</div>
+            <p style="letter-spacing:10px; color:var(--gold); font-size:10px;">SUCCESSFULLY ARCHIVED</p>
+            <h1 id="congrats-title" style="letter-spacing:5px; font-weight:100;"></h1>
+            
+            <p style="font-size:12px; color:#888;">To complete your legacy, please send the following to our Support Concierge:</p>
+            
+            <div class="info-list">
+                • <b>Transaction ID / Screenshot</b> (Payment Proof)<br>
+                • <b>Your Registered Email:</b> <span id="disp-email"></span><br>
+                • <b>Brand Image</b> (4K Resolution Recommended)<br>
+                • <b>Target URL</b> (Where users will land on click)
+            </div>
+
+            <button class="btn-black" onclick="location.reload()">BACK TO GRID</button>
+            <br><br>
+            <a href="https://wa.me/8801576940717" style="text-decoration:none; color:var(--gold); font-size:11px; letter-spacing:2px;">CONTACT SUPPORT NOW →</a>
         </div>
     </div>
 
-    <a href="https://wa.me/8801576940717" target="_blank" class="support-trigger">
+    <a href="https://wa.me/8801576940717" target="_blank" class="support-fab">
         <svg viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
     </a>
 
     <script>
-        const grid = document.getElementById('capture-area');
+        const grid = document.getElementById('pixel-grid');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        let sold = 12; // Initial sold count
 
-        // Generate 100 Plots
+        // Create Grid
         for (let i = 0; i < 100; i++) {
-            const rowIdx = Math.floor(i / 10);
-            const price = prices[rowIdx];
+            const row = Math.floor(i / 10);
+            const price = prices[row];
             const plot = document.createElement('div');
-            plot.className = `plot row-${rowIdx + 1}`;
+            plot.className = `plot row-${row}`;
             
-            if (rowIdx === 0) {
-                plot.classList.add('row-vip');
-                plot.innerHTML = `<span class="crown">👑</span><span class="stars">★★★★★</span>`;
+            if (row === 0) {
+                plot.innerHTML = `<span class="crown-icon">👑</span><span class="vip-stars">★★★★★</span>`;
             }
 
-            plot.innerHTML += `<span class="plot-id">#${i+1}</span><span class="plot-price">$${price}</span>`;
-            plot.onclick = () => openModal(price, i+1);
+            plot.innerHTML += `<span class="p-id">#${i+1}</span><span class="p-price">$${price}</span>`;
+            plot.onclick = () => openModal(i+1, price);
             grid.appendChild(plot);
         }
 
-        function openModal(price, id) {
-            document.getElementById('buy-modal').style.display = 'flex';
-            document.getElementById('modal-title').innerText = `PLOT #${id} - $${price}`;
-            window.currentPrice = price;
+        function openModal(id, price) {
+            document.getElementById('modal-overlay').style.display = 'flex';
+            document.getElementById('plot-info').innerText = `RESERVING PLOT #${id} FOR $${price}`;
+            window.activePrice = price;
         }
 
-        function closeModal() { document.getElementById('buy-modal').style.display = 'none'; }
+        function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
 
-        function confirmPurchase() {
-            const name = document.getElementById('username').value;
-            if(!name) return alert("Please enter your name");
-            
-            document.getElementById('buy-modal').style.display = 'none';
-            document.getElementById('congrats-screen').style.display = 'flex';
-            document.getElementById('congrats-msg').innerText = `Your brand "${name}" has been formally archived into the digital legacy. The world will now witness your presence. Total value: $${window.currentPrice}`;
-            
-            // Success Confetti
-            fireConfetti();
-        }
+        function submitPurchase() {
+            const name = document.getElementById('user-name').value;
+            const email = document.getElementById('user-email').value;
+            if(!name || !email) return alert("Please fill all fields");
 
-        function fireConfetti() {
-            const end = Date.now() + 3000;
-            const colors = ['#9E7E45', '#000000', '#ffffff'];
+            document.getElementById('modal-overlay').style.display = 'none';
+            document.getElementById('success-overlay').style.display = 'flex';
+            
+            document.getElementById('congrats-title').innerText = `WELCOME, ${name.toUpperCase()}`;
+            document.getElementById('disp-email').innerText = email;
+
+            // Confetti Blast
+            const end = Date.now() + 4000;
+            const colors = ['#9E7E45', '#ff0000', '#00ffcc', '#ffffff'];
             (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+                confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+                confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
                 if (Date.now() < end) requestAnimationFrame(frame);
             }());
         }
 
-        function downloadMap() {
-            html2canvas(document.querySelector("#capture-area")).then(canvas => {
-                let link = document.createElement('a');
-                link.download = 'Millionaires_Club_Map.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        }
-
-        // Fast Cursor Logic
+        // Fast Cursor
         const dot = document.getElementById('cursor-dot');
         const outline = document.getElementById('cursor-outline');
         document.addEventListener('mousemove', (e) => {
