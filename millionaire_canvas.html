@@ -8,82 +8,81 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root { --gold: #9E7E45; --black: #000; --white: #fff; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; cursor: none; overflow-x: hidden; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; cursor: default; }
 
-        /* Updated Pure Circle Cursor (No Dot) */
-        #cursor-outline { position: fixed; width: 30px; height: 30px; border: 1.5px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: 0.1s ease-out; }
-
-        /* Navigation */
-        .canvas-nav { position: fixed; top: 0; width: 100%; padding: 25px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); z-index: 1000; box-sizing: border-box; }
-        .nav-btn { background: none; border: 0.5px solid #444; color: #fff; padding: 10px 20px; font-size: 10px; letter-spacing: 2px; cursor: none; text-decoration: none; transition: 0.3s; }
+        /* Header & Nav */
+        .canvas-nav { position: fixed; top: 0; width: 100%; padding: 25px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); z-index: 1000; box-sizing: border-box; border-bottom: 0.5px solid #222; }
+        .nav-btn { background: none; border: 0.5px solid #444; color: #fff; padding: 10px 20px; font-size: 10px; letter-spacing: 2px; text-decoration: none; transition: 0.3s; cursor: pointer; }
         .nav-btn:hover { background: #fff; color: #000; }
 
-        /* Header Styling */
-        .header-area { text-align: center; padding-top: 130px; margin-bottom: 20px; }
+        /* Top Title */
+        .header-area { text-align: center; padding-top: 130px; margin-bottom: 10px; }
+        .limited-tag { font-size: 10px; color: var(--gold); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 10px; display: block; }
         .section-name { 
-            font-size: clamp(30px, 6vw, 60px); letter-spacing: 20px; text-transform: uppercase; 
+            font-size: clamp(30px, 6vw, 60px); letter-spacing: 15px; text-transform: uppercase; 
             font-weight: 100; color: #fff; text-shadow: 0 0 20px rgba(158, 126, 69, 0.4);
-            transition: 0.5s; cursor: none;
-        }
-        .section-name:hover { 
-            color: var(--gold); text-shadow: 0 0 40px #ff4500, 0 0 80px #ff8c00; 
-            letter-spacing: 25px; transform: scale(1.05);
         }
 
-        /* Centered Grid Wrapper */
+        /* Grid Wrapper & Positioning */
         .grid-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 80vh; padding-bottom: 100px; }
-        #capture-area { display: grid; grid-template-columns: repeat(10, auto); gap: 15px; padding: 40px; background: #000; justify-items: center; }
+        #capture-area { 
+            display: grid; 
+            grid-template-columns: repeat(10, auto); 
+            gap: 12px; 
+            padding: 40px; 
+            background: #000; 
+            justify-content: center; /* মিডলে চাপিয়ে আনার জন্য */
+        }
 
-        /* Plot Styling */
+        /* Plot Styling & Fire Effects */
         .plot { 
-            width: 85px; height: 85px; background: #050505; border: 2px solid #1a1a1a; 
+            width: 85px; height: 85px; background: #050505; border: 1.5px solid #1a1a1a; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            transition: 0.4s; position: relative; animation: firePulse 3s infinite alternate;
+            transition: 0.4s; position: relative; cursor: pointer;
+            box-shadow: inset 0 0 15px var(--glow-color); /* ডাউনলোডে কালার নিশ্চিত করতে */
         }
-        .plot.row-0 { width: 145px; height: 145px; border-width: 3px; z-index: 5; }
-        .crown-icon { font-size: 40px; text-shadow: 0 0 20px var(--gold); }
-        .vip-stars { color: var(--gold); font-size: 18px; letter-spacing: 5px; animation: starGlow 1.5s infinite alternate; }
 
-        @keyframes firePulse {
-            0% { box-shadow: inset 0 0 5px rgba(255,255,255,0.1); }
-            100% { box-shadow: inset 0 0 30px var(--glow-color); border-color: var(--glow-color); }
+        /* VIP Row 0 - Adjusted Size & Spacing */
+        .plot.row-0 { width: 130px; height: 130px; border-width: 2px; border-color: var(--gold); }
+        
+        /* Stars Underneath (Layering) */
+        .vip-content-wrapper { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .crown-icon { font-size: 35px; z-index: 2; position: relative; }
+        .vip-stars { 
+            position: absolute; bottom: 15px; color: var(--gold); font-size: 16px; 
+            letter-spacing: 3px; z-index: 1; opacity: 0.8; /* ছবির নিচে থাকবে */
         }
-        @keyframes starGlow { from { text-shadow: 0 0 5px #fff; } to { text-shadow: 0 0 25px var(--gold), 0 0 50px #ffcc00; } }
 
-        /* Row Glow Colors */
+        /* Dynamic Glow per Price Row */
         .row-0 { --glow-color: #9E7E45; } .row-1 { --glow-color: #ffffff; }
         .row-2 { --glow-color: #00ffcc; } .row-3 { --glow-color: #00a2ff; }
         .row-4 { --glow-color: #ff0055; } .row-5 { --glow-color: #ffcc00; }
         .row-6 { --glow-color: #ae00ff; } .row-7 { --glow-color: #00ff44; }
         .row-8 { --glow-color: #ff6600; } .row-9 { --glow-color: #333333; }
 
-        .plot:hover { transform: scale(1.25); z-index: 100; border-color: #fff !important; box-shadow: 0 0 60px var(--glow-color) !important; }
-        .p-price { font-size: 10px; margin-top: 5px; font-weight: bold; letter-spacing: 1px; color: #fff; }
+        .plot:hover { transform: scale(1.1); z-index: 10; border-color: #fff !important; }
 
-        /* Modals & Popups */
-        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background:#fff; color:#000; padding:60px; width:550px; text-align:center; position: relative; }
-        .card input { width:100%; padding:15px; margin:10px 0; border:1px solid #ddd; font-family:serif; box-sizing: border-box; outline: none; }
-        .submit-btn { background:#000; color:#fff; padding:20px; width:100%; border:none; letter-spacing:5px; text-transform:uppercase; cursor:none; transition: 0.3s; }
-        .submit-btn:hover { background: var(--gold); }
+        /* Modals */
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:none; align-items:center; justify-content:center; z-index:9000; }
+        .card { background:#fff; color:#000; padding:60px; width:500px; text-align:center; box-shadow: 0 0 50px rgba(158,126,69,0.3); }
+        .card input { width:100%; padding:15px; margin:10px 0; border:1px solid #ddd; font-family:serif; outline: none; }
+        .btn-black { background:#000; color:#fff; padding:20px; width:100%; border:none; letter-spacing:5px; text-transform:uppercase; cursor:pointer; }
         
-        .info-list { text-align: left; font-size: 13px; line-height: 1.8; color: #444; background: #f7f7f7; padding: 25px; border-left: 4px solid var(--gold); margin: 25px 0; }
-        .popup-nav { display: flex; gap: 10px; margin-top: 20px; }
+        .info-box { text-align: left; background: #f4f4f4; padding: 25px; margin: 25px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; }
     </style>
 </head>
 <body>
-
-    <div id="cursor-outline"></div>
 
     <header class="canvas-nav">
         <div>
             <a href="index.html" class="nav-btn">← RETURN</a>
             <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
         </div>
-        <div style="font-size: 11px; color: var(--gold); letter-spacing: 3px;">SOLD: 0 | REMAINING: 100</div>
+        <div style="font-size: 11px; color: var(--gold); letter-spacing: 2px;">STATUS: LIMITED EDITION | REMAINING: 100</div>
     </header>
 
     <div class="header-area">
+        <span class="limited-tag">Exclusive Access</span>
         <h1 class="section-name">Millionaires Club</h1>
     </div>
 
@@ -93,32 +92,33 @@
 
     <div id="buy-modal" class="overlay">
         <div class="card">
-            <h2 style="letter-spacing:10px; font-weight:100;">RESERVATION</h2>
-            <p id="plot-id-display" style="font-size:10px; color:var(--gold); margin-bottom:25px;"></p>
-            <input type="text" id="brand-name" placeholder="BRAND NAME / USERNAME">
-            <input type="email" id="brand-email" placeholder="YOUR EMAIL ADDRESS">
-            <button class="submit-btn" onclick="triggerCelebration()">BUY PLOT NOW</button>
+            <h2 style="letter-spacing:5px; font-weight:100;">ACQUISITION</h2>
+            <p id="plot-label" style="font-size:10px; color:var(--gold); margin-bottom:20px;"></p>
+            <input type="text" id="user-brand" placeholder="BRAND NAME / USERNAME">
+            <input type="email" id="user-mail" placeholder="EMAIL ADDRESS">
+            <button class="btn-black" onclick="startCelebration()">CONFIRM PURCHASE</button>
             <br><br>
-            <button onclick="closeModals()" style="background:none; border:none; font-size:10px; cursor:none;">[ CANCEL ]</button>
+            <button onclick="closeModals()" style="background:none; border:none; font-size:10px; cursor:pointer;">[ CANCEL ]</button>
         </div>
     </div>
 
-    <div id="info-popup" class="overlay">
+    <div id="success-popup" class="overlay">
         <div class="card" style="max-width: 600px;">
-            <div style="font-size:70px; font-weight:900;">K</div>
-            <p style="letter-spacing:8px; color:var(--gold); font-size:10px;">LEGACY VERIFIED</p>
-            <h2 id="congrats-user" style="font-weight:100; margin-bottom: 20px;"></h2>
+            <div style="font-size:60px; font-weight:900;">K</div>
+            <p style="letter-spacing:5px; color:var(--gold); font-size:10px;">LEGACY VERIFIED</p>
+            <h2 id="congrats-text" style="font-weight:100; margin: 20px 0;"></h2>
             
-            <div class="info-list">
-                • <b>Payment Proof:</b> Transaction ID / Screenshot<br>
-                • <b>Media:</b> High-Quality Brand Logo/Image<br>
-                • <b>Direct Link:</b> Target URL for your Plot<br>
-                • <b>Email:</b> <span id="saved-email" style="text-decoration: underline;"></span>
+            <div class="info-box">
+                <b>NEXT STEPS TO GO LIVE:</b><br>
+                1. Submit Payment Screenshot/TXID<br>
+                2. Provide Your Brand Image/Logo<br>
+                3. Provide Redirect URL/Link<br>
+                4. Email: <span id="saved-mail" style="font-weight:bold;"></span>
             </div>
 
-            <div class="popup-nav">
-                <button class="submit-btn" style="background:var(--gold); flex:2;" onclick="openSupport()">CONTACT SUPPORT</button>
-                <button class="submit-btn" style="background:#333; flex:1;" onclick="location.reload()">BACK</button>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-black" style="flex:2; background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">CONTACT SUPPORT</button>
+                <button class="btn-black" style="flex:1; background:#333;" onclick="location.reload()">BACK</button>
             </div>
         </div>
     </div>
@@ -133,68 +133,66 @@
             const price = prices[row];
             const plot = document.createElement('div');
             plot.className = `plot row-${row}`;
-            if (row === 0) plot.innerHTML = `<span class="crown-icon">👑</span><span class="vip-stars">★★★★★</span>`;
+
+            if (row === 0) {
+                plot.innerHTML = `
+                    <div class="vip-content-wrapper">
+                        <span class="crown-icon">👑</span>
+                        <span class="vip-stars">★★★★★</span>
+                    </div>`;
+            }
+
             plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${i+1}</span>`;
-            plot.innerHTML += `<span class="p-price">$${price}</span>`;
+            plot.innerHTML += `<span style="font-size:10px; z-index:3;">$${price}</span>`;
+            
             plot.onclick = () => {
                 document.getElementById('buy-modal').style.display = 'flex';
-                document.getElementById('plot-id-display').innerText = `ACQUIRING PLOT #${i+1} - $${price}`;
+                document.getElementById('plot-label').innerText = `PLOT #${i+1} SELECTION`;
             };
             grid.appendChild(plot);
         }
 
-        function closeModals() {
-            document.querySelectorAll('.overlay').forEach(el => el.style.display = 'none');
-        }
+        function closeModals() { document.querySelectorAll('.overlay').forEach(e => e.style.display = 'none'); }
 
-        function triggerCelebration() {
-            const name = document.getElementById('brand-name').value;
-            const email = document.getElementById('brand-email').value;
-            if(!name || !email) return alert("Please fill all details");
+        function startCelebration() {
+            const name = document.getElementById('user-brand').value;
+            const email = document.getElementById('user-mail').value;
+            if(!name || !email) return alert("Please fill details");
 
-            // Phase 1: Celebration
-            document.getElementById('buy-modal').innerHTML = `
-                <div class="card">
-                    <h1 style="letter-spacing:5px;">CONGRATULATIONS!</h1>
-                    <p style="color:var(--gold); letter-spacing:3px;">${name.toUpperCase()} IS NOW PART OF THE ARCHIVE</p>
-                </div>`;
-            
-            confetti({ particleCount: 200, spread: 80, origin: { x: 0 }, colors: ['#9E7E45', '#fff'] });
-            confetti({ particleCount: 200, spread: 80, origin: { x: 1 }, colors: ['#9E7E45', '#fff'] });
+            // Close Step 1, Show Congrats inside Modal
+            const modal = document.querySelector('#buy-modal .card');
+            modal.innerHTML = `
+                <h1 style="letter-spacing:5px;">CONGRATULATIONS!</h1>
+                <p style="color:var(--gold); letter-spacing:2px;">${name.toUpperCase()} IS NOW PART OF THE LEGACY</p>
+            `;
 
-            // Phase 2: Show Info Popup after 3 seconds
+            // Double Sided Confetti
+            confetti({ particleCount: 200, spread: 70, origin: { x: 0, y: 0.7 }, colors: ['#9E7E45', '#fff'] });
+            confetti({ particleCount: 200, spread: 70, origin: { x: 1, y: 0.7 }, colors: ['#9E7E45', '#fff'] });
+
+            // Step 2: Transition to Support Info
             setTimeout(() => {
                 document.getElementById('buy-modal').style.display = 'none';
-                document.getElementById('info-popup').style.display = 'flex';
-                document.getElementById('congrats-user').innerText = `WELCOME, ${name.toUpperCase()}`;
-                document.getElementById('saved-email').innerText = email;
+                document.getElementById('success-popup').style.display = 'flex';
+                document.getElementById('congrats-text').innerText = `WELCOME TO THE CLUB, ${name.toUpperCase()}`;
+                document.getElementById('saved-mail').innerText = email;
             }, 3000);
         }
 
-        function openSupport() {
-            window.open('https://wa.me/8801576940717', '_blank');
-        }
-
         function downloadMap() {
-            // Using higher scale for high-quality glow capture
             html2canvas(document.querySelector("#capture-area"), {
                 backgroundColor: "#000",
                 scale: 2,
-                useCORS: true
+                logging: false,
+                useCORS: true,
+                allowTaint: true
             }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = 'K_Archive_Millionaires_Map.png';
+                link.download = 'Millionaires_Club_Canvas.png';
                 link.href = canvas.toDataURL("image/png");
                 link.click();
             });
         }
-
-        // Pure Circle Cursor Logic
-        const outline = document.getElementById('cursor-outline');
-        document.addEventListener('mousemove', (e) => {
-            outline.style.left = e.clientX + 'px';
-            outline.style.top = e.clientY + 'px';
-        });
     </script>
 </body>
 </html>
