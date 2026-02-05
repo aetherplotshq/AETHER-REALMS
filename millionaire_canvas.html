@@ -3,69 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K ARCHIVE | PYRAMID EDITION</title>
+    <title>MILLIONAIRES CLUB | K ARCHIVE</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --gold: #9E7E45; --glow: rgba(158, 126, 69, 0.5); }
+        :root { --gold: #9E7E45; --white: #fff; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
 
-        /* Header & Counter */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.8); box-sizing: border-box; }
+        /* Navigation */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); box-sizing: border-box; }
         .nav-left { display: flex; gap: 15px; }
-        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 8px 15px; font-size: 10px; letter-spacing: 2px; cursor: pointer; }
-        .counter-box { font-size: 12px; letter-spacing: 2px; color: var(--gold); font-weight: bold; }
+        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 20px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-decoration: none; text-transform: uppercase; }
+        .nav-btn:hover { background: #fff; color: #000; }
+        .counter-box { font-size: 11px; letter-spacing: 2px; color: var(--gold); font-weight: bold; }
 
-        /* Glowing Pyramid Title */
-        .header-area { text-align: center; padding-top: 100px; margin-bottom: 20px; }
+        /* Glowing Section Name */
+        .header-area { text-align: center; padding-top: 130px; margin-bottom: 30px; }
         .section-name { 
-            font-size: clamp(25px, 5vw, 60px); letter-spacing: 12px; text-transform: uppercase; 
-            font-weight: 900; background: linear-gradient(90deg, #fff, var(--gold), #fff);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: glowText 3s infinite alternate;
+            font-size: clamp(30px, 6vw, 70px); letter-spacing: 15px; text-transform: uppercase; 
+            font-weight: 900;
+            background: linear-gradient(90deg, #ff0000, #ffcc00, #00ffcc, #00a2ff, #ae00ff, #ff0000);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+            filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.5));
         }
-        @keyframes glowText { from { filter: drop-shadow(0 0 5px var(--gold)); } to { filter: drop-shadow(0 0 20px var(--gold)); } }
+        @keyframes shine { to { background-position: 200% center; } }
 
-        /* Pyramid Grid Layout */
-        .pyramid-container { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 40px 20px; }
-        .pyramid-row { display: flex; justify-content: center; gap: 8px; width: 100%; }
+        /* Grid Layout - Perfectly Centered */
+        .grid-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 50px; }
+        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 40px; }
+        .row-container { display: flex; justify-content: center; gap: 12px; width: 100%; }
 
         /* Plot Styling */
         .plot { 
-            background: #050505; border: 1.5px solid var(--border-color); 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            transition: 0.4s; position: relative; cursor: pointer; box-shadow: inset 0 0 10px var(--border-color);
+            background: #050505; display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; transition: 0.4s; position: relative; cursor: pointer;
+            box-shadow: inset 0 0 15px var(--row-color);
+            border: 2px solid var(--row-color);
         }
-        .plot:hover { transform: scale(1.2); z-index: 100; border-color: #fff; box-shadow: 0 0 30px var(--border-color); }
+        .plot:hover { transform: scale(1.15); z-index: 100; border-color: #fff; box-shadow: 0 0 30px var(--row-color); }
 
-        /* Dynamic Sizes based on Hierarchy */
-        .plot.rank-1 { width: 150px; height: 150px; }
-        .plot.rank-2 { width: 110px; height: 110px; }
-        .plot.rank-3 { width: 85px; height: 85px; }
-        .plot.rank-4 { width: 70px; height: 70px; }
+        /* Dynamic Sizes */
+        .size-lg { width: 145px; height: 145px; margin-bottom: 20px; }
+        .size-md { width: 100px; height: 100px; }
+        .size-sm { width: 85px; height: 85px; }
 
-        .crown { position: absolute; top: -30px; font-size: 50px; filter: drop-shadow(0 0 10px var(--gold)); }
-        .stars { position: absolute; bottom: 10px; color: var(--gold); font-size: 14px; letter-spacing: 3px; }
+        /* Crown & Stars (Outside Plots) */
+        .crown { position: absolute; top: -45px; font-size: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
+        .stars { position: absolute; bottom: -25px; color: var(--gold); font-size: 20px; letter-spacing: 4px; white-space: nowrap; }
 
-        /* Modals */
-        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background:#fff; color:#000; padding:40px; width:400px; text-align:center; border-radius: 2px; }
-        .card h2 { letter-spacing: 4px; margin-bottom: 25px; font-weight: 100; }
-        .card input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; box-sizing: border-box; outline: none; font-family: serif; }
-        .btn-gold { background: #000; color: #fff; padding: 15px; width: 100%; border: none; letter-spacing: 3px; cursor: pointer; font-weight: bold; margin-top: 15px; transition: 0.3s; }
-        .btn-gold:hover { background: var(--gold); }
-
-        /* Support List Styling */
-        .support-info { text-align: left; background: #f9f9f9; padding: 20px; font-size: 12px; line-height: 1.8; border-left: 4px solid var(--gold); margin: 20px 0; }
+        /* Overlays & Modals */
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
+        .card { background:#fff; color:#000; padding:50px; width:450px; text-align:center; }
+        .card input { width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; font-family:serif; font-size: 16px; outline: none; }
+        .btn-buy { background:#000; color:#fff; padding:20px; width:100%; border:none; letter-spacing:5px; cursor:pointer; font-weight:bold; }
+        
+        .support-info { text-align: left; background: #f9f9f9; padding: 20px; font-size: 13px; border-left: 4px solid var(--gold); margin: 20px 0; line-height: 1.8; }
 
         /* Celebration Screen */
-        #celebration-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+        #success-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+
+        /* Copyright Footer */
+        .footer-text { text-align: center; padding: 50px; font-size: 12px; color: #444; line-height: 1.8; border-top: 1px solid #111; width: 80%; margin-top: 50px; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
         <div class="nav-left">
+            <a href="index.html" class="nav-btn">← BACK TO HOME</a>
             <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
         </div>
         <div class="counter-box">SOLD: 0 | LEFT: 100</div>
@@ -75,120 +83,118 @@
         <h1 class="section-name">Millionaires Club</h1>
     </div>
 
-    <div class="pyramid-container" id="capture-area">
-        </div>
+    <div class="grid-wrapper">
+        <div id="capture-area"></div>
 
-    <div id="buy-modal" class="overlay">
-        <div class="card">
-            <h2>ACQUISITION</h2>
-            <input type="number" id="input-plot-no" placeholder="WHICH PLOT NO? (1-100)">
-            <input type="text" id="input-brand" placeholder="YOUR BRAND NAME">
-            <button class="btn-gold" onclick="handlePurchase()">BUY PLOT NOW</button>
-            <p onclick="closeModal()" style="font-size: 10px; cursor: pointer; margin-top: 15px; opacity: 0.5;">[ CLOSE ]</p>
+        <div class="footer-text">
+            K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved. <br>
+            We are not responsible for the content of external websites. <br>
+            Images and brand logos featured on this canvas are © of their respective owners.
         </div>
     </div>
 
-    <div id="celebration-screen">
-        <h1 id="celeb-name" style="font-size: 40px; letter-spacing: 10px;"></h1>
-        <p id="celeb-plot" style="font-size: 18px; color: var(--gold); letter-spacing: 5px;"></p>
+    <div id="buy-modal" class="overlay">
+        <div class="card">
+            <h2 style="letter-spacing:5px;">RESERVATION</h2>
+            <p id="plot-info-text" style="color:var(--gold); font-weight:bold;"></p>
+            <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME">
+            <button class="btn-buy" onclick="confirmOrder()">CONFIRM ORDER</button>
+            <p onclick="closeModal()" style="font-size:10px; cursor:pointer; margin-top:20px; opacity: 0.5;">[ CANCEL ]</p>
+        </div>
+    </div>
+
+    <div id="success-screen">
+        <h1 id="congrats-title" style="font-size: 45px; letter-spacing: 8px;"></h1>
+        <p id="congrats-subtitle" style="font-size: 20px; color: var(--gold); letter-spacing: 4px;"></p>
     </div>
 
     <div id="support-modal" class="overlay">
         <div class="card" style="text-align: left;">
-            <h3 style="text-align: center; letter-spacing: 3px;">CUSTOMER SERVICE</h3>
+            <h3 style="text-align:center; letter-spacing:3px;">ORDER COMPLETED</h3>
             <div class="support-info">
-                1. Provide Plot Number & Brand Name<br>
-                2. Send Payment Transaction ID/SS<br>
-                3. Send High-Quality Brand Logo<br>
-                4. Send Target Website Link
+                1. Send Plot Number & Brand Name<br>
+                2. Send Payment Proof (TXID/SS)<br>
+                3. Send Your High-Res Logo/Image<br>
+                4. Send Link for Redirect
             </div>
-            <button class="btn-gold" style="background: var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">WHATSAPP SUPPORT</button>
-            <button class="btn-gold" onclick="location.reload()">BACK TO CANVAS</button>
+            <button class="btn-buy" style="background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">WHATSAPP SUPPORT</button>
+            <button class="btn-buy" onclick="location.reload()" style="margin-top:10px; background:#333;">BACK TO CANVAS</button>
         </div>
     </div>
 
     <script>
-        const container = document.getElementById('capture-area');
+        const grid = document.getElementById('capture-area');
+        const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
         const colors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
         
-        // Pyramid Row Config: [plots_in_row, price, rank_class]
-        const pyramidConfig = [
-            [1, 7000, 'rank-1'], [3, 5000, 'rank-2'], [5, 4900, 'rank-2'],
-            [7, 4700, 'rank-3'], [9, 4400, 'rank-3'], [11, 4000, 'rank-3'],
-            [13, 3500, 'rank-4'], [15, 2900, 'rank-4'], [17, 2200, 'rank-4'], [19, 1400, 'rank-4']
-        ];
+        let currentSelectedID = 0;
 
-        let globalID = 1;
-        pyramidConfig.forEach((config, rowIndex) => {
+        for (let r = 0; r < 10; r++) {
             const rowDiv = document.createElement('div');
-            rowDiv.className = 'pyramid-row';
+            rowDiv.className = 'row-container';
             
-            for (let i = 0; i < config[0]; i++) {
-                if(globalID > 100) break;
+            for (let c = 0; c < 10; c++) {
+                const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
-                plot.className = `plot ${config[2]}`;
-                plot.style.setProperty('--border-color', colors[rowIndex]);
                 
-                if (globalID === 1) {
+                // Size Logic based on price/row
+                let sizeClass = 'size-sm';
+                if(r === 0) sizeClass = 'size-lg';
+                else if(r < 3) sizeClass = 'size-md';
+
+                plot.className = `plot ${sizeClass}`;
+                plot.style.setProperty('--row-color', colors[r]);
+
+                if(r === 0) {
                     plot.innerHTML = `<span class="crown">👑</span><span class="stars">★★★★★</span>`;
                 }
 
-                plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.4;">#${globalID}</span>`;
-                plot.innerHTML += `<span style="font-size:10px; font-weight:bold;">$${config[1]}</span>`;
-                
-                const currentID = globalID;
-                plot.onclick = () => openBuyModal(currentID);
-                rowDiv.appendChild(plot);
-                globalID++;
-            }
-            container.appendChild(rowDiv);
-        });
+                plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.4;">#${id}</span>`;
+                plot.innerHTML += `<span style="font-size:10px; font-weight:bold;">$${prices[r]}</span>`;
 
-        function openBuyModal(id) {
-            document.getElementById('buy-modal').style.display = 'flex';
-            document.getElementById('input-plot-no').value = id;
+                plot.onclick = () => {
+                    currentSelectedID = id;
+                    document.getElementById('buy-modal').style.display = 'flex';
+                    document.getElementById('plot-info-text').innerText = `ACQUIRING PLOT #${id} ($${prices[r]})`;
+                };
+                rowDiv.appendChild(plot);
+            }
+            grid.appendChild(rowDiv);
         }
 
         function closeModal() { document.getElementById('buy-modal').style.display = 'none'; }
 
-        function handlePurchase() {
-            const plotNo = document.getElementById('input-plot-no').value;
-            const brand = document.getElementById('input-brand').value;
+        function confirmOrder() {
+            const brandName = document.getElementById('brand-input').value;
+            if(!brandName) return alert("Please enter your brand name");
 
-            if (!plotNo || !brand) {
-                alert("সবগুলো তথ্য পূরণ করুন (Plot No & Brand Name)");
-                return;
-            }
-
-            // Close Modal & Start Celebration
             document.getElementById('buy-modal').style.display = 'none';
-            const celebScreen = document.getElementById('celebration-screen');
-            celebScreen.style.display = 'flex';
-            document.getElementById('celeb-name').innerText = `WELCOME, ${brand.toUpperCase()}!`;
-            document.getElementById('celeb-plot').innerText = `PLOT #${plotNo} IS NOW YOURS`;
+            const screen = document.getElementById('success-screen');
+            screen.style.display = 'flex';
+            document.getElementById('congrats-title').innerText = `CONGRATULATIONS, ${brandName.toUpperCase()}!`;
+            document.getElementById('congrats-subtitle').innerText = `PLOT #${currentSelectedID} IS NOW RESERVED`;
 
-            // Golden Confetti
-            const duration = 3000;
-            const animationEnd = Date.now() + duration;
-            const goldColor = ['#9E7E45', '#FFD700', '#FFFFFF'];
+            // Golden Confetti Explosion
+            const end = Date.now() + 3000;
+            const goldColors = ['#9E7E45', '#FFD700', '#FFFFFF'];
 
             (function frame() {
-                confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 }, colors: goldColor });
-                confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 }, colors: goldColor });
-                if (Date.now() < animationEnd) requestAnimationFrame(frame);
+                confetti({ particleCount: 6, angle: 60, spread: 60, origin: { x: 0 }, colors: goldColors });
+                confetti({ particleCount: 6, angle: 120, spread: 60, origin: { x: 1 }, colors: goldColors });
+                if (Date.now() < end) requestAnimationFrame(frame);
             }());
 
             // Switch to Support Modal after 3 seconds
             setTimeout(() => {
-                celebScreen.style.display = 'none';
+                screen.style.display = 'none';
                 document.getElementById('support-modal').style.display = 'flex';
             }, 3000);
         }
 
         function downloadMap() {
-            html2canvas(container, { backgroundColor: "#000", scale: 2 }).then(canvas => {
+            html2canvas(grid, { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = 'K_Archive_Pyramid_Map.png';
+                link.download = 'K_Archive_Canvas.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
