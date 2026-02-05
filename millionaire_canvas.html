@@ -11,9 +11,9 @@
         body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
 
         /* Navigation */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); box-sizing: border-box; }
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); box-sizing: border-box; border-bottom: 1px solid #1a1a1a; }
         .nav-left { display: flex; gap: 15px; }
-        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 20px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-decoration: none; text-transform: uppercase; }
+        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 20px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-decoration: none; text-transform: uppercase; transition: 0.3s; }
         .nav-btn:hover { background: #fff; color: #000; }
         .counter-box { font-size: 11px; letter-spacing: 2px; color: var(--gold); font-weight: bold; }
 
@@ -31,10 +31,10 @@
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid Layout - Perfectly Centered */
+        /* Grid Layout */
         .grid-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 50px; }
         #capture-area { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 40px; }
-        .row-container { display: flex; justify-content: center; gap: 12px; width: 100%; }
+        .row-container { display: flex; justify-content: center; gap: 10px; width: 100%; }
 
         /* Plot Styling */
         .plot { 
@@ -43,30 +43,27 @@
             box-shadow: inset 0 0 15px var(--row-color);
             border: 2px solid var(--row-color);
         }
-        .plot:hover { transform: scale(1.15); z-index: 100; border-color: #fff; box-shadow: 0 0 30px var(--row-color); }
+        .plot:hover { transform: scale(1.1); z-index: 100; border-color: #fff; }
 
-        /* Dynamic Sizes */
-        .size-lg { width: 145px; height: 145px; margin-bottom: 20px; }
-        .size-md { width: 100px; height: 100px; }
-        .size-sm { width: 85px; height: 85px; }
+        /* Sizes: 1st row special, others uniform */
+        .size-lg { width: 145px; height: 145px; margin-bottom: 25px; }
+        .size-standard { width: 90px; height: 90px; }
 
-        /* Crown & Stars (Outside Plots) */
+        /* Crown & Stars (Outside) */
         .crown { position: absolute; top: -45px; font-size: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
-        .stars { position: absolute; bottom: -25px; color: var(--gold); font-size: 20px; letter-spacing: 4px; white-space: nowrap; }
+        .stars { position: absolute; bottom: -28px; color: var(--gold); font-size: 20px; letter-spacing: 4px; }
 
-        /* Overlays & Modals */
+        /* Modals */
         .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background:#fff; color:#000; padding:50px; width:450px; text-align:center; }
-        .card input { width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; font-family:serif; font-size: 16px; outline: none; }
-        .btn-buy { background:#000; color:#fff; padding:20px; width:100%; border:none; letter-spacing:5px; cursor:pointer; font-weight:bold; }
+        .card { background:#fff; color:#000; padding:50px; width:450px; text-align:center; border-radius: 4px; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
+        .card input { width:100%; padding:15px; margin:15px 0; border:1px solid #ddd; font-family:serif; font-size: 16px; outline: none; }
+        .btn-black { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; text-transform:uppercase; cursor:pointer; font-weight:bold; transition: 0.3s; }
+        .btn-black:hover { background: var(--gold); }
         
-        .support-info { text-align: left; background: #f9f9f9; padding: 20px; font-size: 13px; border-left: 4px solid var(--gold); margin: 20px 0; line-height: 1.8; }
+        .support-box { text-align: left; background: #f4f4f4; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; color: #333; }
 
-        /* Celebration Screen */
-        #success-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
-
-        /* Copyright Footer */
-        .footer-text { text-align: center; padding: 50px; font-size: 12px; color: #444; line-height: 1.8; border-top: 1px solid #111; width: 80%; margin-top: 50px; }
+        /* Footer Copyright */
+        .footer-text { text-align: center; padding: 50px; font-size: 11px; color: #444; line-height: 1.8; border-top: 1px solid #111; width: 85%; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -95,30 +92,29 @@
 
     <div id="buy-modal" class="overlay">
         <div class="card">
-            <h2 style="letter-spacing:5px;">RESERVATION</h2>
-            <p id="plot-info-text" style="color:var(--gold); font-weight:bold;"></p>
+            <h2 style="letter-spacing:4px; font-weight:100;">PLOT RESERVATION</h2>
+            <input type="number" id="plot-no-input" placeholder="ENTER PLOT NUMBER (1-100)">
             <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME">
-            <button class="btn-buy" onclick="confirmOrder()">CONFIRM ORDER</button>
+            <button class="btn-black" onclick="processOrder()">RESERVE & BUY</button>
             <p onclick="closeModal()" style="font-size:10px; cursor:pointer; margin-top:20px; opacity: 0.5;">[ CANCEL ]</p>
         </div>
     </div>
 
-    <div id="success-screen">
-        <h1 id="congrats-title" style="font-size: 45px; letter-spacing: 8px;"></h1>
-        <p id="congrats-subtitle" style="font-size: 20px; color: var(--gold); letter-spacing: 4px;"></p>
-    </div>
-
     <div id="support-modal" class="overlay">
         <div class="card" style="text-align: left;">
-            <h3 style="text-align:center; letter-spacing:3px;">ORDER COMPLETED</h3>
-            <div class="support-info">
-                1. Send Plot Number & Brand Name<br>
-                2. Send Payment Proof (TXID/SS)<br>
-                3. Send Your High-Res Logo/Image<br>
-                4. Send Link for Redirect
+            <h2 style="text-align: center; letter-spacing: 2px;">CONGRATULATIONS!</h2>
+            <p style="text-align: center; color: var(--gold); font-size: 14px;" id="success-msg"></p>
+            
+            <div class="support-box">
+                <b>TO COMPLETE BRANDING, SEND US:</b><br>
+                • Your Transaction ID / Payment Screenshot<br>
+                • Your High-Resolution Brand Logo/Image<br>
+                • The Website Link for Redirect<br>
+                • Mention Plot Number & Brand Name
             </div>
-            <button class="btn-buy" style="background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">WHATSAPP SUPPORT</button>
-            <button class="btn-buy" onclick="location.reload()" style="margin-top:10px; background:#333;">BACK TO CANVAS</button>
+            
+            <button class="btn-black" style="background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">SEND TO WHATSAPP</button>
+            <button class="btn-black" onclick="location.reload()" style="margin-top:10px; background:#333;">BACK TO CANVAS</button>
         </div>
     </div>
 
@@ -127,74 +123,61 @@
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
         const colors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
         
-        let currentSelectedID = 0;
-
         for (let r = 0; r < 10; r++) {
             const rowDiv = document.createElement('div');
             rowDiv.className = 'row-container';
-            
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
                 
-                // Size Logic based on price/row
-                let sizeClass = 'size-sm';
-                if(r === 0) sizeClass = 'size-lg';
-                else if(r < 3) sizeClass = 'size-md';
-
+                // Size Logic: Row 1 is LG, all others are Standard
+                let sizeClass = (r === 0) ? 'size-lg' : 'size-standard';
                 plot.className = `plot ${sizeClass}`;
                 plot.style.setProperty('--row-color', colors[r]);
 
-                if(r === 0) {
-                    plot.innerHTML = `<span class="crown">👑</span><span class="stars">★★★★★</span>`;
-                }
-
-                plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.4;">#${id}</span>`;
-                plot.innerHTML += `<span style="font-size:10px; font-weight:bold;">$${prices[r]}</span>`;
+                if(r === 0) plot.innerHTML = `<span class="crown">👑</span><span class="stars">★★★★★</span>`;
+                
+                plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
+                plot.innerHTML += `<span style="font-size:10px; font-weight:bold; color: #eee;">$${prices[r]}</span>`;
+                
+                // পরামর্শের অংশ: কাস্টমারের নাম দেখানোর জন্য নিচের সেকশন (এখন খালি থাকবে)
+                plot.innerHTML += `<span class="owner-name" style="position:absolute; bottom:5px; font-size:7px; color:var(--gold); text-transform:uppercase;"></span>`;
 
                 plot.onclick = () => {
-                    currentSelectedID = id;
                     document.getElementById('buy-modal').style.display = 'flex';
-                    document.getElementById('plot-info-text').innerText = `ACQUIRING PLOT #${id} ($${prices[r]})`;
+                    document.getElementById('plot-no-input').value = id;
                 };
                 rowDiv.appendChild(plot);
             }
             grid.appendChild(rowDiv);
         }
 
-        function closeModal() { document.getElementById('buy-modal').style.display = 'none'; }
+        function closeModal() { document.querySelectorAll('.overlay').forEach(e => e.style.display = 'none'); }
 
-        function confirmOrder() {
-            const brandName = document.getElementById('brand-input').value;
-            if(!brandName) return alert("Please enter your brand name");
+        function processOrder() {
+            const pNo = document.getElementById('plot-no-input').value;
+            const bName = document.getElementById('brand-input').value;
 
+            if(!pNo || !bName) return alert("Please provide both Plot No and Brand Name!");
+
+            // Instant Celebration with White Confetti
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ffffff', '#f0f0f0', '#cccccc']
+            });
+
+            // Show support modal immediately
             document.getElementById('buy-modal').style.display = 'none';
-            const screen = document.getElementById('success-screen');
-            screen.style.display = 'flex';
-            document.getElementById('congrats-title').innerText = `CONGRATULATIONS, ${brandName.toUpperCase()}!`;
-            document.getElementById('congrats-subtitle').innerText = `PLOT #${currentSelectedID} IS NOW RESERVED`;
-
-            // Golden Confetti Explosion
-            const end = Date.now() + 3000;
-            const goldColors = ['#9E7E45', '#FFD700', '#FFFFFF'];
-
-            (function frame() {
-                confetti({ particleCount: 6, angle: 60, spread: 60, origin: { x: 0 }, colors: goldColors });
-                confetti({ particleCount: 6, angle: 120, spread: 60, origin: { x: 1 }, colors: goldColors });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
-
-            // Switch to Support Modal after 3 seconds
-            setTimeout(() => {
-                screen.style.display = 'none';
-                document.getElementById('support-modal').style.display = 'flex';
-            }, 3000);
+            document.getElementById('support-modal').style.display = 'flex';
+            document.getElementById('success-msg').innerText = `${bName.toUpperCase()} - PLOT #${pNo} RESERVED`;
         }
 
         function downloadMap() {
             html2canvas(grid, { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = 'K_Archive_Canvas.png';
+                link.download = 'K_Archive_Map.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
