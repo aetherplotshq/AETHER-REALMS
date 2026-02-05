@@ -7,69 +7,69 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --gold: #9E7E45; --black: #000; --white: #fff; }
-        body { margin: 0; background: #ffffff; color: #000; font-family: 'Times New Roman', serif; overflow-x: hidden; }
+        :root { --gold: #9E7E45; --white: #fff; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
 
         /* Navigation */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(255,255,255,0.9); border-bottom: 1px solid #eee; }
-        .nav-left { display: flex; gap: 15px; }
-        .nav-btn { background: #000; color: #fff; border: none; padding: 10px 20px; font-size: 10px; letter-spacing: 2px; text-decoration: none; cursor: pointer; text-transform: uppercase; }
-        .counter-box { font-size: 11px; font-weight: bold; letter-spacing: 1px; color: #000; }
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 25px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); }
+        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 20px; font-size: 10px; letter-spacing: 2px; cursor: pointer; }
+        .nav-btn:hover { background: #fff; color: #000; }
 
-        /* Title Area */
-        .header-area { text-align: center; padding-top: 130px; margin-bottom: 60px; }
-        .section-name { font-size: clamp(30px, 6vw, 65px); letter-spacing: 10px; text-transform: uppercase; font-weight: 900; color: #000; }
+        /* Glowing Section Name */
+        .header-area { text-align: center; padding-top: 130px; margin-bottom: 30px; }
+        .section-name { 
+            font-size: clamp(30px, 6vw, 70px); letter-spacing: 15px; text-transform: uppercase; 
+            font-weight: 900;
+            background: linear-gradient(90deg, #ff0000, #ffcc00, #00ffcc, #00a2ff, #ae00ff, #ff0000);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+            filter: drop-shadow(0 0 15px rgba(255, 204, 0, 0.5));
+        }
+        @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid Centering */
+        /* Grid Layout */
         .grid-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 50px; }
-        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 50px 20px; background: #fff; }
-        .row-container { display: flex; justify-content: center; gap: 10px; width: 100%; }
+        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 30px; }
+        .row-container { display: flex; justify-content: center; gap: 12px; }
 
-        /* Plot Styling */
+        /* Dynamic Plot Sizing & Glowing */
         .plot { 
-            width: 85px; height: 85px; background: #fff; border: 1px solid #ccc; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            transition: 0.3s; position: relative; cursor: pointer;
+            background: #050505; display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; transition: 0.4s; position: relative; cursor: pointer;
+            box-shadow: inset 0 0 15px var(--row-color);
+            border: 2px solid var(--row-color);
         }
+        .plot:hover { transform: scale(1.15); z-index: 100; border-color: #fff; box-shadow: 0 0 30px var(--row-color); }
 
-        /* VIP Plots - Row 0 */
-        .plot.row-0 { width: 140px; height: 140px; border: 2px solid var(--gold); margin-bottom: 20px; }
-        
-        /* Crown Outside (Top) */
-        .crown-icon { 
-            position: absolute; top: -55px; font-size: 60px; z-index: 10; 
-            filter: drop-shadow(0 5px 10px rgba(158,126,69,0.4));
-        }
-        
-        /* Stars Outside (Bottom) */
-        .vip-stars { 
-            position: absolute; bottom: -35px; color: var(--gold); font-size: 24px; 
-            letter-spacing: 6px; z-index: 5; text-shadow: 0 0 10px rgba(158,126,69,0.3);
-            white-space: nowrap;
-        }
+        /* Plot Sizes (বড় থেকে ছোট) */
+        .size-lg { width: 140px; height: 140px; }
+        .size-md { width: 100px; height: 100px; }
+        .size-sm { width: 85px; height: 85px; }
 
-        .plot:hover { border-color: var(--gold); transform: scale(1.05); z-index: 20; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .p-price { font-size: 11px; font-weight: bold; color: #444; }
+        /* Crown & Stars */
+        .crown { position: absolute; top: -25px; font-size: 45px; filter: drop-shadow(0 0 10px var(--gold)); }
+        .stars { position: absolute; bottom: 10px; color: var(--gold); font-size: 16px; letter-spacing: 3px; }
 
-        /* Footer Copyright */
-        .footer-text { text-align: center; padding: 60px 20px; font-size: 11px; color: #888; line-height: 1.8; width: 100%; max-width: 800px; margin-top: 40px; border-top: 1px solid #eee; }
+        /* Overlays */
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
+        .card { background:#fff; color:#000; padding:50px; width:450px; text-align:center; }
+        .card input { width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; font-family:serif; font-size: 16px; }
+        .btn-buy { background:#000; color:#fff; padding:20px; width:100%; border:none; letter-spacing:5px; cursor:pointer; font-weight:bold; }
 
-        /* Modals & Overlays */
-        #celebration-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; }
-        .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background:#fff; padding:50px; width:450px; text-align:center; border: 1px solid #eee; box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
-        .card input { width:100%; padding:15px; margin:10px 0; border:1px solid #ddd; outline:none; }
-        .btn-action { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:3px; text-transform:uppercase; cursor:pointer; font-weight: bold; }
+        /* Success Screen */
+        #success-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+
+        /* Copyright */
+        .footer-text { text-align: center; padding: 50px; font-size: 12px; color: #555; line-height: 1.8; border-top: 1px solid #222; width: 80%; margin-top: 50px; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
-        <div class="nav-left">
-            <a href="index.html" class="nav-btn" style="background:none; color:#000; border:1px solid #000;">← RETURN</a>
-            <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
-        </div>
-        <div class="counter-box">SOLD: 0 | REMAINING: 100</div>
+        <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
+        <div style="letter-spacing: 2px; font-size: 12px;">SOLD: 0 | LEFT: 100</div>
     </div>
 
     <div class="header-area">
@@ -77,8 +77,7 @@
     </div>
 
     <div class="grid-wrapper">
-        <div id="capture-area">
-            </div>
+        <div id="capture-area"></div>
 
         <div class="footer-text">
             K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved. <br>
@@ -87,92 +86,89 @@
         </div>
     </div>
 
-    <div id="buy-modal" class="modal-overlay">
+    <div id="buy-modal" class="overlay">
         <div class="card">
-            <h2 style="letter-spacing:5px;">ACQUISITION</h2>
-            <p id="plot-info" style="font-size:10px; color:var(--gold);"></p>
-            <input type="text" id="user-name" placeholder="BRAND NAME / USERNAME">
-            <input type="email" id="user-email" placeholder="EMAIL ADDRESS">
-            <button class="btn-action" onclick="runCelebration()">CONFIRM PURCHASE</button>
-            <br><br>
-            <button onclick="closeModal()" style="border:none; background:none; font-size:10px; cursor:pointer;">[ CANCEL ]</button>
+            <h2 style="letter-spacing:5px;">RESERVATION</h2>
+            <p id="selected-plot-info" style="color:var(--gold); font-weight:bold;"></p>
+            <input type="text" id="brand-name" placeholder="ENTER YOUR BRAND NAME">
+            <button class="btn-buy" onclick="confirmOrder()">CONFIRM ORDER</button>
+            <p onclick="closeModal()" style="font-size:10px; cursor:pointer; margin-top:20px;">[ CANCEL ]</p>
         </div>
     </div>
 
-    <div id="celebration-overlay">
-        <h1 style="font-size: 50px; letter-spacing: 10px;">CONGRATULATIONS</h1>
-        <p id="display-name" style="font-size: 20px; letter-spacing: 5px;"></p>
-    </div>
-
-    <div id="info-modal" class="modal-overlay">
-        <div class="card" style="text-align: left;">
-            <h3 style="text-align:center;">NEXT STEPS</h3>
-            <div style="background:#f9f9f9; padding:20px; font-size:13px; border-left:4px solid var(--gold); margin:20px 0; line-height:2;">
-                • Payment Proof (Screenshot/TXID)<br>
-                • Brand Logo (High Resolution)<br>
-                • Redirect URL Link<br>
-                • Your Email: <span id="final-email" style="font-weight:bold;"></span>
-            </div>
-            <button class="btn-action" style="background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">CONTACT SUPPORT</button>
-            <button class="btn-action" onclick="location.reload()" style="margin-top:10px; background:#333;">FINISH</button>
-        </div>
+    <div id="success-screen">
+        <h1 id="congrats-msg" style="font-size: 45px; letter-spacing: 8px; color: #fff;"></h1>
+        <p id="plot-confirm" style="font-size: 20px; color: var(--gold); letter-spacing: 3px;"></p>
+        <button class="nav-btn" style="margin-top: 40px;" onclick="location.reload()">BACK TO CANVAS</button>
     </div>
 
     <script>
-        const container = document.getElementById('capture-area');
+        const grid = document.getElementById('capture-area');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
+        const colors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
+        
+        let selectedPlotId = 0;
 
-        // Generate Rows
         for (let r = 0; r < 10; r++) {
             const rowDiv = document.createElement('div');
             rowDiv.className = 'row-container';
+            
             for (let c = 0; c < 10; c++) {
-                const index = (r * 10) + c;
+                const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
-                plot.className = `plot row-${r}`;
                 
-                // VIP Elements (Crown & Stars Outside)
-                if (r === 0) {
-                    plot.innerHTML = `<span class="crown-icon">👑</span><span class="vip-stars">★★★★★</span>`;
+                // Size Logic
+                let sizeClass = 'size-sm';
+                if(r === 0) sizeClass = 'size-lg';
+                else if(r < 3) sizeClass = 'size-md';
+
+                plot.className = `plot ${sizeClass}`;
+                plot.style.setProperty('--row-color', colors[r]);
+
+                if(r === 0) {
+                    plot.innerHTML = `<span class="crown">👑</span><span class="stars">★★★★★</span>`;
                 }
-                
-                plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${index+1}</span>`;
-                plot.innerHTML += `<span class="p-price">$${prices[r]}</span>`;
-                
+
+                plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.4;">#${id}</span>`;
+                plot.innerHTML += `<span style="font-size:10px; font-weight:bold;">$${prices[r]}</span>`;
+
                 plot.onclick = () => {
+                    selectedPlotId = id;
                     document.getElementById('buy-modal').style.display = 'flex';
-                    document.getElementById('plot-info').innerText = `RESERVING PLOT #${index+1} ($${prices[r]})`;
+                    document.getElementById('selected-plot-info').innerText = `ACQUIRING PLOT #${id} FOR $${prices[r]}`;
                 };
                 rowDiv.appendChild(plot);
             }
-            container.appendChild(rowDiv);
+            grid.appendChild(rowDiv);
         }
 
         function closeModal() { document.getElementById('buy-modal').style.display = 'none'; }
 
-        function runCelebration() {
-            const name = document.getElementById('user-name').value;
-            const email = document.getElementById('user-email').value;
-            if(!name || !email) return alert("Please fill details");
+        function confirmOrder() {
+            const name = document.getElementById('brand-name').value;
+            if(!name) return alert("Please enter brand name");
 
             document.getElementById('buy-modal').style.display = 'none';
-            const whiteScreen = document.getElementById('celebration-overlay');
-            whiteScreen.style.display = 'flex';
-            document.getElementById('display-name').innerText = name.toUpperCase();
+            const screen = document.getElementById('success-screen');
+            screen.style.display = 'flex';
+            document.getElementById('congrats-msg').innerText = `CONGRATULATIONS, ${name.toUpperCase()}!`;
+            document.getElementById('plot-confirm').innerText = `PLOT #${selectedPlotId} IS NOW RESERVED`;
 
-            confetti({ particleCount: 300, spread: 100, origin: { y: 0.6 }, colors: ['#9E7E45', '#000', '#ff0000'] });
+            // Golden Confetti from both sides
+            const end = Date.now() + 3000;
+            const colors_confetti = ['#9E7E45', '#FFD700', '#FFFFFF'];
 
-            setTimeout(() => {
-                whiteScreen.style.display = 'none';
-                document.getElementById('info-modal').style.display = 'flex';
-                document.getElementById('final-email').innerText = email;
-            }, 3000);
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: colors_confetti });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: colors_confetti });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
         }
 
         function downloadMap() {
-            html2canvas(container, { backgroundColor: "#ffffff", scale: 2 }).then(canvas => {
+            html2canvas(grid, { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = 'K_Archive_Map.png';
+                link.download = 'K_Archive_Millionaires_Club.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
