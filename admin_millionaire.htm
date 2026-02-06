@@ -9,46 +9,49 @@
         .container { max-width: 1200px; margin: 0 auto; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .card { background: var(--card); padding: 20px; border-radius: 10px; border: 1px solid #333; margin-bottom: 20px; }
-        .approval-card { border-left: 8px solid var(--gold); }
-        h2 { color: var(--gold); text-transform: uppercase; font-size: 18px; margin-top: 0; }
+        h2 { color: var(--gold); text-transform: uppercase; font-size: 18px; border-bottom: 1px solid #333; padding-bottom: 10px; }
         input { padding: 12px; width: 100%; margin-bottom: 10px; border: 1px solid #444; background: #0B0E11; color: #fff; border-radius: 4px; box-sizing: border-box; }
         button { padding: 10px 20px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; transition: 0.3s; }
         .btn-approve { background: #2ebd85; color: white; width: 100%; }
         .btn-reject { background: #f6465d; color: white; margin-top: 5px; width: 100%; }
         .btn-manual { background: var(--gold); color: #000; width: 100%; margin-top: 10px; }
-        .item { padding: 10px; background: #000; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        .item { padding: 12px; background: #000; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
         .btn-delete { background: #f6465d; color: white; padding: 5px 10px; font-size: 11px; }
+        .scroll { height: 400px; overflow-y: auto; }
     </style>
 </head>
 <body>
     <script>
-        const pass = prompt("Master Access Password:");
-        if(pass === "zoomlink34@gmail.com") { document.body.style.display = "block"; } 
-        else { alert("Wrong Password!"); window.location.href = "index.html"; }
+        // আপনার পাসওয়ার্ড চেক
+        if(prompt("Master Access Password:") === "zoomlink34@gmail.com") { 
+            document.body.style.display = "block"; 
+        } else { 
+            window.location.href = "index.html"; 
+        }
     </script>
 
     <div class="container">
-        <h1 style="text-align: center; color: var(--gold); letter-spacing: 3px;">ADMIN COMMAND CENTER</h1>
+        <h1 style="text-align: center; color: var(--gold); letter-spacing: 3px;">MILLIONAIRE COMMAND CENTER</h1>
         
         <div class="grid">
             <div class="card">
-                <h2>Pending Approvals</h2>
-                <div id="order-list">Loading orders...</div>
+                <h2>Pending Requests (Customer Orders)</h2>
+                <div id="order-list" class="scroll">Loading...</div>
             </div>
 
             <div class="right-col">
                 <div class="card">
-                    <h2>Direct Publish (Manual)</h2>
+                    <h2>Manual Direct Update</h2>
                     <input type="number" id="mPlot" placeholder="Plot ID (1-100)">
-                    <input type="text" id="mBrand" placeholder="Brand Name">
-                    <input type="text" id="mImg" placeholder="Logo Image URL">
-                    <input type="text" id="mWeb" placeholder="Social/Website URL">
-                    <button class="btn-manual" onclick="manualPublish()">GO LIVE NOW</button>
+                    <input type="text" id="mBrand" placeholder="Customer Name/Brand">
+                    <input type="text" id="mImg" placeholder="Logo Link (Image URL)">
+                    <input type="text" id="mWeb" placeholder="Social/Website Link">
+                    <button class="btn-manual" onclick="manualUpdate()">UPDATE & GO LIVE</button>
                 </div>
 
                 <div class="card">
-                    <h2>Live Records (Delete Plots)</h2>
-                    <div id="liveRecords" style="height: 300px; overflow-y: auto;">Loading...</div>
+                    <h2>Live Records (Clear Plots)</h2>
+                    <div id="liveRecords" class="scroll">Loading...</div>
                 </div>
             </div>
         </div>
@@ -68,40 +71,38 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // ১. কাস্টমার অর্ডার লোড করা (Pending)
+        // ১. কাস্টমার অর্ডার লোড করা
         db.ref('pending_orders/Millionaire').on('value', s => {
             const list = document.getElementById('order-list');
             list.innerHTML = "";
             const data = s.val();
-            if(!data) return list.innerHTML = "<p style='color:#666'>No pending requests.</p>";
+            if(!data) return list.innerHTML = "<p style='color:#666'>No pending orders.</p>";
             
             Object.keys(data).forEach(key => {
                 const order = data[key];
                 list.innerHTML += `
-                    <div class="card approval-card">
+                    <div class="card" style="border-left: 5px solid var(--gold); background: #111;">
                         <b>PLOT #${order.plotID}</b> | USER: ${order.brandName} <br><br>
                         <input type="text" id="img_${key}" placeholder="Paste Logo URL">
-                        <input type="text" id="web_${key}" placeholder="Paste Website URL">
+                        <input type="text" id="web_${key}" placeholder="Paste Social Link">
                         <button class="btn-approve" onclick="approve('${key}', '${order.plotID}', '${order.brandName}')">APPROVE & LIVE</button>
-                        <button class="btn-reject" onclick="reject('${key}')">REJECT / DELETE</button>
+                        <button class="btn-reject" onclick="reject('${key}')">DELETE REQUEST</button>
                     </div>`;
             });
         });
 
-        // এপ্রুভ ফাংশন (লাইভ করা)
+        // এপ্রুভ ফাংশন (ম্যাপে লাইভ করবে)
         function approve(key, pid, brand) {
             const img = document.getElementById('img_'+key).value;
             const web = document.getElementById('web_'+key).value;
             if(!img) return alert("Logo URL missing!");
 
-            // pixels ফোল্ডারে লাইভ করা
-            db.ref('pixels/'+pid).set({
-                name: brand, 
-                imageUrl: img, 
-                link: web || "#", 
-                plotID: pid
+            db.ref('sold_plots/plot_'+pid).set({
+                plotID: pid, 
+                username: brand, 
+                image: img, 
+                social: web || "#"
             }).then(() => {
-                // রিকোয়েস্ট ডিলিট করা
                 db.ref('pending_orders/Millionaire/'+key).remove();
                 alert("Plot #" + pid + " is now LIVE!");
             });
@@ -109,37 +110,37 @@
 
         // রিজেক্ট ফাংশন
         function reject(key) {
-            if(confirm("Delete this request?")) db.ref('pending_orders/Millionaire/'+key).remove();
+            if(confirm("Reject this order?")) db.ref('pending_orders/Millionaire/'+key).remove();
         }
 
-        // ২. ম্যানুয়াল পাবলিশ
-        function manualPublish() {
+        // ২. ম্যানুয়াল ডিরেক্ট আপডেট
+        function manualUpdate() {
             const pid = document.getElementById('mPlot').value;
             const name = document.getElementById('mBrand').value;
             const img = document.getElementById('mImg').value;
             const web = document.getElementById('mWeb').value;
             if(!pid || !name || !img) return alert("Fill all fields!");
 
-            db.ref('pixels/'+pid).set({name, imageUrl:img, link:web||"#", plotID:pid}).then(() => {
-                alert("Manual Update Success!");
-                document.getElementById('mPlot').value = "";
-            });
+            db.ref('sold_plots/plot_'+pid).set({
+                plotID: pid, username: name, image: img, social: web || "#"
+            }).then(() => alert("Manual Live Success!"));
         }
 
-        // ৩. লাইভ রেকর্ড দেখা ও ডিলিট করা
-        db.ref('pixels').on('value', s => {
+        // ৩. লাইভ রেকর্ড থেকে ডিলিট
+        db.ref('sold_plots').on('value', s => {
             const list = document.getElementById('liveRecords'); list.innerHTML = "";
-            const data = s.val(); if(!data) return list.innerHTML = "No Records.";
-            Object.keys(data).forEach(id => {
+            const data = s.val(); if(!data) return list.innerHTML = "No live records.";
+            Object.keys(data).forEach(key => {
+                const item = data[key];
                 list.innerHTML += `<div class="item">
-                    <span>#${id} - ${data[id].name}</span>
-                    <button class="btn-delete" onclick="deleteLive('${id}')">DELETE</button>
+                    <span>#${item.plotID} - ${item.username}</span>
+                    <button class="btn-delete" onclick="clearPlot('${key}')">REMOVE</button>
                 </div>`;
             });
         });
 
-        function deleteLive(id) {
-            if(confirm("Delete this live plot?")) db.ref('pixels/'+id).remove();
+        function clearPlot(key) {
+            if(confirm("Remove this brand from map?")) db.ref('sold_plots/'+key).remove();
         }
     </script>
 </body>
