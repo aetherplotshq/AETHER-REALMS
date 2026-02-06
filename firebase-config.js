@@ -1,9 +1,9 @@
 /**
- * K ARCHIVE - Firebase Core Engine
- * Handled Sections: Gaming (12 Games), Millionaires, Social, Nations, 1M Grid
+ * K ARCHIVE - Universal Firebase Core Engine
+ * All-in-One Config for 9 Manual Update Panels
+ * Author: K Archive Dev Team
  */
 
-// Firebase SDK modules from CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { 
     getDatabase, 
@@ -11,15 +11,12 @@ import {
     set, 
     push, 
     onValue, 
-    query, 
-    orderByChild, 
-    startAt, 
     update, 
     remove,
     serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-// Your verified Firebase configuration
+// ফায়ারবেস কনফিগারেশন (আপনার দেওয়া ডাটা অনুযায়ী)
 const firebaseConfig = {
     apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
     authDomain: "aether-realms.firebaseapp.com",
@@ -31,23 +28,35 @@ const firebaseConfig = {
     measurementId: "G-XTRFZJTMEW"
 };
 
-// Initialize Firebase Instance
+// ইনিশিয়ালাইজেশন
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-/** * Exporting all necessary modules
- * This will be used in: manual_update.html and all Game Canvas files
+/**
+ * আপনার ৯টি সেকশনের ডাটাবেস পাথ লিস্ট।
+ * আপনি যখন যে সেকশনের জন্য ম্যানুয়াল প্যানেল বানাবেন, এখান থেকে সেই নাম ব্যবহার করবেন।
  */
+const SECTIONS = {
+    MILLIONAIRE: "estate_data/Millionaire",
+    NATIONS:     "estate_data/Nations",
+    GAMING:      "estate_data/Gaming",
+    SOCIAL:      "estate_data/Social",
+    BILLIONAIRE: "estate_data/Billionaire",
+    LUXURY:      "estate_data/Luxury",
+    ENTERPRISE:  "estate_data/Enterprise",
+    EXCLUSIVE:   "estate_data/Exclusive",
+    ARCHIVE:     "estate_data/Archive"
+};
+
+// সব প্রয়োজনীয় ফাংশন এক্সপোর্ট করা হচ্ছে
 export { 
     db, 
     ref, 
     set, 
     push, 
     onValue, 
-    query, 
-    orderByChild, 
-    startAt, 
     update, 
     remove,
-    serverTimestamp 
+    serverTimestamp,
+    SECTIONS 
 };
