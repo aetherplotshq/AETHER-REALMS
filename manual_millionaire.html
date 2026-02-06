@@ -2,66 +2,126 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MILLIONAIRE CONTROLLER | K ARCHIVE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MILLIONAIRE ADMIN | K ARCHIVE</title>
     <style>
-        body { background: #fcfcfc; font-family: 'Arial', sans-serif; margin: 0; }
-        header { height:70px; display:flex; align-items:center; justify-content:space-between; padding:0 40px; border-bottom:1px solid #eee; background: #fff; }
-        .update-wrapper { max-width: 500px; margin: 60px auto; padding: 40px; background: #fff; border: 1px solid #eee; border-radius: 8px; }
-        .update-wrapper h2 { text-align: center; letter-spacing: 3px; color: #9E7E45; text-transform: uppercase; font-size: 20px; margin-bottom: 30px; }
-        .input-group { margin-bottom: 20px; }
-        label { display: block; font-size: 11px; letter-spacing: 1px; color: #333; margin-bottom: 8px; text-transform: uppercase; font-weight: bold; }
-        input { width: 100%; padding: 14px; border: 1px solid #ddd; background: #fafafa; outline: none; box-sizing: border-box; border-radius: 4px; }
-        input:focus { border-color: #9E7E45; background: #fff; }
-        .publish-btn { width: 100%; padding: 18px; background: #000; color: #fff; border: none; cursor: pointer; letter-spacing: 3px; font-weight: bold; text-transform: uppercase; transition: 0.3s; margin-top: 10px; }
-        .publish-btn:hover { background: #9E7E45; }
+        :root { --gold: #9E7E45; --black: #000; --gray: #f4f4f4; }
+        body { background: var(--gray); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+        
+        header { background: var(--black); color: #fff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--gold); }
+        .container { max-width: 600px; margin: 50px auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        h2 { text-align: center; color: var(--black); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; font-size: 22px; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; color: #555; }
+        input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-size: 14px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--gold); box-shadow: 0 0 5px rgba(158, 126, 69, 0.3); }
+        
+        .btn-group { display: flex; gap: 10px; margin-top: 30px; }
+        .btn { flex: 1; padding: 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        
+        .update-btn { background: var(--black); color: #fff; }
+        .update-btn:hover { background: var(--gold); }
+        
+        .delete-btn { background: #ff4444; color: #fff; }
+        .delete-btn:hover { background: #cc0000; }
+
+        .status-msg { margin-top: 20px; text-align: center; font-size: 13px; font-weight: bold; padding: 10px; border-radius: 4px; display: none; }
     </style>
 </head>
 <body>
-    <header>
-        <button onclick="history.back()" style="background:none; border:none; font-weight:bold; cursor:pointer; font-size:11px;">← BACK</button>
-        <div style="font-size:18px; font-weight:900;">K.</div>
-        <div style="font-size:10px; letter-spacing:2px; color:#9E7E45; font-weight: bold;">MILLIONAIRE CLUB</div>
-    </header>
 
-    <div class="update-wrapper">
-        <h2>Update Elite Plot</h2>
-        <div class="input-group">
-            <label>Plot Identifier (1-100)</label>
-            <input type="number" id="plot-no" placeholder="e.g. 5">
-        </div>
-        <div class="input-group">
-            <label>Brand Logo URL (Direct PNG/JPG)</label>
-            <input type="text" id="logo-url" placeholder="https://example.com/logo.png">
-        </div>
-        <div class="input-group">
-            <label>Destination/Website Link</label>
-            <input type="text" id="target-link" placeholder="https://brand-website.com">
-        </div>
-        <button class="publish-btn" onclick="pushUpdate()">Update Plot Now</button>
+<header>
+    <div style="font-size: 20px; font-weight: 900; letter-spacing: 2px;">K. ARCHIVE</div>
+    <div style="font-size: 12px; color: var(--gold);">ADMIN CONTROLLER</div>
+</header>
+
+<div class="container">
+    <h2>Update Millionaire Plot</h2>
+    
+    <div class="form-group">
+        <label>Plot Number (1 - 100)</label>
+        <input type="number" id="plotId" placeholder="e.g. 5" min="1" max="100">
     </div>
 
-    <script type="module">
-        import { db, ref, set } from "./firebase-config.js";
-        
-        window.pushUpdate = () => {
-            const plotId = document.getElementById('plot-no').value;
-            const logo = document.getElementById('logo-url').value;
-            const link = document.getElementById('target-link').value;
-            
-            if(!plotId || !logo || !link) return alert("Please fill all fields!");
-            
-            // This updates the specific plot on the main Millionaire grid
-            set(ref(db, `estate_data/Millionaire/plot_${plotId}`), {
-                logo: logo,
-                link: link,
-                updatedAt: new Date().toISOString()
-            }).then(() => { 
-                alert("Plot #" + plotId + " successfully updated on the Millionaire Map!"); 
-                location.reload(); 
-            }).catch((err) => {
-                alert("Error: " + err.message);
+    <div class="form-group">
+        <label>Brand Logo Image URL</label>
+        <input type="text" id="logoUrl" placeholder="https://domain.com/logo.png">
+        <small style="color: #888; font-size: 10px;">* সরাসরি ছবির লিঙ্ক দিন (PNG বা JPG)</small>
+    </div>
+
+    <div class="form-group">
+        <label>Customer Website Link</label>
+        <input type="text" id="targetLink" placeholder="https://customer-site.com">
+    </div>
+
+    <div id="status" class="status-msg"></div>
+
+    <div class="btn-group">
+        <button class="btn update-btn" onclick="saveData()">Update Now</button>
+        <button class="btn delete-btn" onclick="clearPlot()">Clear Plot</button>
+    </div>
+    
+    <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; text-align: center;">
+        <a href="millionaire_canvas.html" target="_blank" style="color: var(--gold); text-decoration: none; font-size: 12px;">← View Live Canvas</a>
+    </div>
+</div>
+
+<script type="module">
+    import { db, ref, set, remove } from "./firebase-config.js";
+
+    // ডাটা সেভ বা আপডেট করার ফাংশন
+    window.saveData = () => {
+        const id = document.getElementById('plotId').value;
+        const logo = document.getElementById('logoUrl').value;
+        const link = document.getElementById('targetLink').value;
+        const status = document.getElementById('status');
+
+        if(!id || !logo || !link) {
+            showStatus("সবগুলো ঘর পূরণ করুন!", "red");
+            return;
+        }
+
+        set(ref(db, `estate_data/Millionaire/plot_${id}`), {
+            logo: logo,
+            link: link,
+            updatedAt: new Date().toISOString()
+        }).then(() => {
+            showStatus(`Plot #${id} সফলভাবে আপডেট হয়েছে!`, "green");
+            clearInputs();
+        }).catch((error) => {
+            showStatus("ত্রুটি: " + error.message, "red");
+        });
+    };
+
+    // প্লট খালি করার ফাংশন (Delete)
+    window.clearPlot = () => {
+        const id = document.getElementById('plotId').value;
+        if(!id) return showStatus("প্লট নম্বর দিন!", "red");
+
+        if(confirm(`আপনি কি নিশ্চিত যে #${id} নম্বর প্লটটি খালি করতে চান?`)) {
+            remove(ref(db, `estate_data/Millionaire/plot_${id}`))
+            .then(() => {
+                showStatus(`Plot #${id} খালি করা হয়েছে।`, "orange");
+                clearInputs();
             });
-        };
-    </script>
+        }
+    };
+
+    function showStatus(msg, color) {
+        const status = document.getElementById('status');
+        status.innerText = msg;
+        status.style.display = "block";
+        status.style.background = color === "red" ? "#ffebee" : (color === "green" ? "#e8f5e9" : "#fff3e0");
+        status.style.color = color === "red" ? "#c62828" : (color === "green" ? "#2e7d32" : "#ef6c00");
+    }
+
+    function clearInputs() {
+        document.getElementById('logoUrl').value = "";
+        document.getElementById('targetLink').value = "";
+    }
+</script>
+
 </body>
 </html>
