@@ -13,25 +13,25 @@
 
         /* Navigation & Live Counter */
         .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 1px solid #222; box-sizing: border-box; }
-        .nav-left { display: flex; gap: 15px; }
-        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 12px 20px; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .nav-left { display: flex; gap: 15px; flex-direction: column; } /* Vertical stack for buttons */
+        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 20px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; width: 180px; text-align: left; }
         .nav-btn:hover { background: #fff; color: #000; border-color: #fff; }
         
         .live-counter { text-align: right; border-left: 2px solid var(--gold); padding-left: 15px; }
         .live-counter span { display: block; font-size: 10px; letter-spacing: 2px; font-weight: bold; }
         .count-val { color: var(--gold); font-size: 14px !important; }
 
-        /* Section Header */
-        .header-area { text-align: center; padding-top: 150px; margin-bottom: 50px; }
-        .section-name { font-size: clamp(35px, 8vw, 85px); letter-spacing: 12px; text-transform: uppercase; font-weight: 900; background: linear-gradient(90deg, #1e3c72, #2a5298, #d3d333, #e65c00, #f9d423, #1e3c72); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 5s linear infinite; }
-        @keyframes shine { to { background-position: 200% center; } }
+        /* Section Header - Rolls Royce Inspired */
+        .header-area { text-align: center; padding-top: 180px; margin-bottom: 80px; }
+        .pre-title { font-size: 10px; letter-spacing: 8px; color: var(--gold); text-transform: uppercase; margin-bottom: 15px; opacity: 0.8; display: block; }
+        .section-name { font-size: clamp(35px, 6vw, 65px); letter-spacing: 15px; text-transform: uppercase; font-weight: 400; color: #fff; margin: 0; }
 
-        /* Grid System with Smooth Gradient Transitions */
-        #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 100px; }
+        /* Grid System */
+        #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 50px; }
         .row { display: flex; justify-content: center; gap: 15px; width: 100%; padding: 55px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
         
         .plot { 
-            background: rgba(0,0,0,0.8); border: 2px solid var(--r-col); display: flex; flex-direction: column; 
+            background: rgba(0,0,0,0.8); border: 1px solid var(--r-col); display: flex; flex-direction: column; 
             align-items: center; justify-content: center; transition: 0.4s; position: relative; 
             cursor: pointer; width: 115px; height: 115px; box-shadow: 0 0 10px var(--r-col); 
         }
@@ -42,13 +42,17 @@
 
         /* Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background: #fff; color:#000; padding:40px; width:480px; text-align:center; border-radius: 4px; box-shadow: 0 0 50px rgba(255,255,255,0.1); }
+        .card { background: #fff; color:#000; padding:40px; width:480px; text-align:center; border-radius: 2px; }
         .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; }
         .premium-btn:hover { background: var(--gold); }
         
         .info-list { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); line-height: 1.8; font-size: 14px; }
-        
-        /* Full Address View in Payment */
+
+        /* Footer Text */
+        .archive-footer { padding: 80px 20px; text-align: center; color: #555; font-size: 11px; letter-spacing: 1.5px; line-height: 2; border-top: 1px solid #111; max-width: 800px; margin: 0 auto; }
+        .archive-footer b { color: #888; }
+
+        /* Pay Items */
         .pay-item { text-align: left; padding: 15px; background: #f7f7f7; margin-bottom: 15px; cursor: pointer; border: 1px solid #eee; transition: 0.3s; }
         .pay-item:hover { border-color: var(--gold); background: #fff; }
         .pay-label { display: block; color: #888; font-size: 10px; text-transform: uppercase; margin-bottom: 5px; font-weight: bold; }
@@ -62,8 +66,9 @@
 
     <div class="top-nav">
         <div class="nav-left">
-            <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
-            <button class="nav-btn" style="border-color: var(--gold); color: var(--gold);" onclick="openPayment()">PAYMENT METHOD</button>
+            <button class="nav-btn" onclick="downloadMap()">[ DOWNLOAD MAP ]</button>
+            <button class="nav-btn" onclick="window.location.href='index.html'">[ BACK TO HOME ]</button>
+            <button class="nav-btn" style="border-color: var(--gold); color: var(--gold); margin-top: 5px;" onclick="openPayment()">[ PAYMENT GATEWAY ]</button>
         </div>
         
         <div class="live-counter">
@@ -72,9 +77,19 @@
         </div>
     </div>
 
-    <div class="header-area"><h1 class="section-name">Millionaires Club</h1></div>
+    <div class="header-area">
+        <span class="pre-title">Own a piece of internet history</span>
+        <h1 class="section-name">Millionaires Club</h1>
+    </div>
     
     <div id="capture-area"></div>
+
+    <footer class="archive-footer">
+        K ARCHIVE | THE SOVEREIGN ESTATE<br>
+        <b>The Million Dollar Homepage © 2026. All rights reserved.</b><br>
+        I am not responsible for the content of external sites. 
+        Images featured on the canvas are © of their respective owners.
+    </footer>
 
     <div id="order-modal" class="modal">
         <div class="card">
@@ -89,22 +104,18 @@
     <div id="pay-modal" class="modal">
         <div class="card" style="width: 550px;">
             <h2 style="letter-spacing: 5px; margin-bottom: 30px; font-size: 18px;">PAYMENT GATEWAY</h2>
-            
             <div class="pay-item" onclick="copy('0x44379244884e8e8551954ccEF910778Affleb78E')">
-                <span class="pay-label">Metamask / Trust Wallet (ETH/BNB/Polygon)</span>
+                <span class="pay-label">Metamask / Trust Wallet (ETH/BNB)</span>
                 <span class="pay-address">0x44379244884e8e8551954ccEF910778Affleb78E</span>
             </div>
-
             <div class="pay-item" onclick="copy('912221034')">
                 <span class="pay-label">Binance UID</span>
                 <span class="pay-address">912221034</span>
             </div>
-
             <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
                 <span class="pay-label">USDT (TRC20 Address)</span>
                 <span class="pay-address">TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</span>
             </div>
-
             <button class="premium-btn" onclick="closeModals()">CLOSE</button>
         </div>
     </div>
@@ -134,16 +145,14 @@
 
         const captureArea = document.getElementById('capture-area');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        // Smooth Color Palette (উজ্জ্বল কিন্তু একটির সাথে অন্যটির মিল আছে)
         const rowColors = ['#FFD700', '#FFB800', '#FF8C00', '#FF4500', '#FF0055', '#D400FF', '#7A00FF', '#0070FF', '#00C3FF', '#00FFCC'];
 
         let activeID, activePrice;
 
-        // Grid Generation
         for (let r = 0; r < 10; r++) {
             const row = document.createElement('div');
             row.className = 'row';
-            row.style.backgroundColor = rowColors[r] + '0A'; // Very subtle bg
+            row.style.backgroundColor = rowColors[r] + '05'; 
 
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
@@ -169,7 +178,6 @@
         window.submitOrder = async () => {
             const brand = document.getElementById('brand-input').value;
             if(!brand) return alert("Please enter your brand name.");
-
             try {
                 await push(ref(db, 'pending_orders/Millionaire'), {
                     plotID: activeID, price: activePrice, brandName: brand, timestamp: serverTimestamp()
@@ -184,23 +192,17 @@
             const overlay = document.getElementById('celeb-overlay');
             document.getElementById('congrats-brand').innerText = name.toUpperCase();
             overlay.style.display = 'flex';
-            
-            // Initial Confetti
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-
             setTimeout(() => {
                 overlay.style.display = 'none';
                 document.getElementById('final-modal').style.display = 'flex';
             }, 4000);
         }
 
-        // ক্যানভাসে ফিরে আসার সময় অভিনন্দন ইফেক্ট
         window.closeAndCelebrate = () => {
             document.getElementById('final-modal').style.display = 'none';
-            // পূর্ণ স্ক্রিন জুড়ে রঙিন কাগজের ইফেক্ট
             var duration = 5 * 1000;
             var end = Date.now() + duration;
-
             (function frame() {
               confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#FFD700', '#FF0055', '#0070FF'] });
               confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#FFD700', '#FF0055', '#0070FF'] });
@@ -214,13 +216,14 @@
 
         window.downloadMap = () => {
             const btn = event.target;
-            btn.innerText = "CAPTURING...";
+            const originalText = btn.innerText;
+            btn.innerText = "[ CAPTURING... ]";
             html2canvas(document.getElementById('capture-area'), { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'Millionaires_Club_Map.png';
                 link.href = canvas.toDataURL();
                 link.click();
-                btn.innerText = "DOWNLOAD MAP";
+                btn.innerText = originalText;
             });
         };
     </script>
