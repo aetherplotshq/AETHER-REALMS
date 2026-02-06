@@ -6,6 +6,7 @@
     <title>MILLIONAIRES CLUB | K ARCHIVE</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <style>
         :root { --gold: #9E7E45; --premium-white: #fdfdfd; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
@@ -13,25 +14,37 @@
         /* Navigation */
         .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 1px solid #1a1a1a; box-sizing: border-box; }
         .nav-btn { background: none; border: 1px solid #333; color: #fff; padding: 10px 18px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .nav-btn:hover { background: #fff; color: #000; }
-        .counter { color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; }
+        .nav-btn:hover { background: #fff; color: #000; border-color: #fff; }
 
-        /* Header Area */
+        /* Section Header */
         .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; }
         .section-name { font-size: clamp(30px, 6vw, 75px); letter-spacing: 15px; text-transform: uppercase; font-weight: 900; background: linear-gradient(90deg, #1e3c72, #2a5298, #d3d333, #e65c00, #f9d423, #1e3c72); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 6s linear infinite; }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid */
+        /* Grid System with Colored Background Rows */
         #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 100px; }
-        .row { display: flex; justify-content: center; gap: 15px; width: 100%; padding: 45px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .plot { background: rgba(0,0,0,0.9); border: 2.5px solid var(--r-col); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.4s; position: relative; cursor: pointer; width: 115px; height: 115px; box-shadow: 0 0 15px var(--r-col); }
+        .row { display: flex; justify-content: center; gap: 15px; width: 100%; padding: 60px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        
+        .plot { 
+            background: rgba(0,0,0,0.8); border: 2.5px solid var(--r-col); display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; transition: 0.4s; position: relative; 
+            cursor: pointer; width: 120px; height: 120px; box-shadow: 0 0 15px var(--r-col); 
+        }
         .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 100; box-shadow: 0 0 35px #fff; }
+        .owner-tag { position: absolute; bottom: -30px; font-size: 9px; color: #fff; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 100%; text-align: center; }
 
-        /* Modals */
+        /* Premium Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
         .card { background: var(--premium-white); color:#000; padding:50px; width:480px; text-align:center; border-radius: 2px; }
-        .premium-btn { background: #000; color: #fff; width: 100%; padding: 20px; border: none; font-weight: bold; letter-spacing: 5px; cursor: pointer; text-transform: uppercase; margin-top: 20px; }
-        .info-list { text-align: left; background: #f9f9f9; padding: 20px; border-left: 5px solid var(--gold); margin: 20px 0; font-size: 14px; line-height: 1.8; }
+        .premium-btn { background: #000; color: #fff; width: 100%; padding: 20px; border: none; font-weight: bold; letter-spacing: 4px; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; }
+        .premium-btn:hover { background: var(--gold); }
+        .info-list { text-align: left; background: #f4f4f4; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); line-height: 2; font-size: 14px; }
+
+        /* Payment Items */
+        .pay-item { text-align: left; padding: 15px; background: #fff; border: 1px solid #eee; margin-bottom: 10px; cursor: pointer; }
+        .pay-item:hover { border-color: var(--gold); }
+        .pay-item small { color: #888; text-transform: uppercase; font-size: 10px; display: block; margin-bottom: 5px; }
+        .pay-item b { font-family: monospace; font-size: 13px; word-break: break-all; }
 
         /* Celebration Overlay */
         #celeb-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:#000; display:none; flex-direction:column; align-items:center; justify-content:center; z-index:10000; text-align:center; }
@@ -42,76 +55,86 @@
     <div class="top-nav">
         <div class="nav-left">
             <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
-            <button class="nav-btn" style="border-color: var(--gold); color: var(--gold);" onclick="openPayment()">PAYMENT METHOD</button>
+            <button class="nav-btn" style="border-color: var(--gold); color: var(--gold); margin-left: 10px;" onclick="openPayment()">PAYMENT METHOD</button>
         </div>
-        <div class="counter">SOLD: <span id="s-count">0</span> | LEFT: <span id="l-count">100</span></div>
+        <div style="color:var(--gold); font-size:11px; letter-spacing:2px; font-weight:bold;">K ARCHIVE | MILLIONAIRES CLUB</div>
     </div>
 
     <div class="header-area"><h1 class="section-name">Millionaires Club</h1></div>
-    <div id="capture-area"></div>
+    
+    <div id="capture-area">
+        </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 id="disp-id" style="letter-spacing: 3px; color: var(--gold);">PLOT #00</h2>
-            <h1 id="disp-price">$0,000</h1>
-            <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; text-align:center; font-size:16px;">
-            <button class="premium-btn" onclick="processOrder()">SUBMIT & ACQUIRE</button>
-            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:15px; opacity:0.5;">[ CANCEL ]</p>
-        </div>
-    </div>
-
-    <div id="celeb-overlay">
-        <h1 style="font-size: 45px; letter-spacing: 12px; color: #fff;">CONGRATULATIONS!</h1>
-        <h2 id="congrats-brand" style="font-size: 30px; color: var(--gold); margin-top: 20px;"></h2>
-    </div>
-
-    <div id="final-modal" class="modal">
-        <div class="card">
-            <h2 style="letter-spacing: 2px;">ACQUISITION STEPS</h2>
-            <div class="info-list">
-                ✅ 1. Payment Proof (Screenshot/TXID)<br>
-                ✅ 2. High-Resolution Brand Logo<br>
-                ✅ 3. Website Link (For Redirect)<br>
-                ✅ 4. Confirm Plot ID & Brand Name
-            </div>
-            <button class="premium-btn" onclick="window.open('https://wa.me/8801576940717', '_blank')">CONTACT CUSTOMER SERVICE</button>
-            <button class="premium-btn" style="background:#555; margin-top:10px;" onclick="location.reload()">BACK TO MAP</button>
+            <h2 id="disp-id" style="color:var(--gold); font-size:12px; letter-spacing:3px;">PLOT #00</h2>
+            <h1 id="disp-price" style="font-size: 35px; margin: 10px 0 30px 0;">$0,000</h1>
+            <input type="text" id="brand-input" placeholder="YOUR BRAND NAME" style="width:100%; padding:20px; border:1px solid #ddd; text-align:center; font-size:16px; outline:none; margin-bottom:20px; box-sizing: border-box;">
+            <button class="premium-btn" onclick="submitOrder()">SUBMIT & ACQUIRE</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:20px; opacity:0.5;">[ CANCEL ]</p>
         </div>
     </div>
 
     <div id="pay-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 3px;">SECURE PAYMENT</h2>
-            <div style="text-align:left; padding:15px; background:#f4f4f4; margin-bottom:10px; cursor:pointer;" onclick="copy('912221034')">BINANCE UID: <b>912221034</b></div>
-            <div style="text-align:left; padding:15px; background:#f4f4f4; cursor:pointer;" onclick="copy('0x44379244884e8e8551954ccEF910778Affleb78E')">METAMASK (ETH/BNB): <br><b>0x44379244884e8e8551954ccEF910778Affleb78E</b></div>
+            <h2 style="letter-spacing: 3px; margin-bottom: 30px;">SECURE PAYMENT</h2>
+            <div class="pay-item" onclick="copy('912221034')"><small>BINANCE UID</small><b>912221034</b></div>
+            <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')"><small>USDT (TRC20)</small><b>TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</b></div>
+            <div class="pay-item" onclick="copy('0x44379244884e8e8551954ccEF910778Affleb78E')"><small>METAMASK (ETH/BNB)</small><b>0x44379244884e8e8551954ccEF910778Affleb78E</b></div>
             <button class="premium-btn" onclick="closeModals()">CLOSE</button>
         </div>
     </div>
 
+    <div id="celeb-overlay">
+        <h1 style="font-size: 50px; letter-spacing: 15px; color: #fff; font-weight: 900;">CONGRATULATIONS!</h1>
+        <h2 id="congrats-brand" style="font-size: 35px; color: var(--gold); margin-top: 20px; letter-spacing: 5px;"></h2>
+        <p style="color: #444; letter-spacing: 5px; margin-top: 30px;">PREPARING YOUR ACQUISITION LIST...</p>
+    </div>
+
+    <div id="final-modal" class="modal">
+        <div class="card">
+            <h2 style="letter-spacing: 2px;">ACQUISITION REQUIRED LIST</h2>
+            <div class="info-list">
+                ✅ 1. Payment Proof (Transaction ID/Screenshot)<br>
+                ✅ 2. Your High-Resolution Brand Logo<br>
+                ✅ 3. Website Link (For Redirect)<br>
+                ✅ 4. Confirm Plot Number & Brand Name
+            </div>
+            <button class="premium-btn" onclick="window.open('https://wa.me/8801576940717', '_blank')">CONTACT CUSTOMER SERVICE</button>
+            <button class="premium-btn" style="background:#444; margin-top:10px;" onclick="location.reload()">BACK TO CANVAS</button>
+        </div>
+    </div>
+
     <script type="module">
-        import { db, ref, push, onValue, serverTimestamp, SECTIONS } from "./firebase-config.js";
-        import { launchCelebration } from "./celebration.js";
+        import { db, ref, push, serverTimestamp } from "./firebase-config.js";
+        // Note: Make sure celebration.js export logic matches if using external file, 
+        // otherwise I've integrated it here for stability.
 
         const capture = document.getElementById('capture-area');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        const colors = ['#00d2ff', '#1e90ff', '#3a7bd5', '#4facfe', '#00f2fe', '#43e97b', '#38f9d7', '#f9d423', '#f83600', '#2c3e50'];
+        const colors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
 
-        let activeID, activePrice;
+        let selectedID, selectedPrice;
 
-        // Generate Grid
+        // Create Grid with Colored Backgrounds
         for (let r = 0; r < 10; r++) {
             const row = document.createElement('div');
             row.className = 'row';
+            // Set Row Background based on the plot color (Low opacity for premium look)
+            row.style.backgroundColor = colors[r] + '0D'; 
+
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
                 plot.className = 'plot';
                 plot.style.setProperty('--r-col', colors[r]);
-                plot.innerHTML = `<span style="position:absolute; top:8px; left:10px; font-size:9px; opacity:0.3;">#${id}</span>
-                                 <div style="font-size:18px; font-weight:bold;">$${prices[r]}</div>
-                                 <span style="position:absolute; bottom:-28px; font-size:9px;">AVAILABLE</span>`;
+                plot.innerHTML = `
+                    <span style="position:absolute; top:8px; left:10px; font-size:9px; opacity:0.3;">#${id}</span>
+                    <div style="font-size:18px; font-weight:bold;">$${prices[r]}</div>
+                    <span class="owner-tag">AVAILABLE</span>
+                `;
                 plot.onclick = () => {
-                    activeID = id; activePrice = prices[r];
+                    selectedID = id; selectedPrice = prices[r];
                     document.getElementById('disp-id').innerText = `PLOT #${id}`;
                     document.getElementById('disp-price').innerText = `$${prices[r].toLocaleString()}`;
                     document.getElementById('order-modal').style.display = 'flex';
@@ -121,21 +144,61 @@
             capture.appendChild(row);
         }
 
-        window.processOrder = async () => {
+        // Order Logic
+        window.submitOrder = async () => {
             const brand = document.getElementById('brand-input').value;
-            if(!brand) return alert("Enter Brand Name");
+            if(!brand) return alert("Please enter your brand name.");
 
-            await push(ref(db, 'pending_orders/Millionaire'), {
-                plotID: activeID, price: activePrice, brandName: brand, timestamp: serverTimestamp(), status: "Pending"
-            });
+            try {
+                // Save to Firebase
+                await push(ref(db, 'pending_orders/Millionaire'), {
+                    plotID: selectedID, price: selectedPrice, brandName: brand, timestamp: serverTimestamp()
+                });
 
-            document.getElementById('order-modal').style.display = 'none';
-            launchCelebration(brand); // This calls the celebration logic from celebration.js
+                document.getElementById('order-modal').style.display = 'none';
+                startCelebration(brand);
+            } catch (e) { alert("Database Error!"); }
         };
 
+        // Celebration & Steps Logic
+        function startCelebration(name) {
+            const overlay = document.getElementById('celeb-overlay');
+            document.getElementById('congrats-brand').innerText = name.toUpperCase();
+            overlay.style.display = 'flex';
+
+            // Confetti effect
+            const duration = 5 * 1000;
+            const end = Date.now() + duration;
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff0000', '#00ff00', '#0000ff'] });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff0000', '#00ff00', '#0000ff'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+
+            // Wait 5 seconds then show final list
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.getElementById('final-modal').style.display = 'flex';
+            }, 5000);
+        }
+
+        // Helper Functions
         window.openPayment = () => document.getElementById('pay-modal').style.display = 'flex';
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied!"); };
+        window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied to Clipboard!"); };
+        
+        // Map Downloader Fix
+        window.downloadMap = () => {
+            const btn = event.target;
+            btn.innerText = "PROCESSING...";
+            html2canvas(document.getElementById('capture-area'), { backgroundColor: "#000", scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Millionaires_Club_Map.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                btn.innerText = "DOWNLOAD MAP";
+            });
+        };
     </script>
 </body>
 </html>
