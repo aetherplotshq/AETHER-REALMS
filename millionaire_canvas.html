@@ -17,14 +17,13 @@
         .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 12px 20px; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .nav-btn:hover { background: #fff; color: #000; border-color: #fff; }
         
-        /* Payment Gateway Button Enlarged */
         .pay-gateway-btn { padding: 12px 30px !important; font-weight: bold; border-width: 2px !important; }
 
         .live-counter { text-align: right; border-left: 2px solid var(--gold); padding-left: 15px; }
         .live-counter span { display: block; font-size: 10px; letter-spacing: 2px; font-weight: bold; }
         .count-val { color: var(--gold); font-size: 14px !important; }
 
-        /* Section Header - Fixed Order */
+        /* Section Header */
         .header-area { text-align: center; padding-top: 150px; margin-bottom: 50px; }
         .section-name { font-size: clamp(35px, 8vw, 85px); letter-spacing: 12px; text-transform: uppercase; font-weight: 900; background: linear-gradient(90deg, #1e3c72, #2a5298, #d3d333, #e65c00, #f9d423, #1e3c72); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 5s linear infinite; margin-bottom: 10px; }
         @keyframes shine { to { background-position: 200% center; } }
@@ -45,10 +44,17 @@
         .plot-id { position: absolute; top: 8px; left: 10px; font-size: 9px !important; opacity: 0.4; }
         .status-tag { position: absolute; bottom: -25px; font-size: 9px !important; letter-spacing: 1px; color: #666; }
 
-        /* Footer */
-        .footer-note { text-align: center; padding: 60px 20px; color: #444; font-size: 12px; line-height: 1.8; letter-spacing: 1px; border-top: 1px solid #111; max-width: 900px; margin: 0 auto; }
+        /* Footer Section */
+        .footer-container { text-align: center; padding: 80px 20px; border-top: 1px solid #222; background: #000; margin-top: 50px; }
+        .footer-text { color: #555; font-size: 12px; letter-spacing: 1.5px; line-height: 1.8; max-width: 800px; margin: 0 auto 30px; }
+        .footer-text b { color: var(--gold); }
+        
+        /* Black & White Support Logo */
+        .support-link { display: inline-block; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
+        .support-link:hover { filter: grayscale(0%); opacity: 1; transform: scale(1.1); }
+        .support-logo { width: 40px; height: 40px; }
 
-        /* Modals & Others */
+        /* Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
         .card { background: #fff; color:#000; padding:40px; width:480px; text-align:center; border-radius: 4px; box-shadow: 0 0 50px rgba(255,255,255,0.1); }
         .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; }
@@ -83,9 +89,16 @@
     
     <div id="capture-area"></div>
 
-    <footer class="footer-note">
-        The Million Dollar Homepage © 2005 Alex Tew. All rights reserved. I am not responsible for the content of external sites. Images featured on homepage are © of their respective owners.
-    </footer>
+    <div class="footer-container">
+        <p class="footer-text">
+            <b>K ARCHIVE | MILLIONAIRES CLUB</b> © 2026. All rights reserved.<br>
+            We are dedicated to preserving digital heritage. K ARCHIVE is not responsible for the content of external sites linked via plots.<br>
+            All brand logos and images featured on the canvas are the property of their respective owners.
+        </p>
+        <a href="https://wa.me/8801576940717" target="_blank" class="support-link" title="Customer Support">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support" class="support-logo">
+        </a>
+    </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
