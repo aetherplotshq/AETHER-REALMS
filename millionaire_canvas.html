@@ -6,148 +6,152 @@
     <title>MILLIONAIRES CLUB | K ARCHIVE</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --gold: #9E7E45; --white: #fff; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
+        :root { --gold: #9E7E45; }
+        body { 
+            margin: 0; background: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; 
+        }
 
         /* Navigation */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); box-sizing: border-box; border-bottom: 1px solid #222; }
-        .nav-left { display: flex; gap: 10px; }
-        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 18px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-decoration: none; text-transform: uppercase; transition: 0.3s; }
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.8); border-bottom: 1px solid #222; box-sizing: border-box; }
+        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 18px; font-size: 10px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .nav-btn:hover { background: #fff; color: #000; }
-        .counter { color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; }
+        .counter { color: #00ccff; font-size: 11px; letter-spacing: 2px; }
 
-        /* Glowing Header */
-        .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; }
-        .section-name { 
-            font-size: clamp(30px, 6vw, 75px); letter-spacing: 12px; text-transform: uppercase; font-weight: 900;
-            background: linear-gradient(90deg, #ff0000, #ffcc00, #00ffcc, #00a2ff, #ae00ff, #ff0000);
-            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shine 4s linear infinite; filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
+        .header-area { text-align: center; padding-top: 120px; margin-bottom: 20px; }
+        .section-name { font-size: 50px; letter-spacing: 10px; text-transform: uppercase; font-weight: 900; color: #fff; }
+
+        /* Grid Container with Gradient Background like your image */
+        .grid-container { 
+            display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 100px;
         }
-        @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid */
-        .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
-        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 20px; }
-        .row { display: flex; justify-content: center; gap: 12px; }
+        /* Dynamic background gradients for each row based on your image */
+        #capture-area { 
+            display: flex; flex-direction: column; align-items: center; padding: 40px; gap: 15px;
+            background: linear-gradient(to bottom, #1a2e2e, #2a4d4d, #3d5c4a, #6b5c3d, #8b5a3a, #7a3a2a, #6a2a2a, #4a1a2a, #2a1a2a);
+        }
 
-        /* Plot Styling */
+        .row { display: flex; justify-content: center; gap: 10px; }
+
+        /* Plot Styling as per your image */
         .plot { 
-            background: #050505; border: 1.5px solid var(--r-col); display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; transition: 0.4s; position: relative; cursor: pointer;
-            box-shadow: inset 0 0 15px var(--r-col);
+            background: rgba(0, 0, 0, 0.7); width: 85px; height: 110px;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+            padding: 10px 0; cursor: pointer; transition: 0.3s; position: relative;
         }
-        .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 50; }
-        .lg { width: 135px; height: 135px; } 
-        .std { width: 90px; height: 90px; }
-        .crown { position: absolute; top: -45px; font-size: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
-        .owner-tag { position: absolute; bottom: -30px; font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; font-weight: bold; }
+        .plot:hover { transform: translateY(-5px); background: rgba(0, 0, 0, 0.9); outline: 1px solid #fff; }
 
-        /* RR Style Celebration Overlay */
-        #rr-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #fff; display: none; z-index: 10000; 
-            align-items: center; justify-content: center; flex-direction: column; 
-            text-align: center; opacity: 0; transition: opacity 1.5s ease-in-out;
+        .plot-id { font-size: 8px; color: #666; width: 100%; padding-left: 10px; }
+        .plot-price { font-size: 14px; font-weight: bold; color: #fff; }
+        .owner-tag { font-size: 7px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Overlay & Modals */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:none; align-items:center; justify-content:center; z-index:9000; }
+        .card { background:#fff; color:#000; padding:40px; width:380px; text-align:center; border-radius: 8px; }
+        .card input { width:100%; padding: 15px; margin: 15px 0; border: 1px solid #ddd; font-size: 16px; box-sizing: border-box; }
+        .buy-btn { background:#000; color:#fff; padding:15px; width:100%; border:none; cursor:pointer; font-weight: bold; }
+
+        /* Celebration Screen */
+        #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; }
+        
+        /* Cartoon Walking SVG */
+        .walking-char { 
+            width: 120px; height: 120px; position: absolute; left: -150px; 
+            animation: walkToCenter 3.5s forwards ease-in-out;
         }
 
-        /* Modals */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background:#fff; color:#000; padding:45px; width:420px; text-align:center; border-radius: 4px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .card input { width:100%; padding: 15px; margin: 15px 0; border: 1px solid #ddd; font-family: serif; font-size: 16px; outline: none; box-sizing: border-box; }
-        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; font-weight:bold; cursor:pointer; text-transform: uppercase; }
-        .info-box { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; color: #333; }
-
-        /* Luxury Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes walkToCenter {
+            0% { left: -150px; transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+            100% { left: 45%; transform: rotate(0deg); }
         }
+
+        #brand-name-write { 
+            font-size: 40px; color: #fff; border-right: 3px solid #fff;
+            white-space: nowrap; overflow: hidden; width: 0;
+            animation: writeName 2s steps(20) 3.5s forwards;
+            margin-top: 40px; font-family: 'Times New Roman', serif;
+        }
+
+        @keyframes writeName { from { width: 0; } to { width: 100%; border-color: transparent; } }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
-        <div class="nav-left">
-            <a href="index.html" class="nav-btn">← HOME</a>
-            <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
-        </div>
-        <div class="counter">SOLD: 0 | LEFT: 100</div>
+        <div class="nav-left"><button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button></div>
+        <div class="counter">MILLIONAIRES CLUB ARCHIVE 2026</div>
     </div>
 
-    <div class="header-area">
-        <h1 class="section-name">Millionaires Club</h1>
-    </div>
+    <div class="header-area"><h1 class="section-name">K Archive</h1></div>
 
     <div class="grid-container">
-        <div id="capture-area"></div>
-        <div style="text-align: center; padding: 60px; font-size: 11px; color: #444; border-top: 1px solid #111; width: 80%; margin-top: 50px;">
-            K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved.
-        </div>
+        <div id="capture-area">
+            </div>
     </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 3px;">RESERVATION</h2>
-            <input type="number" id="plot-id-field" readonly>
+            <h2 id="display-id" style="margin:0;">PLOT #00</h2>
+            <p id="display-price" style="color:#888; margin-bottom:20px;">$0000</p>
+            <input type="hidden" id="plot-id-field">
             <input type="text" id="brand-name-field" placeholder="YOUR BRAND NAME">
-            <button class="buy-btn" onclick="processSelection()">SUBMIT & BUY</button>
-            <p onclick="closeModals()" style="font-size: 10px; cursor: pointer; margin-top: 20px; opacity: 0.5;">[ CANCEL ]</p>
+            <button class="buy-btn" onclick="processSelection()">CONFIRM & BUY</button>
+            <p onclick="closeModals()" style="font-size: 11px; cursor: pointer; margin-top: 15px;">[ CLOSE ]</p>
         </div>
     </div>
 
-    <div id="rr-overlay">
-        <div style="max-width: 800px; font-family: 'Times New Roman', serif;">
-            <p style="font-size: 14px; letter-spacing: 8px; color: #999; text-transform: uppercase; margin-bottom: 25px; animation: fadeInUp 2s ease-out;">WELCOME TO THE ARCHIVE</p>
-            <h1 id="celeb-brand-name" style="font-size: clamp(30px, 5vw, 45px); letter-spacing: 12px; color: #000; text-transform: uppercase; margin-bottom: 45px; font-weight: 400; animation: fadeInUp 2.5s ease-out;"></h1>
-            <div style="width: 60px; height: 1px; background: #000; margin: 0 auto 45px; transition: width 2s;"></div>
-            <h2 style="font-size: clamp(40px, 8vw, 60px); letter-spacing: 20px; color: #000; font-weight: 900; animation: fadeInUp 3s ease-out;">CONGRATULATIONS</h2>
+    <div id="celeb-overlay">
+        <div style="position: relative; height: 150px; width: 100%;">
+            <svg class="walking-char" viewBox="0 0 64 64" fill="white">
+                <circle cx="32" cy="12" r="8"/>
+                <path d="M32 20v20m0-15L20 35m12-10l12 10M32 40L22 55m10-15l10 15" stroke="white" stroke-width="4"/>
+            </svg>
         </div>
+        <h2 id="brand-name-write"></h2>
+        <h3 style="color: var(--gold); letter-spacing: 10px; margin-top: 20px;">CONGRATULATIONS</h3>
     </div>
 
     <div id="final-modal" class="modal">
-        <div class="card" style="text-align: left;">
-            <h2 style="text-align: center; letter-spacing: 2px;">NEXT STEPS</h2>
-            <div class="info-box">
-                <b>Luxury Concierge Requirements:</b><br>
-                1. Transaction Identity (ID/Screenshot)<br>
-                2. High-Resolution Brand Assets (Logo)<br>
-                3. Destination URL for Digital Redirect<br>
-                4. Confirmation of Plot Location
-            </div>
-            <button class="buy-btn" style="background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">WHATSAPP SUPPORT</button>
-            <button class="buy-btn" style="background:#333; margin-top: 10px;" onclick="location.reload()">BACK TO CANVAS</button>
+        <div class="card">
+            <h2>NEXT STEPS</h2>
+            <p style="text-align:left; font-size:13px; line-height:1.6; background:#f0f0f0; padding:15px;">
+                1. Copy your Plot ID<br>
+                2. Send Payment Screenshot<br>
+                3. Send Logo & Website Link
+            </p>
+            <button class="buy-btn" onclick="window.open('https://wa.me/8801576940717')">WHATSAPP SUPPORT</button>
+            <button class="buy-btn" style="background:#444; margin-top:5px;" onclick="location.reload()">DONE</button>
         </div>
     </div>
 
     <script>
-        const capture = document.getElementById('capture-area');
-        const rowsPrices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        const rowColors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
+        const captureArea = document.getElementById('capture-area');
+        const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
 
-        // Grid Generation
         for (let r = 0; r < 10; r++) {
             const rowEl = document.createElement('div');
             rowEl.className = 'row';
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
-                const size = (r === 0) ? 'lg' : 'std';
-                plot.className = `plot ${size}`;
-                plot.style.setProperty('--r-col', rowColors[r]);
-
-                if(r === 0) { plot.innerHTML = `<span class="crown">👑</span>`; }
-                plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
-                plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${rowsPrices[r]}</span>`;
-                plot.innerHTML += `<span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
+                plot.className = 'plot';
+                
+                plot.innerHTML = `
+                    <span class="plot-id">#${id}</span>
+                    <span class="plot-price">$${prices[r]}</span>
+                    <span class="owner-tag" id="tag-${id}">AVAILABLE</span>
+                `;
 
                 plot.onclick = () => {
                     document.getElementById('order-modal').style.display = 'flex';
+                    document.getElementById('display-id').innerText = `PLOT #${id}`;
+                    document.getElementById('display-price').innerText = `PRICE: $${prices[r]}`;
                     document.getElementById('plot-id-field').value = id;
                 };
                 rowEl.appendChild(plot);
             }
-            capture.appendChild(rowEl);
+            captureArea.appendChild(rowEl);
         }
 
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
@@ -155,35 +159,23 @@
         function processSelection() {
             const id = document.getElementById('plot-id-field').value;
             const name = document.getElementById('brand-name-field').value;
+            if(!name) return alert("Enter Brand Name");
 
-            if(!id || !name) return alert("Please enter your Brand Name.");
-
-            // ১. ক্যানভাসে নাম আপডেট
-            const ownerTag = document.getElementById(`tag-${id}`);
-            if(ownerTag) ownerTag.innerText = name.toUpperCase();
-
-            // ২. ইনপুট মোডাল বন্ধ
             document.getElementById('order-modal').style.display = 'none';
+            document.getElementById('brand-name-write').innerText = name.toUpperCase();
+            document.getElementById('celeb-overlay').style.display = 'flex';
 
-            // ৩. Rolls-Royce স্টাইল অভিনন্দন শুরু
-            const rrOverlay = document.getElementById('rr-overlay');
-            document.getElementById('celeb-brand-name').innerText = name.toUpperCase();
-            
-            rrOverlay.style.display = 'flex';
-            setTimeout(() => { rrOverlay.style.opacity = '1'; }, 100);
+            document.getElementById(`tag-${id}`).innerText = name.toUpperCase();
+            document.getElementById(`tag-${id}`).style.color = "#00ffcc";
 
-            // ৪. ৫ সেকেন্ড পর অভিনন্দন স্ক্রিন সরিয়ে ফাইনাল পপ-আপ
             setTimeout(() => {
-                rrOverlay.style.opacity = '0';
-                setTimeout(() => {
-                    rrOverlay.style.display = 'none';
-                    document.getElementById('final-modal').style.display = 'flex';
-                }, 1500);
-            }, 5000);
+                document.getElementById('celeb-overlay').style.display = 'none';
+                document.getElementById('final-modal').style.display = 'flex';
+            }, 6500);
         }
 
         function downloadMap() {
-            html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
+            html2canvas(document.getElementById('capture-area')).then(canvas => {
                 let link = document.createElement('a');
                 link.download = 'Millionaires_Club_Map.png';
                 link.href = canvas.toDataURL();
