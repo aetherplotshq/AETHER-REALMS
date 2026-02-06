@@ -26,9 +26,9 @@
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid - Fixed as per your original design */
+        /* Grid */
         .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
-        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 20px; }
+        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 20px; } 
         .row { display: flex; justify-content: center; gap: 12px; }
 
         /* Plot Styling */
@@ -38,9 +38,15 @@
             box-shadow: inset 0 0 15px var(--r-col);
         }
         .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 50; }
+
+        /* Sizes */
         .lg { width: 135px; height: 135px; } 
         .std { width: 90px; height: 90px; }
+
+        /* Crown (Outside) */
         .crown { position: absolute; top: -45px; font-size: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
+
+        /* Plot Name Display */
         .owner-tag { position: absolute; bottom: -30px; font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; font-weight: bold; }
 
         /* Overlays */
@@ -49,31 +55,8 @@
         .card input { width:100%; padding: 15px; margin: 15px 0; border: 1px solid #ddd; font-family: serif; font-size: 16px; outline: none; box-sizing: border-box; }
         .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; font-weight:bold; cursor:pointer; text-transform: uppercase; }
         .info-box { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; }
-
-        /* Celebration Animation Styles */
-        #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; }
         
-        .char-container { position: relative; height: 200px; width: 100%; display: flex; justify-content: center; }
-        
-        /* Vector Cartoon (Black & White) */
-        .vector-char { 
-            width: 100px; height: 100px; position: absolute; left: -150px; 
-            animation: walkIn 3s forwards ease-in-out; 
-        }
-
-        @keyframes walkIn {
-            0% { left: -150px; transform: rotate(-5deg); }
-            100% { left: 45%; transform: rotate(0deg); }
-        }
-
-        #celeb-brand-name { 
-            font-size: 45px; color: var(--gold); border-right: 3px solid #fff;
-            white-space: nowrap; overflow: hidden; width: 0;
-            animation: typing 2s steps(20) 3s forwards;
-            margin-top: 20px; letter-spacing: 5px;
-        }
-
-        @keyframes typing { from { width: 0; } to { width: 100%; border-color: transparent; } }
+        /* Celeb Overlay HTML থেকে সরানো হয়েছে কারণ congrats.js ডাইনামিকলি তৈরি করবে */
     </style>
 </head>
 <body>
@@ -99,48 +82,22 @@
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 id="modal-title" style="letter-spacing: 3px;">RESERVATION</h2>
-            <p id="plot-info-display" style="font-size: 12px; color: #666;"></p>
-            <input type="hidden" id="plot-id-field">
+            <h2 style="letter-spacing: 3px;">RESERVATION</h2>
+            <input type="number" id="plot-id-field" placeholder="PLOT NO (1-100)">
             <input type="text" id="brand-name-field" placeholder="YOUR BRAND NAME">
             <button class="buy-btn" onclick="processSelection()">SUBMIT & BUY</button>
             <p onclick="closeModals()" style="font-size: 10px; cursor: pointer; margin-top: 20px; opacity: 0.5;">[ CANCEL ]</p>
         </div>
     </div>
 
-    <div id="celeb-overlay">
-        <div class="char-container">
-            <svg class="vector-char" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="30" r="15" fill="white"/>
-                <rect x="45" y="45" width="10" height="40" fill="white"/>
-                <path d="M45 55 L20 40 M55 55 L80 40" stroke="white" stroke-width="5"/>
-                <path d="M45 85 L30 100 M55 85 L70 100" stroke="white" stroke-width="5"/>
-            </svg>
-        </div>
-        <h2 id="celeb-brand-name"></h2>
-        <h1 style="font-size: 20px; letter-spacing: 5px; color: #fff; margin-top: 20px;">CONGRATULATIONS</h1>
-    </div>
+    <script type="module">
+        import { startCelebration } from './congrats.js';
 
-    <div id="final-modal" class="modal">
-        <div class="card" style="text-align: left;">
-            <h2 style="text-align: center; letter-spacing: 2px;">NEXT STEPS</h2>
-            <div class="info-box">
-                <b>Please provide these to Customer Service:</b><br>
-                1. Payment Proof (Transaction ID/Screenshot)<br>
-                2. Your High-Resolution Brand Logo<br>
-                3. Your Website Link for Redirect<br>
-                4. Confirm Plot Number & Brand Name
-            </div>
-            <button class="buy-btn" style="background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">WHATSAPP SUPPORT</button>
-            <button class="buy-btn" style="background:#333; margin-top: 10px;" onclick="location.reload()">BACK TO CANVAS</button>
-        </div>
-    </div>
-
-    <script>
         const capture = document.getElementById('capture-area');
         const rowsPrices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
         const rowColors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
 
+        // গ্রিড তৈরি - হুবহু আগের মতো রাখা হয়েছে
         for (let r = 0; r < 10; r++) {
             const rowEl = document.createElement('div');
             rowEl.className = 'row';
@@ -148,57 +105,55 @@
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
                 const size = (r === 0) ? 'lg' : 'std';
-                const price = rowsPrices[r];
                 plot.className = `plot ${size}`;
                 plot.style.setProperty('--r-col', rowColors[r]);
 
                 if(r === 0) { plot.innerHTML = `<span class="crown">👑</span>`; }
 
                 plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
-                plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${price}</span>`;
+                plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${rowsPrices[r]}</span>`;
                 plot.innerHTML += `<span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
 
-                // Click event showing Plot ID and Price
                 plot.onclick = () => {
                     document.getElementById('order-modal').style.display = 'flex';
                     document.getElementById('plot-id-field').value = id;
-                    document.getElementById('plot-info-display').innerText = `PLOT: #${id} | PRICE: $${price}`;
                 };
                 rowEl.appendChild(plot);
             }
             capture.appendChild(rowEl);
         }
 
-        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        // গ্লোবাল ফাংশন হিসেবে সেট করা হয়েছে যাতে HTML থেকে এক্সেস করা যায়
+        window.closeModals = function() { 
+            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); 
+        }
 
-        function processSelection() {
+        window.processSelection = function() {
             const id = document.getElementById('plot-id-field').value;
             const name = document.getElementById('brand-name-field').value;
+            const price = rowsPrices[Math.floor((id-1)/10)];
 
             if(!id || !name) return alert("Fill Plot No and Brand Name!");
 
-            document.getElementById('order-modal').style.display = 'none';
-            const celebOverlay = document.getElementById('celeb-overlay');
-            document.getElementById('celeb-brand-name').innerText = name.toUpperCase();
-            celebOverlay.style.display = 'flex';
-
+            // ১. মেইন ক্যানভাসে নাম আপডেট করা
             const ownerTag = document.getElementById(`tag-${id}`);
             if(ownerTag) ownerTag.innerText = name.toUpperCase();
 
-            setTimeout(() => {
-                celebOverlay.style.display = 'none';
-                document.getElementById('final-modal').style.display = 'flex';
-            }, 6000);
+            // ২. অর্ডার মোডাল বন্ধ করা
+            closeModals();
+
+            // ৩. থ্রিডি ভেক্টর অভিনন্দন সিস্টেম কল করা
+            startCelebration(name, id, price);
         }
 
-        function downloadMap() {
+        window.downloadMap = function() {
             html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = 'K_Archive_Map.png';
+                link.download = 'Millionaires_Club_Map.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
         }
     </script>
 </body>
-</html> 
+</html>
