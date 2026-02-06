@@ -1,5 +1,10 @@
-// celebration.js
+/**
+ * K ARCHIVE - Universal Celebration Engine
+ * Handles Confetti and Congratulatory Messages
+ */
+
 export const launchCelebration = (brandName) => {
+    // ক্যানভাসে থাকা সেলিব্রেশন ওভারলে খুঁজে বের করা
     const overlay = document.getElementById('celeb-overlay');
     const brandDisplay = document.getElementById('congrats-brand');
     
@@ -7,7 +12,7 @@ export const launchCelebration = (brandName) => {
         brandDisplay.innerText = brandName.toUpperCase();
         overlay.style.display = 'flex';
 
-        // রঙিন কাগজ ছিটানোর লজিক
+        // Confetti Effect (রঙিন কাগজ)
         const duration = 5 * 1000;
         const animationEnd = Date.now() + duration;
         const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 11000 };
@@ -19,14 +24,16 @@ export const launchCelebration = (brandName) => {
             if (timeLeft <= 0) return clearInterval(interval);
 
             const particleCount = 50 * (timeLeft / duration);
+            // দুই পাশ থেকে কাগজ ছোড়া
             confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
             confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
         }, 250);
 
-        // ৫ সেকেন্ড পর অটো ক্লোজ হয়ে ফাইনাল স্টেপে যাবে
+        // ৫ সেকেন্ড পর অভিনন্দন বার্তা সরিয়ে ফাইনাল পেমেন্ট ইনস্ট্রাকশন দেখানো
         setTimeout(() => {
             overlay.style.display = 'none';
-            document.getElementById('final-modal').style.display = 'flex';
+            const finalModal = document.getElementById('final-modal');
+            if(finalModal) finalModal.style.display = 'flex';
         }, 5000);
     }
 };
