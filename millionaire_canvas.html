@@ -10,55 +10,52 @@
         :root { --gold: #9E7E45; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
 
-        /* Navigation - Download Button Fixed */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); box-sizing: border-box; border-bottom: 1px solid #222; }
-        .nav-left { display: flex; flex-direction: column; gap: 5px; }
-        .nav-btn-group { display: flex; gap: 15px; } /* Adjusted spacing */
+        /* Navigation */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); border-bottom: 1px solid #222; box-sizing: border-box; }
+        .nav-btn-group { display: flex; gap: 15px; margin-left: -20px; } /* Slightly moved left */
         .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 18px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-decoration: none; text-transform: uppercase; transition: 0.3s; }
         .nav-btn:hover { background: #fff; color: #000; }
-        .home-link { color: var(--gold); text-decoration: none; font-size: 10px; font-weight: bold; text-transform: uppercase; margin-top: 5px; }
+        .home-link { color: var(--gold); text-decoration: none; font-size: 10px; font-weight: bold; text-transform: uppercase; margin-top: 5px; display: block; }
         .counter { color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; }
 
-        /* Section Name - Dynamic Video/Gradient Effect */
+        /* Dynamic Section Name */
         .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; }
         .section-name { 
             font-size: clamp(30px, 6vw, 75px); letter-spacing: 12px; text-transform: uppercase; font-weight: 900;
-            background: linear-gradient(270deg, #1e3c72, #2a5298, #d3d333, #e65c00, #f9d423);
-            background-size: 400% 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: moveGradient 8s ease infinite; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+            background: linear-gradient(90deg, #1e3c72, #2a5298, #d3d333, #e65c00, #f9d423, #1e3c72);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
         }
-        @keyframes moveGradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid Styling - Nature Color Scheme */
+        /* Grid - Horizontal Nature Colors */
         .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
         #capture-area { display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 20px; }
-        .row { display: flex; justify-content: center; gap: 12px; padding: 10px; border-radius: 4px; }
+        .row { display: flex; justify-content: center; gap: 12px; padding: 15px; border-radius: 8px; transition: 0.5s; }
 
         .plot { 
-            background: rgba(0,0,0,0.8); border: 2px solid var(--r-col); display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; cursor: pointer;
-            width: 100px; height: 100px;
+            background: rgba(0,0,0,0.9); border: 2.5px solid var(--r-col); display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            position: relative; cursor: pointer; width: 110px; height: 110px;
             box-shadow: 0 0 15px var(--r-col);
-            animation: glowPulse 3s infinite alternate;
+            animation: pulseGlow 2.5s infinite alternate;
         }
-        @keyframes glowPulse { from { box-shadow: 0 0 5px var(--r-col); } to { box-shadow: 0 0 20px var(--r-col); } }
+        @keyframes pulseGlow { from { opacity: 0.8; box-shadow: 0 0 10px var(--r-col); } to { opacity: 1; box-shadow: 0 0 25px var(--r-col); } }
         
-        .plot:hover { transform: scale(1.15); border-color: #fff; z-index: 100; box-shadow: 0 0 30px #fff; }
-        .owner-tag { position: absolute; bottom: -25px; font-size: 9px; color: #fff; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; text-shadow: 0 0 5px #000; }
+        .plot:hover { transform: scale(1.2); border-color: #fff; z-index: 100; box-shadow: 0 0 40px #fff; filter: brightness(1.3); }
+        .owner-tag { position: absolute; bottom: -28px; font-size: 9px; color: #fff; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; width: 100%; text-align: center; }
 
-        /* ATM Style Payment Modal */
+        /* Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background:#fff; color:#000; padding:45px; width:450px; text-align:center; border-radius: 4px; }
-        .pay-item { text-align: left; padding: 15px 0; border-bottom: 1px solid #eee; cursor: pointer; }
-        .pay-item small { color: #888; font-size: 10px; text-transform: uppercase; }
-        .pay-item p { margin: 5px 0; font-weight: bold; font-family: monospace; font-size: 14px; color: #000; }
+        .card { background:#fff; color:#000; padding:40px; width:450px; text-align:center; border-radius: 4px; border-top: 5px solid var(--gold); }
+        .steps-box { text-align: left; background: #f9f9f9; padding: 20px; margin: 20px 0; font-size: 13px; line-height: 1.8; border: 1px solid #eee; }
 
-        /* Final Steps List */
-        .steps-box { text-align: left; background: #f4f4f4; padding: 20px; margin: 20px 0; font-size: 12px; line-height: 1.6; border-left: 4px solid #000; }
-
-        /* WhatsApp Support Logo - Black & White Style */
-        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; filter: grayscale(100%) contrast(120%); box-shadow: 0 0 15px rgba(255,255,255,0.3); transition: 0.3s; }
+        /* Support Icon - Black & White Style */
+        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; filter: grayscale(100%); transition: 0.3s; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
         .wa-float:hover { filter: grayscale(0%); transform: scale(1.1); }
+
+        /* Congrats Overlay */
+        #celeb-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:#000; display:none; flex-direction:column; align-items:center; justify-content:center; z-index:10000; text-align:center; }
     </style>
 </head>
 <body>
@@ -68,11 +65,10 @@
             <div class="nav-btn-group">
                 <a href="index.html" class="nav-btn">← HOME</a>
                 <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
-                <button class="nav-btn" style="border-color: var(--gold); color: var(--gold);" onclick="openPayment()">PAYMENT INFO</button>
             </div>
             <a href="index.html" class="home-link">Back to Home Page</a>
         </div>
-        <div class="counter">SOLD: <span id="s-val">0</span> | LEFT: <span id="l-val">100</span></div>
+        <div class="counter">SOLD: <span id="s-count">0</span> | LEFT: <span id="l-count">100</span></div>
     </div>
 
     <div class="header-area">
@@ -81,32 +77,41 @@
 
     <div class="grid-container">
         <div id="capture-area"></div>
-        <div style="text-align: center; padding: 60px; font-size: 11px; color: #444; letter-spacing: 2px;">
-            K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved.
+        <div style="text-align: center; padding: 60px; font-size: 11px; color: #555; letter-spacing: 2px; line-height: 2;">
+            K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved.<br>
+            We are not responsible for the content of external websites.<br>
+            Images and brand logos featured on this canvas are © of their respective owners.
         </div>
     </div>
 
-    <div id="pay-modal" class="modal">
+    <div id="order-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 3px;">SECURE ACQUISITION</h2>
-            <div class="pay-item" onclick="copy('912221034')"><small>BINANCE UID</small><p>912221034</p></div>
-            <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')"><small>USDT TRC20</small><p>TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</p></div>
-            <button class="nav-btn" style="background:#000; color:#fff; width:100%; margin-top:20px;" onclick="closeModals()">[ CLOSE ]</button>
+            <div id="plot-details" style="font-size: 12px; font-weight: bold; color: var(--gold); margin-bottom: 10px;"></div>
+            <h2 style="letter-spacing: 3px;">RESERVATION</h2>
+            <input type="text" id="brand-input" placeholder="YOUR BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; text-align:center; font-size:16px;">
+            <button class="nav-btn" style="background:#000; color:#fff; width:100%; padding:18px;" onclick="confirmPurchase()">SUBMIT & BUY</button>
+            <p onclick="closeModals()" style="font-size:10px; cursor:pointer; margin-top:20px; opacity:0.5;">[ CANCEL ]</p>
         </div>
+    </div>
+
+    <div id="celeb-overlay">
+        <h1 style="font-size: 40px; letter-spacing: 8px;">CONGRATULATIONS!</h1>
+        <h2 id="congrats-brand" style="font-size: 30px; color: var(--gold); margin: 20px 0; border-top: 1px solid #222; padding-top: 20px;"></h2>
+        <p style="font-size: 14px; letter-spacing: 2px; color: #555;">SECURE ACQUISITION INITIATED</p>
     </div>
 
     <div id="final-modal" class="modal">
         <div class="card">
             <h2 style="letter-spacing: 2px;">FINAL STEPS</h2>
             <div class="steps-box">
-                <b>Please send to Support:</b><br>
+                <b>Please send the following to Support:</b><br>
                 1. Transaction Proof (Screenshot)<br>
                 2. Brand Name & Selected Plot Number<br>
                 3. Brand Logo (High Quality PNG)<br>
                 4. Redirect URL for your Plot
             </div>
-            <button class="nav-btn" style="background:#000; color:#fff; width:100%;" onclick="window.open('https://wa.me/8801576940717')">WHATSAPP SUPPORT</button>
-            <button class="nav-btn" style="background:#eee; color:#000; width:100%; margin-top:10px; border:none;" onclick="location.reload()">BACK TO CANVAS</button>
+            <button class="nav-btn" style="background:#000; color:#fff; width:100%; margin-bottom:10px;" onclick="window.open('https://wa.me/8801576940717')">WHATSAPP SUPPORT</button>
+            <button class="nav-btn" style="background:#eee; color:#000; width:100%; border:none;" onclick="location.reload()">BACK TO CANVAS</button>
         </div>
     </div>
 
@@ -119,44 +124,62 @@
 
         const capture = document.getElementById('capture-area');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        // Colors from nature art
-        const rowColors = ['#234a57', '#3c6e71', '#708d81', '#b5a46d', '#d4a373', '#bc6c25', '#a34233', '#802828', '#4b243d', '#25162b'];
+        // High-Brightness Nature Colors
+        const colors = ['#00d2ff', '#3a7bd5', '#66cc99', '#ffcc33', '#f39c12', '#e67e22', '#e74c3c', '#c0392b', '#9b59b6', '#2c3e50'];
+
+        let selectedID, selectedPrice;
 
         for (let r = 0; r < 10; r++) {
             const row = document.createElement('div');
             row.className = 'row';
+            row.style.backgroundColor = colors[r] + '15'; // Very light row bg
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
                 plot.className = 'plot';
-                plot.style.setProperty('--r-col', rowColors[r]);
-                plot.innerHTML = `<span style="font-size:16px; font-weight:bold;">$${prices[r]}</span>
+                plot.style.setProperty('--r-col', colors[r]);
+                plot.innerHTML = `<span style="position:absolute; top:8px; left:10px; font-size:9px; opacity:0.3;">#${id}</span>
+                                 <span style="font-size:18px; font-weight:bold;">$${prices[r]}</span>
                                  <span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
                 
-                plot.onclick = () => showOrder(id, prices[r]);
+                plot.onclick = () => {
+                    selectedID = id; selectedPrice = prices[r];
+                    document.getElementById('plot-details').innerText = `SELECTED: PLOT #${id} | PRICE: $${prices[r]}`;
+                    document.getElementById('order-modal').style.display = 'flex';
+                };
                 row.appendChild(plot);
             }
             capture.appendChild(row);
         }
 
-        window.openPayment = () => document.getElementById('pay-modal').style.display = 'flex';
-        window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied!"); };
+        window.confirmPurchase = async () => {
+            const name = document.getElementById('brand-input').value;
+            if(!name) return alert("Enter Brand Name!");
 
-        function showOrder(id, p) {
-            let name = prompt(`Reserving Plot #${id} ($${p}). Enter Brand Name:`);
-            if(name) {
-                push(ref(db, 'pending_orders/Millionaires'), { plotID: id, brandName: name, timestamp: serverTimestamp() });
-                document.getElementById(`tag-${id}`).innerText = name.toUpperCase();
-                document.getElementById('final-modal').style.display = 'flex';
-                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            }
+            try {
+                await push(ref(db, 'pending_orders/Millionaires'), {
+                    plotID: selectedID, price: selectedPrice, brandName: name, timestamp: serverTimestamp()
+                });
+
+                document.getElementById('order-modal').style.display = 'none';
+                document.getElementById('congrats-brand').innerText = name.toUpperCase();
+                document.getElementById('celeb-overlay').style.display = 'flex';
+
+                confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 }, colors: ['#9E7E45', '#fff', colors[0]] });
+
+                setTimeout(() => {
+                    document.getElementById('celeb-overlay').style.display = 'none';
+                    document.getElementById('final-modal').style.display = 'flex';
+                }, 3000);
+            } catch (e) { alert("Error!"); }
         }
+
+        window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
 
         window.downloadMap = () => {
             html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = 'Millionaires_Club_Map.png';
+                link.download = 'K_Archive_Map_Premium.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
