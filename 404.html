@@ -3,99 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - PAGE NOT FOUND | MILLIONAIRES CLUB</title>
+    <title>404 | PAGE NOT FOUND</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            color: #fff;
-            font-family: 'Times New Roman', serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        :root { --gold: #FCD535; --bg: #0B0E11; }
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background: var(--bg); 
+            color: #fff; 
+            font-family: 'Segoe UI', sans-serif; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
             text-align: center;
+            overflow: hidden;
         }
 
-        .error-code {
-            font-size: 120px;
-            font-weight: 900;
-            margin: 0;
-            letter-spacing: 15px;
-            background: linear-gradient(90deg, #9E7E45, #f9d423, #9E7E45);
+        .error-code { 
+            font-size: 150px; 
+            font-weight: 900; 
+            margin: 0; 
+            background: linear-gradient(180deg, var(--gold), #9E7E45);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: glow 3s linear infinite;
+            letter-spacing: 10px;
         }
 
-        @keyframes glow {
-            to { filter: hue-rotate(360deg); }
+        .error-msg { 
+            font-size: 24px; 
+            text-transform: uppercase; 
+            letter-spacing: 5px; 
+            margin-bottom: 20px; 
+            color: #ccc;
         }
 
-        h1 {
-            font-size: 24px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-top: -20px;
+        .redirect-notice { 
+            font-size: 14px; 
+            color: #666; 
+            margin-top: 30px; 
         }
 
-        p {
-            color: #666;
-            letter-spacing: 2px;
-            font-size: 14px;
-            margin: 20px 0;
-        }
+        #timer { color: var(--gold); font-weight: bold; }
 
-        .countdown {
-            color: #9E7E45;
-            font-weight: bold;
-        }
-
-        .home-btn {
-            padding: 15px 30px;
-            border: 1px solid #9E7E45;
-            color: #9E7E45;
+        .btn-home { 
+            margin-top: 30px;
+            padding: 15px 40px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
             text-decoration: none;
             text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 3px;
+            font-weight: bold;
+            letter-spacing: 2px;
             transition: 0.3s;
-            margin-top: 30px;
+            cursor: pointer;
+            background: transparent;
         }
 
-        .home-btn:hover {
-            background: #9E7E45;
-            color: #000;
+        .btn-home:hover { 
+            background: var(--gold); 
+            color: #000; 
+        }
+
+        /* Background Animation */
+        .glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--gold);
+            filter: blur(150px);
+            opacity: 0.1;
+            z-index: -1;
+            animation: move 10s infinite alternate;
+        }
+
+        @keyframes move {
+            from { transform: translate(-50%, -50%); }
+            to { transform: translate(50%, 50%); }
         }
     </style>
 </head>
 <body>
-
-    <div class="error-code">404</div>
-    <h1>Lost in the Club?</h1>
-    <p>আপনি ভুল জায়গায় চলে এসেছেন। <br> আপনাকে <span id="timer" class="countdown">5</span> সেকেন্ডের মধ্যে হোম পেজে নিয়ে যাওয়া হচ্ছে...</p>
+    <div class="glow"></div>
     
-    <a href="index.html" class="home-btn">Go Home Now</a>
+    <h1 class="error-code">404</h1>
+    <p class="error-msg">Lost in the Universe?</p>
+    <p style="color: #888;">The page you are looking for doesn't exist or has been moved.</p>
+
+    <a href="index.html" class="btn-home">Go Home Now</a>
+
+    <p class="redirect-notice">
+        Redirecting to homepage in <span id="timer">5</span> seconds...
+    </p>
 
     <script>
-        // ৫ সেকেন্ড কাউন্টডাউন লজিক
-        let count = 5;
+        let timeLeft = 5;
         const timerElement = document.getElementById('timer');
 
         const countdown = setInterval(() => {
-            count--;
-            timerElement.innerText = count;
-            
-            if (count <= 0) {
+            timeLeft--;
+            timerElement.innerText = timeLeft;
+            if (timeLeft <= 0) {
                 clearInterval(countdown);
-                window.location.href = "index.html"; // এখানে আপনার হোম পেজের নাম দিন
+                window.location.href = "index.html"; // এটি আপনার হোমপেজে নিয়ে যাবে
             }
         }, 1000);
-
-        // সাথে সাথে রিডাইরেক্ট করতে চাইলে নিচের লাইনটি আনকমেন্ট করুন
-        // window.location.href = "index.html";
     </script>
 </body>
 </html>
