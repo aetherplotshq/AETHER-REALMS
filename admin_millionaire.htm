@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN PANEL | MILLIONAIRES CLUB</title>
+    <style>
+        :root { --gold: #9E7E45; --bg: #0f0f0f; --card: #1a1a1a; --text: #eee; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; }
+        
+        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .panel-card { background: var(--card); padding: 25px; border-radius: 8px; border: 1px solid #333; }
+        h2 { border-bottom: 2px solid var(--gold); padding-bottom: 10px; font-size: 18px; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { text-align: left; font-size: 11px; color: var(--gold); text-transform: uppercase; padding: 10px; border-bottom: 1px solid #333; }
+        td { padding: 12px 10px; font-size: 13px; border-bottom: 1px solid #222; }
+
+        /* Forms & Inputs */
+        input { width: 100%; padding: 10px; margin-bottom: 10px; background: #000; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
+        
+        /* Buttons */
+        .btn { padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; transition: 0.3s; margin-top: 5px; }
+        .btn-accept { background: #27ae60; color: white; width: 100%; }
+        .btn-reject { background: #c0392b; color: white; width: 100%; margin-top: 5px; }
+        .btn-delete { background: #e74c3c; color: white; padding: 5px 10px; }
+        .btn-update { background: var(--gold); color: white; width: 100%; font-size: 14px; padding: 12px; }
+
+        .request-card { background: #252525; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid var(--gold); }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center; letter-spacing: 5px; color: var(--gold);">COMMAND CENTER</h1>
+
+    <div class="admin-grid">
+        
+        <div class="panel-card">
+            <h2>Live Requests</h2>
+            <div id="request-list">
+                </div>
+        </div>
+
+        <div class="panel-card">
+            <h2>Active Plots on Map</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Plot</th>
+                        <th>Username</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="active-plots-tbody">
+                    </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="panel-card" style="margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <h2>Manual Direct Update</h2>
+        <input type="number" id="m-plot" placeholder="Plot Number (1-100)">
+        <input type="text" id="m-user" placeholder="Customer Username/Brand">
+        <input type="text" id="m-img" placeholder="Image URL (Logo Link)">
+        <input type="text" id="m-link" placeholder="Social Media / Website Link">
+        <button class="btn btn-update" onclick="manualUpdate()">UPDATE & GO LIVE</button>
+    </div>
+
+    <script type="module">
+        import { db, ref, onValue, set, remove, push } from "./firebase-config.js";
+
+        // ১. লাইভ রিকোয়েস্ট লোড করা
+        onValue(ref(db, 'pending_orders/Millionaire'), (snapshot) => {
+            const list = document.getElementById('request-list');
+            list.innerHTML = "";
+            if (!snapshot.exists()) list.innerHTML = "<p style='color:#666'>No pending requests.</p>";
+
+            snapshot.forEach((child) => {
+                const data = child.val();
+                const key = child.key;
+                
+                list.innerHTML += `
+                    <div class="request-card">
+                        <p><strong>Plot:</strong> #${data.plotID} | <strong>User:</strong> ${data.brandName}</p>
+                        <input type="text" id="img-${key}" placeholder="Paste Logo Image URL">
+                        <input type="text" id="link-${key}" placeholder="Paste Social/Web Link">
+                        <button class="btn btn-accept" onclick="acceptOrder('${key}', '${data.plotID}', '${data.brandName}')">ACCEPT & LIVE</button>
+                        <button class="btn btn-reject" onclick="deleteRequest('${key}')">REJECT</button>
+                    </div>
+                `;
+            });
+        });
+
+        // ২. অ্যাক্টিভ প্লট লোড করা (ম্যাপে যা আছে)
+        onValue(ref(db, 'sold_plots'), (snapshot) => {
+            const tbody = document.getElementById('active-plots-tbody');
+            tbody.innerHTML = "";
+            snapshot.forEach((child) => {
+                const data = child.val();
+                tbody.innerHTML += `
+                    <tr>
+                        <td><b>#${data.plotID}</b></td>
+                        <td>${data.username}</td>
+                        <td><button class="btn btn-delete" onclick="clearPlot('${child.key}')">DELETE</button></td>
+                    </tr>
+                `;
+            });
+        });
+
+        // একসেপ্ট ফাংশন
+        window.acceptOrder = (key, plotID, username) => {
+            const img = document.getElementById(`img-${key}`).value;
+            const link = document.getElementById(`link-${key}`).value;
+
+            if(!img || !link) return alert("Please provide Image and Social links!");
+
+            // ম্যাপে লাইভ করা
+            set(ref(db, 'sold_plots/plot_' + plotID), {
+                plotID: plotID,
+                username: username,
+                image: img,
+                social: link
+            }).then(() => {
+                remove(ref(db, 'pending_orders/Millionaire/' + key));
+                alert("Plot #" + plotID + " is now LIVE!");
+            });
+        };
+
+        // ম্যানুয়াল আপডেট ফাংশন
+        window.manualUpdate = () => {
+            const p = document.getElementById('m-plot').value;
+            const u = document.getElementById('m-user').value;
+            const i = document.getElementById('m-img').value;
+            const l = document.getElementById('m-link').value;
+
+            if(!p || !u || !i || !l) return alert("Fill all fields!");
+
+            set(ref(db, 'sold_plots/plot_' + p), {
+                plotID: p, username: u, image: i, social: l
+            }).then(() => {
+                alert("Manual Update Successful!");
+                location.reload();
+            });
+        };
+
+        // ডিলিট/রিজেক্ট ফাংশন
+        window.deleteRequest = (key) => {
+            if(confirm("Reject this order?")) remove(ref(db, 'pending_orders/Millionaire/' + key));
+        };
+
+        window.clearPlot = (key) => {
+            if(confirm("Delete this plot from map and make it available?")) remove(ref(db, 'sold_plots/' + key));
+        };
+
+    </script>
+</body>
+</html>
