@@ -17,8 +17,9 @@
         .nav-btn { background: none; border: 1px solid #333; color: #fff; padding: 10px 18px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .nav-btn:hover { background: #fff; color: #000; border-color: #fff; }
         .home-link-top { color: #fff; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #fff; padding-bottom: 2px; width: fit-content; }
+        .counter { color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; }
 
-        /* Dynamic Title */
+        /* Section Name - Dynamic Video/Gradient */
         .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; }
         .section-name { 
             font-size: clamp(30px, 6vw, 75px); letter-spacing: 15px; text-transform: uppercase; font-weight: 900;
@@ -28,37 +29,37 @@
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid Styling */
+        /* Grid & Rows */
         .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
         #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .row { display: flex; justify-content: center; gap: 15px; width: 100%; padding: 45px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
 
         .plot { 
             background: rgba(0,0,0,0.9); border: 2.5px solid var(--r-col); display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; transition: 0.4s; position: relative; cursor: pointer; 
-            width: 115px; height: 115px; box-shadow: 0 0 15px var(--r-col);
+            align-items: center; justify-content: center; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+            position: relative; cursor: pointer; width: 115px; height: 115px; box-shadow: 0 0 15px var(--r-col);
         }
         .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 100; box-shadow: 0 0 35px #fff; }
-        .owner-tag { position: absolute; bottom: -28px; font-size: 9px; color: #fff; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
+        .owner-tag { position: absolute; bottom: -28px; font-size: 9px; color: #fff; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 100%; text-align: center; }
 
-        /* Premium Modals */
+        /* Premium Rolls Royce Style Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
         .card { background: var(--premium-white); color:#000; padding:50px; width:480px; text-align:center; border-radius: 2px; position: relative; }
         .card::after { content: ""; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 1px solid #f0f0f0; pointer-events: none; }
         
+        .premium-btn { background: #000; color: #fff; width: 100%; padding: 20px; border: none; font-weight: bold; letter-spacing: 5px; cursor: pointer; text-transform: uppercase; margin-top: 20px; transition: 0.3s; }
+        .premium-btn:hover { background: var(--gold); }
+
         .pay-item { text-align: left; padding: 18px 0; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; }
         .pay-item:hover { background: #fafafa; }
         .pay-item small { color: #999; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
         .pay-item p { margin: 5px 0 0 0; font-weight: bold; font-family: monospace; font-size: 13px; color: #111; word-break: break-all; }
 
-        .premium-btn { background: #000; color: #fff; width: 100%; padding: 20px; border: none; font-weight: bold; letter-spacing: 5px; cursor: pointer; text-transform: uppercase; margin-top: 20px; }
-        .premium-btn:hover { background: var(--gold); }
-
-        /* Celebration Screen */
+        /* Congrats Screen */
         #celeb-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:#000; display:none; flex-direction:column; align-items:center; justify-content:center; z-index:10000; text-align:center; }
         
-        /* B&W Support Icon */
-        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; filter: grayscale(100%); transition: 0.3s; }
+        /* B&W Support */
+        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; filter: grayscale(100%); transition: 0.3s; z-index: 5000; }
         .wa-float:hover { filter: grayscale(0%); transform: scale(1.1); }
     </style>
 </head>
@@ -89,8 +90,8 @@
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <div style="font-size: 11px; color: var(--gold); font-weight: bold; letter-spacing: 3px;" id="disp-id">PLOT #00</div>
-            <div style="font-size: 26px; font-weight: bold; margin: 10px 0 30px 0;" id="disp-price">$0,000</div>
+            <div id="disp-id" style="font-size: 11px; color: var(--gold); font-weight: bold; letter-spacing: 3px;">PLOT #00</div>
+            <div id="disp-price" style="font-size: 26px; font-weight: bold; margin: 10px 0 30px 0;">$0,000</div>
             <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME" style="width:100%; padding:18px; border:1px solid #ddd; text-align:center; font-size:16px; outline:none; margin-bottom:20px;">
             <button class="premium-btn" onclick="confirmOrder()">SUBMIT & ACQUIRE</button>
             <p onclick="closeModals()" style="font-size:10px; cursor:pointer; margin-top:20px; opacity:0.4;">[ CANCEL ]</p>
@@ -100,24 +101,15 @@
     <div id="pay-modal" class="modal">
         <div class="card">
             <h2 style="letter-spacing: 4px; margin-bottom: 30px;">SECURE ACQUISITION</h2>
-            <div class="pay-item" onclick="copy('912221034')">
-                <small>BINANCE UID (USER: KAWSAR6700)</small>
-                <p>912221034</p>
-            </div>
-            <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
-                <small>USDT TRC20 (NETWORK: TRON)</small>
-                <p>TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</p>
-            </div>
-            <div class="pay-item" onclick="copy('0x44379244884e8e8551954ccEF910778Affleb78E')">
-                <small>METAMASK (ETH/BNB/POLYGON)</small>
-                <p>0x44379244884e8e8551954ccEF910778Affleb78E</p>
-            </div>
+            <div class="pay-item" onclick="copy('912221034')"><small>BINANCE UID</small><p>912221034</p></div>
+            <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')"><small>USDT TRC20</small><p>TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</p></div>
+            <div class="pay-item" onclick="copy('0x44379244884e8e8551954ccEF910778Affleb78E')"><small>METAMASK (ETH/BNB)</small><p>0x44379244884e8e8551954ccEF910778Affleb78E</p></div>
             <button class="premium-btn" onclick="closeModals()">[ CLOSE ]</button>
         </div>
     </div>
 
     <div id="celeb-overlay">
-        <h1 style="font-size: 45px; letter-spacing: 12px;">CONGRATULATIONS!</h1>
+        <h1 style="font-size: 45px; letter-spacing: 12px; font-weight: 900;">CONGRATULATIONS!</h1>
         <h2 id="congrats-brand" style="font-size: 30px; color: var(--gold); margin: 25px 0; letter-spacing: 5px; border-top: 1px solid #222; padding-top: 20px;"></h2>
         <p style="font-size: 14px; letter-spacing: 4px; color: #444;">ACQUISITION PROCESS INITIATED</p>
     </div>
@@ -145,10 +137,12 @@
 
         const capture = document.getElementById('capture-area');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
+        // Smooth transition colors
         const colors = ['#00d2ff', '#1e90ff', '#3a7bd5', '#4facfe', '#00f2fe', '#43e97b', '#38f9d7', '#f9d423', '#f83600', '#2c3e50'];
 
         let selectedID, selectedPrice;
 
+        // GENERATING PLOTS
         for (let r = 0; r < 10; r++) {
             const row = document.createElement('div');
             row.className = 'row';
@@ -189,8 +183,8 @@
 
                 const end = Date.now() + 4000;
                 (function frame() {
-                    confetti({ particleCount: 10, spread: 60, origin: { x: 0 }, colors: colors });
-                    confetti({ particleCount: 10, spread: 60, origin: { x: 1 }, colors: colors });
+                    confetti({ particleCount: 7, spread: 60, origin: { x: 0 }, colors: colors });
+                    confetti({ particleCount: 7, spread: 60, origin: { x: 1 }, colors: colors });
                     if (Date.now() < end) requestAnimationFrame(frame);
                 }());
 
@@ -198,12 +192,21 @@
                     document.getElementById('celeb-overlay').style.display = 'none';
                     document.getElementById('final-modal').style.display = 'flex';
                 }, 3500);
-            } catch (e) { alert("Error!"); }
+            } catch (e) { alert("Error connecting to database."); }
         }
 
         window.openPayment = () => document.getElementById('pay-modal').style.display = 'flex';
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied to clipboard!"); };
+        window.copy = (t) => { navigator.clipboard.writeText(t); alert("Address Copied!"); };
 
         window.downloadMap = () => {
-            html2
+            html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
+                let link = document.createElement('a');
+                link.download = 'Millionaires_Club_Map.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
