@@ -2,37 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MASTER ADMIN | MILLIONAIRES CLUB</title>
+    <title>MASTER ADMIN | K ARCHIVE</title>
     <style>
         :root { --gold: #FCD535; --bg: #0B0E11; --card: #1E2329; }
         body { font-family: sans-serif; background: var(--bg); color: #fff; padding: 20px; display: none; }
-        .container { max-width: 1200px; margin: 0 auto; }
+        .container { max-width: 1100px; margin: 0 auto; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .card { background: var(--card); padding: 20px; border-radius: 10px; border: 1px solid #333; margin-bottom: 20px; }
-        h2 { color: var(--gold); text-transform: uppercase; font-size: 18px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        h2 { color: var(--gold); font-size: 16px; border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 0; }
         input { padding: 12px; width: 100%; margin-bottom: 10px; border: 1px solid #444; background: #0B0E11; color: #fff; border-radius: 4px; box-sizing: border-box; }
-        button { padding: 10px 20px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; transition: 0.3s; }
-        .btn-approve { background: #2ebd85; color: white; width: 100%; }
-        .btn-reject { background: #f6465d; color: white; margin-top: 5px; width: 100%; }
-        .btn-manual { background: var(--gold); color: #000; width: 100%; margin-top: 10px; }
-        .item { padding: 12px; background: #000; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
-        .btn-delete { background: #f6465d; color: white; padding: 5px 10px; font-size: 11px; }
+        .btn { padding: 10px 20px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; width: 100%; transition: 0.3s; }
+        .btn-approve { background: #2ebd85; color: white; }
+        .btn-manual { background: var(--gold); color: #000; margin-top: 10px; }
         .scroll { height: 400px; overflow-y: auto; }
+        .live-item { padding: 10px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
     <script>
-        // পাসওয়ার্ড সেশন সিস্টেম (একবার দিলে রিলোড করলেও চাইবে না)
+        // পাসওয়ার্ড সেশন ম্যানেজমেন্ট
         const MASTER_PASS = "zoomlink34@gmail.com";
-        let sessionPass = sessionStorage.getItem("admin_access");
-
-        if (!sessionPass) {
-            let inputPass = prompt("Master Access Password:");
-            if (inputPass === MASTER_PASS) {
-                sessionStorage.setItem("admin_access", "true");
+        if (!sessionStorage.getItem("is_admin")) {
+            if (prompt("Master Access Password:") === MASTER_PASS) {
+                sessionStorage.setItem("is_admin", "true");
                 document.body.style.display = "block";
             } else {
-                alert("Wrong Password!");
+                alert("ভুল পাসওয়ার্ড!");
                 window.location.href = "index.html";
             }
         } else {
@@ -41,26 +36,26 @@
     </script>
 
     <div class="container">
-        <h1 style="text-align: center; color: var(--gold); letter-spacing: 3px;">MILLIONAIRE COMMAND CENTER</h1>
+        <h1 style="text-align: center; color: var(--gold); letter-spacing: 3px;">MILLIONAIRE ADMIN CENTER</h1>
         
         <div class="grid">
             <div class="card">
-                <h2>Pending Requests (Customer Orders)</h2>
+                <h2>Pending Approvals (Orders)</h2>
                 <div id="order-list" class="scroll">অর্ডার চেক করা হচ্ছে...</div>
             </div>
 
             <div class="right-col">
                 <div class="card">
-                    <h2>Manual Direct Update</h2>
+                    <h2>Direct Manual Publish</h2>
                     <input type="number" id="mPlot" placeholder="Plot ID (1-100)">
-                    <input type="text" id="mBrand" placeholder="Customer Name/Brand">
-                    <input type="text" id="mImg" placeholder="Logo Link (Image URL)">
-                    <input type="text" id="mWeb" placeholder="Social/Website Link">
-                    <button class="btn-manual" onclick="manualUpdate()">UPDATE & GO LIVE</button>
+                    <input type="text" id="mBrand" placeholder="Brand Name">
+                    <input type="text" id="mImg" placeholder="Logo Link (URL)">
+                    <input type="text" id="mWeb" placeholder="Social/Web Link">
+                    <button class="btn btn-manual" onclick="manualUpdate()">LIVE NOW</button>
                 </div>
 
                 <div class="card">
-                    <h2>Live Records (Clear Plots)</h2>
+                    <h2>Live Map Data (Clear Plots)</h2>
                     <div id="liveRecords" class="scroll">লোড হচ্ছে...</div>
                 </div>
             </div>
@@ -71,95 +66,71 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <script>
-        const firebaseConfig = {
+        const config = {
             apiKey: "AIzaSyCAdnfu2R82xbC7H85n_9mvQBE58X3TjbA",
             authDomain: "the-5k-elite-legacy.firebaseapp.com",
             databaseURL: "https://the-5k-elite-legacy-default-rtdb.firebaseio.com",
             projectId: "the-5k-elite-legacy",
             appId: "1:440824313752:web:2c93344dcfe2ba0a4c5ded"
         };
-        firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(config);
         const db = firebase.database();
 
-        // ১. নতুন অর্ডার বা রিকোয়েস্ট লোড করা
+        // ১. অর্ডার চেক করা (pixels অথবা pending_orders উভয় পাথই চেক করবে)
         db.ref('pending_orders/Millionaire').on('value', s => {
             const list = document.getElementById('order-list');
             list.innerHTML = "";
             const data = s.val();
             if(!data) {
-                list.innerHTML = "<p style='color:#666'>এখনো কোন নতুন অর্ডার আসেনি।</p>";
+                list.innerHTML = "<p style='color:#666'>কোন পেন্ডিং অর্ডার নেই।</p>";
                 return;
             }
-            
             Object.keys(data).forEach(key => {
-                const order = data[key];
+                const o = data[key];
                 list.innerHTML += `
-                    <div class="card" style="border-left: 5px solid var(--gold); background: #111; margin-bottom:10px;">
-                        <b>PLOT #${order.plotID}</b> | USER: ${order.brandName} <br><br>
-                        <input type="text" id="img_${key}" placeholder="Paste Logo URL">
-                        <input type="text" id="web_${key}" placeholder="Paste Social Link">
-                        <button class="btn-approve" onclick="approve('${key}', '${order.plotID}', '${order.brandName}')">APPROVE & LIVE</button>
-                        <button class="btn-reject" onclick="reject('${key}')" style="background:#444; color:#ccc; margin-top:5px; width:100%; border-radius:5px;">DELETE REQUEST</button>
+                    <div class="card" style="background:#000; border:1px solid var(--gold);">
+                        <b>Plot #${o.plotID} - ${o.brandName}</b><br><br>
+                        <input type="text" id="img_${key}" placeholder="Logo URL">
+                        <input type="text" id="web_${key}" placeholder="Social Link">
+                        <button class="btn btn-approve" onclick="approve('${key}', '${o.plotID}', '${o.brandName}')">APPROVE</button>
                     </div>`;
             });
         });
 
-        // এপ্রুভ ফাংশন (ম্যাপে লাইভ করবে)
+        // এপ্রুভ লজিক
         function approve(key, pid, brand) {
             const img = document.getElementById('img_'+key).value;
             const web = document.getElementById('web_'+key).value;
-            if(!img) return alert("দয়া করে লোগো ইউআরএল দিন!");
-
-            db.ref('sold_plots/plot_'+pid).set({
-                plotID: pid, 
-                username: brand, 
-                image: img, 
-                social: web || "#"
+            if(!img) return alert("Logo URL দিন!");
+            
+            // pixels পাথে লাইভ করা (ক্যানভাস এই পাথ ব্যবহার করে)
+            db.ref('pixels/'+pid).set({
+                plotID: pid, name: brand, imageUrl: img, link: web || "#"
             }).then(() => {
                 db.ref('pending_orders/Millionaire/'+key).remove();
-                alert("Plot #" + pid + " লাইভ হয়ে গেছে!");
+                alert("সফলভাবে লাইভ হয়েছে!");
             });
         }
 
-        // রিকোয়েস্ট রিজেক্ট করা
-        function reject(key) {
-            if(confirm("আপনি কি এই রিকোয়েস্টটি ডিলিট করতে চান?")) db.ref('pending_orders/Millionaire/'+key).remove();
-        }
-
-        // ২. সরাসরি আপডেট ফাংশন
+        // ২. সরাসরি পাবলিশ
         function manualUpdate() {
-            const pid = document.getElementById('mPlot').value;
-            const name = document.getElementById('mBrand').value;
-            const img = document.getElementById('mImg').value;
-            const web = document.getElementById('mWeb').value;
-            if(!pid || !name || !img) return alert("সবগুলো তথ্য সঠিকভাবে দিন!");
-
-            db.ref('sold_plots/plot_'+pid).set({
-                plotID: pid, username: name, image: img, social: web || "#"
-            }).then(() => {
-                alert("সফলভাবে ম্যানুয়াল আপডেট হয়েছে!");
-                document.getElementById('mPlot').value = "";
-                document.getElementById('mBrand').value = "";
-                document.getElementById('mImg').value = "";
-            });
+            const pid = document.getElementById('mPlot').value, name = document.getElementById('mBrand').value,
+                  img = document.getElementById('mImg').value, web = document.getElementById('mWeb').value;
+            if(!pid || !name || !img) return alert("সব তথ্য দিন!");
+            db.ref('pixels/'+pid).set({plotID: pid, name: name, imageUrl: img, link: web || "#"}).then(() => alert("Live!"));
         }
 
-        // ৩. লাইভ রেকর্ড থেকে ডিলিট
-        db.ref('sold_plots').on('value', s => {
+        // ৩. লাইভ ডাটা ডিলিট
+        db.ref('pixels').on('value', s => {
             const list = document.getElementById('liveRecords'); list.innerHTML = "";
-            const data = s.val(); if(!data) return list.innerHTML = "বর্তমানে কোন প্লট লাইভ নেই।";
-            Object.keys(data).forEach(key => {
-                const item = data[key];
-                list.innerHTML += `<div class="item">
-                    <span>#${item.plotID} - ${item.username}</span>
-                    <button class="btn-delete" onclick="clearPlot('${key}')">REMOVE</button>
+            const data = s.val(); if(!data) return list.innerHTML = "ম্যাপ ফাঁকা।";
+            Object.keys(data).forEach(id => {
+                list.innerHTML += `<div class="live-item">
+                    <span>#${id} - ${data[id].name}</span>
+                    <button onclick="db.ref('pixels/${id}').remove()" style="color:red; background:none; border:none; cursor:pointer;">DELETE</button>
                 </div>`;
             });
         });
-
-        function clearPlot(key) {
-            if(confirm("এই প্লটটি কি ম্যাপ থেকে মুছে ফেলতে চান?")) db.ref('sold_plots/'+key).remove();
-        }
     </script>
 </body>
 </html>
