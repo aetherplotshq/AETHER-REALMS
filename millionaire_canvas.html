@@ -11,7 +11,7 @@
         :root { --gold: #9E7E45; --white: #ffffff; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
 
-        /* Navigation & Live Counter */
+        /* Navigation */
         .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 1px solid #222; box-sizing: border-box; }
         .nav-left { display: flex; gap: 15px; align-items: center; }
         .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 12px 20px; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
@@ -23,10 +23,30 @@
         .live-counter span { display: block; font-size: 10px; letter-spacing: 2px; font-weight: bold; }
         .count-val { color: var(--gold); font-size: 14px !important; }
 
-        /* Section Header */
+        /* Header Area & All Row Color Gradient Animation */
         .header-area { text-align: center; padding-top: 150px; margin-bottom: 50px; }
-        .section-name { font-size: clamp(35px, 8vw, 85px); letter-spacing: 12px; text-transform: uppercase; font-weight: 900; background: linear-gradient(90deg, #1e3c72, #2a5298, #d3d333, #e65c00, #f9d423, #1e3c72); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 5s linear infinite; margin-bottom: 10px; }
-        @keyframes shine { to { background-position: 200% center; } }
+        
+        /* এখানে আপনার ১০টি সারির সবগুলো রঙ ধাপে ধাপে আসবে */
+        .section-name { 
+            font-size: clamp(35px, 8vw, 85px); 
+            letter-spacing: 12px; 
+            text-transform: uppercase; 
+            font-weight: 900; 
+            background: linear-gradient(90deg, 
+                #FFD700, #FFB800, #FF8C00, #FF4500, #FF0055, 
+                #D400FF, #7A00FF, #0070FF, #00C3FF, #00FFCC
+            ); 
+            background-size: 300% auto; 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            animation: fullColorShift 8s linear infinite; 
+            margin-bottom: 10px; 
+        }
+
+        @keyframes fullColorShift {
+            0% { background-position: 0% center; }
+            100% { background-position: 300% center; }
+        }
         
         .sub-slogan { font-size: 14px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; opacity: 0.8; }
 
@@ -44,26 +64,35 @@
         .plot-id { position: absolute; top: 8px; left: 10px; font-size: 9px !important; opacity: 0.4; }
         .status-tag { position: absolute; bottom: -25px; font-size: 9px !important; letter-spacing: 1px; color: #666; }
 
-        /* Footer Section */
-        .footer-container { text-align: center; padding: 80px 20px; border-top: 1px solid #222; background: #000; margin-top: 50px; }
-        .footer-text { color: #555; font-size: 12px; letter-spacing: 1.5px; line-height: 1.8; max-width: 800px; margin: 0 auto 30px; }
-        .footer-text b { color: var(--gold); }
-        
-        /* Black & White Support Logo */
-        .support-link { display: inline-block; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
-        .support-link:hover { filter: grayscale(0%); opacity: 1; transform: scale(1.1); }
-        .support-logo { width: 40px; height: 40px; }
+        /* Fixed Bottom Left Customer Support (As per your image) */
+        .fixed-support {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 5000;
+            background: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .fixed-support:hover { transform: scale(1.1); }
+        .fixed-support svg { width: 24px; height: 24px; fill: #000; }
+
+        /* Footer Text */
+        .footer-container { text-align: center; padding: 60px 20px; border-top: 1px solid #222; margin-top: 50px; }
+        .footer-text { color: #555; font-size: 11px; letter-spacing: 1.5px; line-height: 2; max-width: 800px; margin: 0 auto; }
 
         /* Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background: #fff; color:#000; padding:40px; width:480px; text-align:center; border-radius: 4px; box-shadow: 0 0 50px rgba(255,255,255,0.1); }
-        .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; }
-        .premium-btn:hover { background: var(--gold); }
-        .info-list { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); line-height: 1.8; font-size: 14px; }
-        .pay-item { text-align: left; padding: 15px; background: #f7f7f7; margin-bottom: 15px; cursor: pointer; border: 1px solid #eee; transition: 0.3s; }
-        .pay-item:hover { border-color: var(--gold); background: #fff; }
-        .pay-label { display: block; color: #888; font-size: 10px; text-transform: uppercase; margin-bottom: 5px; font-weight: bold; }
-        .pay-address { font-family: 'Courier New', monospace; font-size: 13px; word-break: break-all; color: #222; line-height: 1.4; display: block; }
+        .card { background: #fff; color:#000; padding:40px; width:480px; text-align:center; border-radius: 4px; }
+        .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; margin-top: 15px; }
+        .pay-item { text-align: left; padding: 15px; background: #f7f7f7; margin-bottom: 15px; cursor: pointer; border: 1px solid #eee; }
         #celeb-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:#000; display:none; flex-direction:column; align-items:center; justify-content:center; z-index:10000; text-align:center; }
     </style>
 </head>
@@ -84,20 +113,24 @@
 
     <div class="header-area">
         <h1 class="section-name">Millionaires Club</h1>
-        <div class="sub-slogan">Own a piece of internet history!</div>
+        <div class="sub-slogan">Own a piece of digital eternity</div>
     </div>
     
     <div id="capture-area"></div>
 
+    <div class="fixed-support" onclick="window.open('https://wa.me/8801576940717', '_blank')">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.527 3.66 1.438 5.168L2.05 22l4.986-1.308A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.731 0-3.355-.487-4.736-1.332l-.339-.207-2.958.776.79-2.883-.228-.363A7.955 7.955 0 0 1 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+            <path d="M12 7a1 1 0 0 0-1 1v4H8a1 1 0 1 0 0 2h4a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"/>
+        </svg>
+    </div>
+
     <div class="footer-container">
         <p class="footer-text">
             <b>K ARCHIVE | MILLIONAIRES CLUB</b> © 2026. All rights reserved.<br>
-            We are dedicated to preserving digital heritage. K ARCHIVE is not responsible for the content of external sites linked via plots.<br>
-            All brand logos and images featured on the canvas are the property of their respective owners.
+            Preserving digital culture through limited ownership. Each plot is a unique piece of internet history.<br>
+            All brand logos are trademarks of their respective owners.
         </p>
-        <a href="https://wa.me/8801576940717" target="_blank" class="support-link" title="Customer Support">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support" class="support-logo">
-        </a>
     </div>
 
     <div id="order-modal" class="modal">
@@ -114,16 +147,12 @@
         <div class="card" style="width: 550px;">
             <h2 style="letter-spacing: 5px; margin-bottom: 30px; font-size: 18px;">PAYMENT GATEWAY</h2>
             <div class="pay-item" onclick="copy('0x44379244884e8e8551954ccEF910778Affleb78E')">
-                <span class="pay-label">Metamask / Trust Wallet (ETH/BNB/Polygon)</span>
-                <span class="pay-address">0x44379244884e8e8551954ccEF910778Affleb78E</span>
+                <span style="font-size:10px; color:#888;">Metamask / Trust Wallet</span>
+                <span style="display:block; font-family:monospace;">0x44379244884e8e8551954ccEF910778Affleb78E</span>
             </div>
             <div class="pay-item" onclick="copy('912221034')">
-                <span class="pay-label">Binance UID</span>
-                <span class="pay-address">912221034</span>
-            </div>
-            <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
-                <span class="pay-label">USDT (TRC20 Address)</span>
-                <span class="pay-address">TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</span>
+                <span style="font-size:10px; color:#888;">Binance UID</span>
+                <span style="display:block; font-family:monospace;">912221034</span>
             </div>
             <button class="premium-btn" onclick="closeModals()">CLOSE</button>
         </div>
@@ -132,21 +161,6 @@
     <div id="celeb-overlay">
         <h1 style="font-size: 60px; letter-spacing: 20px; font-weight: 900; color: #fff;">SUCCESS!</h1>
         <h2 id="congrats-brand" style="font-size: 35px; color: var(--gold); margin-top: 20px;"></h2>
-        <p style="color: #444; letter-spacing: 5px; margin-top: 50px;">REGISTERING YOUR PLOT...</p>
-    </div>
-
-    <div id="final-modal" class="modal">
-        <div class="card">
-            <h2 style="letter-spacing: 2px; color: #000;">REQUIRED STEPS</h2>
-            <div class="info-list">
-                ✅ 1. Take a screenshot of Payment.<br>
-                ✅ 2. Provide High-Res Brand Logo.<br>
-                ✅ 3. Website link for Plot redirect.<br>
-                ✅ 4. Mention Plot ID: <b id="final-plot-id">#00</b>
-            </div>
-            <button class="premium-btn" onclick="window.open('https://wa.me/8801576940717', '_blank')">CONTACT CUSTOMER SERVICE</button>
-            <button class="premium-btn" style="background:#555; margin-top:10px;" onclick="closeAndCelebrate()">BACK TO CANVAS</button>
-        </div>
     </div>
 
     <script type="module">
@@ -186,13 +200,12 @@
 
         window.submitOrder = async () => {
             const brand = document.getElementById('brand-input').value;
-            if(!brand) return alert("Please enter your brand name.");
+            if(!brand) return alert("Please enter brand name.");
             try {
                 await push(ref(db, 'pending_orders/Millionaire'), {
                     plotID: activeID, price: activePrice, brandName: brand, timestamp: serverTimestamp()
                 });
                 document.getElementById('order-modal').style.display = 'none';
-                document.getElementById('final-plot-id').innerText = `#${activeID}`;
                 showCelebration(brand);
             } catch (e) { alert("Submission Failed!"); }
         };
@@ -202,22 +215,8 @@
             document.getElementById('congrats-brand').innerText = name.toUpperCase();
             overlay.style.display = 'flex';
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                document.getElementById('final-modal').style.display = 'flex';
-            }, 4000);
+            setTimeout(() => { overlay.style.display = 'none'; }, 4000);
         }
-
-        window.closeAndCelebrate = () => {
-            document.getElementById('final-modal').style.display = 'none';
-            var duration = 5 * 1000;
-            var end = Date.now() + duration;
-            (function frame() {
-              confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#FFD700', '#FF0055', '#0070FF'] });
-              confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#FFD700', '#FF0055', '#0070FF'] });
-              if (Date.now() < end) requestAnimationFrame(frame);
-            }());
-        };
 
         window.openPayment = () => document.getElementById('pay-modal').style.display = 'flex';
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
