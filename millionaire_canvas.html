@@ -7,184 +7,169 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --gold: #9E7E45; --white: #fff; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
+        :root { --gold: #9E7E45; --binance: #F3BA2F; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Arial', sans-serif; overflow-x: hidden; }
 
-        /* Navigation */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); box-sizing: border-box; border-bottom: 1px solid #222; }
-        .nav-left { display: flex; gap: 10px; }
-        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 18px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-decoration: none; text-transform: uppercase; transition: 0.3s; }
-        .nav-btn:hover { background: #fff; color: #000; }
-        .counter { color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; }
+        /* Navigation - Download button moved left for visibility */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); border-bottom: 1px solid #222; }
+        .nav-btn { background: none; border: 1px solid #555; color: #fff; padding: 8px 25px; font-size: 11px; cursor: pointer; text-transform: uppercase; margin-right: 20px; }
+        .counter-box { font-size: 12px; letter-spacing: 2px; font-weight: bold; color: var(--gold); }
 
-        /* Glowing Header */
-        .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; }
+        /* Multi-color Video Effect Title */
+        .header-area { text-align: center; padding-top: 110px; padding-bottom: 40px; }
         .section-name { 
-            font-size: clamp(30px, 6vw, 75px); letter-spacing: 12px; text-transform: uppercase; font-weight: 900;
-            background: linear-gradient(90deg, #ff0000, #ffcc00, #00ffcc, #00a2ff, #ae00ff, #ff0000);
-            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shine 4s linear infinite; filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
+            font-size: 50px; letter-spacing: 12px; text-transform: uppercase; font-weight: 900; 
+            background: linear-gradient(to right, #0e4b5a, #d99a6c, #a63d3d, #6e8a7d, #0e4b5a);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: colorVideo 4s linear infinite;
         }
-        @keyframes shine { to { background-position: 200% center; } }
+        @keyframes colorVideo {
+            to { background-position: 200% center; }
+        }
 
-        /* Grid */
-        .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
-        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 20px; } /* গ্যাপ বাড়ানো হয়েছে যাতে নাম স্পষ্ট দেখা যায় */
-        .row { display: flex; justify-content: center; gap: 12px; }
+        /* Grid - Large, Glowing & Growing Plots */
+        .grid-wrapper { display: flex; flex-direction: column; width: 100%; }
+        .row-section { width: 100%; display: flex; justify-content: center; padding: 50px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .row-container { display: flex; gap: 18px; }
 
-        /* Plot Styling */
         .plot { 
-            background: #050505; border: 1.5px solid var(--r-col); display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; transition: 0.4s; position: relative; cursor: pointer;
-            box-shadow: inset 0 0 15px var(--r-col);
+            width: 130px; height: 130px; 
+            background: rgba(0,0,0,0.7); 
+            border: 2px solid var(--p-color); 
+            box-shadow: 0 0 15px var(--p-color);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            transition: 0.3s all cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            position: relative; cursor: pointer;
         }
-        .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 50; }
+        .plot:hover { 
+            transform: scale(1.15); 
+            box-shadow: 0 0 40px var(--p-color); 
+            z-index: 10; 
+            border-color: #fff;
+            filter: brightness(1.3);
+        }
+        .owner-tag { position: absolute; bottom: -35px; font-size: 10px; color: #fff; text-transform: uppercase; font-weight: bold; width: 100%; text-align: center; letter-spacing: 1px; }
 
-        /* Sizes */
-        .lg { width: 135px; height: 135px; } 
-        .std { width: 90px; height: 90px; }
+        /* Black & White Support Icon */
+        .support-icon { 
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
+            background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            box-shadow: 0 0 20px rgba(255,255,255,0.3); cursor: pointer; z-index: 5000; filter: grayscale(1); 
+        }
 
-        /* Crown (Outside) */
-        .crown { position: absolute; top: -45px; font-size: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
+        /* Modals */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.97); display:none; align-items:center; justify-content:center; z-index:9999; }
+        .card { background:#fff; color:#000; padding:40px; width:430px; text-align:center; border-radius: 4px; }
+        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; font-weight:bold; cursor:pointer; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; }
 
-        /* Plot Name Display (নিচে গ্যাপ দিয়ে সেট করা) */
-        .owner-tag { position: absolute; bottom: -30px; font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; font-weight: bold; }
-
-        /* Overlays */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background:#fff; color:#000; padding:45px; width:420px; text-align:center; border-radius: 4px; }
-        .card input { width:100%; padding: 15px; margin: 15px 0; border: 1px solid #ddd; font-family: serif; font-size: 16px; outline: none; box-sizing: border-box; }
-        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; font-weight:bold; cursor:pointer; text-transform: uppercase; }
-        .info-box { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; }
-
-        /* Celebration Screen (Full Black Background) */
-        #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+        .footer { text-align: center; padding: 80px; font-size: 11px; color: #555; background: #000; border-top: 1px solid #111; line-height: 2; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
-        <div class="nav-left">
-            <a href="index.html" class="nav-btn">← HOME</a>
-            <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
-        </div>
-        <div class="counter">SOLD: 0 | LEFT: 100</div>
+        <button class="nav-btn" onclick="downloadMap()">EXPORT MAP</button>
+        <div class="counter-box">SOLD: <span id="sold-count">0</span> | LEFT: <span id="left-count">100</span></div>
     </div>
 
     <div class="header-area">
         <h1 class="section-name">Millionaires Club</h1>
     </div>
 
-    <div class="grid-container">
-        <div id="capture-area"></div>
-        <div style="text-align: center; padding: 60px; font-size: 11px; color: #444; border-top: 1px solid #111; width: 80%; margin-top: 50px;">
-            K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved.
-        </div>
+    <div id="capture-area" class="grid-wrapper"></div>
+
+    <div class="support-icon" onclick="window.open('https://wa.me/8801576940717')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" style="filter: brightness(0);" alt="Support">
+    </div>
+
+    <div class="footer">
+        K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved. <br>
+        We are not responsible for the content of external websites. <br>
+        Images and brand logos featured on this canvas are © of their respective owners.
     </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 3px;">RESERVATION</h2>
-            <input type="number" id="plot-id-field" placeholder="PLOT NO (1-100)">
-            <input type="text" id="brand-name-field" placeholder="YOUR BRAND NAME">
-            <button class="buy-btn" onclick="processSelection()">SUBMIT & BUY</button>
-            <p onclick="closeModals()" style="font-size: 10px; cursor: pointer; margin-top: 20px; opacity: 0.5;">[ CANCEL ]</p>
+            <h2 style="letter-spacing: 2px;">SECURE YOUR PLOT</h2>
+            <input type="text" id="brand-input" placeholder="YOUR BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; font-size:16px; outline:none;">
+            <input type="hidden" id="plot-id-val">
+            <button class="buy-btn" onclick="startCelebration()">SUBMIT & RESERVE</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:20px; opacity: 0.5;">[ CANCEL ]</p>
         </div>
-    </div>
-
-    <div id="celeb-overlay">
-        <h1 style="font-size: 50px; letter-spacing: 10px; color: #fff; margin-bottom: 10px;">CONGRATULATIONS!</h1>
-        <h2 id="celeb-brand-name" style="font-size: 30px; letter-spacing: 5px; color: var(--gold); border-top: 1px solid #333; padding-top: 20px;"></h2>
-        <p style="font-size: 14px; letter-spacing: 3px; color: #666; margin-top: 20px;">ACQUISITION PROCESS INITIATED</p>
     </div>
 
     <div id="final-modal" class="modal">
         <div class="card" style="text-align: left;">
-            <h2 style="text-align: center; letter-spacing: 2px;">NEXT STEPS</h2>
-            <div class="info-box">
-                <b>Please provide these to Customer Service:</b><br>
-                1. Payment Proof (Transaction ID/Screenshot)<br>
-                2. Your High-Resolution Brand Logo<br>
-                3. Your Website Link for Redirect<br>
-                4. Confirm Plot Number & Brand Name
+            <h2 style="text-align: center;">FINAL STEPS</h2>
+            <div style="background: #f4f4f4; padding: 25px; margin: 20px 0; border-left: 6px solid #000; font-size: 14px; line-height: 2;">
+                <b>Please send the following to Support:</b><br>
+                1. Transaction Proof (Screenshot)<br>
+                2. Brand Name & Selected Plot Number<br>
+                3. Brand Logo (High Quality PNG)<br>
+                4. Redirect URL for your Plot
             </div>
-            <button class="buy-btn" style="background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">WHATSAPP SUPPORT</button>
-            <button class="buy-btn" style="background:#333; margin-top: 10px;" onclick="location.reload()">BACK TO CANVAS</button>
+            <button class="buy-btn" style="background:#000;" onclick="window.open('https://wa.me/8801576940717')">WHATSAPP SUPPORT</button>
+            <button class="buy-btn" style="background:#666;" onclick="location.reload()">BACK TO CANVAS</button>
         </div>
     </div>
 
     <script>
-        const capture = document.getElementById('capture-area');
-        const rowsPrices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        const rowColors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
+        const wrapper = document.getElementById('capture-area');
+        const rowColors = ['#0e4b5a', '#2d6a6d', '#6e8a7d', '#b5a68c', '#d99a6c', '#c2614a', '#a63d3d', '#7d2a3a', '#4d1c31', '#2d142c'];
+        const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
+        let sold = 0;
 
         for (let r = 0; r < 10; r++) {
-            const rowEl = document.createElement('div');
-            rowEl.className = 'row';
+            const section = document.createElement('div');
+            section.className = 'row-section';
+            section.style.backgroundColor = rowColors[r];
+            const container = document.createElement('div');
+            container.className = 'row-container';
+
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
-                const size = (r === 0) ? 'lg' : 'std';
-                plot.className = `plot ${size}`;
-                plot.style.setProperty('--r-col', rowColors[r]);
-
-                if(r === 0) { plot.innerHTML = `<span class="crown">👑</span>`; }
-
-                plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
-                plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${rowsPrices[r]}</span>`;
+                plot.className = 'plot';
+                plot.style.setProperty('--p-color', rowColors[r]); 
                 
-                // নাম দেখানোর ট্যাগ (AVAILABLE লেখা থাকবে শুরুতে)
-                plot.innerHTML += `<span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
-
+                plot.innerHTML = `
+                    <span style="position:absolute; top:8px; left:10px; font-size:9px; opacity:0.5;">#${id}</span>
+                    <span style="font-weight:bold; font-size:16px; letter-spacing:1px;">$${prices[r]}</span>
+                    <span class="owner-tag" id="tag-${id}">AVAILABLE</span>
+                `;
                 plot.onclick = () => {
                     document.getElementById('order-modal').style.display = 'flex';
-                    document.getElementById('plot-id-field').value = id;
+                    document.getElementById('plot-id-val').value = id;
                 };
-                rowEl.appendChild(plot);
+                container.appendChild(plot);
             }
-            capture.appendChild(rowEl);
+            section.appendChild(container);
+            wrapper.appendChild(section);
         }
 
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-        function processSelection() {
-            const id = document.getElementById('plot-id-field').value;
-            const name = document.getElementById('brand-name-field').value;
+        function startCelebration() {
+            const name = document.getElementById('brand-input').value;
+            const id = document.getElementById('plot-id-val').value;
+            if(!name) return alert("Enter brand name!");
 
-            if(!id || !name) return alert("Fill Plot No and Brand Name!");
-
-            // ১. ইনস্ট্যান্ট অভিনন্দন স্ক্রিন ও ব্র্যান্ড নেম দেখানো
+            // কোনো ওয়েটিং বা স্ক্রিন কালার চেঞ্জ ছাড়া সরাসরি পপ-আপ
             document.getElementById('order-modal').style.display = 'none';
-            const celebOverlay = document.getElementById('celeb-overlay');
-            document.getElementById('celeb-brand-name').innerText = name.toUpperCase();
-            celebOverlay.style.display = 'flex';
-
-            // ২. দুই পাশ থেকে সাদা কাগজ ছিটানো (Confetti)
-            const duration = 3000;
-            const end = Date.now() + duration;
-            const whiteColors = ['#ffffff', '#f0f0f0', '#dddddd'];
-
-            (function frame() {
-                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: whiteColors });
-                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: whiteColors });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
-
-            // ৩. মেইন ক্যানভাসে নাম আপডেট করা
-            const ownerTag = document.getElementById(`tag-${id}`);
-            if(ownerTag) ownerTag.innerText = name.toUpperCase();
-
-            // ৪. ৩ সেকেন্ড পর ফাইনাল পপ-আপ
-            setTimeout(() => {
-                celebOverlay.style.display = 'none';
-                document.getElementById('final-modal').style.display = 'flex';
-            }, 3000);
+            document.getElementById(`tag-${id}`).innerText = name.toUpperCase();
+            sold++;
+            document.getElementById('sold-count').innerText = sold;
+            document.getElementById('left-count').innerText = 100 - sold;
+            
+            document.getElementById('final-modal').style.display = 'flex';
         }
 
         function downloadMap() {
-            html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
-                let link = document.createElement('a');
-                link.download = 'K_Archive_Map.png';
+            html2canvas(wrapper, { scale: 1.5, backgroundColor: "#000" }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Millionaires_Club_Map.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
