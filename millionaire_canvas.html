@@ -54,9 +54,6 @@
         .card { background:#fff; color:#000; padding:45px; width:420px; text-align:center; border-radius: 4px; }
         .card input { width:100%; padding: 15px; margin: 15px 0; border: 1px solid #ddd; font-family: serif; font-size: 16px; outline: none; box-sizing: border-box; }
         .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; font-weight:bold; cursor:pointer; text-transform: uppercase; }
-        .info-box { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; }
-        
-        /* Celeb Overlay HTML থেকে সরানো হয়েছে কারণ congrats.js ডাইনামিকলি তৈরি করবে */
     </style>
 </head>
 <body>
@@ -91,13 +88,13 @@
     </div>
 
     <script type="module">
+        // congrats.js কানেক্ট করা হচ্ছে
         import { startCelebration } from './congrats.js';
 
         const capture = document.getElementById('capture-area');
         const rowsPrices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
         const rowColors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
 
-        // গ্রিড তৈরি - হুবহু আগের মতো রাখা হয়েছে
         for (let r = 0; r < 10; r++) {
             const rowEl = document.createElement('div');
             rowEl.className = 'row';
@@ -109,7 +106,6 @@
                 plot.style.setProperty('--r-col', rowColors[r]);
 
                 if(r === 0) { plot.innerHTML = `<span class="crown">👑</span>`; }
-
                 plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
                 plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${rowsPrices[r]}</span>`;
                 plot.innerHTML += `<span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
@@ -123,33 +119,30 @@
             capture.appendChild(rowEl);
         }
 
-        // গ্লোবাল ফাংশন হিসেবে সেট করা হয়েছে যাতে HTML থেকে এক্সেস করা যায়
-        window.closeModals = function() { 
-            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); 
-        }
+        window.closeModals = () => { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-        window.processSelection = function() {
+        window.processSelection = () => {
             const id = document.getElementById('plot-id-field').value;
             const name = document.getElementById('brand-name-field').value;
             const price = rowsPrices[Math.floor((id-1)/10)];
 
             if(!id || !name) return alert("Fill Plot No and Brand Name!");
 
-            // ১. মেইন ক্যানভাসে নাম আপডেট করা
+            // ক্যানভাস আপডেট
             const ownerTag = document.getElementById(`tag-${id}`);
             if(ownerTag) ownerTag.innerText = name.toUpperCase();
 
-            // ২. অর্ডার মোডাল বন্ধ করা
+            // ইনপুট মোডাল বন্ধ
             closeModals();
 
-            // ৩. থ্রিডি ভেক্টর অভিনন্দন সিস্টেম কল করা
+            // congrats.js-এর Rolls-Royce অভিনন্দন স্টাইল শুরু
             startCelebration(name, id, price);
         }
 
-        window.downloadMap = function() {
+        window.downloadMap = () => {
             html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = 'Millionaires_Club_Map.png';
+                link.download = 'K_Archive_Map.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
