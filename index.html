@@ -9,6 +9,7 @@
             --black: #000000; 
             --white: #ffffff; 
             --grey: #888888;
+            --gold: #FCD535; /* Notification এর জন্য আপনার সিগনেচার গোল্ড কালার */
         }
 
         html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
@@ -101,6 +102,14 @@
         .step-text { font-size: 11px; letter-spacing: 1px; color: #555; }
         
         .copyright { grid-column: 1 / -1; margin-top: 80px; font-size: 10px; letter-spacing: 4px; opacity: 0.6; text-align: center; border-top: 1px solid #fafafa; padding-top: 40px; }
+
+        /* Notification Styling */
+        #redirect-popup {
+            display: none; position: fixed; bottom: 30px; right: 30px; 
+            background: var(--black); color: var(--white); padding: 15px 25px; 
+            border-radius: 4px; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+            z-index: 99999; font-size: 11px; letter-spacing: 1px; border-left: 5px solid var(--gold);
+        }
     </style>
 </head>
 <body>
@@ -132,6 +141,8 @@
         </div>
         <button onclick="toggleDrawer()" style="margin-top: 40px; border: none; background: none; cursor: pointer; letter-spacing: 3px; font-size: 9px; border-bottom: 1px solid #000;">[ CLOSE ]</button>
     </div>
+
+    <div id="redirect-popup">NOTICE: Requested page not found. Redirected to Homepage.</div>
 
     <a href="https://wa.me/8801576940717" target="_blank" class="support-btn interactive">
         <svg viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
@@ -185,6 +196,24 @@
             document.querySelectorAll(".reveal").forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight * 0.85) el.classList.add("active");
             });
+        });
+
+        // Redirect Logic: ভুল লিঙ্ক থেকে আসলে নোটিশ দেখানো
+        window.addEventListener("load", () => {
+            if (window.location.search.includes("status=redirected")) {
+                const popup = document.getElementById('redirect-popup');
+                popup.style.display = 'block';
+                
+                // ৫ সেকেন্ড পর এটি সরিয়ে ফেলা
+                setTimeout(() => {
+                    popup.style.transition = "opacity 1s";
+                    popup.style.opacity = "0";
+                    setTimeout(() => popup.style.display = 'none', 1000);
+                }, 5000);
+                
+                // ইউআরএল ক্লিন করা যাতে রিফ্রেশ করলে আবার নোটিশ না আসে
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
         });
     </script>
 </body>
