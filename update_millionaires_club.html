@@ -1,39 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>MASTER PANEL | MILLIONAIRES CLUB</title>
     <style>
-        body { background: #0B0E11; color: #fff; font-family: sans-serif; padding: 20px; display: none; }
-        .grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 400px 1fr; gap: 30px; }
-        .card { background: #1E2329; padding: 25px; border-radius: 10px; border: 1px solid #333; position: sticky; top: 20px; height: fit-content; }
-        h2 { color: #FCD535; text-transform: uppercase; margin-top: 0; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #0B0E11; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 15px; background: #FCD535; color: #000; font-weight: bold; border: none; cursor: pointer; border-radius: 4px; text-transform: uppercase; }
-        .item { padding: 15px; background: #12161D; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; border-radius: 5px; }
-        .list-container { background: #000; padding: 10px; border-radius: 10px; max-height: 80vh; overflow-y: auto; }
-        .btn-del { background: #e74c3c; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; font-size: 11px; }
+        body { background: #0B0E11; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; display: none; }
+        .wrapper { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 380px 1fr; gap: 30px; }
+        .form-card { background: #1E2329; padding: 30px; border-radius: 12px; border: 1px solid #333; position: sticky; top: 20px; height: fit-content; }
+        h2 { color: #FCD535; text-transform: uppercase; margin-bottom: 20px; font-size: 20px; border-left: 4px solid #FCD535; padding-left: 10px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #444; color: #fff; border-radius: 5px; box-sizing: border-box; }
+        .btn-update { width: 100%; padding: 15px; background: #FCD535; color: #000; font-weight: bold; border: none; cursor: pointer; border-radius: 5px; text-transform: uppercase; margin-top: 10px; }
+        .list-section { background: #000; padding: 20px; border-radius: 12px; border: 1px solid #222; }
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #1a1a1a; transition: 0.2s; }
+        .list-item:hover { background: #0d0d0d; }
+        .btn-del { background: #e74c3c; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; }
     </style>
 </head>
 <body>
     <script>
-        if(prompt("Master Password:") === "zoomlink34@gmail.com") { document.body.style.display = "block"; } 
+        if(prompt("Master Key:") === "zoomlink34@gmail.com") { document.body.style.display = "block"; } 
         else { window.location.href = "index.html"; }
     </script>
 
-    <div class="grid">
-        <div class="card">
-            <h2>Direct Plot Update</h2>
-            <p style="font-size: 11px; color: #888;">Update Plot Data (ID 1 - 100)</p>
-            <input type="number" id="mPlot" placeholder="Enter Plot ID (1-100)">
-            <input type="text" id="mBrand" placeholder="Brand/Elite Name">
-            <input type="text" id="mImg" placeholder="Logo URL">
+    <div class="wrapper">
+        <div class="form-card">
+            <h2>Manual Plot Entry</h2>
+            <input type="number" id="mPlot" placeholder="Plot ID (1-100)">
+            <input type="text" id="mBrand" placeholder="Brand Name">
+            <input type="text" id="mImg" placeholder="Logo Image URL">
             <input type="text" id="mWeb" placeholder="Website Link">
-            <button class="btn" onclick="directPublish()">Update Plot Now</button>
+            <button class="btn-update" onclick="manualPush()">Publish to Map</button>
         </div>
 
-        <div class="list-container">
-            <h2 style="padding-left: 10px;">Live Millionaire Plots</h2>
-            <div id="liveRecords">লোডিং...</div>
+        <div class="list-section">
+            <h2>Live Elite Members</h2>
+            <div id="liveList">Checking live data...</div>
         </div>
     </div>
 
@@ -51,36 +52,36 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        window.directPublish = () => {
+        window.manualPush = () => {
             const pid = document.getElementById('mPlot').value;
             const name = document.getElementById('mBrand').value;
             const img = document.getElementById('mImg').value;
             const web = document.getElementById('mWeb').value;
 
-            if(!pid || pid < 1 || pid > 100) return alert("১ থেকে ১০০ এর মধ্যে আইডি দিন!");
-            if(!name) return alert("নাম দিন!");
+            if(!pid || pid < 1 || pid > 100) return alert("Enter Plot ID between 1-100");
+            if(!name) return alert("Brand Name required!");
 
             set(ref(db, 'estate_data/Millionaire/' + pid), {
                 plotID: pid, name: name, imageUrl: img, link: web || "#"
             }).then(() => {
-                alert("Plot #" + pid + " Updated!");
+                alert("Plot #" + pid + " Updated Successfully!");
                 document.getElementById('mPlot').value = "";
             });
         };
 
         onValue(ref(db, 'estate_data/Millionaire'), (s) => {
-            const list = document.getElementById('liveRecords'); list.innerHTML = "";
-            const data = s.val(); if(!data) return list.innerHTML = "কোন প্লট লাইভ নেই।";
+            const list = document.getElementById('liveList'); list.innerHTML = "";
+            const data = s.val(); if(!data) return list.innerHTML = "No live plots found.";
             Object.keys(data).sort((a,b)=>a-b).forEach(id => {
                 list.innerHTML += `
-                <div class="item">
+                <div class="list-item">
                     <span><strong>#${id}</strong> - ${data[id].name}</span>
-                    <button class="btn-del" onclick="deletePlot('${id}')">REMOVE</button>
+                    <button class="btn-del" onclick="removePlot('${id}')">REMOVE</button>
                 </div>`;
             });
         });
 
-        window.deletePlot = (id) => { if(confirm("এই প্লটটি খালি করবেন?")) remove(ref(db, 'estate_data/Millionaire/' + id)); };
+        window.removePlot = (id) => { if(confirm("Clear this plot?")) remove(ref(db, 'estate_data/Millionaire/' + id)); };
     </script>
 </body>
 </html>
