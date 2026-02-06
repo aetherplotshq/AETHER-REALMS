@@ -1,18 +1,20 @@
 /**
  * K ARCHIVE - Universal Celebration Logic
+ * This file handles the vibrant confetti effects and transitions.
  */
 
 export const launchCelebration = (brandName) => {
     const celebOverlay = document.getElementById('celeb-overlay');
     const brandDisplay = document.getElementById('congrats-brand');
-    const finalModal = document.getElementById('final-info-modal');
+    const finalModal = document.getElementById('final-modal'); // আপনার HTML এর সাথে ম্যাচ করা হয়েছে
 
     if (celebOverlay && brandDisplay) {
+        // ১. কাস্টমারের ব্র্যান্ডের নাম বড় অক্ষরে দেখানো
         brandDisplay.innerText = brandName.toUpperCase();
         celebOverlay.style.display = 'flex';
 
-        // ১. বার্থডে স্টাইল রঙিন লম্বা কাগজ ছিটানো
-        const duration = 5 * 1000;
+        // ২. বার্থডে স্টাইল রঙিন লম্বা কাগজ (Confetti) ছিটানোর লজিক
+        const duration = 5 * 1000; // ৫ সেকেন্ড চলবে
         const animationEnd = Date.now() + duration;
 
         const interval = setInterval(function() {
@@ -20,7 +22,8 @@ export const launchCelebration = (brandName) => {
             if (timeLeft <= 0) return clearInterval(interval);
 
             const particleCount = 4;
-            // বাম পাশ থেকে
+            
+            // স্ক্রিনের বাম পাশ থেকে রঙিন কাগজ ছোড়া
             confetti({
                 particleCount,
                 angle: 60,
@@ -29,7 +32,8 @@ export const launchCelebration = (brandName) => {
                 colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'],
                 ticks: 300
             });
-            // ডান পাশ থেকে
+            
+            // স্ক্রিনের ডান পাশ থেকে রঙিন কাগজ ছোড়া
             confetti({
                 particleCount,
                 angle: 120,
@@ -40,7 +44,7 @@ export const launchCelebration = (brandName) => {
             });
         }, 60);
 
-        // ২. ৫ সেকেন্ড পর অভিনন্দন শেষ করে ফাইনাল তথ্যের পপ-আপ দেখানো
+        // ৩. ঠিক ৫ সেকেন্ড পর অভিনন্দন স্ক্রিন বন্ধ করে প্রয়োজনীয় তথ্যের পপ-আপ দেখানো
         setTimeout(() => {
             celebOverlay.style.display = 'none';
             if(finalModal) finalModal.style.display = 'flex';
