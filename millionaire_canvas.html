@@ -12,63 +12,71 @@
 
         /* Navigation */
         .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); box-sizing: border-box; border-bottom: 1px solid #222; }
-        .nav-left { display: flex; gap: 10px; }
+        .nav-left { display: flex; flex-direction: column; gap: 8px; }
+        .nav-btn-group { display: flex; gap: 10px; }
         .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 18px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-decoration: none; text-transform: uppercase; transition: 0.3s; }
         .nav-btn:hover { background: #fff; color: #000; }
+        .home-link { color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 1px; font-weight: bold; text-transform: uppercase; margin-top: 5px; }
+        
+        /* Fixed Counter position inside display */
+        .nav-right { text-align: right; padding-right: 20px; }
         .counter { color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; }
 
-        /* Glowing Header */
-        .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; }
+        /* Header Area - As per your provided Image */
+        .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; background: #000; }
         .section-name { 
             font-size: clamp(30px, 6vw, 75px); letter-spacing: 12px; text-transform: uppercase; font-weight: 900;
-            background: linear-gradient(90deg, #ff0000, #ffcc00, #00ffcc, #00a2ff, #ae00ff, #ff0000);
-            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shine 4s linear infinite; filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
+            color: #314d56; /* Matching the Teal/Dark Blue tone from your screenshot */
+            filter: drop-shadow(0 0 5px rgba(49, 77, 86, 0.5));
         }
-        @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid */
+        /* Grid - Colors as per your provided screenshot */
         .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
-        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 20px; } /* গ্যাপ বাড়ানো হয়েছে যাতে নাম স্পষ্ট দেখা যায় */
-        .row { display: flex; justify-content: center; gap: 12px; }
+        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 20px; width: 100%; }
+        .row { display: flex; justify-content: center; gap: 12px; width: 100%; padding: 20px 0; }
 
-        /* Plot Styling */
+        /* Plot Styling matching screenshot */
         .plot { 
-            background: #050505; border: 1.5px solid var(--r-col); display: flex; flex-direction: column; 
+            background: #0a1417; border: 1px solid var(--r-col); display: flex; flex-direction: column; 
             align-items: center; justify-content: center; transition: 0.4s; position: relative; cursor: pointer;
-            box-shadow: inset 0 0 15px var(--r-col);
+            width: 110px; height: 110px;
         }
         .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 50; }
+        .owner-tag { position: absolute; bottom: -25px; font-size: 10px; color: #fff; text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; font-weight: bold; opacity: 0.8; }
 
-        /* Sizes */
-        .lg { width: 135px; height: 135px; } 
-        .std { width: 90px; height: 90px; }
-
-        /* Crown (Outside) */
-        .crown { position: absolute; top: -45px; font-size: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
-
-        /* Plot Name Display (নিচে গ্যাপ দিয়ে সেট করা) */
-        .owner-tag { position: absolute; bottom: -30px; font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; font-weight: bold; }
-
-        /* Overlays */
+        /* Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
         .card { background:#fff; color:#000; padding:45px; width:420px; text-align:center; border-radius: 4px; }
-        .card input { width:100%; padding: 15px; margin: 15px 0; border: 1px solid #ddd; font-family: serif; font-size: 16px; outline: none; box-sizing: border-box; }
+        .card input { width:100%; padding: 15px; margin: 15px 0; border: 1px solid #ddd; font-family: serif; font-size: 16px; outline: none; box-sizing: border-box; text-align: center; }
         .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; font-weight:bold; cursor:pointer; text-transform: uppercase; }
-        .info-box { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; }
+        
+        /* Payment List - From your provided image */
+        .pay-item { margin-bottom: 20px; cursor: pointer; transition: 0.3s; padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
+        .pay-item:hover { background: #f0f0f0; }
+        .pay-item small { font-size: 10px; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+        .pay-item p { margin: 5px 0; font-weight: bold; font-family: monospace; font-size: 13px; color: #000; word-break: break-all; }
 
-        /* Celebration Screen (Full Black Background) */
+        /* Celebration Screen */
         #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
+
+        /* WhatsApp Floating Logo */
+        .wa-float { position: fixed; bottom: 30px; right: 30px; z-index: 5000; background: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
         <div class="nav-left">
-            <a href="index.html" class="nav-btn">← HOME</a>
-            <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
+            <div class="nav-btn-group">
+                <a href="index.html" class="nav-btn">← HOME</a>
+                <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
+                <button class="nav-btn" style="border-color: var(--gold); color: var(--gold);" onclick="openPayment()">PAYMENT INFO</button>
+            </div>
+            <a href="index.html" class="home-link">Back to Home Page</a>
         </div>
-        <div class="counter">SOLD: 0 | LEFT: 100</div>
+        <div class="nav-right">
+            <div class="counter">SOLD: <span id="sold-count">0</span> | LEFT: <span id="left-count">100</span></div>
+        </div>
     </div>
 
     <div class="header-area">
@@ -82,109 +90,122 @@
         </div>
     </div>
 
+    <div class="wa-float" onclick="window.open('https://wa.me/8801576940717', '_blank')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" alt="Support">
+    </div>
+
+    <div id="payment-modal" class="modal">
+        <div class="card">
+            <h2 style="letter-spacing: 2px;">SECURE ACQUISITION</h2>
+            <div class="pay-item" onclick="copyText('912221034')">
+                <small>BINANCE UID (USER: KAWSAR6700)</small>
+                <p>912221034</p>
+            </div>
+            <div class="pay-item" onclick="copyText('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
+                <small>USDT TRC20</small>
+                <p>TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</p>
+            </div>
+            <div class="pay-item" onclick="copyText('0x44379244884e8e8551954ccEF910778Affleb78E')">
+                <small>METAMASK (ETH/BNB)</small>
+                <p>0x44379244884e8e8551954ccEF910778Affleb78E</p>
+            </div>
+            <button class="buy-btn" onclick="closeModals()">[ CLOSE ]</button>
+        </div>
+    </div>
+
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 3px;">RESERVATION</h2>
-            <input type="number" id="plot-id-field" placeholder="PLOT NO (1-100)">
-            <input type="text" id="brand-name-field" placeholder="YOUR BRAND NAME">
-            <button class="buy-btn" onclick="processSelection()">SUBMIT & BUY</button>
+            <div id="plot-info-box" style="font-size: 11px; color: var(--gold); font-weight: bold; margin-bottom: 10px; letter-spacing: 1px;"></div>
+            <h2 style="letter-spacing: 3px; margin-top: 0;">RESERVATION</h2>
+            <input type="text" id="brand-input" placeholder="YOUR BRAND NAME">
+            <input type="hidden" id="p-id"><input type="hidden" id="p-price">
+            <button class="buy-btn" onclick="processOrder()">SUBMIT & BUY</button>
             <p onclick="closeModals()" style="font-size: 10px; cursor: pointer; margin-top: 20px; opacity: 0.5;">[ CANCEL ]</p>
         </div>
     </div>
 
     <div id="celeb-overlay">
         <h1 style="font-size: 50px; letter-spacing: 10px; color: #fff; margin-bottom: 10px;">CONGRATULATIONS!</h1>
-        <h2 id="celeb-brand-name" style="font-size: 30px; letter-spacing: 5px; color: var(--gold); border-top: 1px solid #333; padding-top: 20px;"></h2>
+        <h2 id="celeb-brand" style="font-size: 30px; letter-spacing: 5px; color: var(--gold); border-top: 1px solid #333; padding-top: 20px;"></h2>
         <p style="font-size: 14px; letter-spacing: 3px; color: #666; margin-top: 20px;">ACQUISITION PROCESS INITIATED</p>
     </div>
 
-    <div id="final-modal" class="modal">
-        <div class="card" style="text-align: left;">
-            <h2 style="text-align: center; letter-spacing: 2px;">NEXT STEPS</h2>
-            <div class="info-box">
-                <b>Please provide these to Customer Service:</b><br>
-                1. Payment Proof (Transaction ID/Screenshot)<br>
-                2. Your High-Resolution Brand Logo<br>
-                3. Your Website Link for Redirect<br>
-                4. Confirm Plot Number & Brand Name
-            </div>
-            <button class="buy-btn" style="background:var(--gold);" onclick="window.open('https://wa.me/8801576940717', '_blank')">WHATSAPP SUPPORT</button>
-            <button class="buy-btn" style="background:#333; margin-top: 10px;" onclick="location.reload()">BACK TO CANVAS</button>
-        </div>
-    </div>
+    <script type="module">
+        import { db, ref, push, serverTimestamp } from "./firebase-config.js";
 
-    <script>
         const capture = document.getElementById('capture-area');
         const rowsPrices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        const rowColors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
+        // Colors extracted from your screenshot
+        const rowColors = ['#152e35', '#1d3d45', '#2a535d', '#314d56', '#4a4138', '#5e3a31', '#542828', '#421a1a', '#2d1414', '#1a0a0a'];
 
         for (let r = 0; r < 10; r++) {
             const rowEl = document.createElement('div');
             rowEl.className = 'row';
+            rowEl.style.backgroundColor = rowColors[r]; // Row background color from screenshot
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
+                const price = rowsPrices[r];
                 const plot = document.createElement('div');
-                const size = (r === 0) ? 'lg' : 'std';
-                plot.className = `plot ${size}`;
-                plot.style.setProperty('--r-col', rowColors[r]);
+                plot.className = 'plot';
+                plot.style.setProperty('--r-col', 'rgba(255,255,255,0.1)'); // Subtle border
 
-                if(r === 0) { plot.innerHTML = `<span class="crown">👑</span>`; }
-
-                plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
-                plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${rowsPrices[r]}</span>`;
-                
-                // নাম দেখানোর ট্যাগ (AVAILABLE লেখা থাকবে শুরুতে)
-                plot.innerHTML += `<span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
+                plot.innerHTML = `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>
+                                 <span style="font-weight:bold; font-size:16px;">$${price}</span>
+                                 <span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
 
                 plot.onclick = () => {
                     document.getElementById('order-modal').style.display = 'flex';
-                    document.getElementById('plot-id-field').value = id;
+                    document.getElementById('p-id').value = id;
+                    document.getElementById('p-price').value = price;
+                    document.getElementById('plot-info-box').innerText = `PLOT #${id} | PRICE: $${price}`;
                 };
                 rowEl.appendChild(plot);
             }
             capture.appendChild(rowEl);
         }
 
-        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        window.closeModals = () => { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        window.openPayment = () => { document.getElementById('payment-modal').style.display = 'flex'; }
+        window.copyText = (text) => { navigator.clipboard.writeText(text); alert("Copied: " + text); }
 
-        function processSelection() {
-            const id = document.getElementById('plot-id-field').value;
-            const name = document.getElementById('brand-name-field').value;
+        window.processOrder = async () => {
+            const id = document.getElementById('p-id').value;
+            const price = document.getElementById('p-price').value;
+            const name = document.getElementById('brand-input').value;
 
-            if(!id || !name) return alert("Fill Plot No and Brand Name!");
+            if(!name) return alert("Enter brand name!");
 
-            // ১. ইনস্ট্যান্ট অভিনন্দন স্ক্রিন ও ব্র্যান্ড নেম দেখানো
-            document.getElementById('order-modal').style.display = 'none';
-            const celebOverlay = document.getElementById('celeb-overlay');
-            document.getElementById('celeb-brand-name').innerText = name.toUpperCase();
-            celebOverlay.style.display = 'flex';
+            try {
+                await push(ref(db, 'pending_orders/Millionaire'), {
+                    plotID: id, price: price, brandName: name, status: "Pending", timestamp: serverTimestamp()
+                });
 
-            // ২. দুই পাশ থেকে সাদা কাগজ ছিটানো (Confetti)
-            const duration = 3000;
-            const end = Date.now() + duration;
-            const whiteColors = ['#ffffff', '#f0f0f0', '#dddddd'];
+                document.getElementById('order-modal').style.display = 'none';
+                document.getElementById('celeb-brand').innerText = name.toUpperCase();
+                document.getElementById('celeb-overlay').style.display = 'flex';
 
-            (function frame() {
-                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: whiteColors });
-                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: whiteColors });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
+                // Celebration Confetti
+                const end = Date.now() + 4000;
+                (function frame() {
+                    confetti({ particleCount: 10, spread: 70, origin: { y: 0.6 } });
+                    if (Date.now() < end) requestAnimationFrame(frame);
+                }());
 
-            // ৩. মেইন ক্যানভাসে নাম আপডেট করা
-            const ownerTag = document.getElementById(`tag-${id}`);
-            if(ownerTag) ownerTag.innerText = name.toUpperCase();
+                document.getElementById(`tag-${id}`).innerText = name.toUpperCase();
 
-            // ৪. ৩ সেকেন্ড পর ফাইনাল পপ-আপ
-            setTimeout(() => {
-                celebOverlay.style.display = 'none';
-                document.getElementById('final-modal').style.display = 'flex';
-            }, 3000);
+                setTimeout(() => {
+                    document.getElementById('celeb-overlay').style.display = 'none';
+                    document.getElementById('final-modal').style.display = 'flex';
+                    const waMsg = `K-ARCHIVE Order:%0APlot: #${id}%0ABrand: ${name}%0APrice: $${price}`;
+                    document.getElementById('wa-final-btn').onclick = () => window.open(`https://wa.me/8801576940717?text=${waMsg}`, '_blank');
+                }, 4500);
+            } catch (e) { alert("Error connecting to Firebase!"); }
         }
 
-        function downloadMap() {
+        window.downloadMap = () => {
             html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = 'K_Archive_Map.png';
+                link.download = 'MillionairesClub_Map.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
