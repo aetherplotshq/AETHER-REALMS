@@ -2,14 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="0; url=/index.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether Realms | Redirecting...</title>
+    <meta http-equiv="refresh" content="0; url=index.html?status=redirected">
     
     <script type="text/javascript">
-        // ২. জাভাস্ক্রিপ্ট লেভেলে সবথেকে দ্রুত রিডাইরেক্ট
-        window.location.replace("index.html");
+        // ২. জাভাস্ক্রিপ্ট লেভেলে রিডাইরেক্ট নিশ্চিত করা
+        window.location.replace("index.html?status=redirected");
     </script>
+
+    <style>
+        /* ৩. পেজ লোড হওয়ার ১ মিলি-সেকেন্ডের জন্যও যেন কিছু না দেখা যায় */
+        body { 
+            background: #0B0E11; /* আপনার ওয়েবসাইটের ডার্ক থিম কালার */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body style="background: #0B0E11;">
+<body>
     </body>
 </html>
