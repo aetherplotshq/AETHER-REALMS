@@ -1,7 +1,6 @@
 /**
  * K ARCHIVE - Universal Firebase Core Engine
  * All-in-One Config for 9 Manual Update Panels
- * Author: K Archive Dev Team
  */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -16,7 +15,6 @@ import {
     serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-// ফায়ারবেস কনফিগারেশন (আপনার দেওয়া ডাটা অনুযায়ী)
 const firebaseConfig = {
     apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
     authDomain: "aether-realms.firebaseapp.com",
@@ -28,14 +26,9 @@ const firebaseConfig = {
     measurementId: "G-XTRFZJTMEW"
 };
 
-// ইনিশিয়ালাইজেশন
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-/**
- * আপনার ৯টি সেকশনের ডাটাবেস পাথ লিস্ট।
- * আপনি যখন যে সেকশনের জন্য ম্যানুয়াল প্যানেল বানাবেন, এখান থেকে সেই নাম ব্যবহার করবেন।
- */
 const SECTIONS = {
     MILLIONAIRE: "estate_data/Millionaire",
     NATIONS:     "estate_data/Nations",
@@ -48,7 +41,7 @@ const SECTIONS = {
     ARCHIVE:     "estate_data/Archive"
 };
 
-// সব প্রয়োজনীয় ফাংশন এক্সপোর্ট করা হচ্ছে
+// একদম নিচের এই অংশটুকু খেয়াল করুন, এখানে সব ঠিক থাকতে হবে
 export { 
     db, 
     ref, 
