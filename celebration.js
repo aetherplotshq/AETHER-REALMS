@@ -1,38 +1,48 @@
 /**
- * K ARCHIVE - Universal Celebration Engine
- * Handles Confetti and Congratulatory Messages
+ * K ARCHIVE - Universal Celebration & Next Steps Logic
  */
 
 export const launchCelebration = (brandName) => {
-    // ক্যানভাসে থাকা সেলিব্রেশন ওভারলে খুঁজে বের করা
-    const overlay = document.getElementById('celeb-overlay');
-    const brandDisplay = document.getElementById('congrats-brand');
-    
-    if (overlay && brandDisplay) {
-        brandDisplay.innerText = brandName.toUpperCase();
-        overlay.style.display = 'flex';
+    const celebOverlay = document.getElementById('celeb-overlay');
+    const brandDisplay = document.getElementById('celeb-brand-name');
+    const finalModal = document.getElementById('final-modal');
 
-        // Confetti Effect (রঙিন কাগজ)
+    if (celebOverlay && brandDisplay) {
+        // ১. অভিনন্দন স্ক্রিন দেখানো
+        brandDisplay.innerText = brandName.toUpperCase();
+        celebOverlay.style.display = 'flex';
+
+        // ২. বার্থডে স্টাইল রঙিন ও লম্বা কাগজ (Confetti) ছিটানো
         const duration = 5 * 1000;
         const animationEnd = Date.now() + duration;
-        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 11000 };
-
-        const randomInRange = (min, max) => Math.random() * (max - min) + min;
 
         const interval = setInterval(function() {
             const timeLeft = animationEnd - Date.now();
             if (timeLeft <= 0) return clearInterval(interval);
 
-            const particleCount = 50 * (timeLeft / duration);
-            // দুই পাশ থেকে কাগজ ছোড়া
-            confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-            confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
-        }, 250);
+            // বাম পাশ থেকে রঙিন লম্বা কাগজ
+            confetti({
+                particleCount: 3,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0, y: 0.6 },
+                colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'],
+                ticks: 300 // এটি কাগজকে লম্বা ও দীর্ঘস্থায়ী করে
+            });
+            // ডান পাশ থেকে রঙিন লম্বা কাগজ
+            confetti({
+                particleCount: 3,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1, y: 0.6 },
+                colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'],
+                ticks: 300
+            });
+        }, 60);
 
-        // ৫ সেকেন্ড পর অভিনন্দন বার্তা সরিয়ে ফাইনাল পেমেন্ট ইনস্ট্রাকশন দেখানো
+        // ৩. ৫ সেকেন্ড পর অভিনন্দন স্ক্রিন সরিয়ে ৪টি তথ্যের তালিকা দেখানো
         setTimeout(() => {
-            overlay.style.display = 'none';
-            const finalModal = document.getElementById('final-modal');
+            celebOverlay.style.display = 'none';
             if(finalModal) finalModal.style.display = 'flex';
         }, 5000);
     }
