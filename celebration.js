@@ -1,18 +1,17 @@
 /**
- * K ARCHIVE - Universal Celebration & Next Steps Logic
+ * K ARCHIVE - Universal Celebration Logic
  */
 
 export const launchCelebration = (brandName) => {
     const celebOverlay = document.getElementById('celeb-overlay');
-    const brandDisplay = document.getElementById('celeb-brand-name');
-    const finalModal = document.getElementById('final-modal');
+    const brandDisplay = document.getElementById('congrats-brand');
+    const finalModal = document.getElementById('final-info-modal');
 
     if (celebOverlay && brandDisplay) {
-        // ১. অভিনন্দন স্ক্রিন দেখানো
         brandDisplay.innerText = brandName.toUpperCase();
         celebOverlay.style.display = 'flex';
 
-        // ২. বার্থডে স্টাইল রঙিন ও লম্বা কাগজ (Confetti) ছিটানো
+        // ১. বার্থডে স্টাইল রঙিন লম্বা কাগজ ছিটানো
         const duration = 5 * 1000;
         const animationEnd = Date.now() + duration;
 
@@ -20,18 +19,19 @@ export const launchCelebration = (brandName) => {
             const timeLeft = animationEnd - Date.now();
             if (timeLeft <= 0) return clearInterval(interval);
 
-            // বাম পাশ থেকে রঙিন লম্বা কাগজ
+            const particleCount = 4;
+            // বাম পাশ থেকে
             confetti({
-                particleCount: 3,
+                particleCount,
                 angle: 60,
                 spread: 55,
                 origin: { x: 0, y: 0.6 },
                 colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'],
-                ticks: 300 // এটি কাগজকে লম্বা ও দীর্ঘস্থায়ী করে
+                ticks: 300
             });
-            // ডান পাশ থেকে রঙিন লম্বা কাগজ
+            // ডান পাশ থেকে
             confetti({
-                particleCount: 3,
+                particleCount,
                 angle: 120,
                 spread: 55,
                 origin: { x: 1, y: 0.6 },
@@ -40,7 +40,7 @@ export const launchCelebration = (brandName) => {
             });
         }, 60);
 
-        // ৩. ৫ সেকেন্ড পর অভিনন্দন স্ক্রিন সরিয়ে ৪টি তথ্যের তালিকা দেখানো
+        // ২. ৫ সেকেন্ড পর অভিনন্দন শেষ করে ফাইনাল তথ্যের পপ-আপ দেখানো
         setTimeout(() => {
             celebOverlay.style.display = 'none';
             if(finalModal) finalModal.style.display = 'flex';
