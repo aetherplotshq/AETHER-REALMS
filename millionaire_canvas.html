@@ -11,39 +11,48 @@
         :root { --gold: #9E7E45; --white: #ffffff; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
 
-        /* Navigation */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); border-bottom: 1px solid #222; box-sizing: border-box; }
+        /* Navigation & Live Counter */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 1px solid #222; box-sizing: border-box; }
+        .nav-left { display: flex; gap: 15px; }
         .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 12px 20px; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .nav-btn:hover { background: #fff; color: #000; border-color: #fff; }
+        
+        .live-counter { text-align: right; border-left: 2px solid var(--gold); padding-left: 15px; }
+        .live-counter span { display: block; font-size: 10px; letter-spacing: 2px; font-weight: bold; }
+        .count-val { color: var(--gold); font-size: 14px !important; }
 
         /* Section Header */
         .header-area { text-align: center; padding-top: 150px; margin-bottom: 50px; }
         .section-name { font-size: clamp(35px, 8vw, 85px); letter-spacing: 12px; text-transform: uppercase; font-weight: 900; background: linear-gradient(90deg, #1e3c72, #2a5298, #d3d333, #e65c00, #f9d423, #1e3c72); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 5s linear infinite; }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid System with Vibrant Row Colors */
+        /* Grid System with Smooth Gradient Transitions */
         #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 100px; }
-        .row { display: flex; justify-content: center; gap: 15px; width: 100%; padding: 50px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .row { display: flex; justify-content: center; gap: 15px; width: 100%; padding: 55px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
         
         .plot { 
-            background: rgba(0,0,0,0.85); border: 2.5px solid var(--r-col); display: flex; flex-direction: column; 
+            background: rgba(0,0,0,0.8); border: 2px solid var(--r-col); display: flex; flex-direction: column; 
             align-items: center; justify-content: center; transition: 0.4s; position: relative; 
-            cursor: pointer; width: 110px; height: 110px; box-shadow: 0 0 15px var(--r-col); 
+            cursor: pointer; width: 115px; height: 115px; box-shadow: 0 0 10px var(--r-col); 
         }
-        .plot:hover { transform: scale(1.15); border-color: #fff; z-index: 100; box-shadow: 0 0 40px #fff; }
-        .plot span { font-size: 16px; font-weight: bold; color: #fff; text-shadow: 0 0 5px #000; }
-        .plot-id { position: absolute; top: 8px; left: 10px; font-size: 9px !important; opacity: 0.5; }
-        .status-tag { position: absolute; bottom: -25px; font-size: 10px !important; letter-spacing: 1px; color: #aaa; }
+        .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 100; box-shadow: 0 0 30px #fff; }
+        .plot span { font-size: 16px; font-weight: bold; color: #fff; }
+        .plot-id { position: absolute; top: 8px; left: 10px; font-size: 9px !important; opacity: 0.4; }
+        .status-tag { position: absolute; bottom: -25px; font-size: 9px !important; letter-spacing: 1px; color: #666; }
 
         /* Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background: #fff; color:#000; padding:50px; width:450px; text-align:center; border-radius: 4px; box-shadow: 0 0 50px rgba(255,255,255,0.1); }
+        .card { background: #fff; color:#000; padding:40px; width:480px; text-align:center; border-radius: 4px; box-shadow: 0 0 50px rgba(255,255,255,0.1); }
         .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; }
         .premium-btn:hover { background: var(--gold); }
         
-        .info-list { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid #000; line-height: 1.8; font-size: 14px; }
-        .pay-item { text-align: left; padding: 15px; background: #f4f4f4; margin-bottom: 12px; cursor: pointer; border-radius: 4px; }
-        .pay-item:hover { background: #eee; }
+        .info-list { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); line-height: 1.8; font-size: 14px; }
+        
+        /* Full Address View in Payment */
+        .pay-item { text-align: left; padding: 15px; background: #f7f7f7; margin-bottom: 15px; cursor: pointer; border: 1px solid #eee; transition: 0.3s; }
+        .pay-item:hover { border-color: var(--gold); background: #fff; }
+        .pay-label { display: block; color: #888; font-size: 10px; text-transform: uppercase; margin-bottom: 5px; font-weight: bold; }
+        .pay-address { font-family: 'Courier New', monospace; font-size: 13px; word-break: break-all; color: #222; line-height: 1.4; display: block; }
 
         /* Celebration Screen */
         #celeb-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:#000; display:none; flex-direction:column; align-items:center; justify-content:center; z-index:10000; text-align:center; }
@@ -54,9 +63,13 @@
     <div class="top-nav">
         <div class="nav-left">
             <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
-            <button class="nav-btn" style="border-color: var(--gold); color: var(--gold); margin-left: 10px;" onclick="openPayment()">PAYMENT METHOD</button>
+            <button class="nav-btn" style="border-color: var(--gold); color: var(--gold);" onclick="openPayment()">PAYMENT METHOD</button>
         </div>
-        <div style="color:var(--gold); font-size:11px; letter-spacing:3px; font-weight:bold;">MILLIONAIRES CLUB</div>
+        
+        <div class="live-counter">
+            <span>SOLD: <span class="count-val" id="sold-count">0</span></span>
+            <span>AVAILABLE: <span class="count-val" id="avail-count">100</span></span>
+        </div>
     </div>
 
     <div class="header-area"><h1 class="section-name">Millionaires Club</h1></div>
@@ -65,41 +78,54 @@
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 id="disp-id" style="font-size:12px; letter-spacing:4px; opacity:0.6;">PLOT #00</h2>
-            <h1 id="disp-price" style="font-size: 40px; margin: 10px 0;">$0,000</h1>
-            <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME" style="width:100%; padding:18px; border:1px solid #ddd; text-align:center; font-size:16px; margin:20px 0; box-sizing: border-box;">
-            <button class="premium-btn" onclick="submitOrder()">SUBMIT & ACQUIRE</button>
-            <p onclick="closeModals()" style="cursor:pointer; font-size:11px; margin-top:20px; opacity:0.5; letter-spacing:1px;">[ CANCEL ]</p>
+            <h2 id="disp-id" style="font-size:11px; letter-spacing:4px; color:var(--gold);">PLOT ACQUISITION</h2>
+            <h1 id="disp-price" style="font-size: 45px; margin: 10px 0;">$0,000</h1>
+            <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME" style="width:100%; padding:20px; border:1px solid #ddd; text-align:center; font-size:16px; margin:20px 0; box-sizing: border-box; outline: none;">
+            <button class="premium-btn" onclick="submitOrder()">SUBMIT REQUEST</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:20px; opacity:0.5; text-decoration: underline;">BACK TO MAP</p>
         </div>
     </div>
 
     <div id="pay-modal" class="modal">
-        <div class="card">
-            <h2 style="letter-spacing: 4px; margin-bottom: 25px;">SECURE PAYMENT</h2>
-            <div class="pay-item" onclick="copy('0x44379244884e8e8551954ccEF910778Affleb78E')"><small style="display:block; color:#888; font-size:10px;">METAMASK / TRUST WALLET (ETH/BNB)</small><b>0x44379244884e8e...Affleb78E</b></div>
-            <div class="pay-item" onclick="copy('912221034')"><small style="display:block; color:#888; font-size:10px;">BINANCE UID</small><b>912221034</b></div>
-            <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')"><small style="display:block; color:#888; font-size:10px;">USDT (TRC20)</small><b>TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</b></div>
+        <div class="card" style="width: 550px;">
+            <h2 style="letter-spacing: 5px; margin-bottom: 30px; font-size: 18px;">PAYMENT GATEWAY</h2>
+            
+            <div class="pay-item" onclick="copy('0x44379244884e8e8551954ccEF910778Affleb78E')">
+                <span class="pay-label">Metamask / Trust Wallet (ETH/BNB/Polygon)</span>
+                <span class="pay-address">0x44379244884e8e8551954ccEF910778Affleb78E</span>
+            </div>
+
+            <div class="pay-item" onclick="copy('912221034')">
+                <span class="pay-label">Binance UID</span>
+                <span class="pay-address">912221034</span>
+            </div>
+
+            <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
+                <span class="pay-label">USDT (TRC20 Address)</span>
+                <span class="pay-address">TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</span>
+            </div>
+
             <button class="premium-btn" onclick="closeModals()">CLOSE</button>
         </div>
     </div>
 
     <div id="celeb-overlay">
-        <h1 style="font-size: 55px; letter-spacing: 15px; font-weight: 900;">SUCCESSFUL!</h1>
-        <h2 id="congrats-brand" style="font-size: 30px; color: var(--gold); margin-top: 15px;"></h2>
-        <p style="color: #555; letter-spacing: 4px; margin-top: 40px;">VERIFYING YOUR ACQUISITION...</p>
+        <h1 style="font-size: 60px; letter-spacing: 20px; font-weight: 900; color: #fff;">SUCCESS!</h1>
+        <h2 id="congrats-brand" style="font-size: 35px; color: var(--gold); margin-top: 20px;"></h2>
+        <p style="color: #444; letter-spacing: 5px; margin-top: 50px;">REGISTERING YOUR PLOT...</p>
     </div>
 
     <div id="final-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 2px;">REQUIRED DOCUMENTS</h2>
+            <h2 style="letter-spacing: 2px; color: #000;">REQUIRED STEPS</h2>
             <div class="info-list">
-                • Payment Screenshot / TXID<br>
-                • Brand Logo (Transparent PNG)<br>
-                • Redirect Website Link<br>
-                • Confirm Plot ID & Brand Name
+                ✅ 1. Take a screenshot of Payment.<br>
+                ✅ 2. Provide High-Res Brand Logo.<br>
+                ✅ 3. Website link for Plot redirect.<br>
+                ✅ 4. Mention Plot ID: <b id="final-plot-id">#00</b>
             </div>
             <button class="premium-btn" onclick="window.open('https://wa.me/8801576940717', '_blank')">CONTACT CUSTOMER SERVICE</button>
-            <button class="premium-btn" style="background:#666; margin-top:10px;" onclick="location.reload()">BACK TO CANVAS</button>
+            <button class="premium-btn" style="background:#555; margin-top:10px;" onclick="closeAndCelebrate()">BACK TO CANVAS</button>
         </div>
     </div>
 
@@ -108,16 +134,16 @@
 
         const captureArea = document.getElementById('capture-area');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        // ছবির মতো উজ্জ্বল ১০টি কালার
-        const rowColors = ['#00C3FF', '#0072FF', '#00A86B', '#8E44AD', '#E67E22', '#C0392B', '#FF007F', '#D4AF37', '#2ECC71', '#34495E'];
+        // Smooth Color Palette (উজ্জ্বল কিন্তু একটির সাথে অন্যটির মিল আছে)
+        const rowColors = ['#FFD700', '#FFB800', '#FF8C00', '#FF4500', '#FF0055', '#D400FF', '#7A00FF', '#0070FF', '#00C3FF', '#00FFCC'];
 
         let activeID, activePrice;
 
-        // Generate Grid with vibrant row styles
+        // Grid Generation
         for (let r = 0; r < 10; r++) {
             const row = document.createElement('div');
             row.className = 'row';
-            row.style.backgroundColor = rowColors[r] + '15'; // ১৯% ট্রান্সপারেন্সি ব্যাকগ্রাউন্ড
+            row.style.backgroundColor = rowColors[r] + '0A'; // Very subtle bg
 
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
@@ -131,7 +157,7 @@
                 `;
                 plot.onclick = () => {
                     activeID = id; activePrice = prices[r];
-                    document.getElementById('disp-id').innerText = `PLOT #${id}`;
+                    document.getElementById('disp-id').innerText = `PLOT #${id} ACQUISITION`;
                     document.getElementById('disp-price').innerText = `$${prices[r].toLocaleString()}`;
                     document.getElementById('order-modal').style.display = 'flex';
                 };
@@ -141,34 +167,50 @@
         }
 
         window.submitOrder = async () => {
-            const name = document.getElementById('brand-input').value;
-            if(!name) return alert("Enter Brand Name!");
+            const brand = document.getElementById('brand-input').value;
+            if(!brand) return alert("Please enter your brand name.");
 
             try {
                 await push(ref(db, 'pending_orders/Millionaire'), {
-                    plotID: activeID, price: activePrice, brandName: name, timestamp: serverTimestamp()
+                    plotID: activeID, price: activePrice, brandName: brand, timestamp: serverTimestamp()
                 });
                 document.getElementById('order-modal').style.display = 'none';
-                startCelebration(name);
-            } catch (e) { alert("Error!"); }
+                document.getElementById('final-plot-id').innerText = `#${activeID}`;
+                showCelebration(brand);
+            } catch (e) { alert("Submission Failed!"); }
         };
 
-        function startCelebration(name) {
+        function showCelebration(name) {
             const overlay = document.getElementById('celeb-overlay');
             document.getElementById('congrats-brand').innerText = name.toUpperCase();
             overlay.style.display = 'flex';
-
+            
+            // Initial Confetti
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
 
             setTimeout(() => {
                 overlay.style.display = 'none';
                 document.getElementById('final-modal').style.display = 'flex';
-            }, 5000);
+            }, 4000);
         }
+
+        // ক্যানভাসে ফিরে আসার সময় অভিনন্দন ইফেক্ট
+        window.closeAndCelebrate = () => {
+            document.getElementById('final-modal').style.display = 'none';
+            // পূর্ণ স্ক্রিন জুড়ে রঙিন কাগজের ইফেক্ট
+            var duration = 5 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+              confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#FFD700', '#FF0055', '#0070FF'] });
+              confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#FFD700', '#FF0055', '#0070FF'] });
+              if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        };
 
         window.openPayment = () => document.getElementById('pay-modal').style.display = 'flex';
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied!"); };
+        window.copy = (t) => { navigator.clipboard.writeText(t); alert("Address Copied!"); };
 
         window.downloadMap = () => {
             const btn = event.target;
