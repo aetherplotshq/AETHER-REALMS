@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - PAGE NOT FOUND | MILLIONAIRES CLUB</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: 'Times New Roman', serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .error-code {
+            font-size: 120px;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: 15px;
+            background: linear-gradient(90deg, #9E7E45, #f9d423, #9E7E45);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 3s linear infinite;
+        }
+
+        @keyframes glow {
+            to { filter: hue-rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 24px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-top: -20px;
+        }
+
+        p {
+            color: #666;
+            letter-spacing: 2px;
+            font-size: 14px;
+            margin: 20px 0;
+        }
+
+        .countdown {
+            color: #9E7E45;
+            font-weight: bold;
+        }
+
+        .home-btn {
+            padding: 15px 30px;
+            border: 1px solid #9E7E45;
+            color: #9E7E45;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 3px;
+            transition: 0.3s;
+            margin-top: 30px;
+        }
+
+        .home-btn:hover {
+            background: #9E7E45;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-code">404</div>
+    <h1>Lost in the Club?</h1>
+    <p>আপনি ভুল জায়গায় চলে এসেছেন। <br> আপনাকে <span id="timer" class="countdown">5</span> সেকেন্ডের মধ্যে হোম পেজে নিয়ে যাওয়া হচ্ছে...</p>
+    
+    <a href="index.html" class="home-btn">Go Home Now</a>
+
+    <script>
+        // ৫ সেকেন্ড কাউন্টডাউন লজিক
+        let count = 5;
+        const timerElement = document.getElementById('timer');
+
+        const countdown = setInterval(() => {
+            count--;
+            timerElement.innerText = count;
+            
+            if (count <= 0) {
+                clearInterval(countdown);
+                window.location.href = "index.html"; // এখানে আপনার হোম পেজের নাম দিন
+            }
+        }, 1000);
+
+        // সাথে সাথে রিডাইরেক্ট করতে চাইলে নিচের লাইনটি আনকমেন্ট করুন
+        // window.location.href = "index.html";
+    </script>
+</body>
+</html>
