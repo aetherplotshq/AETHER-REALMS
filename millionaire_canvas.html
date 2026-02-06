@@ -7,157 +7,198 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --gold: #9E7E45; --binance: #F3BA2F; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Arial', sans-serif; overflow-x: hidden; }
+        :root { --gold: #9E7E45; --white: #fff; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
 
-        /* Navigation - Counter moved to Right-Middle */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); border-bottom: 1px solid #222; }
-        .nav-btn { background: none; border: 1px solid #555; color: #fff; padding: 8px 25px; font-size: 11px; cursor: pointer; text-transform: uppercase; }
-        .counter-box { font-size: 12px; letter-spacing: 2px; font-weight: bold; color: var(--gold); margin-right: 40px; } /* ডান থেকে হালকা বামে সরানো */
+        /* Navigation */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); box-sizing: border-box; border-bottom: 1px solid #222; }
+        .nav-left { display: flex; flex-direction: column; gap: 5px; }
+        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 18px; font-size: 10px; letter-spacing: 2px; cursor: pointer; text-decoration: none; text-transform: uppercase; transition: 0.3s; text-align: center; }
+        .nav-btn:hover { background: #fff; color: #000; }
+        .home-link { color: var(--gold); text-decoration: none; font-size: 9px; letter-spacing: 1px; font-weight: bold; text-transform: uppercase; }
+        
+        .nav-right { text-align: right; }
+        .counter { color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; }
+        .payment-methods { margin-top: 5px; font-size: 10px; opacity: 0.8; letter-spacing: 1px; color: #eee; }
 
-        /* Multi-color Video Effect Title */
-        .header-area { text-align: center; padding-top: 110px; padding-bottom: 40px; }
+        /* Glowing Header */
+        .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; }
         .section-name { 
-            font-size: 50px; letter-spacing: 12px; text-transform: uppercase; font-weight: 900; 
-            background: linear-gradient(to right, #0e4b5a, #d99a6c, #a63d3d, #6e8a7d, #0e4b5a);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: colorVideo 4s linear infinite;
+            font-size: clamp(30px, 6vw, 75px); letter-spacing: 12px; text-transform: uppercase; font-weight: 900;
+            background: linear-gradient(90deg, #ff0000, #ffcc00, #00ffcc, #00a2ff, #ae00ff, #ff0000);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite; filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
         }
-        @keyframes colorVideo { to { background-position: 200% center; } }
+        @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid - Glowing Plots */
-        .grid-wrapper { display: flex; flex-direction: column; width: 100%; }
-        .row-section { width: 100%; display: flex; justify-content: center; padding: 50px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .row-container { display: flex; gap: 18px; }
+        /* Grid */
+        .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
+        #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 20px; }
+        .row { display: flex; justify-content: center; gap: 12px; }
 
         .plot { 
-            width: 130px; height: 130px; background: rgba(0,0,0,0.7); border: 2px solid var(--p-color); box-shadow: 0 0 15px var(--p-color);
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            transition: 0.3s all ease; position: relative; cursor: pointer;
+            background: #050505; border: 1.5px solid var(--r-col); display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; transition: 0.4s; position: relative; cursor: pointer;
+            box-shadow: inset 0 0 15px var(--r-col);
         }
-        .plot:hover { transform: scale(1.15); box-shadow: 0 0 40px var(--p-color); z-index: 10; border-color: #fff; }
-        .owner-tag { position: absolute; bottom: -35px; font-size: 10px; color: #fff; text-transform: uppercase; font-weight: bold; width: 100%; text-align: center; }
+        .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 50; }
+        .lg { width: 135px; height: 135px; } 
+        .std { width: 90px; height: 90px; }
+        .crown { position: absolute; top: -45px; font-size: 55px; filter: drop-shadow(0 0 10px var(--gold)); }
+        .owner-tag { position: absolute; bottom: -30px; font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; width: 100%; text-align: center; font-weight: bold; }
 
-        /* Celebration Screen (Congrats) */
-        #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; color: var(--binance); }
+        /* Overlays */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
+        .card { background:#fff; color:#000; padding:45px; width:420px; text-align:center; border-radius: 4px; }
+        .card input { width:100%; padding: 15px; margin: 15px 0; border: 1px solid #ddd; font-family: serif; font-size: 16px; outline: none; box-sizing: border-box; text-align: center; }
+        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; font-weight:bold; cursor:pointer; text-transform: uppercase; }
+        .info-box { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; }
 
-        /* Support Icon */
-        .support-icon { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; filter: grayscale(1); z-index: 5000; cursor: pointer; }
-
-        /* Modals */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.97); display:none; align-items:center; justify-content:center; z-index:9999; }
-        .card { background:#fff; color:#000; padding:40px; width:430px; text-align:center; border-radius: 4px; }
-        .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; font-weight:bold; cursor:pointer; text-transform: uppercase; margin-top: 15px; }
-
-        .footer { text-align: center; padding: 80px; font-size: 11px; color: #555; background: #000; border-top: 1px solid #111; line-height: 2; }
+        #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; text-align: center; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
-        <button class="nav-btn" onclick="downloadMap()">EXPORT MAP</button>
-        <div class="counter-box">SOLD: <span id="sold-count">0</span> | LEFT: <span id="left-count">100</span></div>
+        <div class="nav-left">
+            <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
+            <a href="index.html" class="home-link">← BACK TO HOME PAGE</a>
+        </div>
+        <div class="nav-right">
+            <div class="counter">SOLD: <span id="sold-count">0</span> | LEFT: <span id="left-count">100</span></div>
+            <div class="payment-methods">ACCEPT: BINANCE • USDT • BKASH • NAGAD</div>
+        </div>
     </div>
 
     <div class="header-area">
         <h1 class="section-name">Millionaires Club</h1>
     </div>
 
-    <div id="capture-area" class="grid-wrapper"></div>
-
-    <div class="support-icon" onclick="window.open('https://wa.me/8801576940717')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" style="filter: brightness(0);" alt="Support">
-    </div>
-
-    <div class="footer">
-        K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved. <br>
-        We are not responsible for the content of external websites. <br>
-        Images and brand logos featured on this canvas are © of their respective owners.
+    <div class="grid-container">
+        <div id="capture-area"></div>
+        <div style="text-align: center; padding: 60px; font-size: 11px; color: #444; border-top: 1px solid #111; width: 80%; margin-top: 50px;">
+            K ARCHIVE - MILLIONAIRES CLUB © 2026. All rights reserved.
+        </div>
     </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2>RESERVE PLOT</h2>
-            <input type="text" id="brand-input" placeholder="YOUR BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; outline:none;">
-            <input type="hidden" id="plot-id-val">
-            <button class="buy-btn" onclick="startProcess()">SUBMIT & BUY</button>
+            <p id="dynamic-info" style="font-size: 11px; color: var(--gold); font-weight: bold; letter-spacing: 1px; margin-bottom: 5px;"></p>
+            <h2 style="letter-spacing: 3px; margin-top: 0;">RESERVATION</h2>
+            <input type="text" id="brand-name-field" placeholder="YOUR BRAND NAME">
+            <input type="hidden" id="selected-plot-id">
+            <input type="hidden" id="selected-plot-price">
+            <button class="buy-btn" onclick="processSelection()">SUBMIT & BUY</button>
+            <p onclick="closeModals()" style="font-size: 10px; cursor: pointer; margin-top: 20px; opacity: 0.5;">[ CANCEL ]</p>
         </div>
     </div>
 
     <div id="celeb-overlay">
-        <h1 style="font-size: 60px; margin: 0; letter-spacing: -2px;">CONGRATS!</h1>
-        <h2 id="display-brand" style="font-size: 30px; color: #fff;"></h2>
-        <p style="letter-spacing: 5px; color: #888;">RESERVATION SUCCESSFUL</p>
+        <h1 style="font-size: 50px; letter-spacing: 10px; color: #fff; margin-bottom: 10px;">CONGRATULATIONS!</h1>
+        <h2 id="celeb-brand-name" style="font-size: 30px; letter-spacing: 5px; color: var(--gold); border-top: 1px solid #333; padding-top: 20px;"></h2>
+        <p style="font-size: 14px; letter-spacing: 3px; color: #666; margin-top: 20px;">ACQUISITION PROCESS INITIATED</p>
     </div>
 
     <div id="final-modal" class="modal">
         <div class="card" style="text-align: left;">
-            <h2 style="text-align: center;">FINAL STEPS</h2>
-            <div style="background: #f4f4f4; padding: 25px; margin: 20px 0; border-left: 6px solid #000; font-size: 14px; line-height: 2;">
-                1. Transaction Proof (Screenshot)<br>
-                2. Brand Name & Plot Number<br>
-                3. Logo (PNG) & URL
+            <h2 style="text-align: center; letter-spacing: 2px;">NEXT STEPS</h2>
+            <div class="info-box">
+                <b>Please provide these to Customer Service:</b><br>
+                1. Payment Proof (Transaction ID/Screenshot)<br>
+                2. Your High-Resolution Brand Logo<br>
+                3. Your Website Link for Redirect<br>
+                4. Confirm Plot Number & Brand Name
             </div>
-            <button class="buy-btn" onclick="window.open('https://wa.me/8801576940717')">WHATSAPP SUPPORT</button>
-            <button class="buy-btn" style="background:#666;" onclick="location.reload()">BACK TO CANVAS</button>
+            <button class="buy-btn" id="wa-btn" style="background:var(--gold);">WHATSAPP SUPPORT</button>
+            <button class="buy-btn" style="background:#333; margin-top: 10px;" onclick="location.reload()">BACK TO CANVAS</button>
         </div>
     </div>
 
-    <script>
-        const wrapper = document.getElementById('capture-area');
-        const rowColors = ['#0e4b5a', '#2d6a6d', '#6e8a7d', '#b5a68c', '#d99a6c', '#c2614a', '#a63d3d', '#7d2a3a', '#4d1c31', '#2d142c'];
-        const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        let sold = 0;
+    <script type="module">
+        import { db, ref, set, push, serverTimestamp } from "./firebase-config.js";
+
+        const capture = document.getElementById('capture-area');
+        const rowsPrices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
+        const rowColors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
 
         for (let r = 0; r < 10; r++) {
-            const section = document.createElement('div');
-            section.className = 'row-section';
-            section.style.backgroundColor = rowColors[r];
-            const container = document.createElement('div');
-            container.className = 'row-container';
+            const rowEl = document.createElement('div');
+            rowEl.className = 'row';
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
+                const price = rowsPrices[r];
                 const plot = document.createElement('div');
-                plot.className = 'plot';
-                plot.style.setProperty('--p-color', rowColors[r]); 
-                plot.innerHTML = `<span style="position:absolute; top:8px; left:10px; font-size:9px; opacity:0.5;">#${id}</span><span style="font-weight:bold; font-size:16px;">$${prices[r]}</span><span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
-                plot.onclick = () => { document.getElementById('order-modal').style.display = 'flex'; document.getElementById('plot-id-val').value = id; };
-                container.appendChild(plot);
+                const size = (r === 0) ? 'lg' : 'std';
+                plot.className = `plot ${size}`;
+                plot.style.setProperty('--r-col', rowColors[r]);
+
+                if(r === 0) { plot.innerHTML = `<span class="crown">👑</span>`; }
+                plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
+                plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${price}</span>`;
+                plot.innerHTML += `<span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
+
+                plot.onclick = () => {
+                    document.getElementById('order-modal').style.display = 'flex';
+                    document.getElementById('selected-plot-id').value = id;
+                    document.getElementById('selected-plot-price').value = price;
+                    document.getElementById('dynamic-info').innerText = `PLOT #${id} | VALUE: $${price}`;
+                };
+                rowEl.appendChild(plot);
             }
-            section.appendChild(container);
-            wrapper.appendChild(section);
+            capture.appendChild(rowEl);
         }
 
-        function startProcess() {
-            const name = document.getElementById('brand-input').value;
-            const id = document.getElementById('plot-id-val').value;
-            if(!name) return alert("Enter brand name!");
+        window.closeModals = () => { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-            document.getElementById('order-modal').style.display = 'none';
-            document.getElementById('display-brand').innerText = name.toUpperCase();
-            
-            // সেলিব্রেশন ও রঙিন কাগজ
-            const celeb = document.getElementById('celeb-overlay');
-            celeb.style.display = 'flex';
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        window.processSelection = async () => {
+            const id = document.getElementById('selected-plot-id').value;
+            const price = document.getElementById('selected-plot-price').value;
+            const name = document.getElementById('brand-name-field').value;
 
-            document.getElementById(`tag-${id}`).innerText = name.toUpperCase();
-            sold++;
-            document.getElementById('sold-count').innerText = sold;
-            document.getElementById('left-count').innerText = 100 - sold;
+            if(!name) return alert("Please enter your brand name!");
 
-            setTimeout(() => {
-                celeb.style.display = 'none';
-                document.getElementById('final-modal').style.display = 'flex';
-            }, 2000);
+            try {
+                // ফায়ারবেস আপডেট
+                const orderRef = ref(db, 'pending_orders/Millionaire');
+                await push(orderRef, {
+                    plotID: id,
+                    price: price,
+                    brandName: name,
+                    status: "Pending",
+                    timestamp: serverTimestamp()
+                });
+
+                // অভিনন্দন স্ক্রিন
+                document.getElementById('order-modal').style.display = 'none';
+                const celebOverlay = document.getElementById('celeb-overlay');
+                document.getElementById('celeb-brand-name').innerText = name.toUpperCase();
+                celebOverlay.style.display = 'flex';
+
+                // ঘন পরিসরে রঙিন কাগজ (Confetti)
+                const end = Date.now() + 3000;
+                (function frame() {
+                    confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 } });
+                    confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 } });
+                    if (Date.now() < end) requestAnimationFrame(frame);
+                }());
+
+                // মেইন ক্যানভাসে নাম পরিবর্তন
+                document.getElementById(`tag-${id}`).innerText = name.toUpperCase();
+
+                setTimeout(() => {
+                    celebOverlay.style.display = 'none';
+                    document.getElementById('final-modal').style.display = 'flex';
+                    const msg = `K-ARCHIVE ORDER:%0APlot: #${id}%0ABrand: ${name}%0APrice: $${price}`;
+                    document.getElementById('wa-btn').onclick = () => window.open(`https://wa.me/8801576940717?text=${msg}`, '_blank');
+                }, 3500);
+
+            } catch (e) { alert("Database Error! Check Connection."); }
         }
 
-        function downloadMap() {
-            html2canvas(wrapper).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Millionaires_Club.png';
+        window.downloadMap = () => {
+            html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
+                let link = document.createElement('a');
+                link.download = 'Millionaires_Club_Map.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
