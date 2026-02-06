@@ -18,7 +18,7 @@
         .nav-btn:hover { background: #fff; color: #000; border-color: #fff; }
         .home-link-top { color: #fff; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #fff; padding-bottom: 2px; width: fit-content; }
 
-        /* Section Name - Smooth Gradient Video Style */
+        /* Dynamic Title */
         .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; }
         .section-name { 
             font-size: clamp(30px, 6vw, 75px); letter-spacing: 15px; text-transform: uppercase; font-weight: 900;
@@ -28,40 +28,38 @@
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid & Rows with Smooth Transitions */
+        /* Grid Styling */
         .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
         #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .row { 
-            display: flex; justify-content: center; gap: 15px; width: 100%; padding: 45px 0; 
-            border-bottom: 1px solid rgba(255,255,255,0.03); transition: 0.5s;
-        }
+        .row { display: flex; justify-content: center; gap: 15px; width: 100%; padding: 45px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
 
         .plot { 
             background: rgba(0,0,0,0.9); border: 2.5px solid var(--r-col); display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
-            position: relative; cursor: pointer; width: 115px; height: 115px; 
-            box-shadow: 0 0 15px var(--r-col);
+            align-items: center; justify-content: center; transition: 0.4s; position: relative; cursor: pointer; 
+            width: 115px; height: 115px; box-shadow: 0 0 15px var(--r-col);
         }
         .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 100; box-shadow: 0 0 35px #fff; }
         .owner-tag { position: absolute; bottom: -28px; font-size: 9px; color: #fff; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
 
-        /* Premium Rolls Royce Style Pop-up */
+        /* Premium Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background: var(--premium-white); color:#000; padding:50px; width:480px; text-align:center; border-radius: 2px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative; }
-        .card::before { content: ""; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 1px solid #eee; pointer-events: none; }
+        .card { background: var(--premium-white); color:#000; padding:50px; width:480px; text-align:center; border-radius: 2px; position: relative; }
+        .card::after { content: ""; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 1px solid #f0f0f0; pointer-events: none; }
         
-        .premium-id { font-size: 12px; color: var(--gold); font-weight: bold; letter-spacing: 3px; margin-bottom: 5px; }
-        .premium-price { font-size: 28px; font-weight: bold; margin-bottom: 30px; letter-spacing: 2px; }
-        .premium-input { width: 100%; padding: 18px; border: 1px solid #ddd; font-size: 16px; text-align: center; margin-bottom: 25px; outline: none; transition: 0.3s; }
-        .premium-input:focus { border-color: #000; }
-        .premium-btn { background: #000; color: #fff; width: 100%; padding: 20px; border: none; font-weight: bold; letter-spacing: 5px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .pay-item { text-align: left; padding: 18px 0; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; }
+        .pay-item:hover { background: #fafafa; }
+        .pay-item small { color: #999; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; }
+        .pay-item p { margin: 5px 0 0 0; font-weight: bold; font-family: monospace; font-size: 13px; color: #111; word-break: break-all; }
+
+        .premium-btn { background: #000; color: #fff; width: 100%; padding: 20px; border: none; font-weight: bold; letter-spacing: 5px; cursor: pointer; text-transform: uppercase; margin-top: 20px; }
         .premium-btn:hover { background: var(--gold); }
 
-        /* Celebration Overlay */
+        /* Celebration Screen */
         #celeb-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:#000; display:none; flex-direction:column; align-items:center; justify-content:center; z-index:10000; text-align:center; }
         
-        /* B&W Support */
-        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; filter: grayscale(100%); box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        /* B&W Support Icon */
+        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; filter: grayscale(100%); transition: 0.3s; }
+        .wa-float:hover { filter: grayscale(0%); transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -74,7 +72,7 @@
                 <button class="nav-btn" style="border-color: var(--gold); color: var(--gold);" onclick="openPayment()">PAYMENT METHOD</button>
             </div>
         </div>
-        <div class="counter">SOLD: <span id="s-val">0</span> | LEFT: <span id="l-val">100</span></div>
+        <div class="counter">SOLD: <span id="s-count">0</span> | LEFT: <span id="l-count">100</span></div>
     </div>
 
     <div class="header-area">
@@ -91,38 +89,43 @@
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <div class="premium-id" id="display-id">PLOT #00</div>
-            <div class="premium-price" id="display-price">$0,000</div>
-            <h3 style="letter-spacing: 5px; font-size: 14px; margin-bottom: 20px; color: #555;">RESERVATION</h3>
-            <input type="text" id="brand-input" class="premium-input" placeholder="ENTER YOUR BRAND NAME">
+            <div style="font-size: 11px; color: var(--gold); font-weight: bold; letter-spacing: 3px;" id="disp-id">PLOT #00</div>
+            <div style="font-size: 26px; font-weight: bold; margin: 10px 0 30px 0;" id="disp-price">$0,000</div>
+            <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME" style="width:100%; padding:18px; border:1px solid #ddd; text-align:center; font-size:16px; outline:none; margin-bottom:20px;">
             <button class="premium-btn" onclick="confirmOrder()">SUBMIT & ACQUIRE</button>
-            <p onclick="closeModals()" style="font-size: 10px; cursor: pointer; margin-top: 25px; opacity: 0.4; letter-spacing: 2px;">[ CANCEL PROCESS ]</p>
+            <p onclick="closeModals()" style="font-size:10px; cursor:pointer; margin-top:20px; opacity:0.4;">[ CANCEL ]</p>
         </div>
-    </div>
-
-    <div id="celeb-overlay">
-        <h1 style="font-size: 45px; letter-spacing: 12px; font-weight: 900;">CONGRATULATIONS!</h1>
-        <h2 id="congrats-brand" style="font-size: 30px; color: var(--gold); margin: 25px 0; letter-spacing: 5px; border-top: 1px solid #222; padding-top: 20px;"></h2>
-        <p style="font-size: 14px; letter-spacing: 4px; color: #444;">ACQUISITION PROCESS INITIATED</p>
     </div>
 
     <div id="pay-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 3px; margin-bottom: 30px;">SECURE ACQUISITION</h2>
-            <div style="text-align: left; margin-bottom: 30px;">
-                <p style="font-size: 10px; color: #888;">BINANCE UID</p>
-                <p style="font-weight: bold; margin-bottom: 15px;">912221034</p>
-                <p style="font-size: 10px; color: #888;">USDT TRC20</p>
-                <p style="font-weight: bold; margin-bottom: 15px;">TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</p>
+            <h2 style="letter-spacing: 4px; margin-bottom: 30px;">SECURE ACQUISITION</h2>
+            <div class="pay-item" onclick="copy('912221034')">
+                <small>BINANCE UID (USER: KAWSAR6700)</small>
+                <p>912221034</p>
+            </div>
+            <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
+                <small>USDT TRC20 (NETWORK: TRON)</small>
+                <p>TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</p>
+            </div>
+            <div class="pay-item" onclick="copy('0x44379244884e8e8551954ccEF910778Affleb78E')">
+                <small>METAMASK (ETH/BNB/POLYGON)</small>
+                <p>0x44379244884e8e8551954ccEF910778Affleb78E</p>
             </div>
             <button class="premium-btn" onclick="closeModals()">[ CLOSE ]</button>
         </div>
     </div>
 
+    <div id="celeb-overlay">
+        <h1 style="font-size: 45px; letter-spacing: 12px;">CONGRATULATIONS!</h1>
+        <h2 id="congrats-brand" style="font-size: 30px; color: var(--gold); margin: 25px 0; letter-spacing: 5px; border-top: 1px solid #222; padding-top: 20px;"></h2>
+        <p style="font-size: 14px; letter-spacing: 4px; color: #444;">ACQUISITION PROCESS INITIATED</p>
+    </div>
+
     <div id="final-modal" class="modal">
         <div class="card" style="text-align: left;">
             <h2 style="text-align: center; letter-spacing: 3px;">FINAL STEPS</h2>
-            <div style="background: #f9f9f9; padding: 25px; margin: 25px 0; font-size: 13px; line-height: 1.8; border-left: 5px solid #000;">
+            <div style="background: #f9f9f9; padding: 25px; margin: 20px 0; font-size: 13px; line-height: 1.8; border-left: 5px solid #000;">
                 1. Transaction Proof (Screenshot)<br>
                 2. Brand Name & Plot Number<br>
                 3. Brand Logo (PNG)<br>
@@ -142,7 +145,6 @@
 
         const capture = document.getElementById('capture-area');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
-        // Smother Gradient Colors (Nature inspired transition)
         const colors = ['#00d2ff', '#1e90ff', '#3a7bd5', '#4facfe', '#00f2fe', '#43e97b', '#38f9d7', '#f9d423', '#f83600', '#2c3e50'];
 
         let selectedID, selectedPrice;
@@ -150,7 +152,7 @@
         for (let r = 0; r < 10; r++) {
             const row = document.createElement('div');
             row.className = 'row';
-            row.style.backgroundColor = colors[r] + '0A'; // Subtle glow in row
+            row.style.backgroundColor = colors[r] + '0A';
             
             for (let c = 0; c < 10; c++) {
                 const id = (r * 10) + c + 1;
@@ -163,8 +165,8 @@
                 
                 plot.onclick = () => {
                     selectedID = id; selectedPrice = prices[r];
-                    document.getElementById('display-id').innerText = `PLOT #${id}`;
-                    document.getElementById('display-price').innerText = `$${prices[r].toLocaleString()}`;
+                    document.getElementById('disp-id').innerText = `PLOT #${id}`;
+                    document.getElementById('disp-price').innerText = `$${prices[r].toLocaleString()}`;
                     document.getElementById('order-modal').style.display = 'flex';
                 };
                 row.appendChild(plot);
@@ -174,7 +176,7 @@
 
         window.confirmOrder = async () => {
             const name = document.getElementById('brand-input').value;
-            if(!name) return alert("Please enter your brand name.");
+            if(!name) return alert("Please enter brand name.");
 
             try {
                 await push(ref(db, 'pending_orders/Millionaires'), {
@@ -185,11 +187,10 @@
                 document.getElementById('congrats-brand').innerText = name.toUpperCase();
                 document.getElementById('celeb-overlay').style.display = 'flex';
 
-                // Mixed Color Confetti using all 10 row colors
                 const end = Date.now() + 4000;
                 (function frame() {
-                    confetti({ particleCount: 10, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
-                    confetti({ particleCount: 10, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+                    confetti({ particleCount: 10, spread: 60, origin: { x: 0 }, colors: colors });
+                    confetti({ particleCount: 10, spread: 60, origin: { x: 1 }, colors: colors });
                     if (Date.now() < end) requestAnimationFrame(frame);
                 }());
 
@@ -197,20 +198,12 @@
                     document.getElementById('celeb-overlay').style.display = 'none';
                     document.getElementById('final-modal').style.display = 'flex';
                 }, 3500);
-            } catch (e) { alert("Database error!"); }
+            } catch (e) { alert("Error!"); }
         }
 
-        window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
         window.openPayment = () => document.getElementById('pay-modal').style.display = 'flex';
+        window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+        window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied to clipboard!"); };
 
         window.downloadMap = () => {
-            html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
-                let link = document.createElement('a');
-                link.download = 'Millionaires_Club_Map.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        }
-    </script>
-</body>
-</html>
+            html2
