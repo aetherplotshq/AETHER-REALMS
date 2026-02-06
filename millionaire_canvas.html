@@ -26,7 +26,7 @@
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid */
+        /* Grid - Fixed as per your original design */
         .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
         #capture-area { display: flex; flex-direction: column; align-items: center; gap: 45px; padding: 20px; }
         .row { display: flex; justify-content: center; gap: 12px; }
@@ -50,40 +50,30 @@
         .buy-btn { background:#000; color:#fff; padding:18px; width:100%; border:none; letter-spacing:4px; font-weight:bold; cursor:pointer; text-transform: uppercase; }
         .info-box { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); font-size: 13px; line-height: 1.8; }
 
-        /* --- 3D Cartoon Celebration Screen --- */
-        #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; overflow: hidden;}
+        /* Celebration Animation Styles */
+        #celeb-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; z-index: 10000; align-items: center; justify-content: center; flex-direction: column; }
         
-        .animation-box { position: relative; width: 100%; height: 300px; display: flex; align-items: center; justify-content: center; }
-
-        /* 3D Character (B&W) */
-        .cartoon-char {
-            width: 80px; height: 150px; background: #fff; border-radius: 50px 50px 10px 10px;
-            position: absolute; left: -100px; bottom: 20px;
-            box-shadow: 10px 10px 30px rgba(255,255,255,0.1);
-            animation: walk-in 3s forwards ease-out;
-        }
-        .cartoon-char::before { content: '👀'; position: absolute; top: 20px; left: 20px; font-size: 30px; }
-        .cartoon-char::after { content: ''; position: absolute; bottom: -10px; left: 10px; width: 60px; height: 20px; background: #fff; border-radius: 10px; }
-
-        @keyframes walk-in {
-            0% { left: -100px; transform: skewY(5deg); }
-            50% { transform: skewY(-5deg); }
-            100% { left: 45%; transform: skewY(0deg); }
+        .char-container { position: relative; height: 200px; width: 100%; display: flex; justify-content: center; }
+        
+        /* Vector Cartoon (Black & White) */
+        .vector-char { 
+            width: 100px; height: 100px; position: absolute; left: -150px; 
+            animation: walkIn 3s forwards ease-in-out; 
         }
 
-        /* Hand Writing Animation */
+        @keyframes walkIn {
+            0% { left: -150px; transform: rotate(-5deg); }
+            100% { left: 45%; transform: rotate(0deg); }
+        }
+
         #celeb-brand-name { 
-            font-size: 40px; color: var(--gold); letter-spacing: 5px; opacity: 0;
-            border-right: 3px solid #fff; white-space: nowrap; overflow: hidden;
-            animation: write-text 1.5s steps(20) 2.5s forwards;
-            margin-top: 50px;
+            font-size: 45px; color: var(--gold); border-right: 3px solid #fff;
+            white-space: nowrap; overflow: hidden; width: 0;
+            animation: typing 2s steps(20) 3s forwards;
+            margin-top: 20px; letter-spacing: 5px;
         }
 
-        @keyframes write-text {
-            from { width: 0; opacity: 1; }
-            to { width: 100%; opacity: 1; border-color: transparent; }
-        }
-
+        @keyframes typing { from { width: 0; } to { width: 100%; border-color: transparent; } }
     </style>
 </head>
 <body>
@@ -109,8 +99,9 @@
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 3px;">RESERVATION</h2>
-            <input type="number" id="plot-id-field" placeholder="PLOT NO (1-100)">
+            <h2 id="modal-title" style="letter-spacing: 3px;">RESERVATION</h2>
+            <p id="plot-info-display" style="font-size: 12px; color: #666;"></p>
+            <input type="hidden" id="plot-id-field">
             <input type="text" id="brand-name-field" placeholder="YOUR BRAND NAME">
             <button class="buy-btn" onclick="processSelection()">SUBMIT & BUY</button>
             <p onclick="closeModals()" style="font-size: 10px; cursor: pointer; margin-top: 20px; opacity: 0.5;">[ CANCEL ]</p>
@@ -118,12 +109,16 @@
     </div>
 
     <div id="celeb-overlay">
-        <h1 style="font-size: 30px; letter-spacing: 8px; color: #fff; margin-bottom: 20px; opacity: 0.7;">WELCOME TO THE CLUB</h1>
-        <div class="animation-box">
-            <div class="cartoon-char"></div>
+        <div class="char-container">
+            <svg class="vector-char" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="30" r="15" fill="white"/>
+                <rect x="45" y="45" width="10" height="40" fill="white"/>
+                <path d="M45 55 L20 40 M55 55 L80 40" stroke="white" stroke-width="5"/>
+                <path d="M45 85 L30 100 M55 85 L70 100" stroke="white" stroke-width="5"/>
+            </svg>
         </div>
         <h2 id="celeb-brand-name"></h2>
-        <p style="font-size: 12px; letter-spacing: 4px; color: #444; margin-top: 40px;">HANDCRAFTED SUCCESS</p>
+        <h1 style="font-size: 20px; letter-spacing: 5px; color: #fff; margin-top: 20px;">CONGRATULATIONS</h1>
     </div>
 
     <div id="final-modal" class="modal">
@@ -143,7 +138,6 @@
 
     <script>
         const capture = document.getElementById('capture-area');
-        // Your existing pricing and colors remain unchanged
         const rowsPrices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
         const rowColors = ['#9E7E45', '#FFFFFF', '#00FFCC', '#00A2FF', '#FF0055', '#FFCC00', '#AE00FF', '#00FF44', '#FF6600', '#555555'];
 
@@ -154,17 +148,21 @@
                 const id = (r * 10) + c + 1;
                 const plot = document.createElement('div');
                 const size = (r === 0) ? 'lg' : 'std';
+                const price = rowsPrices[r];
                 plot.className = `plot ${size}`;
                 plot.style.setProperty('--r-col', rowColors[r]);
 
                 if(r === 0) { plot.innerHTML = `<span class="crown">👑</span>`; }
+
                 plot.innerHTML += `<span style="position:absolute; top:5px; left:8px; font-size:8px; opacity:0.3;">#${id}</span>`;
-                plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${rowsPrices[r]}</span>`;
+                plot.innerHTML += `<span style="font-size:11px; font-weight:bold;">$${price}</span>`;
                 plot.innerHTML += `<span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
 
+                // Click event showing Plot ID and Price
                 plot.onclick = () => {
                     document.getElementById('order-modal').style.display = 'flex';
                     document.getElementById('plot-id-field').value = id;
+                    document.getElementById('plot-info-display').innerText = `PLOT: #${id} | PRICE: $${price}`;
                 };
                 rowEl.appendChild(plot);
             }
@@ -181,22 +179,16 @@
 
             document.getElementById('order-modal').style.display = 'none';
             const celebOverlay = document.getElementById('celeb-overlay');
-            const celebNameDisplay = document.getElementById('celeb-brand-name');
-            
-            celebNameDisplay.innerText = name.toUpperCase();
+            document.getElementById('celeb-brand-name').innerText = name.toUpperCase();
             celebOverlay.style.display = 'flex';
 
-            // Confetti part removed.
-            
-            // Update main canvas
             const ownerTag = document.getElementById(`tag-${id}`);
             if(ownerTag) ownerTag.innerText = name.toUpperCase();
 
-            // 4.5 seconds to allow the character walk and write animation to finish
             setTimeout(() => {
                 celebOverlay.style.display = 'none';
                 document.getElementById('final-modal').style.display = 'flex';
-            }, 5500);
+            }, 6000);
         }
 
         function downloadMap() {
