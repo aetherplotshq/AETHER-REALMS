@@ -1,28 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>ELITE ADMIN | MILLIONAIRES CLUB</title>
+    <meta charset="UTF-8">
+    <title>ADMIN PANEL | MILLIONAIRES CLUB</title>
     <style>
-        body { font-family: sans-serif; background: #0B0E11; color: #fff; padding: 20px; display: none; }
-        .card { background: #1E2329; padding: 20px; margin-bottom: 20px; border-radius: 10px; border-left: 8px solid #FCD535; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        h1 { color: #FCD535; letter-spacing: 2px; text-transform: uppercase; }
-        input { padding: 12px; width: 250px; margin-right: 10px; border: 1px solid #444; background: #0B0E11; color: #fff; border-radius: 4px; margin-bottom: 10px; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0B0E11; color: #fff; padding: 20px; display: none; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .card { background: #1E2329; padding: 25px; margin-bottom: 20px; border-radius: 10px; border-left: 6px solid #FCD535; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        h1 { color: #FCD535; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .plot-head { font-size: 18px; font-weight: bold; color: #FCD535; margin-bottom: 15px; display: block; }
+        input { padding: 12px; width: 260px; margin-right: 10px; border: 1px solid #444; background: #000; color: #fff; border-radius: 4px; margin-bottom: 10px; }
         button { padding: 12px 25px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
         .btn-approve { background: #2ebd85; color: white; }
-        .btn-approve:hover { background: #26a374; }
+        .btn-approve:hover { background: #1f9165; }
         .btn-reject { background: #e74c3c; color: white; margin-left: 10px; }
-        .plot-info { color: #FCD535; font-weight: bold; font-size: 1.2em; margin-bottom: 10px; display: block; }
     </style>
 </head>
 <body>
     <script>
-        const accessPass = prompt("Access Password:");
-        if(accessPass === "zoomlink34@gmail.com") { document.body.style.display = "block"; } 
-        else { alert("ভুল পাসওয়ার্ড!"); window.location.href = "index.html"; }
+        const pass = prompt("Enter Admin Password:");
+        if(pass === "zoomlink34@gmail.com") { document.body.style.display = "block"; } 
+        else { alert("Access Denied!"); window.location.href = "index.html"; }
     </script>
 
-    <h1>Pending Elite Requests (100 Plots)</h1>
-    <div id="order-list">চেকিং রিকোয়েস্ট...</div>
+    <div class="container">
+        <h1>Millionaires Club | Pending Requests</h1>
+        <div id="order-list">Scanning for new orders...</div>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -38,41 +42,42 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        onValue(ref(db, 'pending_orders/Millionaire'), (snap) => {
+        // Fetching orders from pending_orders/Millionaire
+        onValue(ref(db, 'pending_orders/Millionaire'), (snapshot) => {
             const list = document.getElementById('order-list');
             list.innerHTML = "";
-            const data = snap.val();
-            if(!data) return list.innerHTML = "<p>কোন পেন্ডিং অর্ডার নেই।</p>";
+            const data = snapshot.val();
+            if(!data) return list.innerHTML = "<p style='color:#666;'>No pending requests found.</p>";
 
-            Object.keys(data).forEach(id => {
-                const order = data[id];
+            Object.keys(data).forEach(key => {
+                const order = data[key];
                 list.innerHTML += `
                     <div class="card">
-                        <span class="plot-info">PLOT #${order.plotID} - ${order.brandName} ($${order.price})</span>
-                        <div>
-                            <input type="text" id="img_${id}" placeholder="Logo Image URL">
-                            <input type="text" id="web_${id}" placeholder="Website/Social URL">
-                            <button class="btn-approve" onclick="approveOrder('${id}', '${order.plotID}', '${order.brandName}')">APPROVE</button>
-                            <button class="btn-reject" onclick="rejectOrder('${id}')">REJECT</button>
+                        <span class="plot-head">PLOT #${order.plotID} - Brand: ${order.brandName} (Price: $${order.price})</span>
+                        <div class="controls">
+                            <input type="text" id="img_${key}" placeholder="Direct Image URL (Logo)">
+                            <input type="text" id="web_${key}" placeholder="Redirect URL (Website)">
+                            <button class="btn-approve" onclick="processOrder('${key}', '${order.plotID}', '${order.brandName}')">Approve & Live</button>
+                            <button class="btn-reject" onclick="deleteOrder('${key}')">Reject</button>
                         </div>
                     </div>`;
             });
         });
 
-        window.approveOrder = (orderKey, plotID, brandName) => {
-            const img = document.getElementById('img_'+orderKey).value;
-            const web = document.getElementById('web_'+orderKey).value;
-            if(!img) return alert("ইমেজ লিঙ্ক দিন!");
+        window.processOrder = (key, pid, brand) => {
+            const img = document.getElementById('img_'+key).value;
+            const web = document.getElementById('web_'+key).value;
+            if(!img) return alert("Image URL is mandatory!");
 
-            set(ref(db, 'estate_data/Millionaire/' + plotID), {
-                plotID: plotID, name: brandName, imageUrl: img, link: web || "#"
+            set(ref(db, 'estate_data/Millionaire/' + pid), {
+                plotID: pid, name: brand, imageUrl: img, link: web || "#"
             }).then(() => {
-                remove(ref(db, 'pending_orders/Millionaire/' + orderKey));
-                alert("Plot #" + plotID + " সফলভাবে লাইভ হয়েছে!");
+                remove(ref(db, 'pending_orders/Millionaire/' + key));
+                alert("Plot #" + pid + " is now Live!");
             });
         };
 
-        window.rejectOrder = (key) => { if(confirm("অর্ডারটি ডিলিট করবেন?")) remove(ref(db, 'pending_orders/Millionaire/' + key)); };
+        window.deleteOrder = (key) => { if(confirm("Are you sure?")) remove(ref(db, 'pending_orders/Millionaire/' + key)); };
     </script>
 </body>
 </html>
