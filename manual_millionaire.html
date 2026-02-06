@@ -10,7 +10,7 @@
         :root { --gold: #9E7E45; --premium-white: #fdfdfd; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
 
-        /* Navigation */
+        /* Navigation - স্ক্রিনশট অনুযায়ী ডিজাইন */
         .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 1px solid #1a1a1a; box-sizing: border-box; }
         .nav-left { display: flex; flex-direction: column; gap: 8px; }
         .nav-btn-group { display: flex; gap: 15px; }
@@ -19,7 +19,7 @@
         .home-link-top { color: #fff; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #fff; padding-bottom: 2px; width: fit-content; }
         .counter { color: var(--gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; }
 
-        /* Section Name */
+        /* Header */
         .header-area { text-align: center; padding-top: 130px; margin-bottom: 40px; }
         .section-name { 
             font-size: clamp(30px, 6vw, 75px); letter-spacing: 15px; text-transform: uppercase; font-weight: 900;
@@ -29,7 +29,7 @@
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* Grid & Rows */
+        /* Grid - স্ক্রিনশটের মতো রো ভিত্তিক গ্যাপ */
         .grid-container { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 120px; }
         #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .row { display: flex; justify-content: center; gap: 15px; width: 100%; padding: 45px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
@@ -44,12 +44,11 @@
         .plot img { width: 90%; height: 90%; object-fit: contain; }
         .owner-tag { position: absolute; bottom: -28px; font-size: 9px; color: #fff; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 100%; text-align: center; }
 
-        /* Modals */
+        /* Modals & UI Elements */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background: var(--premium-white); color:#000; padding:50px; width:480px; text-align:center; border-radius: 2px; position: relative; }
-        .premium-btn { background: #000; color: #fff; width: 100%; padding: 20px; border: none; font-weight: bold; letter-spacing: 5px; cursor: pointer; text-transform: uppercase; margin-top: 20px; transition: 0.3s; }
-        #celeb-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:#000; display:none; flex-direction:column; align-items:center; justify-content:center; z-index:10000; text-align:center; }
-        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; filter: grayscale(100%); transition: 0.3s; z-index: 5000; }
+        .card { background: var(--premium-white); color:#000; padding:50px; width:480px; text-align:center; border-radius: 2px; }
+        .premium-btn { background: #000; color: #fff; width: 100%; padding: 20px; border: none; font-weight: bold; letter-spacing: 5px; cursor: pointer; text-transform: uppercase; margin-top: 20px; }
+        .wa-float { position: fixed; bottom: 30px; right: 30px; background: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5000; }
     </style>
 </head>
 <body>
@@ -59,7 +58,7 @@
             <a href="index.html" class="home-link-top">← BACK TO HOME PAGE</a>
             <div class="nav-btn-group">
                 <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
-                <button class="nav-btn" style="border-color: var(--gold); color: var(--gold);" onclick="openPayment()">PAYMENT METHOD</button>
+                <button class="nav-btn" style="border-color: var(--gold); color: var(--gold);">PAYMENT METHOD</button>
             </div>
         </div>
         <div class="counter">SOLD: <span id="s-count">0</span> | LEFT: <span id="l-count">100</span></div>
@@ -69,32 +68,35 @@
         <h1 class="section-name">Millionaires Club</h1>
     </div>
 
-    <div class="grid-container">
+    <div id="grid-wrapper" class="grid-container">
         <div id="capture-area"></div>
     </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <div id="disp-id" style="font-size: 11px; color: var(--gold); font-weight: bold; letter-spacing: 3px;">PLOT #00</div>
-            <div id="disp-price" style="font-size: 26px; font-weight: bold; margin: 10px 0 30px 0;">$0,000</div>
-            <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME" style="width:100%; padding:18px; border:1px solid #ddd; text-align:center; outline:none;">
-            <button class="premium-btn" onclick="confirmOrder()">SUBMIT & ACQUIRE</button>
-            <p onclick="closeModals()" style="font-size:10px; cursor:pointer; margin-top:20px; opacity:0.4;">[ CANCEL ]</p>
+            <h2 id="disp-id">PLOT #00</h2>
+            <h1 id="disp-price">$0,000</h1>
+            <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; text-align:center;">
+            <button class="premium-btn" onclick="confirmOrder()">SUBMIT</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:15px; opacity:0.5;">[ CANCEL ]</p>
         </div>
     </div>
 
+    <div class="wa-float" onclick="window.open('https://wa.me/8801576940717')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30">
+    </div>
+
     <script type="module">
-        import { db, ref, push, onValue, SECTIONS, serverTimestamp } from "./firebase-config.js";
+        // Firebase কনফিগ থেকে ডাটা আনা হচ্ছে
+        import { db, ref, onValue, SECTIONS } from "./firebase-config.js";
 
         const capture = document.getElementById('capture-area');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
         const colors = ['#00d2ff', '#1e90ff', '#3a7bd5', '#4facfe', '#00f2fe', '#43e97b', '#38f9d7', '#f9d423', '#f83600', '#2c3e50'];
 
-        let selectedID, selectedPrice;
-
-        // ১. গ্রিড জেনারেটর (প্লটগুলো দেখানোর জন্য)
-        function initGrid() {
-            capture.innerHTML = ""; // আগের সব ক্লিয়ার করা
+        // ১. গ্রিড জেনারেট করার ফাংশন (যাতে সাথে সাথে দেখা যায়)
+        function generateGrid() {
+            capture.innerHTML = "";
             for (let r = 0; r < 10; r++) {
                 const row = document.createElement('div');
                 row.className = 'row';
@@ -113,56 +115,62 @@
                         </div>
                         <span class="owner-tag" id="tag-${id}">AVAILABLE</span>`;
                     
-                    plot.onclick = () => handlePlotClick(id, prices[r], plot);
+                    plot.onclick = () => openOrder(id, prices[r]);
                     row.appendChild(plot);
                 }
                 capture.appendChild(row);
             }
         }
 
-        function handlePlotClick(id, price, element) {
-            const link = element.getAttribute('data-link');
-            if(link) {
-                window.open(link, '_blank');
-            } else {
-                selectedID = id; selectedPrice = price;
-                document.getElementById('disp-id').innerText = `PLOT #${id}`;
-                document.getElementById('disp-price').innerText = `$${price.toLocaleString()}`;
-                document.getElementById('order-modal').style.display = 'flex';
-            }
+        // ২. ডাটাবেস থেকে তথ্য লোড করা
+        function loadLiveContent() {
+            const dataRef = ref(db, SECTIONS.MILLIONAIRE);
+            onValue(dataRef, (snapshot) => {
+                const data = snapshot.val();
+                let soldCount = 0;
+                if(data) {
+                    Object.keys(data).forEach(key => {
+                        const id = key.split('_')[1];
+                        const info = data[key];
+                        const contentArea = document.querySelector(`.content-${id}`);
+                        const tag = document.getElementById(`tag-${id}`);
+                        const plotBox = document.querySelector(`.plot-box-${id}`);
+
+                        if(info.logo && contentArea) {
+                            contentArea.innerHTML = `<img src="${info.logo}" alt="logo">`;
+                            tag.innerText = "ACQUIRED";
+                            tag.style.color = "#9E7E45";
+                            plotBox.onclick = () => window.open(info.link, '_blank');
+                            soldCount++;
+                        }
+                    });
+                }
+                document.getElementById('s-count').innerText = soldCount;
+                document.getElementById('l-count').innerText = 100 - soldCount;
+            });
         }
 
-        // ২. ডাটাবেস থেকে লাইভ ডাটা লোড করা
-        onValue(ref(db, SECTIONS.MILLIONAIRE), (snapshot) => {
-            const data = snapshot.val();
-            let sold = 0;
-            if(data) {
-                Object.keys(data).forEach(key => {
-                    const id = key.split('_')[1];
-                    const info = data[key];
-                    const contentArea = document.querySelector(`.content-${id}`);
-                    const tag = document.getElementById(`tag-${id}`);
-                    const plotBox = document.querySelector(`.plot-box-${id}`);
+        // ৩. পেজ লোড হলে রান হবে
+        generateGrid();
+        loadLiveContent();
 
-                    if(info.logo && contentArea) {
-                        contentArea.innerHTML = `<img src="${info.logo}" alt="logo">`;
-                        tag.innerText = "ACQUIRED";
-                        tag.style.color = "#9E7E45";
-                        plotBox.setAttribute('data-link', info.link);
-                        sold++;
-                    }
-                });
-            }
-            document.getElementById('s-count').innerText = sold;
-            document.getElementById('l-count').innerText = 100 - sold;
-        });
+        // ইউজার ইন্টারঅ্যাকশন ফাংশন
+        window.openOrder = (id, price) => {
+            document.getElementById('disp-id').innerText = `PLOT #${id}`;
+            document.getElementById('disp-price').innerText = `$${price}`;
+            document.getElementById('order-modal').style.display = 'flex';
+        };
 
-        // ইনিশিয়ালাইজেশন
-        initGrid();
-
-        // অন্যান্য ফাংশন (অর্ডার কনফার্ম, ক্লোজ ইত্যাদি)
-        window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        window.openPayment = () => alert("Payment methods showing..."); // আপনার আগের কোড অনুযায়ী সেট হবে
+        window.closeModals = () => { document.getElementById('order-modal').style.display = 'none'; };
+        
+        window.downloadMap = () => {
+            html2canvas(capture, { backgroundColor: "#000", scale: 2 }).then(canvas => {
+                let link = document.createElement('a');
+                link.download = 'Millionaires_Club_Map.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        };
     </script>
 </body>
 </html>
