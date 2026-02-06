@@ -2,27 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MILLIONAIRE ADMIN | AETHER REALMS</title>
+    <title>MILLIONAIRES CLUB | REQUEST PANEL</title>
     <style>
-        :root { --gold: #FCD535; --bg: #0B0E11; --card: #1E2329; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; padding: 20px; display: none; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .order-card { background: var(--card); border-left: 5px solid var(--gold); padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-        h1 { color: var(--gold); text-align: center; border-bottom: 2px solid #333; padding-bottom: 10px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #444; color: #fff; border-radius: 5px; box-sizing: border-box; }
-        .btn-approve { background: var(--gold); color: #000; padding: 12px; width: 100%; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; }
-        .badge { background: #444; padding: 5px 10px; border-radius: 4px; font-size: 12px; color: var(--gold); }
+        :root { --club-gold: #D4AF37; --club-bg: #05070A; --club-card: #12161D; }
+        body { font-family: 'Georgia', serif; background: var(--club-bg); color: #E0E0E0; padding: 40px; display: none; }
+        .container { max-width: 900px; margin: 0 auto; border: 1px solid #2A2F3A; padding: 30px; border-radius: 20px; box-shadow: 0 0 50px rgba(212, 175, 55, 0.1); }
+        h1 { color: var(--club-gold); text-align: center; text-transform: uppercase; letter-spacing: 5px; border-bottom: 1px solid var(--club-gold); padding-bottom: 20px; margin-bottom: 30px; }
+        .order-card { background: var(--club-card); border: 1px solid #2A2F3A; padding: 25px; border-radius: 15px; margin-bottom: 25px; transition: 0.3s; }
+        .order-card:hover { border-color: var(--club-gold); transform: translateY(-5px); }
+        .plot-id { color: var(--club-gold); font-weight: bold; font-size: 20px; }
+        input { width: 100%; padding: 15px; margin: 12px 0; background: #000; border: 1px solid #333; color: #fff; border-radius: 8px; box-sizing: border-box; font-family: sans-serif; }
+        input:focus { border-color: var(--club-gold); outline: none; }
+        .btn-approve { background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); color: #000; padding: 15px; width: 100%; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; text-transform: uppercase; letter-spacing: 2px; }
+        .btn-reject { background: none; color: #ff4d4d; border: none; cursor: pointer; margin-top: 15px; font-size: 13px; text-decoration: underline; width: 100%; }
     </style>
 </head>
 <body>
     <script>
-        if(prompt("Admin Password:") === "zoomlink34@gmail.com") { document.body.style.display = "block"; } 
+        if(prompt("Club Master Access:") === "zoomlink34@gmail.com") { document.body.style.display = "block"; } 
         else { window.location.href = "index.html"; }
     </script>
 
     <div class="container">
-        <h1>MILLIONAIRE ORDERS <span class="badge">AETHER REALMS</span></h1>
-        <div id="order-list">চেক করা হচ্ছে...</div>
+        <h1>Millionaires Club <br><small style="font-size: 12px; letter-spacing: 2px; color: #888;">Pending Memberships</small></h1>
+        <div id="request-list">Authenticating...</div>
     </div>
 
     <script type="module">
@@ -39,38 +42,39 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // শুধুমাত্র Millionaire সেকশনের অর্ডার দেখবে
-        onValue(ref(db, 'orders/Millionaire'), (snapshot) => {
-            const list = document.getElementById('order-list');
+        onValue(ref(db, 'orders/Millionaires_Club'), (snap) => {
+            const list = document.getElementById('request-list');
             list.innerHTML = "";
-            const data = snapshot.val();
-            if(!data) return list.innerHTML = "<p style='text-align:center; color:#666;'>এই সেকশনে কোন রিকোয়েস্ট নেই।</p>";
+            const data = snap.val();
+            if(!data) return list.innerHTML = "<p style='text-align:center; color:#555;'>No elite requests at the moment.</p>";
             
             Object.keys(data).forEach(key => {
                 const o = data[key];
                 list.innerHTML += `
                     <div class="order-card">
-                        <h3>PLOT #${o.plotID} - User: ${o.name}</h3>
-                        <input type="text" id="img_${key}" placeholder="Logo URL">
-                        <input type="text" id="web_${key}" placeholder="Website Link">
-                        <button class="btn-approve" onclick="approve('${key}', '${o.plotID}', '${o.name}')">APPROVE TO MILLIONAIRE</button>
+                        <div class="plot-id">MEMBERSHIP PLOT #${o.plotID}</div>
+                        <div style="margin-bottom:15px; color:#888;">Name: ${o.name}</div>
+                        <input type="text" id="img_${key}" placeholder="Elite Brand Logo URL">
+                        <input type="text" id="web_${key}" placeholder="Exclusive Website URL">
+                        <button class="btn-approve" onclick="approveClub('${key}', '${o.plotID}', '${o.name}')">Grant Membership</button>
+                        <button class="btn-reject" onclick="reject('${key}')">Dismiss Request</button>
                     </div>`;
             });
         });
 
-        window.approve = (key, pid, name) => {
+        window.approveClub = (key, pid, name) => {
             const img = document.getElementById('img_'+key).value;
             const web = document.getElementById('web_'+key).value;
-            if(!img) return alert("Logo URL দিন!");
+            if(!img) return alert("Logo URL is required for the Club.");
             
-            // estate_data/Millionaire পাথে সেভ হবে
-            set(ref(db, 'estate_data/Millionaire/' + pid), {
-                name: name, imageUrl: img, link: web || "#", plotID: pid
+            set(ref(db, 'estate_data/Millionaires_Club/' + pid), {
+                name: name, imageUrl: img, link: web || "#", plotID: pid, club_status: "Elite"
             }).then(() => {
-                remove(ref(db, 'orders/Millionaire/' + key));
-                alert("Plot #" + pid + " Millionaire সেকশনে লাইভ হয়েছে!");
+                remove(ref(db, 'orders/Millionaires_Club/' + key));
+                alert("Membership Granted for Plot #" + pid);
             });
         };
+        window.reject = (key) => { if(confirm("Reject membership?")) remove(ref(db, 'orders/Millionaires_Club/' + key)); };
     </script>
 </body>
 </html>
