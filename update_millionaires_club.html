@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MILLIONAIRES CLUB | MASTER ENGINE</title>
+    <style>
+        :root { --gold: #D4AF37; --bg: #05070A; }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; display: none; }
+        .wrapper { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 400px 1fr; gap: 30px; }
+        .control-panel { background: #12161D; padding: 30px; border-radius: 15px; border: 1px solid var(--gold); position: sticky; top: 20px; height: fit-content; }
+        h2 { color: var(--gold); text-align: center; margin-bottom: 25px; text-transform: uppercase; font-size: 18px; }
+        input { width: 100%; padding: 12px; margin: 8px 0; background: #000; border: 1px solid #333; color: #fff; border-radius: 6px; box-sizing: border-box; }
+        .btn-update { width: 100%; padding: 15px; background: var(--gold); color: #000; font-weight: bold; border: none; cursor: pointer; border-radius: 6px; margin-top: 15px; }
+        .records-panel { background: #0A0D12; padding: 25px; border-radius: 15px; border: 1px solid #222; }
+        .elite-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #12161D; margin-bottom: 10px; border-radius: 8px; border-left: 3px solid var(--gold); }
+        .del-btn { background: #3d0000; color: #ff4d4d; border: 1px solid #660000; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <script>
+        if(prompt("Club Master Access:") === "zoomlink34@gmail.com") { document.body.style.display = "block"; } 
+        else { window.location.href = "index.html"; }
+    </script>
+
+    <div class="wrapper">
+        <div class="control-panel">
+            <h2>Club Direct Entry</h2>
+            <input type="number" id="cPlot" placeholder="Plot ID">
+            <input type="text" id="cName" placeholder="Elite Name">
+            <input type="text" id="cImg" placeholder="Logo URL">
+            <input type="text" id="cWeb" placeholder="Elite Link">
+            <button class="btn-update" onclick="clubUpdate()">PUBLISH TO CLUB</button>
+        </div>
+
+        <div class="records-panel">
+            <h2 style="text-align: left;">Live Club Members</h2>
+            <div id="eliteRecords">Loading records...</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
+            authDomain: "aether-realms.firebaseapp.com",
+            databaseURL: "https://aether-realms-default-rtdb.firebaseio.com",
+            projectId: "aether-realms",
+            appId: "1:745970771566:web:1b0607362279665074a87f"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        window.clubUpdate = () => {
+            const pid = document.getElementById('cPlot').value;
+            const name = document.getElementById('cName').value;
+            const img = document.getElementById('cImg').value;
+            const web = document.getElementById('cWeb').value;
+            if(!pid || !name) return alert("Required fields missing.");
+
+            set(ref(db, 'estate_data/Millionaires_Club/' + pid), {
+                plotID: pid, name: name, imageUrl: img, link: web || "#"
+            }).then(() => { alert("Club Data Synced!"); document.getElementById('cPlot').value = ""; });
+        };
+
+        onValue(ref(db, 'estate_data/Millionaires_Club'), (s) => {
+            const list = document.getElementById('eliteRecords'); list.innerHTML = "";
+            const data = s.val(); if(!data) return list.innerHTML = "No elite records found.";
+            Object.keys(data).forEach(id => {
+                list.innerHTML += `
+                <div class="elite-item">
+                    <span><strong>#${id}</strong> - ${data[id].name}</span>
+                    <button class="del-btn" onclick="terminate('${id}')">REMOVE</button>
+                </div>`;
+            });
+        });
+
+        window.terminate = (id) => { if(confirm("Remove from Club?")) remove(ref(db, 'estate_data/Millionaires_Club/' + id)); };
+    </script>
+</body>
+</html>
