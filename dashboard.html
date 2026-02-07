@@ -3,108 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESTATE DASHBOARD | K ARCHIVE</title>
-    <link rel="stylesheet" href="style.css">
+    <title>DASHBOARD | K ARCHIVE</title>
     <style>
-        body { background: #fff; color: #111; font-family: 'Times New Roman', serif; cursor: none; }
+        :root { --gold: #9E7E45; --white: #ffffff; --black: #000; }
+        body { background: #fff; color: #111; font-family: 'Times New Roman', serif; cursor: none; margin: 0; overflow-x: hidden; }
         
-        .dashboard-container { max-width: 1100px; margin: 150px auto 50px; padding: 0 40px; }
+        #cursor-dot { position: fixed; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        #cursor-outline { position: fixed; width: 35px; height: 35px; border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
+        body.cursor-active #cursor-outline { width: 60px; height: 60px; background: rgba(158,126,69,0.05); }
+
+        /* Mobile Block */
+        @media (max-width: 1023px) {
+            .mobile-block { display: flex !important; }
+            .dashboard-container, .header, #cursor-dot, #cursor-outline { display: none !important; }
+        }
+        .mobile-block { display: none; height: 100vh; background: #000; color: var(--gold); flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; }
+
+        .header { padding: 40px 8%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f9f9f9; }
         
-        /* ডবল কার্সার এলিমেন্ট */
-        #cursor-dot { position: fixed; width: 5px; height: 5px; background: #9E7E45; border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
-        #cursor-outline { position: fixed; width: 35px; height: 35px; border: 1px solid #9E7E45; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: 0.2s; }
+        .dashboard-container { max-width: 1200px; margin: 80px auto; padding: 0 5%; }
+        .welcome-header { margin-bottom: 80px; }
+        .welcome-header h2 { font-weight: 100; letter-spacing: 10px; text-transform: uppercase; font-size: 32px; margin: 0; }
+        .welcome-header p { color: #aaa; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-top: 10px; }
 
-        .welcome-header { margin-bottom: 60px; border-left: 2px solid #9E7E45; padding-left: 30px; }
-        .welcome-header h2 { font-weight: 100; letter-spacing: 12px; text-transform: uppercase; margin: 0; font-size: 28px; }
-        .welcome-header p { color: #888; font-size: 10px; letter-spacing: 4px; margin-top: 10px; text-transform: uppercase; }
-
-        .member-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        .layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; }
         
-        .card { background: #fff; border: 1px solid #f2f2f2; padding: 40px; position: relative; transition: 0.4s; }
-        .card:hover { border-color: #9E7E45; box-shadow: 0 20px 40px rgba(0,0,0,0.02); }
-        
-        .card-title { font-size: 9px; letter-spacing: 4px; color: #9E7E45; text-transform: uppercase; margin-bottom: 30px; display: block; font-weight: bold; border-bottom: 1px solid #f2f2f2; padding-bottom: 15px; }
+        .card { border: 1px solid #eee; padding: 40px; transition: 0.5s; position: relative; }
+        .card:hover { border-color: var(--gold); }
+        .card-label { font-size: 9px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 30px; display: block; font-weight: bold; }
 
-        .plot-inventory { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 20px; }
-        .owned-plot { 
-            aspect-ratio: 1/1; border: 1px solid #eee; 
-            display: flex; align-items: center; justify-content: center; 
-            font-size: 9px; flex-direction: column; background: #fafafa;
-            transition: 0.3s; letter-spacing: 1px;
+        /* Plot Grid */
+        .plot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; }
+        .plot-box { 
+            aspect-ratio: 1/1; border: 1px solid #f2f2f2; background: #fafafa; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: 0.4s; text-decoration: none; color: inherit;
         }
-        .owned-plot:hover { background: #000; color: #fff; border-color: #000; transform: translateY(-5px); }
+        .plot-box:hover { background: #000; color: #fff; border-color: #000; transform: scale(1.05); }
+        .plot-id { color: var(--gold); font-size: 10px; font-weight: bold; margin-bottom: 5px; }
+        .plot-cat { font-size: 7px; letter-spacing: 1px; opacity: 0.6; }
 
-        .profile-info { text-align: center; }
-        .avatar-circle { 
-            width: 120px; height: 120px; border: 1px solid #9E7E45; 
-            border-radius: 50%; margin: 0 auto 25px; display: flex; 
-            align-items: center; justify-content: center; font-size: 40px; font-weight: 100;
-            background: #fff; color: #000;
-        }
+        /* Profile Section */
+        .owner-card { text-align: center; }
+        .avatar { width: 100px; height: 100px; border: 1px solid var(--gold); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 100; }
+        .status-pill { display: inline-block; padding: 6px 15px; background: #000; color: #fff; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; }
 
-        .status-badge { 
-            display: inline-block; padding: 8px 20px; background: #000; 
-            color: #fff; font-size: 8px; letter-spacing: 3px; margin-top: 15px; text-transform: uppercase;
-        }
+        .links { margin-top: 40px; text-align: left; }
+        .links a { display: block; padding: 18px 0; border-bottom: 1px solid #f5f5f5; text-decoration: none; color: #666; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        .links a:hover { color: var(--gold); padding-left: 10px; }
 
-        .action-links { margin-top: 40px; text-align: left; }
-        .action-links a { 
-            display: block; padding: 18px 0; border-bottom: 1px solid #f2f2f2; 
-            text-decoration: none; color: #555; font-size: 11px; transition: 0.3s;
-            letter-spacing: 2px; text-transform: uppercase;
-        }
-        .action-links a:hover { color: #9E7E45; padding-left: 15px; border-bottom-color: #9E7E45; }
-
-        .btn-acquire {
-            margin-top: 40px; background: #000; color: #fff; border: none;
-            padding: 20px 40px; font-size: 10px; letter-spacing: 4px;
-            text-transform: uppercase; transition: 0.5s; cursor: none; display: inline-block;
-        }
-        .btn-acquire:hover { background: #9E7E45; }
+        .btn-gold { margin-top: 30px; background: #000; color: #fff; padding: 18px 30px; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; border: none; cursor: none; transition: 0.4s; display: inline-block; text-decoration: none; }
+        .btn-gold:hover { background: var(--gold); }
     </style>
 </head>
 <body>
+
+    <div class="mobile-block">
+        <h1 style="letter-spacing: 15px;">K</h1>
+        <p style="font-size: 10px; letter-spacing: 3px; line-height: 2;">ESTATE MANAGEMENT REQUIRES DESKTOP ACCESS</p>
+    </div>
+
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
 
     <header class="header">
-        <button onclick="history.back()" style="background:none; border:none; letter-spacing:3px; font-weight:bold; cursor:none; font-size:10px;">← BACK</button>
-        <div style="font-size:24px; font-weight: 900; letter-spacing: 5px;">K</div>
-        <div style="font-size:9px; letter-spacing:4px; color:#bbb;">PORTAL ACCESS</div>
+        <button onclick="history.back()" class="hover-target" style="background:none; border:none; letter-spacing:3px; font-weight:bold; cursor:none; font-size:10px;">← BACK</button>
+        <div style="font-size:22px; font-weight: 900; letter-spacing: 10px;">K</div>
+        <div style="font-size:9px; letter-spacing:4px; color:#bbb;">ESTATE PORTAL</div>
     </header>
 
     <div class="dashboard-container">
         <div class="welcome-header">
-            <h2 id="user-display">The Estate Owner</h2>
-            <p>Managing your digital legacy within the archive</p>
+            <h2>The Estate Owner</h2>
+            <p>Digital Asset Management Suite</p>
         </div>
 
-        <div class="member-grid">
+        <div class="layout">
             <div class="card">
-                <span class="card-title">Your Secured Assets</span>
-                <div id="inventory-list" class="plot-inventory">
-                    <div class="owned-plot">
-                        <span style="color:#9E7E45; margin-bottom: 5px;">#024</span>
-                        <span style="font-size:7px; color:#aaa;">GAMING</span>
+                <span class="card-label">Secured Inventory</span>
+                <div class="plot-grid">
+                    <div class="plot-box hover-target">
+                        <span class="plot-id">#024</span>
+                        <span class="plot-cat">GAMING</span>
                     </div>
-                    <div class="owned-plot" style="opacity: 0.3; border-style: dashed;">
-                        <span>EMPTY</span>
+                    <div class="plot-box hover-target" style="opacity: 0.3; border-style: dashed;">
+                        <span style="font-size: 8px;">VACANT</span>
                     </div>
                 </div>
-                <a href="index.html#realms" class="btn-acquire">Acquire New Asset</a>
+                <a href="index.html" class="btn-gold hover-target">Acquire New Asset</a>
             </div>
 
-            <div class="profile-info">
+            <div class="owner-card">
                 <div class="card">
-                    <div class="avatar-circle">K</div>
-                    <div style="font-weight: bold; letter-spacing: 3px; font-size: 14px; text-transform: uppercase;">Verified Owner</div>
-                    <div class="status-badge">Elite Member</div>
+                    <div class="avatar">K</div>
+                    <div style="font-weight: bold; letter-spacing: 2px; font-size: 13px; text-transform: uppercase;">Verified Member</div>
+                    <div class="status-pill">Elite Tier</div>
                     
-                    <div class="action-links">
-                        <a href="support.html">Private Concierge</a>
-                        <a href="manual_update.html">Request Asset Update</a>
-                        <a href="order.html">Pending Reservations</a>
-                        <a href="index.html" style="border:none; color: #d32f2f; margin-top: 20px;">Sign Out</a>
+                    <div class="links">
+                        <a href="support.html" class="hover-target">Concierge Desk</a>
+                        <a href="support.html" class="hover-target">Request Update ($9 Fee)</a>
+                        <a href="#" class="hover-target">Ownership Deed</a>
+                        <a href="index.html" class="hover-target" style="color: #c00; border: none;">Exit Portal</a>
                     </div>
                 </div>
             </div>
@@ -112,20 +111,16 @@
     </div>
 
     <script>
-        // কার্সার লজিক
         const dot = document.getElementById('cursor-dot');
         const outline = document.getElementById('cursor-outline');
         document.addEventListener('mousemove', (e) => {
-            dot.style.left = e.clientX + 'px';
-            dot.style.top = e.clientY + 'px';
+            dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
             outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
         });
-    </script>
-    <script type="module">
-        import { db, ref, onValue } from "./firebase-config.js";
-        
-        // এখানে ফিউচারে ইউজার আইডি দিয়ে ফায়ারবেস থেকে ডাটা আনা হবে
-        console.log("K-Archive: Dashboard Real-time Link Ready.");
+        document.querySelectorAll('.hover-target').forEach(el => {
+            el.onmouseenter = () => document.body.classList.add('cursor-active');
+            el.onmouseleave = () => document.body.classList.remove('cursor-active');
+        });
     </script>
 </body>
 </html>
