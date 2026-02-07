@@ -5,156 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CONCIERGE | K ARCHIVE HQ</title>
     <style>
-        :root { --gold: #9E7E45; --white: #ffffff; --dark: #050505; --grey: #f4f4f4; }
-        body { background: var(--white); color: var(--dark); font-family: 'Times New Roman', serif; overflow-x: hidden; margin: 0; cursor: none; }
+        :root { --gold: #9E7E45; --white: #ffffff; --dark: #050505; }
+        body { background: var(--white); color: var(--dark); font-family: 'Times New Roman', serif; overflow: hidden; margin: 0; cursor: none; }
         
-        /* Rolls-Royce Style Luxury Cursor */
-        #cursor-dot { position: fixed; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
+        /* Ultra-Smooth Cursor */
+        #cursor-dot { position: fixed; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
         #cursor-outline { 
-            position: fixed; width: 30px; height: 30px; border: 1px solid rgba(158, 126, 69, 0.4); border-radius: 50%; 
+            position: fixed; width: 40px; height: 40px; border: 1px solid rgba(158, 126, 69, 0.3); border-radius: 50%; 
             pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); 
-            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), height 0.4s cubic-bezier(0.23, 1, 0.32, 1); 
+            transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1), height 0.5s cubic-bezier(0.23, 1, 0.32, 1), background 0.5s; 
         }
-        body.cursor-active #cursor-outline { width: 55px; height: 55px; border-color: var(--gold); background: rgba(158, 126, 69, 0.03); }
+        body.cursor-active #cursor-outline { width: 70px; height: 70px; background: rgba(158, 126, 69, 0.05); border-color: var(--gold); }
 
-        /* Header Navigation */
-        .header { padding: 40px 10%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f2f2f2; background: rgba(255,255,255,0.8); backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000; }
-        .back-btn { background: none; border: none; letter-spacing: 3px; font-size: 10px; color: var(--dark); text-decoration: none; text-transform: uppercase; font-weight: bold; cursor: none; }
-
-        .support-wrapper { max-width: 800px; margin: 100px auto; text-align: center; padding: 0 20px; }
-        .brand-k { font-size: 80px; font-weight: 900; margin-bottom: 10px; letter-spacing: 15px; color: var(--dark); }
-        .support-title { font-size: 14px; letter-spacing: 10px; text-transform: uppercase; color: var(--gold); margin-bottom: 80px; font-weight: 100; }
-
-        /* Permanent Floating WhatsApp Button */
-        .permanent-ws {
-            position: fixed; bottom: 35px; right: 35px; width: 60px; height: 60px;
-            background: #000; border: 1px solid var(--gold); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 10005; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        /* Desktop Only Protection */
+        @media (max-width: 1023px) {
+            body { cursor: default; overflow: auto; }
+            .mobile-block { display: flex !important; }
+            .support-wrapper, .header, #cursor-dot, #cursor-outline { display: none !important; }
         }
-        .permanent-ws:hover { transform: rotate(90deg) scale(1.1); background: var(--gold); }
-        .permanent-ws svg { fill: var(--gold); transition: 0.3s; }
-        .permanent-ws:hover svg { fill: #fff; }
+        .mobile-block { display: none; height: 100vh; background: #000; color: var(--gold); flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; }
 
-        /* Support Selection Card */
+        /* Navigation */
+        .header { padding: 50px 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .back-btn { background: none; border: none; letter-spacing: 4px; font-size: 10px; color: var(--dark); text-decoration: none; text-transform: uppercase; font-weight: bold; cursor: none; transition: 0.3s; }
+        .back-btn:hover { color: var(--gold); }
+
+        /* Layout */
+        .support-wrapper { height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .brand-k { font-size: 100px; font-weight: 900; letter-spacing: 20px; color: var(--dark); margin-bottom: 5px; }
+        .support-title { font-size: 12px; letter-spacing: 12px; text-transform: uppercase; color: var(--gold); margin-bottom: 60px; opacity: 0.8; }
+
         .whatsapp-trigger {
             display: inline-flex; flex-direction: column; align-items: center;
-            padding: 70px 120px; border: 1px solid #eee; transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            padding: 60px 100px; border: 1px solid #eee; transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
             text-decoration: none; color: var(--dark); cursor: none;
         }
-        .whatsapp-trigger:hover { border-color: var(--gold); background: #fafafa; transform: translateY(-5px); }
-        .ws-icon { width: 45px; height: 45px; margin-bottom: 30px; opacity: 0.9; }
+        .whatsapp-trigger:hover { border-color: var(--gold); background: #fafafa; transform: translateY(-10px); }
+        .ws-icon { width: 40px; height: 40px; margin-bottom: 25px; }
 
-        .label { font-size: 9px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; font-weight: bold; }
-        .sub-label { font-size: 13px; color: #888; letter-spacing: 1px; font-style: italic; }
+        .label { font-size: 10px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; font-weight: bold; }
+        .sub-label { font-size: 13px; color: #999; letter-spacing: 1px; }
 
-        /* Submission Modal Style */
+        /* Modal */
         #submission-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.99); z-index: 10010; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.98); z-index: 10010; align-items: center; justify-content: center;
         }
         .modal-content {
-            max-width: 450px; width: 85%; padding: 60px; border: 1px solid #eee; background: #fff;
-            text-align: left; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+            max-width: 400px; padding: 60px; border: 1px solid #eee; background: #fff;
+            text-align: left; position: relative; box-shadow: 0 40px 80px rgba(0,0,0,0.03);
         }
-        .modal-content h2 { font-size: 12px; letter-spacing: 6px; text-transform: uppercase; border-bottom: 1px solid var(--gold); padding-bottom: 20px; margin-bottom: 40px; font-weight: 100; }
-        .modal-content ul { list-style: none; padding: 0; margin-bottom: 50px; }
-        .modal-content li { font-size: 11px; letter-spacing: 1px; margin-bottom: 18px; color: #333; text-transform: uppercase; }
-        .modal-content li::before { content: "• "; color: var(--gold); font-weight: bold; }
+        .modal-content h2 { font-size: 11px; letter-spacing: 5px; text-transform: uppercase; border-bottom: 1px solid var(--gold); padding-bottom: 20px; margin-bottom: 30px; }
+        .modal-content li { font-size: 10px; letter-spacing: 1px; margin-bottom: 15px; color: #444; text-transform: uppercase; list-style: none; }
+        .modal-content li::before { content: "• "; color: var(--gold); margin-right: 10px; }
 
         .chat-now-btn {
-            display: block; width: 100%; padding: 22px; background: #000; color: #fff;
+            display: block; width: 100%; padding: 20px; background: #000; color: #fff;
             text-align: center; text-decoration: none; font-size: 10px; letter-spacing: 5px;
-            text-transform: uppercase; transition: 0.4s; box-sizing: border-box;
+            text-transform: uppercase; transition: 0.4s; margin-top: 30px;
         }
-        .chat-now-btn:hover { background: var(--gold); color: #fff; }
-        .close-modal { position: absolute; top: 30px; right: 30px; font-size: 18px; color: #ccc; cursor: none; transition: 0.3s; }
-        .close-modal:hover { color: var(--dark); }
+        .chat-now-btn:hover { background: var(--gold); }
 
-        footer { margin-top: 150px; font-size: 9px; letter-spacing: 8px; color: #ccc; text-transform: uppercase; padding-bottom: 50px; }
+        footer { position: fixed; bottom: 40px; width: 100%; text-align: center; font-size: 8px; letter-spacing: 8px; color: #ccc; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
+    <div class="mobile-block">
+        <h1 style="letter-spacing: 15px;">K</h1>
+        <p style="font-size: 10px; letter-spacing: 3px; line-height: 2;">EXCLUSIVELY FOR DESKTOP ARCHIVE ACCESS</p>
+    </div>
+
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
 
-    <a href="https://wa.me/8801576940717" target="_blank" class="permanent-ws hover-target" title="Direct Line">
-        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
-    </a>
-
     <header class="header">
-        <button class="back-btn hover-target" onclick="history.back()">← Return to Archive</button>
-        <div style="font-size:8px; letter-spacing:5px; color:#bbb; text-transform:uppercase;">Archive Concierge</div>
+        <button class="back-btn hover-target" onclick="history.back()">← Return</button>
+        <div style="font-size:9px; letter-spacing:5px; color:#bbb;">CONCIERGE</div>
     </header>
 
     <div class="support-wrapper">
         <div class="brand-k hover-target">K</div>
-        <div class="support-title">The Concierge</div>
+        <div class="support-title">The Archive Office</div>
 
         <div class="whatsapp-trigger hover-target" id="openModal">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="ws-icon" alt="WhatsApp">
-            <div class="label">Sovereign Acquisition Desk</div>
-            <div class="sub-label">Verified Line: +880 1576 940717</div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="ws-icon" alt="WS">
+            <div class="label">Direct Acquisition Desk</div>
+            <div class="sub-label">+880 1576 940717</div>
         </div>
-
-        <div style="margin-top: 80px;">
-            <div class="label" style="color:#bbb; opacity:0.6;">Official Correspondence</div>
-            <div class="sub-label" style="font-style: normal; font-size: 11px;">aetherplotshq@gmail.com</div>
-        </div>
-
-        <footer>© 2026 K ARCHIVE | HQ STUDIO</footer>
     </div>
+
+    <footer>© 2026 K ARCHIVE | HQ</footer>
 
     <div id="submission-modal">
         <div class="modal-content">
-            <span class="close-modal hover-target" id="closeModal">✕</span>
-            <h2>Submission Protocol</h2>
-            <ul>
-                <li>Verified Plot Number & Section</li>
-                <li>Official Brand Identity (Transparent PNG)</li>
-                <li>Destination URL (Social/Web)</li>
-                <li>Acquisition Proof (Transaction Receipt)</li>
-            </ul>
-            <a href="https://wa.me/8801576940717?text=CONCIERGE_READY:%20I%20have%20the%20assets%20prepared%20for%20Archive%20submission." target="_blank" class="chat-now-btn hover-target">Initiate Secure Chat</a>
+            <span style="position:absolute; top:20px; right:20px; cursor:none;" class="hover-target" id="closeModal">✕</span>
+            <h2>Protocol</h2>
+            <li>Plot ID & Section</li>
+            <li>Brand Asset (PNG)</li>
+            <li>Target URL</li>
+            <li>Proof of Payment</li>
+            <a href="https://wa.me/8801576940717" target="_blank" class="chat-now-btn hover-target">Initiate Session</a>
         </div>
     </div>
 
     <script>
-        // Smooth Luxury Cursor Logic
         const dot = document.getElementById('cursor-dot');
         const outline = document.getElementById('cursor-outline');
-        
         document.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            
-            dot.style.left = `${posX}px`;
-            dot.style.top = `${posY}px`;
-            
-            outline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
+            dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
+            outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 600, fill: "forwards" });
         });
-
-        // Hover Effect Classes
         document.querySelectorAll('.hover-target').forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+            el.onmouseenter = () => document.body.classList.add('cursor-active');
+            el.onmouseleave = () => document.body.classList.remove('cursor-active');
         });
-
-        // Modal Controls
-        const modal = document.getElementById('submission-modal');
-        const openBtn = document.getElementById('openModal');
-        const closeBtn = document.getElementById('closeModal');
-
-        openBtn.onclick = () => modal.style.display = "flex";
-        closeBtn.onclick = () => modal.style.display = "none";
-        
-        // Close on background click
-        window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; }
+        document.getElementById('openModal').onclick = () => document.getElementById('submission-modal').style.display = 'flex';
+        document.getElementById('closeModal').onclick = () => document.getElementById('submission-modal').style.display = 'none';
     </script>
-
 </body>
 </html>
