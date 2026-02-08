@@ -3,122 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K ARCHIVE | REGISTRY PORTAL</title>
+    <title>K ARCHIVE | UNIVERSAL LEDGER</title>
     <style>
-        /* Home Page Match Styles */
-        body {
-            margin: 0;
-            background-color: #ffffff; /* একদম সাদা ব্যাকগ্রাউন্ড */
-            color: #000000;
-            font-family: 'Times New Roman', serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+        :root { --black: #000; --white: #fff; --grey: #f8f8f8; }
+        body { margin: 0; background: var(--white); color: var(--black); font-family: 'Times New Roman', serif; padding: 20px; }
+        
+        /* Layout */
+        .portal-wrapper { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
+        
+        h2 { font-weight: 300; letter-spacing: 5px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 10px; font-size: 18px; }
 
-        .portal-box {
-            width: 100%;
-            max-width: 400px;
-            padding: 40px;
-            border: 0.5px solid #000000; /* হোমপেজের মতো চিকন কালো বর্ডার */
-            background: #ffffff;
-            text-align: center;
-        }
+        /* Left Side: Submission Form */
+        .submission-panel { padding: 20px; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; color: #666; }
+        input, select { width: 100%; padding: 12px; border: 0.5px solid #000; background: transparent; font-family: inherit; font-size: 13px; box-sizing: border-box; }
+        
+        .btn-submit { width: 100%; padding: 15px; background: #000; color: #fff; border: none; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-submit:hover { opacity: 0.8; }
 
-        h2 {
-            font-weight: 300;
-            letter-spacing: 10px;
-            text-transform: uppercase;
-            margin-bottom: 40px;
-            font-size: 20px;
-        }
+        .update-notice { background: #fffbe6; border-left: 3px solid #ffe58f; padding: 15px; font-size: 11px; margin-top: 20px; line-height: 1.6; }
+        .support-link { display: inline-block; margin-top: 10px; color: #000; font-weight: bold; text-decoration: underline; }
 
-        .input-group {
-            text-align: left;
-            margin-bottom: 25px;
-        }
-
-        .input-group label {
-            font-size: 9px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #000;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 0.5px solid #000;
-            background: transparent;
-            color: #000;
-            font-size: 12px;
-            box-sizing: border-box;
-            outline: none;
-            font-family: 'Times New Roman', serif;
-            letter-spacing: 1px;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 15px;
-            background: #000;
-            color: #fff;
-            border: 0.5px solid #000;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            font-size: 11px;
-            transition: 0.4s;
-        }
-
-        .btn-submit:hover {
-            background: #fff;
-            color: #000;
-        }
-
-        .back-btn {
-            display: block;
-            margin-top: 30px;
-            font-size: 10px;
-            color: #666;
-            text-decoration: none;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* Success Display */
-        #success-msg {
-            display: none;
-            padding: 20px 0;
-        }
+        /* Right Side: Ledger/History */
+        .history-panel { padding: 20px; background: var(--grey); min-height: 500px; border: 0.5px solid #eee; }
+        .filter-area { margin-bottom: 20px; }
+        
+        .ledger-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .ledger-table th { text-align: left; padding: 10px; border-bottom: 1px solid #ddd; text-transform: uppercase; font-size: 10px; }
+        .ledger-table td { padding: 12px 10px; border-bottom: 1px solid #eee; }
+        .tag-plot { background: #000; color: #fff; padding: 2px 6px; font-size: 10px; border-radius: 2px; }
 
         /* Responsive */
-        @media (max-width: 480px) {
-            .portal-box {
-                padding: 30px 20px;
-                border: none; /* মোবাইলে ক্লিন লুকের জন্য বর্ডার তুলে দেওয়া হয়েছে */
-            }
+        @media (max-width: 768px) {
+            .portal-wrapper { grid-template-columns: 1fr; }
+            body { padding: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="portal-box">
-        <div id="main-content">
-            <h2>Portal</h2>
-            
-            <div class="input-group">
-                <label>Full Name</label>
-                <input type="text" id="name" placeholder="ENTER NAME">
-            </div>
+    <div style="text-align:center; margin-bottom: 40px;">
+        <h1 style="letter-spacing: 15px; text-transform: uppercase; font-weight: 400; font-size: 24px;">K Archive Ledger</h1>
+        <p style="font-size: 10px; letter-spacing: 5px; color: #888;">OFFICIAL RECORD OF SOVEREIGN OWNERSHIP</p>
+    </div>
 
+    <div class="portal-wrapper">
+        
+        <div class="submission-panel">
+            <h2>Acquisition Entry</h2>
             <div class="input-group">
-                <label>Archive Section</label>
+                <label>Legal Name</label>
+                <input type="text" id="name" placeholder="Full Identity">
+            </div>
+            <div class="input-group">
+                <label>Select Section</label>
                 <select id="section">
                     <option value="Millionaires Club">Millionaires Club</option>
                     <option value="Social Creators">Social Creators</option>
@@ -130,63 +69,109 @@
                     <option value="Pet Paradise">Pet Paradise</option>
                 </select>
             </div>
-
             <div class="input-group">
-                <label>Plot Identifier</label>
-                <input type="text" id="plot" placeholder="PLOT NUMBER" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                <label>Plot Number</label>
+                <input type="text" id="plot" placeholder="e.g. 05">
             </div>
-
             <div class="input-group">
-                <label>Payment / Reference Link</label>
-                <input type="text" id="ref" placeholder="TXID OR URL">
+                <label>Payment Reference</label>
+                <input type="text" id="ref" placeholder="TXID or Link">
             </div>
+            <button class="btn-submit" onclick="submitEntry()">Submit Registration</button>
 
-            <button class="btn-submit" onclick="sendToArchive()">Submit</button>
-            <a href="index.html" class="back-btn">[ Return Home ]</a>
+            <div class="update-notice">
+                <b>IMPORTANT NOTICE:</b><br>
+                For each information update (Logo, Name, or Link), an administrative fee of <b>$9.00 USD</b> will be charged. This ensures the immutability of the archive.
+                <br>
+                <a href="https://wa.me/8801576940717" class="support-link">Contact Customer Support</a>
+            </div>
+            <a href="index.html" style="display:block; margin-top:20px; font-size:10px; color:#999; text-decoration:none;">[ Return Home ]</a>
         </div>
 
-        <div id="success-msg">
-            <h2 style="color: #000;">Recorded</h2>
-            <p style="font-size: 11px; letter-spacing: 2px; line-height: 2;">YOUR DATA HAS BEEN TRANSMITTED TO THE K ARCHIVE SOVEREIGN LEDGER.</p>
-            <button class="btn-submit" onclick="location.reload()">New Entry</button>
+        <div class="history-panel">
+            <h2>Ownership History</h2>
+            <div class="filter-area">
+                <label>Filter by Section</label>
+                <select id="filterSection" onchange="loadHistory()">
+                    <option value="All">Show All Records</option>
+                    <option value="Millionaires Club">Millionaires Club</option>
+                    <option value="Social Creators">Social Creators</option>
+                    <option value="Gaming Realm">Gaming Realm</option>
+                    <option value="Nations Grid">Nations Grid</option>
+                    <option value="Little Stars">Little Stars</option>
+                    <option value="Eternal Roots">Eternal Roots</option>
+                    <option value="The Union Wall">The Union Wall</option>
+                    <option value="Pet Paradise">Pet Paradise</option>
+                </select>
+            </div>
+
+            <table class="ledger-table">
+                <thead>
+                    <tr>
+                        <th>Plot</th>
+                        <th>Owner</th>
+                        <th>Section</th>
+                    </tr>
+                </thead>
+                <tbody id="ledger-data">
+                    </tbody>
+            </table>
+            <p id="loading-msg" style="font-size: 11px; color: #999; margin-top: 20px;">Fetching records...</p>
         </div>
+
     </div>
 
     <script type="module">
-        import { db, ref, push, serverTimestamp } from "./firebase-config.js";
+        import { db, ref, push, onValue, serverTimestamp } from "./firebase-config.js";
 
-        window.sendToArchive = async () => {
+        // Entry Submission
+        window.submitEntry = async () => {
             const name = document.getElementById('name').value;
             const section = document.getElementById('section').value;
             const plot = document.getElementById('plot').value;
             const refID = document.getElementById('ref').value;
 
-            if(!name || !plot) {
-                alert("Please fill in the identity and plot identifier.");
-                return;
-            }
-
-            const btn = document.querySelector('.btn-submit');
-            btn.innerText = "Processing...";
-            btn.disabled = true;
+            if(!name || !plot) return alert("Please fill all fields.");
 
             try {
                 await push(ref(db, 'registrations'), {
-                    name,
-                    section,
-                    plot,
-                    reference: refID,
-                    timestamp: serverTimestamp()
+                    name, section, plot, reference: refID, timestamp: serverTimestamp()
                 });
-
-                document.getElementById('main-content').style.display = 'none';
-                document.getElementById('success-msg').style.display = 'block';
-            } catch (e) {
-                alert("Archive connection failed.");
-                btn.innerText = "Submit";
-                btn.disabled = false;
-            }
+                alert("Success! Your registration is being processed.");
+                location.reload();
+            } catch (e) { alert("Error connecting to Archive."); }
         };
+
+        // Load History Data
+        window.loadHistory = () => {
+            const filter = document.getElementById('filterSection').value;
+            const ledgerTable = document.getElementById('ledger-data');
+            const loadingMsg = document.getElementById('loading-msg');
+            
+            onValue(ref(db, 'registrations'), (snapshot) => {
+                ledgerTable.innerHTML = "";
+                loadingMsg.style.display = "none";
+                const data = snapshot.val();
+                
+                if (data) {
+                    Object.values(data).reverse().forEach(entry => {
+                        if (filter === "All" || entry.section === filter) {
+                            const row = `<tr>
+                                <td><span class="tag-plot">#${entry.plot}</span></td>
+                                <td>${entry.name}</td>
+                                <td style="color:#777">${entry.section}</td>
+                            </tr>`;
+                            ledgerTable.innerHTML += row;
+                        }
+                    });
+                } else {
+                    ledgerTable.innerHTML = "<tr><td colspan='3'>No records found.</td></tr>";
+                }
+            });
+        };
+
+        // Initial Load
+        loadHistory();
     </script>
 </body>
 </html>
