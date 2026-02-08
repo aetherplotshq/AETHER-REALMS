@@ -4,122 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K ARCHIVE | REGISTRY PORTAL</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Home Page Match Styles */
         body {
             margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+            background-color: #ffffff; /* একদম সাদা ব্যাকগ্রাউন্ড */
+            color: #000000;
             font-family: 'Times New Roman', serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px;
         }
 
-        .main-container {
-            background-color: #fff;
-            width: 90%;
-            max-width: 500px;
-            padding: 50px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            border: 1px solid #ddd;
+        .portal-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            border: 0.5px solid #000000; /* হোমপেজের মতো চিকন কালো বর্ডার */
+            background: #ffffff;
             text-align: center;
         }
 
         h2 {
-            letter-spacing: 5px;
+            font-weight: 300;
+            letter-spacing: 10px;
             text-transform: uppercase;
-            font-weight: 400;
-            margin-bottom: 30px;
-            color: #000;
+            margin-bottom: 40px;
+            font-size: 20px;
         }
 
-        .form-group {
+        .input-group {
             text-align: left;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
-        .form-group label {
-            display: block;
-            font-size: 10px;
+        .input-group label {
+            font-size: 9px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-            color: #666;
+            color: #000;
+            display: block;
+            margin-bottom: 8px;
         }
 
         input, select {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ccc;
-            font-size: 14px;
+            border: 0.5px solid #000;
+            background: transparent;
+            color: #000;
+            font-size: 12px;
             box-sizing: border-box;
             outline: none;
             font-family: 'Times New Roman', serif;
+            letter-spacing: 1px;
         }
 
         .btn-submit {
             width: 100%;
             padding: 15px;
-            background-color: #000;
+            background: #000;
             color: #fff;
-            border: none;
+            border: 0.5px solid #000;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 5px;
             cursor: pointer;
             margin-top: 20px;
-            transition: 0.3s;
+            font-size: 11px;
+            transition: 0.4s;
         }
 
         .btn-submit:hover {
-            background-color: #333;
+            background: #fff;
+            color: #000;
         }
 
-        .back-home {
+        .back-btn {
             display: block;
-            margin-top: 25px;
-            font-size: 11px;
-            color: #999;
+            margin-top: 30px;
+            font-size: 10px;
+            color: #666;
             text-decoration: none;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        /* Success Message */
-        #success-box {
+        /* Success Display */
+        #success-msg {
             display: none;
-            padding: 40px 20px;
+            padding: 20px 0;
         }
 
-        #success-box i {
-            font-size: 40px;
-            color: #27ae60;
-            margin-bottom: 20px;
-        }
-
-        /* Responsive Mobile */
+        /* Responsive */
         @media (max-width: 480px) {
-            .main-container {
+            .portal-box {
                 padding: 30px 20px;
-                width: 95%;
+                border: none; /* মোবাইলে ক্লিন লুকের জন্য বর্ডার তুলে দেওয়া হয়েছে */
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <div id="portal-form">
-            <h2>Portal Registry</h2>
+    <div class="portal-box">
+        <div id="main-content">
+            <h2>Portal</h2>
             
-            <div class="form-group">
+            <div class="input-group">
                 <label>Full Name</label>
-                <input type="text" id="userName" placeholder="Enter Legal Name">
+                <input type="text" id="name" placeholder="ENTER NAME">
             </div>
 
-            <div class="form-group">
-                <label>Section Selection</label>
-                <select id="userSection">
+            <div class="input-group">
+                <label>Archive Section</label>
+                <select id="section">
                     <option value="Millionaires Club">Millionaires Club</option>
                     <option value="Social Creators">Social Creators</option>
                     <option value="Gaming Realm">Gaming Realm</option>
@@ -131,24 +131,23 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label>Plot Number</label>
-                <input type="text" id="userPlot" placeholder="e.g. 15" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <div class="input-group">
+                <label>Plot Identifier</label>
+                <input type="text" id="plot" placeholder="PLOT NUMBER" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             </div>
 
-            <div class="form-group">
-                <label>Transaction ID / Ref</label>
-                <input type="text" id="userRef" placeholder="Payment Reference">
+            <div class="input-group">
+                <label>Payment / Reference Link</label>
+                <input type="text" id="ref" placeholder="TXID OR URL">
             </div>
 
-            <button class="btn-submit" onclick="submitData()">Submit Application</button>
-            <a href="index.html" class="back-home">[ BACK TO HOME ]</a>
+            <button class="btn-submit" onclick="sendToArchive()">Submit</button>
+            <a href="index.html" class="back-btn">[ Return Home ]</a>
         </div>
 
-        <div id="success-box">
-            <i class="fas fa-check-circle"></i>
-            <h3 style="letter-spacing: 3px;">SUBMITTED</h3>
-            <p style="font-size: 13px; color: #666;">Your registration data has been sent to the K Archive ledger.</p>
+        <div id="success-msg">
+            <h2 style="color: #000;">Recorded</h2>
+            <p style="font-size: 11px; letter-spacing: 2px; line-height: 2;">YOUR DATA HAS BEEN TRANSMITTED TO THE K ARCHIVE SOVEREIGN LEDGER.</p>
             <button class="btn-submit" onclick="location.reload()">New Entry</button>
         </div>
     </div>
@@ -156,39 +155,38 @@
     <script type="module">
         import { db, ref, push, serverTimestamp } from "./firebase-config.js";
 
-        window.submitData = async () => {
-            const name = document.getElementById('userName').value;
-            const section = document.getElementById('userSection').value;
-            const plot = document.getElementById('userPlot').value;
-            const refID = document.getElementById('userRef').value;
+        window.sendToArchive = async () => {
+            const name = document.getElementById('name').value;
+            const section = document.getElementById('section').value;
+            const plot = document.getElementById('plot').value;
+            const refID = document.getElementById('ref').value;
 
             if(!name || !plot) {
-                alert("Please complete the required fields.");
+                alert("Please fill in the identity and plot identifier.");
                 return;
             }
 
             const btn = document.querySelector('.btn-submit');
-            btn.innerText = "PROCESSING...";
+            btn.innerText = "Processing...";
             btn.disabled = true;
 
             try {
-                await push(ref(db, 'portal_submissions'), {
-                    fullName: name,
-                    section: section,
-                    plotNumber: plot,
+                await push(ref(db, 'registrations'), {
+                    name,
+                    section,
+                    plot,
                     reference: refID,
-                    status: "Pending",
                     timestamp: serverTimestamp()
                 });
 
-                document.getElementById('portal-form').style.display = 'none';
-                document.getElementById('success-box').style.display = 'block';
+                document.getElementById('main-content').style.display = 'none';
+                document.getElementById('success-msg').style.display = 'block';
             } catch (e) {
-                alert("Error connecting to Archive. Try again.");
-                btn.innerText = "Submit Application";
+                alert("Archive connection failed.");
+                btn.innerText = "Submit";
                 btn.disabled = false;
             }
         };
     </script>
 </body>
-</html> 
+</html>
