@@ -218,48 +218,47 @@
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
         window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied!"); };
 
-        /* সংশোধিত ডাউনলোড লজিক: ১০০% নিখুঁত ছবি ক্যাপচার করার জন্য */
+        /* আপডেটেড ডাউনলোড ফাংশন: 
+           ১. ডিসপ্লেতে কোনো নড়াচড়া (Shift) হবে না।
+           ২. হাই-কোয়ালিটি (Scale 3) ইমেজ জেনারেট হবে।
+        */
         window.downloadMap = () => {
             const btn = event.target;
             const originalText = btn.innerText;
-            btn.innerText = "CAPTURING FULL MAP...";
+            btn.innerText = "CAPTURING HD...";
             
             const area = document.getElementById('capture-area');
             const containers = document.querySelectorAll('.row-container');
-            
-            // সাময়িকভাবে স্লাইডার মোড বন্ধ করে সব প্লট দৃশ্যমান করা
-            containers.forEach(el => {
-                el.style.overflow = 'visible';
-                el.style.display = 'block';
-            });
 
-            html2canvas(area, {
+            // ছবির কোয়ালিটি এবং পজিশন ঠিক রাখার জন্য বিশেষ অপশন
+            const options = {
                 backgroundColor: "#000",
-                scale: 2,             // ছবি ফাটা রোধে স্কেল ২
+                scale: 3,             // কোয়ালিটি ৩ গুণ বাড়িয়ে দেওয়া হয়েছে
                 useCORS: true,
-                width: 1400,          // ১০০ প্লটের ফুল উইডথ ১৪০০পিক্সেল ধরা হয়েছে
-                windowWidth: 1400,
+                allowTaint: true,
                 scrollX: 0,
-                scrollY: -window.scrollY,
-                x: area.getBoundingClientRect().left + window.scrollX
-            }).then(canvas => {
+                scrollY: 0,
+                windowWidth: 1450,    // পুরো ক্যানভাসের সঠিক উইডথ ফিক্স করা হয়েছে
+                onclone: (clonedDoc) => {
+                    // ক্লোন করা ডকুমেন্টে স্লাইডারগুলো খুলে দেওয়া হয়েছে যাতে পূর্ণ ছবি আসে
+                    const clonedContainers = clonedDoc.querySelectorAll('.row-container');
+                    clonedContainers.forEach(c => {
+                        c.style.overflow = 'visible';
+                        c.style.display = 'block';
+                    });
+                }
+            };
+
+            html2canvas(area, options).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Millionaires_Club_Full_Map.png';
+                link.download = 'Millionaires_Club_HD_Map.png';
                 link.href = canvas.toDataURL("image/png", 1.0);
                 link.click();
-                
                 btn.innerText = originalText;
-                // লেআউট আবার আগের (স্লাইডিং) অবস্থায় ফিরিয়ে আনা
-                containers.forEach(el => {
-                    el.style.overflow = 'auto';
-                    el.style.display = 'flex';
-                });
             }).catch(err => {
-                btn.innerText = "DOWNLOAD FAILED";
-                containers.forEach(el => {
-                    el.style.overflow = 'auto';
-                    el.style.display = 'flex';
-                });
+                console.error(err);
+                btn.innerText = "DOWNLOAD ERROR";
+                setTimeout(() => btn.innerText = originalText, 2000);
             });
         };
     </script>
