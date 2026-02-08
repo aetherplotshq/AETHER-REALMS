@@ -22,7 +22,7 @@
         .live-counter span { display: block; font-size: 10px; letter-spacing: 2px; font-weight: bold; }
         .count-val { color: var(--gold); font-size: 14px !important; }
 
-        /* Header Animation */
+        /* Header Area */
         .header-area { text-align: center; padding-top: 150px; margin-bottom: 50px; }
         .section-name { 
             font-size: clamp(35px, 8vw, 85px); 
@@ -35,7 +35,7 @@
         .sub-slogan { font-size: 14px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; opacity: 0.8; }
 
         /* Grid - Fixed Center for PC & Slider for Mobile */
-        #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 20px; background: #000; }
+        #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 50px; background: #000; }
         .row-container { width: 100%; display: flex; justify-content: center; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .row-container::-webkit-scrollbar { display: none; }
         .row { display: flex; justify-content: center; gap: 15px; width: fit-content; padding: 55px 20px; border-bottom: 1px solid rgba(255,255,255,0.03); }
@@ -218,45 +218,50 @@
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
         window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied!"); };
 
-        /* সংশোধিত ডাউনলোড লজিক: 
-           ১. 'x: 0' এবং 'scrollX: 0' দিয়ে বামের কালো অংশ দূর করা হয়েছে।
-           ২. 'scale: 4' দিয়ে ছবির কোয়ালিটি আরও উন্নত করা হয়েছে।
+        /* নিখুঁত ডাউনলোড ফাংশন:
+           - Scale 4 (Ultra HD Quality)
+           - ক্যানভাস এরিয়া বাদে ডানে-বামে বা উপরে-নিচে কোনো বাড়তি স্পেস থাকবে না।
         */
         window.downloadMap = () => {
             const btn = event.target;
             const originalText = btn.innerText;
-            btn.innerText = "CAPTURING HD MAP...";
+            btn.innerText = "CAPTURING...";
             
             const area = document.getElementById('capture-area');
             
+            // গ্রিড মডুউল সমূহের পূর্ণ মাপে ছবি তোলার জন্য কনফিগারেশন
             html2canvas(area, {
                 backgroundColor: "#000",
-                scale: 4,               // আরও হাই কোয়ালিটি
+                scale: 4, 
                 useCORS: true,
                 allowTaint: true,
-                width: 1350,            // গ্রিডের পূর্ণ প্রশস্ততা ফিক্সড করা হয়েছে
-                windowWidth: 1350,
-                x: 0,                   // একদম বাম থেকে শুরু হবে
-                scrollX: 0,             // স্ক্রল থাকলেও সেটা ধরবে না
+                // গ্রিড এরিয়ার একদম সঠিক প্রশস্ততা (১৩১০ পিক্সেল আপনার ডিজাইনের জন্য আদর্শ)
+                width: 1310, 
+                height: area.scrollHeight,
+                scrollX: 0,
                 scrollY: 0,
+                x: (area.offsetWidth - 1310) / 2, // এটি গ্রিডকে মাঝখান থেকে ধরে ডানে বামের বাড়তি অংশ কেটে দেবে
                 onclone: (clonedDoc) => {
-                    // ক্লোন করা ক্যানভাসে স্লাইডার খুলে দেওয়া হচ্ছে যেন পুরোটা দেখা যায়
+                    const clonedArea = clonedDoc.getElementById('capture-area');
+                    clonedArea.style.padding = "0";
+                    clonedArea.style.margin = "0";
+                    
                     const containers = clonedDoc.querySelectorAll('.row-container');
                     containers.forEach(el => {
                         el.style.overflow = 'visible';
                         el.style.display = 'block';
-                        el.style.width = '100%';
-                        el.querySelector('.row').style.justifyContent = 'center';
+                        el.querySelector('.row').style.padding = "40px 0"; 
+                        el.querySelector('.row').style.margin = "0 auto";
                     });
                 }
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Millionaires_Club_Full_Map.png';
+                link.download = 'Millionaires_Club_Canvas.png';
                 link.href = canvas.toDataURL("image/png", 1.0);
                 link.click();
                 btn.innerText = originalText;
             }).catch(err => {
-                btn.innerText = "FAILED";
+                btn.innerText = "ERROR";
                 console.error(err);
             });
         };
