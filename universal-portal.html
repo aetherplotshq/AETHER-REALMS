@@ -3,175 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K ARCHIVE | UNIVERSAL LEDGER</title>
+    <title>K ARCHIVE | ESTATE PORTAL</title>
     <style>
-        :root { --black: #000; --white: #fff; --grey: #f8f8f8; }
-        body { margin: 0; background: var(--white); color: var(--black); font-family: 'Times New Roman', serif; padding: 20px; }
-        
-        /* Layout */
-        .portal-wrapper { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
-        
-        h2 { font-weight: 300; letter-spacing: 5px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 10px; font-size: 18px; }
+        /* একদম শুরুর সেই ক্লিন হোয়াইট অ্যান্ড ব্ল্যাক ডিজাইন */
+        body {
+            margin: 0;
+            background: #ffffff;
+            color: #000000;
+            font-family: 'Times New Roman', serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-        /* Left Side: Submission Form */
-        .submission-panel { padding: 20px; }
-        .input-group { margin-bottom: 20px; }
-        label { display: block; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; color: #666; }
-        input, select { width: 100%; padding: 12px; border: 0.5px solid #000; background: transparent; font-family: inherit; font-size: 13px; box-sizing: border-box; }
-        
-        .btn-submit { width: 100%; padding: 15px; background: #000; color: #fff; border: none; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-submit:hover { opacity: 0.8; }
+        /* হেডার সেকশন */
+        .portal-header {
+            width: 100%;
+            padding: 50px 0;
+            text-align: center;
+            border-bottom: 0.5px solid #000;
+        }
 
-        .update-notice { background: #fffbe6; border-left: 3px solid #ffe58f; padding: 15px; font-size: 11px; margin-top: 20px; line-height: 1.6; }
-        .support-link { display: inline-block; margin-top: 10px; color: #000; font-weight: bold; text-decoration: underline; }
+        .portal-header h1 {
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            font-weight: 300;
+            margin: 0;
+            font-size: 24px;
+        }
 
-        /* Right Side: Ledger/History */
-        .history-panel { padding: 20px; background: var(--grey); min-height: 500px; border: 0.5px solid #eee; }
-        .filter-area { margin-bottom: 20px; }
-        
-        .ledger-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        .ledger-table th { text-align: left; padding: 10px; border-bottom: 1px solid #ddd; text-transform: uppercase; font-size: 10px; }
-        .ledger-table td { padding: 12px 10px; border-bottom: 1px solid #eee; }
-        .tag-plot { background: #000; color: #fff; padding: 2px 6px; font-size: 10px; border-radius: 2px; }
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr; /* বামে ইনপুট, ডানে হিস্ট্রি */
+            gap: 60px;
+            padding: 60px 0;
+        }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .portal-wrapper { grid-template-columns: 1fr; }
-            body { padding: 10px; }
+        h2 {
+            font-size: 13px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        /* ফর্ম ডিজাইন */
+        .form-area input, .form-area select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 0.5px solid #000;
+            background: #fff;
+            font-family: inherit;
+            box-sizing: border-box;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: #000;
+            color: #fff;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #444;
+        }
+
+        /* নোটিশ এবং সাপোর্ট */
+        .update-fee-notice {
+            margin-top: 25px;
+            font-size: 11px;
+            line-height: 1.8;
+            color: #555;
+            padding: 15px;
+            border: 0.5px dashed #000;
+        }
+
+        .support-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #000;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        /* হিস্ট্রি টেবিল ডিজাইন */
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th {
+            text-align: left;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 12px;
+            border-bottom: 1px solid #000;
+        }
+
+        .history-table td {
+            padding: 15px 12px;
+            font-size: 14px;
+            border-bottom: 0.5px solid #eee;
+        }
+
+        .plot-id {
+            background: #000;
+            color: #fff;
+            padding: 3px 8px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        /* রেসপনসিভ */
+        @media (max-width: 850px) {
+            .container { grid-template-columns: 1fr; }
+            .portal-header h1 { font-size: 18px; letter-spacing: 6px; }
         }
     </style>
 </head>
 <body>
 
-    <div style="text-align:center; margin-bottom: 40px;">
-        <h1 style="letter-spacing: 15px; text-transform: uppercase; font-weight: 400; font-size: 24px;">K Archive Ledger</h1>
-        <p style="font-size: 10px; letter-spacing: 5px; color: #888;">OFFICIAL RECORD OF SOVEREIGN OWNERSHIP</p>
+    <div class="portal-header">
+        <h1>Estate Portal</h1>
+        <p style="font-size: 9px; letter-spacing: 3px; margin-top: 8px; color: #666;">CENTRAL ARCHIVE LEDGER</p>
     </div>
 
-    <div class="portal-wrapper">
-        
-        <div class="submission-panel">
-            <h2>Acquisition Entry</h2>
-            <div class="input-group">
-                <label>Legal Name</label>
-                <input type="text" id="name" placeholder="Full Identity">
-            </div>
-            <div class="input-group">
-                <label>Select Section</label>
-                <select id="section">
-                    <option value="Millionaires Club">Millionaires Club</option>
-                    <option value="Social Creators">Social Creators</option>
-                    <option value="Gaming Realm">Gaming Realm</option>
-                    <option value="Nations Grid">Nations Grid</option>
-                    <option value="Little Stars">Little Stars</option>
-                    <option value="Eternal Roots">Eternal Roots</option>
-                    <option value="The Union Wall">The Union Wall</option>
-                    <option value="Pet Paradise">Pet Paradise</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label>Plot Number</label>
-                <input type="text" id="plot" placeholder="e.g. 05">
-            </div>
-            <div class="input-group">
-                <label>Payment Reference</label>
-                <input type="text" id="ref" placeholder="TXID or Link">
-            </div>
-            <button class="btn-submit" onclick="submitEntry()">Submit Registration</button>
+    <div class="container">
+        <div class="form-area">
+            <h2>Registration & Update</h2>
+            <input type="text" id="p-name" placeholder="OWNER NAME / BRAND">
+            <select id="p-section">
+                <option value="Millionaires Club">Millionaires Club</option>
+                <option value="Social Creators">Social Creators</option>
+                <option value="Gaming Realm">Gaming Realm</option>
+                <option value="Nations Grid">Nations Grid</option>
+                <option value="Little Stars">Little Stars</option>
+                <option value="Eternal Roots">Eternal Roots</option>
+                <option value="The Union Wall">The Union Wall</option>
+                <option value="Pet Paradise">Pet Paradise</option>
+            </select>
+            <input type="text" id="p-plot" placeholder="PLOT NUMBER (E.G. 01)">
+            <input type="text" id="p-ref" placeholder="PAYMENT TXID / REFERENCE">
+            
+            <button class="btn-submit" onclick="submitToLedger()">Submit Entry</button>
 
-            <div class="update-notice">
-                <b>IMPORTANT NOTICE:</b><br>
-                For each information update (Logo, Name, or Link), an administrative fee of <b>$9.00 USD</b> will be charged. This ensures the immutability of the archive.
+            <div class="update-fee-notice">
+                <b>ADMINISTRATION POLICY:</b><br>
+                To maintain the integrity of the archive, any updates to plot data (Logo, Name, or Link) will incur a service fee of <b>$7.00 USD</b> per update.
                 <br>
-                <a href="https://wa.me/8801576940717" class="support-link">Contact Customer Support</a>
+                <a href="https://wa.me/8801576940717" class="support-link" target="_blank">Contact Archive Support</a>
             </div>
-            <a href="index.html" style="display:block; margin-top:20px; font-size:10px; color:#999; text-decoration:none;">[ Return Home ]</a>
+            
+            <a href="index.html" style="display:block; margin-top:30px; font-size:10px; color:#000; text-decoration:none; letter-spacing:1px;">[ ← RETURN TO HOME ]</a>
         </div>
 
-        <div class="history-panel">
+        <div class="history-area">
             <h2>Ownership History</h2>
-            <div class="filter-area">
-                <label>Filter by Section</label>
-                <select id="filterSection" onchange="loadHistory()">
-                    <option value="All">Show All Records</option>
-                    <option value="Millionaires Club">Millionaires Club</option>
-                    <option value="Social Creators">Social Creators</option>
-                    <option value="Gaming Realm">Gaming Realm</option>
-                    <option value="Nations Grid">Nations Grid</option>
-                    <option value="Little Stars">Little Stars</option>
-                    <option value="Eternal Roots">Eternal Roots</option>
-                    <option value="The Union Wall">The Union Wall</option>
-                    <option value="Pet Paradise">Pet Paradise</option>
-                </select>
-            </div>
-
-            <table class="ledger-table">
+            <table class="history-table">
                 <thead>
                     <tr>
                         <th>Plot</th>
-                        <th>Owner</th>
+                        <th>Identity</th>
                         <th>Section</th>
                     </tr>
                 </thead>
-                <tbody id="ledger-data">
+                <tbody id="ledger-content">
                     </tbody>
             </table>
-            <p id="loading-msg" style="font-size: 11px; color: #999; margin-top: 20px;">Fetching records...</p>
+            <p id="loading" style="font-size: 11px; margin-top: 20px; color: #999;">Synchronizing with ledger...</p>
         </div>
-
     </div>
 
     <script type="module">
         import { db, ref, push, onValue, serverTimestamp } from "./firebase-config.js";
 
-        // Entry Submission
-        window.submitEntry = async () => {
-            const name = document.getElementById('name').value;
-            const section = document.getElementById('section').value;
-            const plot = document.getElementById('plot').value;
-            const refID = document.getElementById('ref').value;
+        // ডাটাবেসে তথ্য পাঠানো
+        window.submitToLedger = async () => {
+            const name = document.getElementById('p-name').value;
+            const section = document.getElementById('p-section').value;
+            const plot = document.getElementById('p-plot').value;
+            const refID = document.getElementById('p-ref').value;
 
-            if(!name || !plot) return alert("Please fill all fields.");
+            if(!name || !plot) return alert("Please fill the identity and plot number.");
 
             try {
                 await push(ref(db, 'registrations'), {
                     name, section, plot, reference: refID, timestamp: serverTimestamp()
                 });
-                alert("Success! Your registration is being processed.");
+                alert("Information Submitted to Archive.");
                 location.reload();
-            } catch (e) { alert("Error connecting to Archive."); }
+            } catch(e) { alert("Ledger Connection Failed."); }
         };
 
-        // Load History Data
-        window.loadHistory = () => {
-            const filter = document.getElementById('filterSection').value;
-            const ledgerTable = document.getElementById('ledger-data');
-            const loadingMsg = document.getElementById('loading-msg');
+        // ডাটাবেস থেকে হিস্ট্রি দেখানো
+        onValue(ref(db, 'registrations'), (snapshot) => {
+            const tbody = document.getElementById('ledger-content');
+            const loading = document.getElementById('loading');
+            tbody.innerHTML = "";
+            loading.style.display = "none";
             
-            onValue(ref(db, 'registrations'), (snapshot) => {
-                ledgerTable.innerHTML = "";
-                loadingMsg.style.display = "none";
-                const data = snapshot.val();
-                
-                if (data) {
-                    Object.values(data).reverse().forEach(entry => {
-                        if (filter === "All" || entry.section === filter) {
-                            const row = `<tr>
-                                <td><span class="tag-plot">#${entry.plot}</span></td>
-                                <td>${entry.name}</td>
-                                <td style="color:#777">${entry.section}</td>
-                            </tr>`;
-                            ledgerTable.innerHTML += row;
-                        }
-                    });
-                } else {
-                    ledgerTable.innerHTML = "<tr><td colspan='3'>No records found.</td></tr>";
-                }
-            });
-        };
-
-        // Initial Load
-        loadHistory();
+            const data = snapshot.val();
+            if(data) {
+                Object.values(data).reverse().forEach(item => {
+                    tbody.innerHTML += `<tr>
+                        <td><span class="plot-id">#${item.plot}</span></td>
+                        <td>${item.name}</td>
+                        <td style="color:#666; font-size:12px;">${item.section}</td>
+                    </tr>`;
+                });
+            } else {
+                tbody.innerHTML = "<tr><td colspan='3' style='text-align:center; padding:20px; color:#999;'>No records found in ledger.</td></tr>";
+            }
+        });
     </script>
 </body>
 </html>
