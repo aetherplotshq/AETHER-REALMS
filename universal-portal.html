@@ -3,91 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K ARCHIVE | SECURED ESTATE PORTAL</title>
+    <title>K ARCHIVE | ESTATE PORTAL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --gold: #d4af37;
             --premium-black: #0a0a0a;
-            --marble: rgba(255, 255, 255, 0.05);
+            --white: #ffffff;
         }
 
         body {
             background-color: var(--premium-black);
             color: #e0e0e0;
-            font-family: 'Cinzel', serif;
+            font-family: 'Times New Roman', serif;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            cursor: crosshair;
             background-image: url('https://www.transparenttextures.com/patterns/black-marble.png');
         }
 
         .portal-wrapper {
             width: 90%;
-            max-width: 850px;
+            max-width: 600px;
             background: rgba(0, 0, 0, 0.95);
             border: 1px solid var(--gold);
-            padding: 50px;
-            box-shadow: 0 0 80px rgba(212, 175, 55, 0.15);
+            padding: 40px;
             text-align: center;
-            position: relative;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
         }
 
-        .header h1 { color: var(--gold); letter-spacing: 7px; margin: 0; font-size: 32px; }
-        .sub-header { color: #888; font-size: 12px; letter-spacing: 3px; margin-top: 10px; border-bottom: 1px solid var(--gold); padding-bottom: 20px; }
+        .header h1 { color: var(--gold); letter-spacing: 5px; margin-bottom: 30px; }
 
-        .profile-container {
-            margin: 40px 0;
-            padding: 30px;
-            background: var(--marble);
-            border-left: 5px solid var(--gold);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        /* Filtering Section */
+        .filter-box {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
         }
 
-        .member-photo {
-            width: 150px;
-            height: 150px;
-            border: 2px solid var(--gold);
-            padding: 8px;
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
             background: #000;
-            margin-bottom: 20px;
-            object-fit: cover;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-        }
-
-        .owner-name { color: var(--gold); font-size: 30px; margin: 0; text-transform: uppercase; }
-        .asset-details { color: #ccc; font-size: 14px; margin-top: 10px; font-family: 'Segoe UI', sans-serif; }
-
-        .btn-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 40px;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            font-family: serif;
         }
 
         .btn-action {
             text-decoration: none;
             color: var(--gold);
             border: 1px solid var(--gold);
-            padding: 18px;
+            padding: 15px;
+            display: block;
+            margin-top: 20px;
             font-weight: bold;
-            font-size: 13px;
             transition: 0.4s;
-            letter-spacing: 2px;
+            cursor: pointer;
+            background: none;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .btn-action:hover {
-            background: var(--gold);
-            color: black;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-        }
+        .btn-action:hover { background: var(--gold); color: #000; }
 
-        /* DIGITAL DEED (MODAL) */
+        /* Modal Overlay */
         #deedOverlay {
             display: none;
             position: fixed;
@@ -96,27 +80,63 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
+            overflow-y: auto;
+            padding: 20px 0;
         }
 
+        /* Black & White Premium Deed */
         .deed-paper {
-            background: #fffef2;
-            color: #1a1a1a;
-            width: 80%;
-            max-width: 650px;
-            padding: 60px;
-            border: 15px double #d4af37;
+            background: #fff;
+            color: #000;
+            width: 90%;
+            max-width: 700px;
+            padding: 50px;
+            border: 10px double #000;
             text-align: center;
             position: relative;
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
         }
 
-        .deed-paper h2 { font-family: 'Cinzel', serif; border-bottom: 2px solid #d4af37; display: inline-block; padding-bottom: 10px; margin-bottom: 30px; }
-        .deed-name { color: #967117; font-size: 45px; text-decoration: underline; margin: 20px 0; }
-        .seal { position: absolute; bottom: 40px; right: 40px; width: 120px; opacity: 0.9; }
+        .deed-header { border-bottom: 2px solid #000; margin-bottom: 20px; padding-bottom: 10px; }
+        .deed-header h2 { margin: 0; font-size: 28px; letter-spacing: 2px; }
+
+        .deed-photo {
+            width: 120px; height: 120px;
+            border: 2px solid #000;
+            margin: 20px auto;
+            object-fit: cover;
+            display: block;
+        }
+
+        .deed-body p { line-height: 1.8; font-size: 16px; text-align: justify; margin: 20px 0; }
+        .owner-highlight { font-size: 30px; font-weight: bold; text-decoration: underline; display: block; margin: 10px 0; }
+
+        /* Signatures & Seal */
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding: 0 20px;
+        }
+
+        .sig-box { border-top: 1px solid #000; width: 200px; padding-top: 5px; font-size: 12px; }
+        .sig-kawsar { font-family: 'Brush Script MT', cursive; font-size: 20px; }
+
+        .official-seal {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            opacity: 0.8;
+            filter: grayscale(1);
+        }
 
         @media print {
             body * { visibility: hidden; }
             #deedOverlay, #deedOverlay * { visibility: visible; }
-            #deedOverlay { position: absolute; left: 0; top: 0; }
+            #deedOverlay { position: absolute; left: 0; top: 0; padding: 0; }
+            .no-print { display: none; }
         }
     </style>
 </head>
@@ -125,58 +145,104 @@
 <div class="portal-wrapper">
     <div class="header">
         <h1>K ARCHIVE</h1>
-        <div class="sub-header">SECURED ESTATE PORTAL | VERIFIED ACCESS</div>
+        <p style="font-size: 11px; letter-spacing: 2px;">DIGITAL ASSET MANAGEMENT</p>
     </div>
 
-    <div class="profile-container">
-        <img src="MEMBER_PHOTO.jpg" alt="Owner Avatar" class="member-photo">
-        
-        <h2 id="mainName" class="owner-name">MR. WORLDWIDE</h2>
-        
-        <div class="asset-details">
-            SEKCTION: <span id="mainSection" style="color: var(--gold);">MILLIONAIRES CLUB</span> <br>
-            PLOT ID: <span id="mainPlot" style="color: var(--gold);">#007</span>
-        </div>
-        <div style="margin-top: 15px; font-size: 11px; color: var(--gold);">UPDATE FEE: $7 APPLIED</div>
+    <div class="filter-box">
+        <label>SELECT ESTATE SECTION:</label>
+        <select id="sectionSelect">
+            <option value="Millionaires Club">Millionaires Club</option>
+            <option value="Social Creators">Social Creators</option>
+            <option value="Gaming Realm">Gaming Realm</option>
+            <option value="Nations Grid">Nations Grid</option>
+            <option value="Little Stars">Little Stars</option>
+            <option value="Eternal Roots">Eternal Roots</option>
+            <option value="The Union Wall">The Union Wall</option>
+            <option value="Pet Paradise">Pet Paradise</option>
+        </select>
+
+        <label>ENTER PLOT ID:</label>
+        <select id="plotSelect">
+            <option value="#001">#001</option>
+            <option value="#002">#002</option>
+            <option value="#003">#003</option>
+            <option value="#007">#007</option>
+            <option value="#024">#024</option>
+        </select>
+
+        <button onclick="generateDeed()" class="btn-action">SEARCH & VIEW DEED</button>
     </div>
 
-    <div class="btn-grid">
-        <a href="https://wa.me/8801576940717" class="btn-action"><i class="fab fa-whatsapp"></i> CONCIERGE</a>
-        <a href="https://wa.me/8801576940717?text=I%20request%20an%20update%20for%20my%20plot%20(Fee:%20$7)" class="btn-action"><i class="fas fa-sync"></i> UPDATE ($7)</a>
-        <a href="javascript:void(0)" onclick="openDeed()" class="btn-action"><i class="fas fa-certificate"></i> VIEW DEED</a>
-        <a href="index.html" class="btn-action" style="border-color: #444; color: #444;">EXIT PORTAL</a>
-    </div>
+    <a href="https://wa.me/8801576940717" target="_blank" class="btn-action"><i class="fab fa-whatsapp"></i> CONTACT CONCIERGE</a>
+    <a href="https://wa.me/8801576940717?text=I%20want%20to%20update%20my%20info%20(Fee:%20$7)" target="_blank" class="btn-action"><i class="fas fa-sync"></i> UPDATE INFO ($7)</a>
 </div>
 
 <div id="deedOverlay">
     <div class="deed-paper">
-        <h2>DEED OF SOVEREIGNTY</h2>
-        <p style="font-style: italic;">This document officially recognizes the digital ownership of</p>
-        
-        <h1 id="deedName" class="deed-name">NAME</h1>
-        <p>In the exclusive <b><span id="deedSectionDisplay">SECTION</span></b></p>
-        <p>Plot Reference: <b><span id="deedPlotDisplay">#000</span></b></p>
+        <div class="deed-header">
+            <h2>CERTIFICATE OF OWNERSHIP</h2>
+            <small>K ARCHIVE OFFICIAL DOCUMENT</small>
+        </div>
 
-        <p style="margin-top: 40px; font-size: 14px; line-height: 1.6;">
-            The authority of <b>K ARCHIVE</b> hereby confirms that this asset is transferable and maintains permanent status within the digital realm.
-        </p>
+        <img src="MEMBER_PHOTO.jpg" id="deedMemberPhoto" class="deed-photo" alt="Member Photo">
 
-        <img src="https://cdn-icons-png.flaticon.com/512/2182/2182232.png" class="seal" alt="Official Seal">
+        <div class="deed-body">
+            <p>
+                This official document recognizes and validates that the individual known as 
+                <span id="resName" class="owner-highlight">AVAILABLE FOR ACQUISITION</span> 
+                has been granted perpetual digital sovereignty over <b>Plot <span id="resPlot">#000</span></b> 
+                within the <b><span id="resSection">EMPTY SECTION</span></b>. 
+            </p>
+            <p>
+                As part of the K ARCHIVE collective, this asset is held under the governing laws of the Archive. 
+                The holder enjoys full rights to display, link, and preserve their legacy within this allocated space. 
+                This deed is transferable only upon official administrative approval and verification.
+            </p>
+        </div>
 
-        <div style="margin-top: 50px;">
-            <button onclick="window.print()" style="padding: 10px 20px; background: #000; color: #d4af37; border: 1px solid #d4af37; cursor: pointer; font-weight: bold;">PRINT / DOWNLOAD</button>
-            <button onclick="closeDeed()" style="background: none; border: none; color: #888; cursor: pointer; display: block; margin: 10px auto;">[ CLOSE ]</button>
+        <div class="signature-section">
+            <div class="sig-box">
+                <div class="sig-kawsar">ARCHIVEKawsar</div>
+                AUTHORITY SIGNATURE
+            </div>
+            <div class="sig-box">
+                <div style="height: 25px;"></div>
+                HOLDER SIGNATURE
+            </div>
+        </div>
+
+        <img src="https://cdn-icons-png.flaticon.com/512/2182/2182232.png" class="official-seal" alt="Seal">
+
+        <div class="no-print" style="margin-top: 60px;">
+            <button onclick="window.print()" style="padding: 10px 20px; cursor: pointer; border: 1px solid #000; background: #000; color: #fff;">DOWNLOAD PDF</button>
+            <button onclick="closeDeed()" style="background:none; border:none; text-decoration: underline; margin-left: 20px; cursor:pointer;">Close</button>
         </div>
     </div>
 </div>
 
 <script>
-    function openDeed() {
-        // ওপরের ইনফরমেশনগুলো অটোমেটিক দলিলে নিয়ে যাওয়ার ম্যাজিক
-        document.getElementById('deedName').innerText = document.getElementById('mainName').innerText;
-        document.getElementById('deedSectionDisplay').innerText = document.getElementById('mainSection').innerText;
-        document.getElementById('deedPlotDisplay').innerText = document.getElementById('mainPlot').innerText;
-        
+    // বর্তমানে কোনো কাস্টমার নেই, তাই ডেটাবেস খালি। 
+    // যখন কোনো প্লট বিক্রি হবে, আপনি এই 'soldPlots' অবজেক্টে তথ্য যোগ করবেন।
+    const soldPlots = {
+        // উদাহরণ: "#007-Millionaires Club": { name: "Elon Musk", photo: "elon.jpg" }
+    };
+
+    function generateDeed() {
+        const section = document.getElementById('sectionSelect').value;
+        const plot = document.getElementById('plotSelect').value;
+        const key = plot + "-" + section;
+
+        document.getElementById('resSection').innerText = section;
+        document.getElementById('resPlot').innerText = plot;
+
+        if (soldPlots[key]) {
+            document.getElementById('resName').innerText = soldPlots[key].name;
+            document.getElementById('deedMemberPhoto').src = soldPlots[key].photo;
+        } else {
+            document.getElementById('resName').innerText = "AVAILABLE FOR ACQUISITION";
+            document.getElementById('deedMemberPhoto').src = "https://via.placeholder.com/150?text=No+Photo";
+        }
+
         document.getElementById("deedOverlay").style.display = "flex";
     }
 
