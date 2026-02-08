@@ -34,7 +34,7 @@
         @keyframes fullColorShift { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
         .sub-slogan { font-size: 14px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; opacity: 0.8; }
 
-        /* Grid - Fixed Center PC / Slide Mobile */
+        /* Grid - Fixed Center for PC & Slider for Mobile */
         #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 20px; background: #000; }
         .row-container { width: 100%; display: flex; justify-content: center; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .row-container::-webkit-scrollbar { display: none; }
@@ -45,7 +45,7 @@
         .plot-id { position: absolute; top: 8px; left: 10px; font-size: 9px !important; opacity: 0.4; }
         .status-tag { position: absolute; bottom: -25px; font-size: 9px !important; letter-spacing: 1px; color: #666; }
 
-        /* Footer - Original Details Restored */
+        /* Footer */
         .footer-container { text-align: center; padding: 60px 20px; border-top: 1px solid #222; margin-top: 50px; background: #000; }
         .footer-text { color: #555; font-size: 11px; letter-spacing: 1.5px; line-height: 1.8; max-width: 800px; margin: 0 auto; }
 
@@ -56,7 +56,7 @@
         /* Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; padding: 15px; box-sizing: border-box; }
         .card { background: #fff; color:#000; padding:40px; width:100%; max-width:550px; text-align:center; border-radius: 4px; box-sizing: border-box; }
-        .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; }
+        .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; margin-top: 15px; }
         .info-list { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); line-height: 1.8; font-size: 14px; }
         .pay-item { text-align: left; padding: 15px; background: #f7f7f7; margin-bottom: 15px; cursor: pointer; border: 1px solid #eee; }
         .pay-label { display: block; color: #888; font-size: 10px; text-transform: uppercase; margin-bottom: 5px; font-weight: bold; }
@@ -218,30 +218,48 @@
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
         window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied!"); };
 
+        /* সংশোধিত ডাউনলোড লজিক: ১০০% নিখুঁত ছবি ক্যাপচার করার জন্য */
         window.downloadMap = () => {
             const btn = event.target;
-            btn.innerText = "CAPTURING HD MAP...";
+            const originalText = btn.innerText;
+            btn.innerText = "CAPTURING FULL MAP...";
+            
             const area = document.getElementById('capture-area');
             const containers = document.querySelectorAll('.row-container');
-            containers.forEach(el => el.style.overflow = 'visible');
+            
+            // সাময়িকভাবে স্লাইডার মোড বন্ধ করে সব প্লট দৃশ্যমান করা
+            containers.forEach(el => {
+                el.style.overflow = 'visible';
+                el.style.display = 'block';
+            });
 
             html2canvas(area, {
                 backgroundColor: "#000",
-                scale: 2.5,
+                scale: 2,             // ছবি ফাটা রোধে স্কেল ২
                 useCORS: true,
-                width: 1400,
+                width: 1400,          // ১০০ প্লটের ফুল উইডথ ১৪০০পিক্সেল ধরা হয়েছে
                 windowWidth: 1400,
-                x: (area.offsetWidth - 1400) / 2
+                scrollX: 0,
+                scrollY: -window.scrollY,
+                x: area.getBoundingClientRect().left + window.scrollX
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Millionaires_Club_Map.png';
+                link.download = 'Millionaires_Club_Full_Map.png';
                 link.href = canvas.toDataURL("image/png", 1.0);
                 link.click();
-                btn.innerText = "DOWNLOAD MAP";
-                containers.forEach(el => el.style.overflow = 'auto');
-            }).catch(() => {
-                btn.innerText = "DOWNLOAD MAP";
-                containers.forEach(el => el.style.overflow = 'auto');
+                
+                btn.innerText = originalText;
+                // লেআউট আবার আগের (স্লাইডিং) অবস্থায় ফিরিয়ে আনা
+                containers.forEach(el => {
+                    el.style.overflow = 'auto';
+                    el.style.display = 'flex';
+                });
+            }).catch(err => {
+                btn.innerText = "DOWNLOAD FAILED";
+                containers.forEach(el => {
+                    el.style.overflow = 'auto';
+                    el.style.display = 'flex';
+                });
             });
         };
     </script>
