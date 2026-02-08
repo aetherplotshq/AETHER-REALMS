@@ -35,12 +35,12 @@
         .sub-slogan { font-size: 14px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; opacity: 0.8; }
 
         /* Grid - Fixed Center for PC & Slider for Mobile */
-        #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 20px; }
+        #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 20px; background: #000; }
         
         .row-container {
             width: 100%;
             display: flex;
-            justify-content: center; /* PC তে মাঝখানে রাখবে */
+            justify-content: center; 
             overflow-x: auto;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
@@ -66,21 +66,17 @@
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; padding: 15px; box-sizing: border-box; }
         .card { background: #fff; color:#000; padding:40px; width:100%; max-width:480px; text-align:center; border-radius: 4px; box-shadow: 0 0 50px rgba(255,255,255,0.1); box-sizing: border-box; }
         .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; }
-        .premium-btn:hover { background: var(--gold); }
         .info-list { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); line-height: 1.8; font-size: 14px; }
         .pay-item { text-align: left; padding: 15px; background: #f7f7f7; margin-bottom: 15px; cursor: pointer; border: 1px solid #eee; transition: 0.3s; }
-        .pay-item:hover { border-color: var(--gold); background: #fff; }
         .pay-label { display: block; color: #888; font-size: 10px; text-transform: uppercase; margin-bottom: 5px; font-weight: bold; }
         .pay-address { font-family: 'Courier New', monospace; font-size: 13px; word-break: break-all; color: #222; }
 
-        /* Mobile Adjustments */
         @media (max-width: 768px) {
             .row-container { justify-content: flex-start; }
             .top-nav { padding: 15px 20px; }
             .nav-left { gap: 8px; }
             .nav-btn { padding: 10px 12px; font-size: 9px; }
             .header-area { padding-top: 120px; }
-            .plot { width: 115px; height: 115px; }
         }
     </style>
 </head>
@@ -106,11 +102,7 @@
     <div id="capture-area"></div>
 
     <div class="footer-container">
-        <p class="footer-text">
-            <b>K ARCHIVE | MILLIONAIRES CLUB</b> © 2026. All rights reserved.<br>
-            Preserving digital culture through limited ownership. Each plot is a unique piece of internet history.<br>
-            All brand logos are trademarks of their respective owners.
-        </p>
+        <p class="footer-text"><b>K ARCHIVE | MILLIONAIRES CLUB</b> © 2026. All rights reserved.</p>
     </div>
 
     <div class="fixed-support" onclick="window.open('https://wa.me/8801576940717', '_blank')">
@@ -134,14 +126,6 @@
                 <span class="pay-label">Metamask / Trust Wallet (ETH/BNB/Polygon)</span>
                 <span class="pay-address">0x443792A4884e8e855f954ccEF910778Aff1eb78E</span>
             </div>
-            <div class="pay-item" onclick="copy('912221034')">
-                <span class="pay-label">Binance UID</span>
-                <span class="pay-address">912221034</span>
-            </div>
-            <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">
-                <span class="pay-label">USDT (TRC20 Address)</span>
-                <span class="pay-address">TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</span>
-            </div>
             <button class="premium-btn" onclick="closeModals()">CLOSE</button>
         </div>
     </div>
@@ -163,7 +147,6 @@
     <div id="celeb-overlay" style="position: fixed; top:0; left:0; width:100%; height:100%; background:#000; display:none; flex-direction:column; align-items:center; justify-content:center; z-index:10000; text-align:center;">
         <h1 style="font-size: clamp(40px, 10vw, 60px); letter-spacing: clamp(10px, 5vw, 20px); font-weight: 900; color: #fff;">SUCCESS!</h1>
         <h2 id="congrats-brand" style="font-size: clamp(20px, 5vw, 35px); color: var(--gold); margin-top: 20px;"></h2>
-        <p style="color: #444; letter-spacing: 5px; margin-top: 50px;">REGISTERING YOUR PLOT...</p>
     </div>
 
     <script type="module">
@@ -178,7 +161,6 @@
         for (let r = 0; r < 10; r++) {
             const rowWrapper = document.createElement('div');
             rowWrapper.className = 'row-container';
-            
             const row = document.createElement('div');
             row.className = 'row';
             row.style.backgroundColor = rowColors[r] + '0A';
@@ -204,9 +186,7 @@
             const brand = document.getElementById('brand-input').value;
             if(!brand) return alert("Please enter brand name.");
             try {
-                await push(ref(db, 'pending_orders/Millionaire'), {
-                    plotID: activeID, price: activePrice, brandName: brand, timestamp: serverTimestamp()
-                });
+                await push(ref(db, 'pending_orders/Millionaire'), { plotID: activeID, price: activePrice, brandName: brand, timestamp: serverTimestamp() });
                 document.getElementById('order-modal').style.display = 'none';
                 document.getElementById('final-plot-id').innerText = `#${activeID}`;
                 showCelebration(brand);
@@ -218,16 +198,12 @@
             document.getElementById('congrats-brand').innerText = name.toUpperCase();
             overlay.style.display = 'flex';
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                document.getElementById('final-modal').style.display = 'flex';
-            }, 3000);
+            setTimeout(() => { overlay.style.display = 'none'; document.getElementById('final-modal').style.display = 'flex'; }, 3000);
         }
 
         window.closeAndCelebrate = () => {
             document.getElementById('final-modal').style.display = 'none';
-            var duration = 5 * 1000;
-            var end = Date.now() + duration;
+            var duration = 5 * 1000; var end = Date.now() + duration;
             (function frame() {
               confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#FFD700', '#FF0055', '#0070FF'] });
               confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#FFD700', '#FF0055', '#0070FF'] });
@@ -237,21 +213,42 @@
 
         window.openPayment = () => document.getElementById('pay-modal').style.display = 'flex';
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        window.copy = (t) => { navigator.clipboard.writeText(t); alert("Address copied to clipboard!"); };
+        window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied!"); };
 
+        /* সবচেয়ে গুরুত্বপূর্ণ অংশ: ডাউনলোড সিস্টেম 
+           এটি মোবাইল এবং কম্পিউটারে ১০০% ফ্রেশ ক্যানভাস ক্যাপচার করবে 
+        */
         window.downloadMap = () => {
             const btn = event.target;
-            btn.innerText = "CAPTURING...";
-            html2canvas(document.getElementById('capture-area'), { 
-                backgroundColor: "#000", 
-                scale: 2,
-                windowWidth: 1200 // ফুল ক্যানভাস ক্যাপচারের জন্য ফিক্সড উইডথ
+            const originalText = btn.innerText;
+            btn.innerText = "GENERATING HD MAP...";
+            
+            const area = document.getElementById('capture-area');
+            
+            // ক্যাপচারের আগে সব রো-কে সাময়িকভাবে সেন্টারে আনা হচ্ছে যাতে ছবিতে কোনো গ্যাপ না থাকে
+            const containers = document.querySelectorAll('.row-container');
+            containers.forEach(el => el.style.overflow = 'visible');
+
+            html2canvas(area, {
+                backgroundColor: "#000",
+                scale: 3, // আরও বেশি হাই কোয়ালিটির জন্য স্কেল বাড়ানো হয়েছে
+                useCORS: true,
+                logging: false,
+                width: 1350, // ১০০টি প্লটের জন্য পারফেক্ট ফিক্সড উইডথ (১১৫px * ১০ + গ্যাপ)
+                windowWidth: 1350,
+                x: (area.offsetWidth - 1350) / 2 // ক্যানভাসকে একদম মাঝখান থেকে ক্যাপচার করবে
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Millionaires_Club_Map.png';
-                link.href = canvas.toDataURL();
+                link.download = 'Millionaires_Club_HD_Map.png';
+                link.href = canvas.toDataURL("image/png", 1.0);
                 link.click();
-                btn.innerText = "DOWNLOAD MAP";
+                btn.innerText = originalText;
+                // ক্যাপচার শেষ হলে স্টাইল আবার আগের মতো করে দেয়া
+                containers.forEach(el => el.style.overflow = 'auto');
+            }).catch(err => {
+                console.error(err);
+                btn.innerText = "DOWNLOAD FAILED";
+                containers.forEach(el => el.style.overflow = 'auto');
             });
         };
     </script>
