@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K ARCHIVE | SOVEREIGN PORTAL</title>
+    <title>K ARCHIVE | OFFICIAL DEED</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <style>
         :root {
             --gold: #d4af37;
-            --dark: #0a0a0a;
+            --silver: #C0C0C0;
+            --black: #000000;
         }
 
         body {
-            background-color: var(--dark);
+            background-color: #0a0a0a;
             color: #e0e0e0;
             font-family: 'Cinzel', serif;
             margin: 0;
@@ -22,157 +24,72 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         .portal-container {
             width: 90%;
-            max-width: 500px;
-            padding: 40px;
+            max-width: 450px;
+            padding: 30px;
             background: #111;
             border: 1px solid var(--gold);
             text-align: center;
         }
 
+        .portal-container label { font-size: 10px; letter-spacing: 2px; color: var(--silver); display: block; margin-top: 15px; }
+
         input, select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: #000;
-            border: 1px solid #333;
-            color: var(--gold);
-            font-family: 'Cinzel', serif;
-            box-sizing: border-box;
+            width: 100%; padding: 10px; margin: 8px 0;
+            background: #000; border: 1px solid #333;
+            color: var(--gold); font-family: 'Cinzel', serif;
+            box-sizing: border-box; font-size: 13px;
         }
 
         .btn-generate {
-            background: var(--gold);
-            color: #000;
-            border: none;
-            padding: 15px 30px;
-            cursor: pointer;
-            font-weight: bold;
-            letter-spacing: 2px;
-            width: 100%;
-            margin-top: 20px;
+            background: var(--gold); color: #000; border: none;
+            padding: 12px; cursor: pointer; font-weight: bold;
+            letter-spacing: 2px; width: 100%; margin-top: 20px; text-transform: uppercase;
         }
 
-        /* VINTAGE DEED STYLES */
+        /* DEED STYLES - BLACK, WHITE, SILVER & GOLD */
         #deedOverlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
-            overflow-y: auto;
-            padding: 20px 0;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.98); z-index: 9999; overflow-y: auto; padding: 20px 0;
         }
 
         .deed-paper {
-            width: 90%;
-            max-width: 850px;
-            margin: auto;
-            /* Background image from your upload */
-            background-image: url('Brown Vintage Ilustration History Project Presentation.jpg'); 
-            background-size: cover;
-            padding: 80px;
-            position: relative;
-            color: #4a3728; /* Deep vintage brown color */
-            border: 20px solid transparent;
-            border-image: url('https://www.transparenttextures.com/patterns/dark-leather.png') 30 stretch;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            width: 90%; max-width: 750px; margin: auto;
+            background: #fff; padding: 50px; position: relative;
+            color: #000; border: 15px double #000; box-shadow: 0 0 40px rgba(255,255,255,0.1);
         }
 
-        .deed-header {
-            text-align: center;
-            border-bottom: 2px solid #7a5c41;
-            margin-bottom: 30px;
-        }
+        .deed-header { text-align: center; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
+        .deed-header h1 { font-family: 'Playfair Display', serif; font-size: 30px; margin: 0; letter-spacing: 3px; color: var(--black); }
+        .deed-header p { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #555; }
 
-        .deed-header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 45px;
-            margin: 0;
-            letter-spacing: 5px;
-        }
+        .asset-logo { width: 90px; height: 90px; margin: 15px auto; border: 1px solid #000; padding: 5px; display: block; object-fit: contain; }
 
-        .asset-logo {
-            width: 120px;
-            height: 120px;
-            margin: 20px auto;
-            border: 2px solid #7a5c41;
-            padding: 5px;
-            display: block;
-            object-fit: contain;
-        }
+        .deed-content { font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.6; text-align: center; color: #333; }
+        .owner-name { font-family: 'Great Vibes', cursive; font-size: 45px; display: block; margin: 10px 0; color: #000; border-bottom: 1px solid #eee; }
 
-        .deed-content {
-            font-family: 'Playfair Display', serif;
-            font-size: 18px;
-            line-height: 1.8;
-            text-align: center;
-            font-style: italic;
-        }
+        .signatures { display: flex; justify-content: space-between; margin-top: 40px; }
+        .sig-box { border-top: 1px solid #000; width: 200px; text-align: center; font-size: 11px; padding-top: 5px; color: #000; }
+        .sig-font { font-family: 'Great Vibes', cursive; font-size: 22px; color: #000; }
 
-        .owner-name {
-            font-family: 'Great Vibes', cursive;
-            font-size: 55px;
-            display: block;
-            margin: 20px 0;
-            color: #2e1a0b;
-        }
+        .controls { margin-top: 25px; text-align: center; }
+        .btn-action { padding: 10px 20px; background: #000; color: var(--gold); border: 1px solid var(--gold); cursor: pointer; margin: 5px; font-size: 11px; letter-spacing: 1px; }
 
-        .signatures {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 60px;
-        }
-
-        .sig-box {
-            border-top: 1px solid #7a5c41;
-            width: 250px;
-            text-align: center;
-            font-size: 14px;
-            padding-top: 5px;
-        }
-
-        .sig-kawsar {
-            font-family: 'Great Vibes', cursive;
-            font-size: 28px;
-        }
-
-        .controls {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .btn-print {
-            padding: 10px 20px;
-            background: #4a3728;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            margin: 0 10px;
-        }
-
-        @media print {
-            .controls, #deedOverlay button { display: none; }
-            body { background: none; }
-            #deedOverlay { position: relative; background: none; padding: 0; }
-            .deed-paper { box-shadow: none; border: none; width: 100%; }
-        }
+        @media print { .controls { display: none; } }
     </style>
 </head>
 <body>
 
     <div class="portal-container">
-        <h2 style="color: var(--gold);">K ARCHIVE PORTAL</h2>
-        <p style="font-size: 11px;">ENTER YOUR ACQUISITION DETAILS</p>
+        <h3 style="color: var(--gold); letter-spacing: 4px; font-size: 18px;">K ARCHIVE</h3>
+        
+        <label>FULL NAME</label>
+        <input type="text" id="custName" placeholder="ENTER NAME">
 
-        <label>FULL LEGAL NAME</label>
-        <input type="text" id="custName" placeholder="Enter Name for Deed">
-
-        <label>ESTATE SECTION</label>
+        <label>SELECT SECTION</label>
         <select id="custSection">
             <option value="Millionaires Club">Millionaires Club</option>
             <option value="Social Creators">Social Creators</option>
@@ -184,54 +101,57 @@
             <option value="Pet Paradise">Pet Paradise</option>
         </select>
 
-        <label>PLOT REFERENCE NUMBER</label>
-        <input type="text" id="custPlot" placeholder="Enter Plot No. (e.g. 10000000000)">
+        <label>PLOT NUMBER (NUMBERS ONLY)</label>
+        <input type="text" id="custPlot" placeholder="e.g. 007" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
 
-        <button class="btn-generate" onclick="generateVintageDeed()">VALIDATE & GENERATE</button>
+        <button class="btn-generate" onclick="generateDeed()">VALIDATE & GENERATE</button>
     </div>
 
     <div id="deedOverlay">
-        <div class="deed-paper" id="printableDeed">
-            <div class="deed-header">
-                <h1>Deed of Sovereignty</h1>
-                <p>K ARCHIVE OFFICIAL HERITAGE DOCUMENT</p>
-            </div>
-
-            <img src="default-logo.png" id="dynamicLogo" class="asset-logo">
-
-            <div class="deed-content">
-                Know all men by these presents, that the digital title and perpetual rights 
-                of the sovereign asset designated as <b>Plot #<span id="displayPlot"></span></b> within the 
-                renowned <b><span id="displaySection"></span></b> jurisdiction, is hereby officially 
-                bestowed upon and recorded in the name of:
-
-                <span class="owner-name" id="displayName">NAME HERE</span>
-
-                This grant is absolute, recognizing the holder's eternal status within the K Archive. 
-                The holder maintains the right to archive, link, and preserve their identity 
-                under the governing authority of the ARCHIVE.
-            </div>
-
-            <div class="signatures">
-                <div class="sig-box">
-                    <div class="sig-kawsar">ARCHIVEKawsar</div>
-                    Governing Authority
+        <div id="deed-to-download">
+            <div class="deed-paper">
+                <div class="deed-header">
+                    <h1>Deed of Sovereignty</h1>
+                    <p>K Archive Official Heritage & Digital Title</p>
                 </div>
-                <div class="sig-box">
-                    <div class="sig-kawsar" id="displaySig">Holder Name</div>
-                    Registered Holder
+
+                <img src="default-logo.png" id="dynamicLogo" class="asset-logo">
+
+                <div class="deed-content">
+                    This document certifies that the digital title of <b>Plot #<span id="displayPlot"></span></b> 
+                    in the <b><span id="displaySection"></span></b> jurisdiction has been recorded to:
+
+                    <span class="owner-name" id="displayName">NAME HERE</span>
+
+                    This grant is recognized as a lifetime asset under the <b>K Archive Governing Authority</b>. 
+                    The holder maintains perpetual rights to this designated grid within the archive.
+                </div>
+
+                <div class="signatures">
+                    <div class="sig-box">
+                        <div class="sig-font">ARCHIVEKawsar</div>
+                        AUTHORITY SIGNATURE
+                    </div>
+                    <div class="sig-box">
+                        <div class="sig-font" id="displaySig">Holder Name</div>
+                        HOLDER SIGNATURE
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px; font-size: 9px; color: #999;">
+                    VERIFIED SECURE | SYNC ID: <span id="syncID"></span>
                 </div>
             </div>
+        </div>
 
-            <div class="controls">
-                <button class="btn-print" onclick="window.print()"><i class="fas fa-print"></i> PRINT DEED</button>
-                <button class="btn-print" onclick="closeDeed()">CLOSE</button>
-            </div>
+        <div class="controls">
+            <button class="btn-action" onclick="downloadPDF()"><i class="fas fa-download"></i> DOWNLOAD DEED</button>
+            <button class="btn-action" onclick="window.print()"><i class="fas fa-print"></i> PRINT</button>
+            <button class="btn-action" onclick="closeDeed()" style="background: #555;">CLOSE</button>
         </div>
     </div>
 
     <script>
-        // সেকশন অনুযায়ী লোগো সেট করার জন্য অবজেক্ট
         const sectionLogos = {
             "Millionaires Club": "logos/millionaire.png",
             "Social Creators": "logos/creator.png",
@@ -243,28 +163,41 @@
             "Pet Paradise": "logos/pets.png"
         };
 
-        function generateVintageDeed() {
+        function generateDeed() {
             const name = document.getElementById('custName').value.trim();
             const section = document.getElementById('custSection').value;
             const plot = document.getElementById('custPlot').value.trim();
 
             if(!name || !plot) {
-                alert("Please fill in all details to validate sovereignty.");
+                alert("Please enter Name and Plot number.");
                 return;
             }
 
-            // দলিলে ডেটা বসানো
             document.getElementById('displayName').innerText = name;
             document.getElementById('displaySig').innerText = name;
             document.getElementById('displaySection').innerText = section;
             document.getElementById('displayPlot').innerText = plot;
             
-            // লোগো পরিবর্তন লজিক
+            // Sync ID generator for accuracy
+            document.getElementById('syncID').innerText = 'K' + Math.floor(100000 + Math.random() * 900000);
+
             if(sectionLogos[section]) {
                 document.getElementById('dynamicLogo').src = sectionLogos[section];
             }
 
             document.getElementById('deedOverlay').style.display = 'flex';
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById('deed-to-download');
+            const opt = {
+                margin: 0.5,
+                filename: 'K_Archive_Deed.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
         }
 
         function closeDeed() {
