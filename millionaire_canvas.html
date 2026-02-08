@@ -218,47 +218,46 @@
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
         window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied!"); };
 
-        /* আপডেটেড ডাউনলোড ফাংশন: 
-           ১. ডিসপ্লেতে কোনো নড়াচড়া (Shift) হবে না।
-           ২. হাই-কোয়ালিটি (Scale 3) ইমেজ জেনারেট হবে।
+        /* সংশোধিত ডাউনলোড লজিক: 
+           ১. 'x: 0' এবং 'scrollX: 0' দিয়ে বামের কালো অংশ দূর করা হয়েছে।
+           ২. 'scale: 4' দিয়ে ছবির কোয়ালিটি আরও উন্নত করা হয়েছে।
         */
         window.downloadMap = () => {
             const btn = event.target;
             const originalText = btn.innerText;
-            btn.innerText = "CAPTURING HD...";
+            btn.innerText = "CAPTURING HD MAP...";
             
             const area = document.getElementById('capture-area');
-            const containers = document.querySelectorAll('.row-container');
-
-            // ছবির কোয়ালিটি এবং পজিশন ঠিক রাখার জন্য বিশেষ অপশন
-            const options = {
+            
+            html2canvas(area, {
                 backgroundColor: "#000",
-                scale: 3,             // কোয়ালিটি ৩ গুণ বাড়িয়ে দেওয়া হয়েছে
+                scale: 4,               // আরও হাই কোয়ালিটি
                 useCORS: true,
                 allowTaint: true,
-                scrollX: 0,
+                width: 1350,            // গ্রিডের পূর্ণ প্রশস্ততা ফিক্সড করা হয়েছে
+                windowWidth: 1350,
+                x: 0,                   // একদম বাম থেকে শুরু হবে
+                scrollX: 0,             // স্ক্রল থাকলেও সেটা ধরবে না
                 scrollY: 0,
-                windowWidth: 1450,    // পুরো ক্যানভাসের সঠিক উইডথ ফিক্স করা হয়েছে
                 onclone: (clonedDoc) => {
-                    // ক্লোন করা ডকুমেন্টে স্লাইডারগুলো খুলে দেওয়া হয়েছে যাতে পূর্ণ ছবি আসে
-                    const clonedContainers = clonedDoc.querySelectorAll('.row-container');
-                    clonedContainers.forEach(c => {
-                        c.style.overflow = 'visible';
-                        c.style.display = 'block';
+                    // ক্লোন করা ক্যানভাসে স্লাইডার খুলে দেওয়া হচ্ছে যেন পুরোটা দেখা যায়
+                    const containers = clonedDoc.querySelectorAll('.row-container');
+                    containers.forEach(el => {
+                        el.style.overflow = 'visible';
+                        el.style.display = 'block';
+                        el.style.width = '100%';
+                        el.querySelector('.row').style.justifyContent = 'center';
                     });
                 }
-            };
-
-            html2canvas(area, options).then(canvas => {
+            }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Millionaires_Club_HD_Map.png';
+                link.download = 'Millionaires_Club_Full_Map.png';
                 link.href = canvas.toDataURL("image/png", 1.0);
                 link.click();
                 btn.innerText = originalText;
             }).catch(err => {
+                btn.innerText = "FAILED";
                 console.error(err);
-                btn.innerText = "DOWNLOAD ERROR";
-                setTimeout(() => btn.innerText = originalText, 2000);
             });
         };
     </script>
