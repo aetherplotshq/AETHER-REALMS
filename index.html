@@ -42,7 +42,6 @@
         .portal-link {
             position: absolute; right: 50px; top: 85px; font-size: 10px; 
             letter-spacing: 4px; font-weight: bold; text-decoration: none; color: black; border-bottom: 1px solid var(--black);
-            cursor: pointer;
         }
 
         .rr-logo-container { position: relative; width: 50px; height: 60px; }
@@ -50,6 +49,14 @@
         .k-front { top: 0; left: 0; z-index: 2; }
         .k-back { top: 10px; left: 10px; opacity: 0.15; z-index: 1; }
         .brand-subtitle { font-size: 11px; letter-spacing: 14px; font-weight: 300; margin-top: 15px; color: var(--black); text-transform: uppercase; }
+
+        /* Responsive Nav */
+        @media (max-width: 768px) {
+            .nav-bar { height: 140px; }
+            .buy-trigger { left: 20px; top: 60px; font-size: 8px; letter-spacing: 2px; }
+            .portal-link { right: 20px; top: 60px; font-size: 8px; letter-spacing: 2px; }
+            .brand-subtitle { font-size: 8px; letter-spacing: 6px; }
+        }
 
         /* Payment Drawer */
         #payment-drawer {
@@ -76,19 +83,10 @@
         .title { font-size: 32px; font-weight: 100; letter-spacing: 18px; text-transform: uppercase; margin-bottom: 15px; }
         .sub-desc { font-size: 11px; letter-spacing: 3px; color: #999; margin-bottom: 40px; font-style: italic; }
         
-        .btn-enter { padding: 18px 80px; border: 0.5px solid var(--black); text-decoration: none; color: var(--black); font-size: 10px; letter-spacing: 6px; transition: 0.4s; text-transform: uppercase; cursor: pointer; background: transparent; }
+        .btn-enter { padding: 18px 80px; border: 0.5px solid var(--black); text-decoration: none; color: var(--black); font-size: 10px; letter-spacing: 6px; transition: 0.4s; text-transform: uppercase; }
         .btn-enter:hover { background: var(--black); color: var(--white); }
 
-        /* License Application Modal Styles */
-        #license-modal { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.98); z-index: 9000; align-items: center; justify-content: center;
-        }
-        .license-card { background: #fff; padding: 40px; width: 90%; max-width: 400px; text-align: center; }
-        .license-card input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ddd; box-sizing: border-box; font-family: serif; }
-        .license-btn { width: 100%; padding: 18px; background: #000; color: #fff; border: none; letter-spacing: 3px; cursor: pointer; font-weight: bold; }
-
-        /* Social Buttons */
+        /* Buttons Fix */
         .support-btn, .twitter-btn { 
             position: fixed; bottom: 40px; width: 45px; height: 45px; 
             border: 0.5px solid var(--black); border-radius: 50%; display: flex; 
@@ -106,18 +104,6 @@
             border-top: 1px solid #f0f0f0; display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
         }
         @media (max-width: 850px) { .footer { grid-template-columns: 1fr; padding: 80px 5%; } }
-
-        .footer-left h3 { font-size: 14px; letter-spacing: 6px; margin-bottom: 40px; font-weight: bold; }
-        .gov-item { margin-bottom: 30px; font-size: 12px; line-height: 1.8; letter-spacing: 1px; }
-        .gov-item b { color: var(--black); display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; }
-
-        .footer-right { border-left: 1px solid #eee; padding-left: 50px; }
-        @media (max-width: 850px) { .footer-right { border-left: none; padding-left: 0; border-top: 1px solid #eee; padding-top: 40px; } }
-        
-        .step-box { margin-bottom: 30px; }
-        .step-num { font-family: serif; font-style: italic; font-size: 20px; color: var(--black); margin-right: 15px; }
-        .step-text { font-size: 11px; letter-spacing: 1px; color: #555; }
-        
         .copyright { grid-column: 1 / -1; margin-top: 80px; font-size: 10px; letter-spacing: 4px; opacity: 0.6; text-align: center; border-top: 1px solid #fafafa; padding-top: 40px; }
 
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; transition: opacity 0.8s; }
@@ -136,7 +122,7 @@
     <div id="cursor-outline"></div>
 
     <header class="nav-bar">
-        <div class="portal-link interactive" onclick="toggleLicenseModal()">LICENSE APPLICATION</div>
+        <a href="portal.html" class="portal-link interactive">LICENSE APPLICATION</a>
         <div class="buy-trigger interactive" onclick="toggleDrawer()">ACQUISITION</div>
         
         <div class="rr-logo-container interactive">
@@ -163,50 +149,37 @@
         <button onclick="toggleDrawer()" style="margin-top: 40px; border: none; background: none; cursor: pointer; letter-spacing: 3px; font-size: 9px; border-bottom: 1px solid #000;">[ CLOSE ]</button>
     </div>
 
-    <div id="license-modal">
-        <div class="license-card">
-            <h2 style="font-size:12px; letter-spacing:4px; margin-bottom:20px;">ESTATE LICENSE APPLICATION</h2>
-            <p style="font-size:10px; color:red; margin-bottom:20px;">ONE-TIME LICENSE FEE: $70</p>
-            <input type="text" id="cust-name" placeholder="YOUR FULL NAME">
-            <input type="number" id="cust-plot" placeholder="PLOT ID (e.g. 77)">
-            <p style="font-size:10px; color:#888; margin: 15px 0;">Apply and contact via WhatsApp for payment and verification.</p>
-            <button class="license-btn" onclick="submitLicenseRequest()">APPLY & SEND</button>
-            <p onclick="toggleLicenseModal()" style="cursor:pointer; font-size:9px; margin-top:20px; text-decoration:underline; opacity:0.5;">CLOSE</p>
-        </div>
-    </div>
-
     <section class="snap-section"><div class="reveal active"><span class="label">Elite Tier</span><h2 class="title">Millionaires Club</h2><p class="sub-desc">Exclusive 7-tier glowing estates for the world's summit.</p><a href="millionaire_canvas.html" class="btn-enter interactive">Enter Estate</a></div></section>
     <section class="snap-section"><div class="reveal"><span class="label">Identity</span><h2 class="title">Social Creators</h2><p class="sub-desc">Heritage plots for influencers with 1M+ legacy.</p><a href="creator_canvas.html" class="btn-enter interactive">Claim Space</a></div></section>
     <section class="snap-section"><div class="reveal"><span class="label">Leaderboard</span><h2 class="title">Gaming Realm</h2><p class="sub-desc">Where professional rank meets eternal digital sovereignty.</p><a href="gaming_canvas.html" class="btn-enter interactive">View Rank</a></div></section>
     <section class="snap-section"><div class="reveal"><span class="label">Geography</span><h2 class="title">Nations Grid</h2><p class="sub-desc">195,000 plots allocated by sovereign national borders.</p><a href="nations_canvas.html" class="btn-enter interactive">Explore Nations</a></div></section>
-    <section class="snap-section"><div class="reveal"><span class="label">Next Gen</span><h2 class="title">Little Stars</h2><p class="sub-desc">Digital legacy for children. Immortalize their first steps with name & photo.</p><a href="children_canvas.html" class="btn-enter interactive">Store Memory</a></div></section>
-    <section class="snap-section"><div class="reveal"><span class="label">Heritage</span><h2 class="title">Eternal Roots</h2><p class="sub-desc">A royal tribute to parents and ancestors. Classically preserved forever.</p><a href="parents_canvas.html" class="btn-enter interactive">Honour Now</a></div></section>
-    <section class="snap-section"><div class="reveal"><span class="label">Romance</span><h2 class="title">The Union Wall</h2><p class="sub-desc">Celebrate eternal love. Dedicated space for couples and milestones.</p><a href="couples_canvas.html" class="btn-enter interactive">Join Souls</a></div></section>
-    <section class="snap-section"><div class="reveal"><span class="label">Companions</span><h2 class="title">Pet Paradise</h2><p class="sub-desc">Because loyalty deserves a place in the archive. For our silent friends.</p><a href="pets_canvas.html" class="btn-enter interactive">Enter Paradise</a></div></section>
+    <section class="snap-section"><div class="reveal"><span class="label">Next Gen</span><h2 class="title">Little Stars</h2><p class="sub-desc">Digital legacy for children. Immortalize their first steps.</p><a href="children_canvas.html" class="btn-enter interactive">Store Memory</a></div></section>
+    <section class="snap-section"><div class="reveal"><span class="label">Heritage</span><h2 class="title">Eternal Roots</h2><p class="sub-desc">A royal tribute to parents and ancestors. Classically preserved.</p><a href="parents_canvas.html" class="btn-enter interactive">Honour Now</a></div></section>
+    <section class="snap-section"><div class="reveal"><span class="label">Romance</span><h2 class="title">The Union Wall</h2><p class="sub-desc">Celebrate eternal love. Dedicated space for couples.</p><a href="couples_canvas.html" class="btn-enter interactive">Join Souls</a></div></section>
+    <section class="snap-section"><div class="reveal"><span class="label">Companions</span><h2 class="title">Pet Paradise</h2><p class="sub-desc">Because loyalty deserves a place in the archive.</p><a href="pets_canvas.html" class="btn-enter interactive">Enter Paradise</a></div></section>
 
-    <section class="snap-section" style="background: #fafafa; border-top: 1px solid #eee;">
+    <section class="snap-section" style="background: #fafafa;">
         <div class="reveal">
-            <span class="label">Official Activation</span>
-            <h2 class="title">Estate License</h2>
-            <p class="sub-desc">Get your shareable digital license to prove your sovereign ownership. <b>Fee: $70</b></p>
-            <div class="btn-enter interactive" onclick="toggleLicenseModal()">Request License</div>
+            <span class="label">Authentication</span>
+            <h2 class="title">Sovereign License</h2>
+            <p class="sub-desc">Secure your official shareable license. <b>Fee: $70</b></p>
+            <a href="portal.html" class="btn-enter interactive">Get Licensed</a>
         </div>
     </section>
 
     <footer class="footer">
         <div class="footer-left reveal">
             <h3>ESTATE GOVERNANCE</h3>
-            <div class="gov-item"><b>• Renewal Policy</b>One-time lifetime renewal fee of $365 is mandatory. No recurring costs ever.</div>
-            <div class="gov-item"><b>• Data Modification</b>$7 administrative fee for media, name or link updates.</div>
-            <div class="gov-item"><b>• Service Window</b>Concierge active 24h: Thursday, Friday, Saturday.</div>
+            <div class="gov-item"><b>• Renewal Policy</b>One-time lifetime renewal fee of $365.</div>
+            <div class="gov-item"><b>• Data Modification</b>$7 administrative fee for updates.</div>
+            <div class="gov-item"><b>• Service Window</b>Concierge active 24h: Thursday to Saturday.</div>
         </div>
 
         <div class="footer-right reveal">
             <h3>ACQUISITION STEPS</h3>
             <div class="step-box"><span class="step-num">01</span><span class="step-text">Complete payment via the Acquisition Drawer.</span></div>
-            <div class="step-box"><span class="step-num">02</span><span class="step-text">Prepare 4K Photo, Display Name, and Target URL.</span></div>
-            <div class="step-box"><span class="step-num">03</span><span class="step-text">Submit assets to WhatsApp Support for verification.</span></div>
-            <div class="step-box"><span class="step-num">04</span><span class="step-text">Live sync completed within 2-4 hours post-approval.</span></div>
+            <div class="step-box"><span class="step-num">02</span><span class="step-text">Submit assets to WhatsApp Support for verification.</span></div>
+            <div class="step-box"><span class="step-num">03</span><span class="step-text">Live sync completed within 2-4 hours post-approval.</span></div>
         </div>
 
         <div class="copyright">© 2026 K ARCHIVE. OWNED BY <b>KAWSAR</b>. ALL RIGHTS RESERVED.</div>
@@ -232,34 +205,14 @@
         function toggleDrawer() { document.getElementById('payment-drawer').classList.toggle('open'); }
         function copyV(text) { navigator.clipboard.writeText(text); alert("Copied: " + text); }
 
-        // License Modal Functions
-        function toggleLicenseModal() {
-            const modal = document.getElementById('license-modal');
-            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-        function submitLicenseRequest() {
-            const name = document.getElementById('cust-name').value;
-            const plot = document.getElementById('cust-plot').value;
-            if(!name || !plot) { alert("Please fill all fields."); return; }
-            
-            const msg = `Hello K Archive, I am applying for the Official Estate License.%0AName: ${name}%0APlot ID: ${plot}%0AStatus: $70 Fee Ready.`;
-            window.open(`https://wa.me/8801576940717?text=${msg}`, '_blank');
-            toggleLicenseModal();
-        }
-
         // Loader logic
         window.addEventListener("load", () => {
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('fade-out');
-            }, 1000);
+            setTimeout(() => { document.getElementById('loader').classList.add('fade-out'); }, 1000);
         });
 
         // Intersection Observer for Reveal
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
