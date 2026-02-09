@@ -11,7 +11,7 @@
         :root { --gold: #9E7E45; --white: #ffffff; }
         body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; touch-action: pan-x pan-y; }
 
-        /* Navigation */
+        /* Navigation (Hobuho Copied) */
         .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 1px solid #222; box-sizing: border-box; }
         .nav-left { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
         .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 12px 20px; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
@@ -25,7 +25,7 @@
         /* Header Area */
         .header-area { text-align: center; padding-top: 150px; margin-bottom: 50px; }
         .section-name { 
-            font-size: clamp(30px, 7vw, 75px); 
+            font-size: clamp(35px, 8vw, 85px); 
             letter-spacing: 12px; text-transform: uppercase; font-weight: 900; 
             background: linear-gradient(90deg, #FFD700, #FFB800, #FF8C00, #FF4500, #FF0055, #D400FF, #7A00FF, #0070FF, #00C3FF, #00FFCC); 
             background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
@@ -34,39 +34,35 @@
         @keyframes fullColorShift { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
         .sub-slogan { font-size: 14px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; opacity: 0.8; }
 
-        /* Eiffel Tower Structure */
+        /* Pyramid Grid - Fix 100x100 Plots */
         #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 100px; background: #000; }
-        .tower-structure { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .pyramid-wrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; }
         
-        .row { display: flex; justify-content: center; gap: 8px; margin-bottom: 5px; }
+        .row { display: flex; justify-content: center; gap: 10px; width: 100%; }
         
         .plot { 
             background: rgba(0,0,0,0.8); 
-            border: 1.5px solid var(--r-col); 
+            border: 2px solid var(--r-col); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             transition: 0.4s; position: relative; cursor: pointer; 
-            width: 80px; height: 80px; 
-            box-shadow: 0 0 8px var(--r-col); flex-shrink: 0;
+            width: 100px; height: 100px; /* Fixed 100x100 */
+            box-shadow: 0 0 10px var(--r-col); flex-shrink: 0;
         }
-        .plot:hover { transform: scale(1.2) rotate(2deg); border-color: #fff; z-index: 100; box-shadow: 0 0 25px #fff; background: #111; }
-        .plot span { font-size: 11px; font-weight: bold; color: #fff; }
-        .plot-id { position: absolute; top: 6px; left: 8px; font-size: 8px !important; opacity: 0.4; color: var(--gold) !important; }
+        .plot:hover { transform: scale(1.1); border-color: #fff; z-index: 100; box-shadow: 0 0 30px #fff; }
+        .plot span { font-size: 14px; font-weight: bold; color: #fff; }
+        .plot-id { position: absolute; top: 8px; left: 10px; font-size: 9px !important; opacity: 0.4; }
+        .status-tag { position: absolute; bottom: 8px; font-size: 8px !important; letter-spacing: 1px; color: #666; }
 
-        /* Footer & Modals (Original) */
-        .footer-container { text-align: center; padding: 60px 20px; border-top: 1px solid #222; margin-top: 50px; background: #000; }
-        .footer-text { color: #555; font-size: 11px; letter-spacing: 1.5px; line-height: 1.8; max-width: 800px; margin: 0 auto; }
-        .fixed-support { position: fixed; bottom: 30px; left: 30px; z-index: 5000; background: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .fixed-support svg { width: 24px; height: 24px; fill: #000; }
-
+        /* Modal & Footer (Hobuho Copied from your file) */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; padding: 15px; box-sizing: border-box; }
-        .card { background: #fff; color:#000; padding:40px; width:100%; max-width:550px; text-align:center; box-sizing: border-box; }
+        .card { background: #fff; color:#000; padding:40px; width:100%; max-width:550px; text-align:center; border-radius: 4px; box-sizing: border-box; }
         .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; margin-top: 15px; }
 
-        @media (max-width: 768px) {
-            .plot { width: 55px; height: 55px; }
-            .plot span { font-size: 9px; }
-            .header-area { padding-top: 120px; }
-        }
+        .footer-container { text-align: center; padding: 60px 20px; border-top: 1px solid #222; margin-top: 50px; background: #000; }
+        .footer-text { color: #555; font-size: 11px; letter-spacing: 1.5px; line-height: 1.8; max-width: 800px; margin: 0 auto; }
+
+        .fixed-support { position: fixed; bottom: 30px; left: 30px; z-index: 5000; background: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .fixed-support svg { width: 24px; height: 24px; fill: #000; }
     </style>
 </head>
 <body>
@@ -74,8 +70,8 @@
     <div class="top-nav">
         <div class="nav-left">
             <button class="nav-btn" onclick="downloadMap()">DOWNLOAD MAP</button>
-            <button class="nav-btn" onclick="window.location.href='index.html'">BACK</button>
-            <button class="nav-btn pay-gateway-btn" onclick="openPayment()">PAYMENT</button>
+            <button class="nav-btn" onclick="window.location.href='index.html'">BACK TO HOME</button>
+            <button class="nav-btn pay-gateway-btn" onclick="openPayment()">PAYMENT GATEWAY</button>
         </div>
         <div class="live-counter">
             <span>AVAILABLE: <span class="count-val">100</span></span>
@@ -84,11 +80,11 @@
 
     <div class="header-area">
         <h1 class="section-name">Social Creators</h1>
-        <div class="sub-slogan">The Eiffel Tower of Digital Identity</div>
+        <div class="sub-slogan">The Sovereign Pyramid of Influence</div>
     </div>
     
     <div id="capture-area">
-        <div class="tower-structure" id="eiffel-grid">
+        <div class="pyramid-wrapper" id="pyramid-grid">
             </div>
     </div>
 
@@ -100,7 +96,7 @@
         <div class="card">
             <h2 id="disp-id" style="font-size:11px; letter-spacing:4px; color:var(--gold);">PLOT ACQUISITION</h2>
             <h1 id="disp-price" style="font-size: 45px; margin: 10px 0;">$0,000</h1>
-            <input type="text" id="brand-input" placeholder="ENTER BRAND NAME" style="width:100%; padding:20px; border:1px solid #ddd; text-align:center; font-size:16px; margin:20px 0; outline: none; box-sizing: border-box;">
+            <input type="text" id="brand-input" placeholder="ENTER YOUR BRAND NAME" style="width:100%; padding:20px; border:1px solid #ddd; text-align:center; font-size:16px; margin:20px 0; outline: none; box-sizing: border-box;">
             <button class="premium-btn" onclick="submitOrder()">SUBMIT REQUEST</button>
             <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:20px; opacity:0.5; text-decoration: underline;">BACK TO MAP</p>
         </div>
@@ -108,7 +104,7 @@
 
     <div id="pay-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 5px; margin-bottom: 30px;">PAYMENT GATEWAY</h2>
+            <h2 style="letter-spacing: 5px; margin-bottom: 30px; font-size: 18px;">PAYMENT GATEWAY</h2>
             <p>Binance UID: 912221034</p>
             <p>USDT (TRC20): TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</p>
             <button class="premium-btn" onclick="closeModals()">CLOSE</button>
@@ -120,38 +116,44 @@
     </div>
 
     <script>
-        const grid = document.getElementById('eiffel-grid');
-        const colors = ['#FFD700', '#FFB800', '#FF8C00', '#FF4500', '#D400FF', '#0070FF', '#00FFCC'];
+        const grid = document.getElementById('pyramid-grid');
+        const colors = ['#FFD700', '#FFB800', '#FF8C00', '#FF4500', '#FF0055', '#D400FF', '#7A00FF', '#0070FF', '#00C3FF', '#00FFCC'];
         
-        // Eiffel Shape Pattern: 1, 2, 2, 3, 3, 4, 4, 10, 12, 14, 15, 15, 15 (Total 100 approx)
-        const towerPattern = [1, 2, 2, 3, 3, 4, 4, 10, 12, 14, 15, 15, 15];
+        // Pyramid Row Logic: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 9 (Sum: 100)
+        const rowStructure = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 9];
         let currentPlot = 1;
 
-        towerPattern.forEach((count, rowIndex) => {
+        rowStructure.forEach((plotCount, rowIndex) => {
             const row = document.createElement('div');
             row.className = 'row';
             
-            for(let i=0; i<count; i++) {
-                if(currentPlot > 100) break;
+            // Row Price Logic: First plot of row determines row price
+            let rowPrice;
+            if (currentPlot <= 50) {
+                rowPrice = 1599 - ((currentPlot - 1) * 50);
+            } else {
+                rowPrice = 1599 - (49 * 50); // Fixed at 50th plot price
+            }
 
-                let price;
-                if(currentPlot <= 50) {
-                    price = 3500 - ((currentPlot - 1) * 50);
-                } else {
-                    price = 3500 - (49 * 50); // Fixed at 50th plot price
-                }
+            for(let i=0; i < plotCount; i++) {
+                if(currentPlot > 100) break;
 
                 const plot = document.createElement('div');
                 plot.className = 'plot';
                 plot.style.setProperty('--r-col', colors[rowIndex % colors.length]);
-                plot.innerHTML = `<span class="plot-id">#${currentPlot}</span><span>$${price}</span>`;
                 
-                const pID = currentPlot;
-                const pPrice = price;
+                plot.innerHTML = `
+                    <span class="plot-id">#${currentPlot}</span>
+                    <span>$${rowPrice}</span>
+                    <span class="status-tag">AVAILABLE</span>
+                `;
+                
+                const thisID = currentPlot;
+                const thisPrice = rowPrice;
                 
                 plot.onclick = () => {
-                    document.getElementById('disp-id').innerText = `PLOT #${pID} ACQUISITION`;
-                    document.getElementById('disp-price').innerText = `$${pPrice.toLocaleString()}`;
+                    document.getElementById('disp-id').innerText = `PLOT #${thisID} ACQUISITION`;
+                    document.getElementById('disp-price').innerText = `$${thisPrice.toLocaleString()}`;
                     document.getElementById('order-modal').style.display = 'flex';
                 };
 
@@ -163,19 +165,21 @@
 
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function openPayment() { document.getElementById('pay-modal').style.display = 'flex'; }
+        
         function submitOrder() {
             const brand = document.getElementById('brand-input').value;
             if(!brand) return alert("Enter Brand Name");
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            alert("Request sent for " + brand);
+            alert("Request Submitted!");
             closeModals();
         }
 
         function downloadMap() {
-            const btn = event.target; btn.innerText = "CAPTURING...";
+            const btn = event.target;
+            btn.innerText = "CAPTURING...";
             html2canvas(document.getElementById('capture-area'), { backgroundColor: "#000", scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Social_Creators_Eiffel.png';
+                link.download = 'Social_Creators_Pyramid.png';
                 link.href = canvas.toDataURL();
                 link.click();
                 btn.innerText = "DOWNLOAD MAP";
