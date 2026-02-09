@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LICENSE APPLICATION | K ARCHIVE</title>
+    <style>
+        body { font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f9f9f9; margin: 0; }
+        .card { width: 400px; border: 2px solid #000; padding: 30px; background: #fff; box-shadow: 10px 10px 0px #000; }
+        h2 { text-transform: uppercase; letter-spacing: 3px; font-size: 18px; border-bottom: 2px solid #000; padding-bottom: 10px; text-align: center; }
+        label { display: block; font-size: 10px; font-weight: bold; margin-top: 15px; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #000; box-sizing: border-box; font-family: inherit; }
+        .btn { width: 100%; padding: 15px; background: #000; color: #fff; border: none; margin-top: 25px; cursor: pointer; letter-spacing: 2px; font-weight: bold; }
+        .btn:hover { background: #FCD535; color: #000; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>License Request</h2>
+        <label>BRAND NAME</label>
+        <input type="text" id="b-name" placeholder="Enter Brand Name">
+        
+        <label>SECTION PURCHASED</label>
+        <select id="b-section">
+            <option>Millionaire Club</option>
+            <option>Social Creator</option>
+            <option>Gaming Realm</option>
+        </select>
+
+        <label>PLOT NUMBER</label>
+        <input type="text" id="b-plot" placeholder="e.g. Block-01, Plot-99">
+
+        <label>PLOT PRICE (USD)</label>
+        <input type="text" id="b-price" placeholder="e.g. $99">
+
+        <button class="btn" onclick="submitRequest()">SUBMIT & DOWNLOAD DATA</button>
+    </div>
+
+    <script>
+        function submitRequest() {
+            const name = document.getElementById('b-name').value;
+            const sect = document.getElementById('b-section').value;
+            const plot = document.getElementById('b-plot').value;
+            const price = document.getElementById('b-price').value;
+
+            if(!name || !plot || !price) return alert("All fields are required.");
+
+            // Excel (CSV) Download
+            const csv = "Brand,Section,Plot,Price,Date\n" + `"${name}","${sect}","${plot}","${price}","${new Date().toLocaleString()}"`;
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `License_Req_${name}.csv`;
+            a.click();
+
+            alert("Request Submitted! Excel data downloaded to your computer.");
+            window.location.href = `https://wa.me/8801576940717?text=New License Request: ${name}`;
+        }
+    </script>
+</body>
+</html>
