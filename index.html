@@ -158,6 +158,15 @@
     <section class="snap-section"><div class="reveal"><span class="label">Romance</span><h2 class="title">The Union Wall</h2><p class="sub-desc">Celebrate eternal love. Dedicated space for couples.</p><a href="couples_canvas.html" class="btn-enter interactive">Join Souls</a></div></section>
     <section class="snap-section"><div class="reveal"><span class="label">Companions</span><h2 class="title">Pet Paradise</h2><p class="sub-desc">Because loyalty deserves a place in the archive.</p><a href="pets_canvas.html" class="btn-enter interactive">Enter Paradise</a></div></section>
 
+    <section class="snap-section" style="background: #fafafa;">
+        <div class="reveal">
+            <span class="label">Authentication</span>
+            <h2 class="title">Sovereign License</h2>
+            <p class="sub-desc">Secure your official shareable license. <b>Fee: $70</b></p>
+            <a href="portal.html" class="btn-enter interactive">Get Licensed</a>
+        </div>
+    </section>
+
     <footer class="footer">
         <div class="footer-left reveal">
             <h3>ESTATE GOVERNANCE</h3>
@@ -185,32 +194,29 @@
     </a>
 
     <script>
-        // গেটকিপার লজিক: মেম্বার কি না চেক করবে
-        window.addEventListener("load", () => {
-            const user = localStorage.getItem('kUser');
-            if (!user) {
-                // লগইন না থাকলে portal.html-এ চলে যাবে
-                window.location.href = 'portal.html';
-            } else {
-                // থাকলে সাইট দেখাবে
-                setTimeout(() => { document.getElementById('loader').classList.add('fade-out'); }, 1000);
-            }
-        });
-
+        // Smooth Cursor
         const outline = document.getElementById('cursor-outline');
         document.addEventListener('mousemove', (e) => {
             outline.style.left = e.clientX + 'px';
             outline.style.top = e.clientY + 'px';
         });
 
+        // Toggle Drawer
         function toggleDrawer() { document.getElementById('payment-drawer').classList.toggle('open'); }
         function copyV(text) { navigator.clipboard.writeText(text); alert("Copied: " + text); }
 
+        // Loader logic
+        window.addEventListener("load", () => {
+            setTimeout(() => { document.getElementById('loader').classList.add('fade-out'); }, 1000);
+        });
+
+        // Intersection Observer for Reveal
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+        // Interactive hover
         document.querySelectorAll('.interactive').forEach(el => {
             el.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
