@@ -86,14 +86,14 @@
         .btn-enter { padding: 18px 80px; border: 0.5px solid var(--black); text-decoration: none; color: var(--black); font-size: 10px; letter-spacing: 6px; transition: 0.4s; text-transform: uppercase; }
         .btn-enter:hover { background: var(--black); color: var(--white); }
 
-        /* Responsive Titles */
-        @media (max-width: 768px) {
-            .title { font-size: 20px; letter-spacing: 8px; }
-            .label { letter-spacing: 5px; }
-            .btn-enter { padding: 15px 40px; font-size: 8px; }
-        }
+        /* Certificate Modal & Section Style */
+        .cert-section { background: #fafafa; border-top: 1px solid #eee; padding: 100px 20px; text-align: center; scroll-snap-align: center; }
+        .cert-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); display: none; align-items: center; justify-content: center; z-index: 9000; }
+        .cert-card { background: #fff; padding: 40px; width: 90%; max-width: 450px; text-align: center; border-radius: 4px; }
+        .cert-input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ddd; box-sizing: border-box; font-family: 'Times New Roman', serif; outline: none; }
+        .cert-submit { width: 100%; padding: 18px; background: #000; color: #fff; border: none; letter-spacing: 3px; font-weight: bold; cursor: pointer; margin-top: 15px; }
 
-        /* Support Button */
+        /* Support & Twitter Buttons */
         .support-btn { 
             position: fixed; bottom: 40px; left: 40px; width: 45px; height: 45px; 
             border: 0.5px solid var(--black); border-radius: 50%; display: flex; 
@@ -101,7 +101,6 @@
         }
         .support-btn svg { fill: var(--black); width: 20px; }
 
-        /* Twitter (X) Button - NEWLY ADDED */
         .twitter-btn { 
             position: fixed; bottom: 40px; right: 40px; width: 45px; height: 45px; 
             border: 0.5px solid var(--black); border-radius: 50%; display: flex; 
@@ -137,8 +136,6 @@
         .loader-logo { font-size: 80px; font-weight: 900; color: var(--gold); animation: pulse 2s infinite; }
         .fade-out { opacity: 0; pointer-events: none; }
         @keyframes pulse { 0%, 100% { transform: scale(0.9); opacity: 0.5; } 50% { transform: scale(1); opacity: 1; } }
-
-        #redirect-popup { display: none; position: fixed; bottom: 30px; right: 30px; background: var(--black); color: var(--white); padding: 15px 25px; border-radius: 4px; z-index: 99999; font-size: 11px; border-left: 5px solid var(--gold); }
     </style>
 </head>
 <body>
@@ -178,16 +175,6 @@
         <button onclick="toggleDrawer()" style="margin-top: 40px; border: none; background: none; cursor: pointer; letter-spacing: 3px; font-size: 9px; border-bottom: 1px solid #000;">[ CLOSE ]</button>
     </div>
 
-    <div id="redirect-popup">NOTICE: Requested page not found. Redirected to Homepage.</div>
-
-    <a href="https://wa.me/8801576940717" target="_blank" class="support-btn interactive">
-        <svg viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
-    </a>
-
-    <a href="https://x.com/ARCHIVEKAWSAR" target="_blank" class="twitter-btn interactive">
-        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-    </a>
-
     <section class="snap-section"><div class="reveal active"><span class="label">Elite Tier</span><h2 class="title">Millionaires Club</h2><p class="sub-desc">Exclusive 7-tier glowing estates for the world's summit.</p><a href="millionaire_canvas.html" class="btn-enter interactive">Enter Estate</a></div></section>
     <section class="snap-section"><div class="reveal"><span class="label">Identity</span><h2 class="title">Social Creators</h2><p class="sub-desc">Heritage plots for influencers with 1M+ legacy.</p><a href="creator_canvas.html" class="btn-enter interactive">Claim Space</a></div></section>
     <section class="snap-section"><div class="reveal"><span class="label">Leaderboard</span><h2 class="title">Gaming Realm</h2><p class="sub-desc">Where professional rank meets eternal digital sovereignty.</p><a href="gaming_canvas.html" class="btn-enter interactive">View Rank</a></div></section>
@@ -196,6 +183,25 @@
     <section class="snap-section"><div class="reveal"><span class="label">Heritage</span><h2 class="title">Eternal Roots</h2><p class="sub-desc">A royal tribute to parents and ancestors. Classically preserved forever.</p><a href="parents_canvas.html" class="btn-enter interactive">Honour Now</a></div></section>
     <section class="snap-section"><div class="reveal"><span class="label">Romance</span><h2 class="title">The Union Wall</h2><p class="sub-desc">Celebrate eternal love. Dedicated space for couples and milestones.</p><a href="couples_canvas.html" class="btn-enter interactive">Join Souls</a></div></section>
     <section class="snap-section"><div class="reveal"><span class="label">Companions</span><h2 class="title">Pet Paradise</h2><p class="sub-desc">Because loyalty deserves a place in the archive. For our silent friends.</p><a href="pets_canvas.html" class="btn-enter interactive">Enter Paradise</a></div></section>
+
+    <section class="cert-section reveal">
+        <span class="label">Legality</span>
+        <h2 class="title">Sovereign Deed</h2>
+        <p class="sub-desc">Official ownership certificate with lifetime validation archive. <b>Fee: $70</b></p>
+        <button class="btn-enter interactive" onclick="openCertRequest()">Request License</button>
+    </section>
+
+    <div id="cert-modal" class="cert-modal">
+        <div class="cert-card">
+            <h2 style="font-size:11px; letter-spacing:4px; color:var(--black); margin-bottom:20px;">CERTIFICATE APPLICATION</h2>
+            <p style="font-size:9px; color:red; margin-bottom:20px; letter-spacing:1px;">ONE-TIME REGISTRATION FEE: $70</p>
+            <input type="text" id="req-name" class="cert-input" placeholder="FULL LEGAL NAME">
+            <input type="text" id="req-plot" class="cert-input" placeholder="PLOT ID (e.g. #77)">
+            <p style="font-size:10px; color:#888; margin: 15px 0;">Submit details and proceed to WhatsApp for payment verification.</p>
+            <button class="cert-submit" onclick="submitCertRequest()">SUBMIT & CONTACT</button>
+            <p onclick="closeCertRequest()" style="cursor:pointer; font-size:9px; margin-top:20px; text-decoration:underline; opacity:0.5;">CANCEL</p>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="footer-left reveal">
@@ -216,6 +222,14 @@
         <div class="copyright">© 2026 K ARCHIVE. OWNED BY <b>KAWSAR</b>. ALL RIGHTS RESERVED.</div>
     </footer>
 
+    <a href="https://wa.me/8801576940717" target="_blank" class="support-btn interactive">
+        <svg viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
+    </a>
+
+    <a href="https://x.com/ARCHIVEKAWSAR" target="_blank" class="twitter-btn interactive">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+
     <script>
         // Smooth Cursor
         const outline = document.getElementById('cursor-outline');
@@ -227,6 +241,18 @@
         // Toggle Drawer
         function toggleDrawer() { document.getElementById('payment-drawer').classList.toggle('open'); }
         function copyV(text) { navigator.clipboard.writeText(text); alert("Copied: " + text); }
+
+        // Certificate Functions
+        function openCertRequest() { document.getElementById('cert-modal').style.display = 'flex'; }
+        function closeCertRequest() { document.getElementById('cert-modal').style.display = 'none'; }
+        function submitCertRequest() {
+            const name = document.getElementById('req-name').value;
+            const plot = document.getElementById('req-plot').value;
+            if(!name || !plot) return alert("Please fill all fields.");
+            const msg = `Hello K Archive, I am applying for the Sovereign Deed.%0AName: ${name}%0APlot ID: ${plot}%0AStatus: $70 Payment Ready.`;
+            window.open(`https://wa.me/8801576940717?text=${msg}`, '_blank');
+            closeCertRequest();
+        }
 
         // Loader logic
         window.addEventListener("load", () => {
