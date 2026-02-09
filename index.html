@@ -101,7 +101,18 @@
         }
         .support-btn svg { fill: var(--black); width: 20px; }
 
-        /* Footer - YOUR ORIGINAL STYLE */
+        /* Twitter (X) Button - NEWLY ADDED */
+        .twitter-btn { 
+            position: fixed; bottom: 40px; right: 40px; width: 45px; height: 45px; 
+            border: 0.5px solid var(--black); border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; z-index: 2500; background: #fff;
+            transition: 0.3s;
+        }
+        .twitter-btn svg { fill: var(--black); width: 18px; }
+        .twitter-btn:hover { background: var(--black); }
+        .twitter-btn:hover svg { fill: var(--white); }
+
+        /* Footer */
         .footer { 
             background: var(--white); padding: 120px 8%; scroll-snap-align: end; 
             border-top: 1px solid #f0f0f0; display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
@@ -171,6 +182,10 @@
 
     <a href="https://wa.me/8801576940717" target="_blank" class="support-btn interactive">
         <svg viewBox="0 0 24 24"><path d="M12.004 2C6.48 2 2 6.48 2 12C2 13.59 2.37 15.12 3.08 16.46L2 22L7.69 20.91C8.99 21.61 10.45 22 12.004 22C17.524 22 22.004 17.52 22.004 12C22.004 6.48 17.524 2 12.004 2ZM12.004 20.18C10.634 20.18 9.334 19.83 8.194 19.22L7.854 19.04L4.544 19.67L5.194 16.46L4.994 16.14C4.294 15.01 3.924 13.72 3.924 12.38C3.924 7.91 7.554 4.28 12.024 4.28C16.494 4.28 20.124 7.91 20.124 12.38C20.124 16.85 16.474 20.18 12.004 20.18Z"/></svg>
+    </a>
+
+    <a href="https://x.com/ARCHIVEKAWSAR" target="_blank" class="twitter-btn interactive">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
     </a>
 
     <section class="snap-section"><div class="reveal active"><span class="label">Elite Tier</span><h2 class="title">Millionaires Club</h2><p class="sub-desc">Exclusive 7-tier glowing estates for the world's summit.</p><a href="millionaire_canvas.html" class="btn-enter interactive">Enter Estate</a></div></section>
