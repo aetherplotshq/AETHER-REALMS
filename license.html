@@ -2,128 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LICENSE APPLICATION | K ARCHIVE</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root { --black: #000; --gold: #FCD535; --white: #fff; }
-        body { 
-            margin: 0; padding: 20px; font-family: 'Courier New', Courier, monospace; 
-            background: var(--white); display: flex; justify-content: center; align-items: center; min-height: 100vh;
-        }
-        .form-card { 
-            width: 100%; max-width: 450px; border: 3px solid #000; padding: 30px; 
-            background: #fff; box-shadow: 12px 12px 0px #000; text-align: left;
-        }
-        .header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-        h1 { font-size: 18px; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
-        
-        label { display: block; font-size: 11px; font-weight: bold; margin-top: 15px; text-transform: uppercase; }
-        input, select { 
-            width: 100%; padding: 12px; margin-top: 5px; border: 2px solid #000; 
-            box-sizing: border-box; font-family: inherit; font-size: 14px; outline: none;
-        }
-
-        .submit-btn { 
-            width: 100%; padding: 15px; background: var(--black); color: var(--white); 
-            border: none; font-weight: bold; margin-top: 25px; cursor: pointer; 
-            letter-spacing: 2px; text-transform: uppercase;
-        }
-        .submit-btn:hover { background: var(--gold); color: var(--black); }
-
-        .back-home { 
-            display: block; margin-top: 20px; text-align: center; color: #666; 
-            font-size: 12px; text-decoration: underline; cursor: pointer;
-        }
-
-        /* সাকসেস মেসেজ স্টাইল */
-        #success-msg { display: none; text-align: center; }
+        body { font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #fff; }
+        .box { width: 400px; padding: 40px; border: 3px solid #000; box-shadow: 12px 12px 0px #000; background: #fff; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #000; box-sizing: border-box; outline: none; }
+        .btn { width: 100%; padding: 15px; background: #000; color: #fff; border: none; cursor: pointer; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
+        .btn:hover { background: #FCD535; color: #000; }
+        #success-view { display: none; text-align: center; }
+        h2 { letter-spacing: 2px; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; text-align: center; }
+        label { font-size: 10px; font-weight: bold; display: block; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="form-card" id="form-container">
-        <div id="application-form">
-            <div class="header">
-                <h1>License Application</h1>
-            </div>
+    <div class="box" id="form-view">
+        <h2>LICENSE REQUEST</h2>
+        <label>BRAND NAME</label>
+        <input type="text" id="brand" placeholder="e.g. ROLEX">
+        <label>SELECT SECTION</label>
+        <select id="section">
+            <option>Millionaire Club</option>
+            <option>Social Creator</option>
+            <option>Gaming Realm</option>
+            <option>Nations Grid</option>
+            <option>Little Stars</option>
+            <option>Eternal Roots</option>
+            <option>Union Wall</option>
+            <option>Pet Paradise</option>
+        </select>
+        <label>PLOT NUMBER (NUMBERS ONLY)</label>
+        <input type="text" id="plot" placeholder="e.g. 45" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        <label>PRICE PAID (USD)</label>
+        <input type="text" id="price" placeholder="e.g. 99" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        <button class="btn" onclick="processApplication()">Submit & Download</button>
+    </div>
 
-            <label>1. Brand/Owner Name</label>
-            <input type="text" id="brand-name" placeholder="ENTER NAME">
-
-            <label>2. Section Purchased</label>
-            <select id="section-type">
-                <option value="Millionaire Club">Millionaire Club</option>
-                <option value="Social Creator">Social Creator</option>
-                <option value="Gaming Realm">Gaming Realm</option>
-                <option value="Nations Grid">Nations Grid</option>
-                <option value="Little Stars">Little Stars</option>
-                <option value="Eternal Roots">Eternal Roots</option>
-                <option value="Union Wall">Union Wall</option>
-                <option value="Pet Paradise">Pet Paradise</option>
-            </select>
-
-            <label>3. Plot Number (Numbers Only)</label>
-            <input type="text" id="plot-no" placeholder="e.g. 102" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-
-            <label>4. Plot Price (USD - Numbers Only)</label>
-            <input type="text" id="plot-price" placeholder="e.g. 99" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-
-            <button class="submit-btn" onclick="handleSubmit()">Submit</button>
-            <a href="index.html" class="back-home">Back to Home</a>
-        </div>
-
-        <div id="success-msg">
-            <h2 style="color: green;">CONGRATULATIONS!</h2>
-            <p>Your application has been submitted successfully.</p>
-            <p style="font-weight: bold; color: #d32f2f;">LICENSE FEE: $70</p>
-            <hr>
-            <p style="font-size: 13px;">Please click below to send your request to our Customer Service on WhatsApp.</p>
-            <button class="submit-btn" id="wa-send-btn">SEND MESSAGE TO SERVICE</button>
-            <a href="index.html" class="back-home">Return to Home</a>
-        </div>
+    <div class="box" id="success-view">
+        <h2 style="color: green;">CONGRATULATIONS!</h2>
+        <p style="font-weight: bold; color: #d32f2f; font-size: 18px;">LICENSE FEE: $70</p>
+        <hr>
+        <p style="font-size: 12px;">Data downloaded successfully. Click below to notify our Service Center.</p>
+        <button class="btn" onclick="sendToWhatsApp()">SEND TO SERVICE</button>
+        <p onclick="window.location.href='index.html'" style="text-decoration: underline; cursor: pointer; margin-top: 20px; font-size: 11px;">Back to Home</p>
     </div>
 
     <script>
-        function handleSubmit() {
-            const brand = document.getElementById('brand-name').value;
-            const section = document.getElementById('section-type').value;
-            const plot = document.getElementById('plot-no').value;
-            const price = document.getElementById('plot-price').value;
+        function processApplication() {
+            const brand = document.getElementById('brand').value;
+            const plot = document.getElementById('plot').value;
+            const price = document.getElementById('price').value;
+            const sect = document.getElementById('section').value;
 
-            if(!brand || !plot || !price) {
-                alert("Please fill all details correctly.");
-                return;
-            }
+            if(!brand || !plot || !price) { alert("Please fill all information correctly."); return; }
 
-            // ১. ডাটা ডাউনলোড (CSV/Excel)
-            const csv = "Brand,Section,Plot,Price,Date\n" + `"${brand}","${section}","${plot}","${price}","${new Date().toLocaleString()}"`;
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `License_Req_${brand}.csv`;
-            a.click();
+            // ১. ডাটা ডাউনলোড
+            const csvContent = `Brand Name: ${brand}\nSection: ${sect}\nPlot Number: ${plot}\nPrice Paid: ${price}\nDate: ${new Date().toLocaleString()}`;
+            const blob = new Blob([csvContent], { type: 'text/plain' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `License_Request_${brand}.txt`;
+            link.click();
 
-            // ২. ফর্ম লুকিয়ে অভিনন্দন জানানো
-            document.getElementById('application-form').style.display = 'none';
-            document.getElementById('success-msg').style.display = 'block';
+            // ২. সাকসেস ভিউ
+            setTimeout(() => {
+                document.getElementById('form-view').style.display = 'none';
+                document.getElementById('success-view').style.display = 'block';
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            }, 500);
+        }
 
-            // ৩. রঙিন কাগজ ছিটানো (Confetti)
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-
-            // ৪. হোয়াটসঅ্যাপ বাটন সেটআপ
-            const waBtn = document.getElementById('wa-send-btn');
-            const message = `Hello K Archive Service, I have applied for a License.\n\nBrand: ${brand}\nSection: ${section}\nPlot: ${plot}\nPrice: $${price}\n\nI am ready to pay the $70 License Fee. Please guide me for payment.`;
-            
-            waBtn.onclick = function() {
-                window.open(`https://wa.me/8801576940717?text=${encodeURIComponent(message)}`, '_blank');
-                // মেসেজ সেন্ড বাটনে ক্লিক করলে ৫ সেকেন্ড পর হোম পেজে নিয়ে যাবে
-                setTimeout(() => { window.location.href = 'index.html'; }, 5000);
-            };
+        function sendToWhatsApp() {
+            const brand = document.getElementById('brand').value;
+            const msg = `Hello K Archive, I've applied for a License for ${brand}. Ready to pay $70.`;
+            window.open(`https://wa.me/8801576940717?text=${encodeURIComponent(msg)}`, '_blank');
         }
     </script>
 </body>
