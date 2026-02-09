@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SOCIAL CREATORS | K ARCHIVE</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        :root { --gold: #FCD535; --white: #ffffff; --bg: #000; }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; touch-action: pan-x pan-y; }
+
+        /* Navigation */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 1px solid #222; box-sizing: border-box; }
+        .nav-left { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 12px 20px; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .nav-btn:hover { background: #fff; color: #000; border-color: #fff; }
+        .pay-gateway-btn { border-color: var(--gold) !important; color: var(--gold) !important; font-weight: bold; }
+
+        .live-counter { text-align: right; border-left: 2px solid var(--gold); padding-left: 15px; }
+        .live-counter span { display: block; font-size: 10px; letter-spacing: 2px; font-weight: bold; }
+        .count-val { color: var(--gold); font-size: 14px !important; }
+
+        /* Header Area */
+        .header-area { text-align: center; padding-top: 150px; margin-bottom: 30px; }
+        .section-name { 
+            font-size: clamp(30px, 6vw, 70px); 
+            letter-spacing: 10px; text-transform: uppercase; font-weight: 900; 
+            background: linear-gradient(90deg, #FFD700, #FFB800, #FF8C00, #FCD535); 
+            background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            animation: fullColorShift 8s linear infinite; margin-bottom: 10px; 
+        }
+        @keyframes fullColorShift { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
+        .sub-slogan { font-size: 12px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; opacity: 0.8; }
+
+        /* Pyramid Grid Layout */
+        #capture-area { 
+            display: flex; flex-direction: column; align-items: center; 
+            width: 100%; padding-bottom: 100px; background: #000; 
+            min-height: 100vh;
+        }
+        .pyramid-container { 
+            display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px;
+        }
+        .row { display: flex; justify-content: center; gap: 10px; }
+
+        /* Plot Styling */
+        .plot { 
+            background: rgba(15, 15, 15, 0.9); 
+            border: 1px solid rgba(252, 213, 53, 0.3); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            position: relative; cursor: pointer; 
+            width: 85px; height: 85px; 
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(252, 213, 53, 0.05);
+        }
+        .plot:hover { 
+            transform: scale(1.15); 
+            border-color: var(--gold); 
+            z-index: 100; 
+            box-shadow: 0 0 25px var(--gold);
+            background: #000;
+        }
+        .plot span { font-size: 11px; font-weight: bold; color: var(--gold); margin-top: 5px; }
+        .plot-id { position: absolute; top: 5px; left: 7px; font-size: 8px !important; opacity: 0.5; color: #fff !important; }
+
+        /* Modals & Support (Original Style) */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; padding: 15px; box-sizing: border-box; }
+        .card { background: #fff; color:#000; padding:40px; width:100%; max-width:500px; text-align:center; border-radius: 2px; }
+        .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; }
+        .premium-btn:hover { background: var(--gold); color: #000; }
+        
+        .fixed-support { position: fixed; bottom: 30px; left: 30px; z-index: 5000; background: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .fixed-support svg { width: 24px; height: 24px; fill: #000; }
+
+        /* Responsive Mobile */
+        @media (max-width: 600px) {
+            .plot { width: 65px; height: 65px; }
+            .plot span { font-size: 9px; }
+            .top-nav { padding: 15px; }
+            .nav-btn { padding: 8px 10px; font-size: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <div class="nav-left">
+            <button class="nav-btn" onclick="downloadMap()">HD MAP</button>
+            <button class="nav-btn" onclick="window.location.href='index.html'">BACK</button>
+            <button class="nav-btn pay-gateway-btn" onclick="openPayment()">GATEWAY</button>
+        </div>
+        <div class="live-counter">
+            <span>AVAILABLE: <span class="count-val">100</span></span>
+        </div>
+    </div>
+
+    <div class="header-area">
+        <h1 class="section-name">Social Creators</h1>
+        <div class="sub-slogan">The Pinnacle of Digital Identity</div>
+    </div>
+    
+    <div id="capture-area">
+        <div class="pyramid-container" id="pyramid-grid">
+            </div>
+    </div>
+
+    <div id="order-modal" class="modal">
+        <div class="card">
+            <h2 id="disp-id" style="font-size:10px; letter-spacing:4px; color:#888;">ACQUISITION</h2>
+            <h1 id="disp-price" style="font-size: 40px; margin: 10px 0;">$0,000</h1>
+            <input type="text" id="brand-input" placeholder="CREATOR / BRAND NAME" style="width:100%; padding:15px; border:1px solid #ddd; text-align:center; font-size:14px; margin:20px 0; outline: none; box-sizing: border-box;">
+            <button class="premium-btn" onclick="submitOrder()">REQUEST PLOT</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:20px; opacity:0.5; text-decoration: underline;">CANCEL</p>
+        </div>
+    </div>
+
+    <div id="pay-modal" class="modal">
+        <div class="card">
+            <h2 style="letter-spacing: 5px; margin-bottom: 30px; font-size: 18px;">PAYMENT GATEWAY</h2>
+            <div style="text-align: left; background: #f7f7f7; padding: 15px; margin-bottom: 10px; cursor: pointer;" onclick="copy('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">
+                <small style="color:#888;">METAMASK / TRUST</small><br><b>0x443792A4884e8e855f954ccEF910778Aff1eb78E</b>
+            </div>
+            <div style="text-align: left; background: #f7f7f7; padding: 15px; margin-bottom: 10px; cursor: pointer;" onclick="copy('912221034')">
+                <small style="color:#888;">BINANCE UID</small><br><b>912221034</b>
+            </div>
+            <button class="premium-btn" onclick="closeModals()">CLOSE</button>
+        </div>
+    </div>
+
+    <div class="fixed-support" onclick="window.open('https://wa.me/8801576940717', '_blank')">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.527 3.66 1.438 5.168L2.05 22l4.986-1.308A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.731 0-3.355-.487-4.736-1.332l-.339-.207-2.958.776.79-2.883-.228-.363A7.955 7.955 0 0 1 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
+    </div>
+
+    <script>
+        const grid = document.getElementById('pyramid-grid');
+        let currentPlot = 1;
+        const totalPlots = 100;
+        const basePrice = 1599;
+        const priceDrop = 50;
+
+        // Pyramid Row Structure: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 9 (Total 100)
+        const rowPattern = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 9];
+
+        rowPattern.forEach(count => {
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'row';
+            
+            for(let i=0; i<count; i++) {
+                if(currentPlot > totalPlots) break;
+
+                // Price Logic
+                let plotPrice;
+                if(currentPlot <= 50) {
+                    plotPrice = basePrice - ((currentPlot - 1) * priceDrop);
+                } else {
+                    plotPrice = basePrice - (49 * priceDrop); // 50th plot price for all 51-100
+                }
+
+                const plot = document.createElement('div');
+                plot.className = 'plot';
+                plot.innerHTML = `
+                    <span class="plot-id">#${currentPlot}</span>
+                    <span>$${plotPrice.toLocaleString()}</span>
+                `;
+
+                const thisID = currentPlot;
+                const thisPrice = plotPrice;
+
+                plot.onclick = () => {
+                    document.getElementById('disp-id').innerText = `PLOT #${thisID} ACQUISITION`;
+                    document.getElementById('disp-price').innerText = `$${thisPrice.toLocaleString()}`;
+                    document.getElementById('order-modal').style.display = 'flex';
+                };
+
+                rowDiv.appendChild(plot);
+                currentPlot++;
+            }
+            grid.appendChild(rowDiv);
+        });
+
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        function openPayment() { document.getElementById('pay-modal').style.display = 'flex'; }
+        function copy(t) { navigator.clipboard.writeText(t); alert("Address Copied!"); }
+        
+        function submitOrder() {
+            const brand = document.getElementById('brand-input').value;
+            if(!brand) return alert("Please enter name.");
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            alert("Request Submitted for " + brand + ". Please contact support for payment verification.");
+            closeModals();
+        }
+
+        function downloadMap() {
+            const btn = event.target;
+            btn.innerText = "CAPTURING...";
+            html2canvas(document.getElementById('capture-area'), {
+                backgroundColor: "#000",
+                scale: 2,
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Social_Creators_Pyramid.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                btn.innerText = "HD MAP";
+            });
+        }
+    </script>
+</body>
+</html>
