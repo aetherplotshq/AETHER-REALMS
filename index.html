@@ -42,6 +42,7 @@
         .portal-link {
             position: absolute; right: 50px; top: 85px; font-size: 10px; 
             letter-spacing: 4px; font-weight: bold; text-decoration: none; color: black; border-bottom: 1px solid var(--black);
+            cursor: pointer;
         }
 
         .rr-logo-container { position: relative; width: 50px; height: 60px; }
@@ -49,14 +50,6 @@
         .k-front { top: 0; left: 0; z-index: 2; }
         .k-back { top: 10px; left: 10px; opacity: 0.15; z-index: 1; }
         .brand-subtitle { font-size: 11px; letter-spacing: 14px; font-weight: 300; margin-top: 15px; color: var(--black); text-transform: uppercase; }
-
-        /* Responsive Nav for Mobile */
-        @media (max-width: 768px) {
-            .nav-bar { height: 140px; }
-            .buy-trigger { left: 20px; top: 60px; font-size: 8px; letter-spacing: 2px; }
-            .portal-link { right: 20px; top: 60px; font-size: 8px; letter-spacing: 2px; }
-            .brand-subtitle { font-size: 8px; letter-spacing: 6px; }
-        }
 
         /* Payment Drawer */
         #payment-drawer {
@@ -83,33 +76,29 @@
         .title { font-size: 32px; font-weight: 100; letter-spacing: 18px; text-transform: uppercase; margin-bottom: 15px; }
         .sub-desc { font-size: 11px; letter-spacing: 3px; color: #999; margin-bottom: 40px; font-style: italic; }
         
-        .btn-enter { padding: 18px 80px; border: 0.5px solid var(--black); text-decoration: none; color: var(--black); font-size: 10px; letter-spacing: 6px; transition: 0.4s; text-transform: uppercase; }
+        .btn-enter { padding: 18px 80px; border: 0.5px solid var(--black); text-decoration: none; color: var(--black); font-size: 10px; letter-spacing: 6px; transition: 0.4s; text-transform: uppercase; cursor: pointer; background: transparent; }
         .btn-enter:hover { background: var(--black); color: var(--white); }
 
-        /* Certificate Modal & Section Style */
-        .cert-section { background: #fafafa; border-top: 1px solid #eee; padding: 100px 20px; text-align: center; scroll-snap-align: center; }
-        .cert-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); display: none; align-items: center; justify-content: center; z-index: 9000; }
-        .cert-card { background: #fff; padding: 40px; width: 90%; max-width: 450px; text-align: center; border-radius: 4px; }
-        .cert-input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ddd; box-sizing: border-box; font-family: 'Times New Roman', serif; outline: none; }
-        .cert-submit { width: 100%; padding: 18px; background: #000; color: #fff; border: none; letter-spacing: 3px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        /* License Application Modal Styles */
+        #license-modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.98); z-index: 9000; align-items: center; justify-content: center;
+        }
+        .license-card { background: #fff; padding: 40px; width: 90%; max-width: 400px; text-align: center; }
+        .license-card input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ddd; box-sizing: border-box; font-family: serif; }
+        .license-btn { width: 100%; padding: 18px; background: #000; color: #fff; border: none; letter-spacing: 3px; cursor: pointer; font-weight: bold; }
 
-        /* Support & Twitter Buttons */
-        .support-btn { 
-            position: fixed; bottom: 40px; left: 40px; width: 45px; height: 45px; 
+        /* Social Buttons */
+        .support-btn, .twitter-btn { 
+            position: fixed; bottom: 40px; width: 45px; height: 45px; 
             border: 0.5px solid var(--black); border-radius: 50%; display: flex; 
             align-items: center; justify-content: center; z-index: 2500; background: #fff;
         }
-        .support-btn svg { fill: var(--black); width: 20px; }
-
-        .twitter-btn { 
-            position: fixed; bottom: 40px; right: 40px; width: 45px; height: 45px; 
-            border: 0.5px solid var(--black); border-radius: 50%; display: flex; 
-            align-items: center; justify-content: center; z-index: 2500; background: #fff;
-            transition: 0.3s;
-        }
-        .twitter-btn svg { fill: var(--black); width: 18px; }
+        .support-btn { left: 40px; }
+        .twitter-btn { right: 40px; transition: 0.3s; }
         .twitter-btn:hover { background: var(--black); }
         .twitter-btn:hover svg { fill: var(--white); }
+        svg { fill: var(--black); width: 20px; }
 
         /* Footer */
         .footer { 
@@ -131,7 +120,6 @@
         
         .copyright { grid-column: 1 / -1; margin-top: 80px; font-size: 10px; letter-spacing: 4px; opacity: 0.6; text-align: center; border-top: 1px solid #fafafa; padding-top: 40px; }
 
-        /* Loader & Notification */
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; transition: opacity 0.8s; }
         .loader-logo { font-size: 80px; font-weight: 900; color: var(--gold); animation: pulse 2s infinite; }
         .fade-out { opacity: 0; pointer-events: none; }
@@ -148,7 +136,7 @@
     <div id="cursor-outline"></div>
 
     <header class="nav-bar">
-        <a href="universal-portal.html" class="portal-link interactive">ESTATE PORTAL</a>
+        <div class="portal-link interactive" onclick="toggleLicenseModal()">LICENSE APPLICATION</div>
         <div class="buy-trigger interactive" onclick="toggleDrawer()">ACQUISITION</div>
         
         <div class="rr-logo-container interactive">
@@ -175,6 +163,18 @@
         <button onclick="toggleDrawer()" style="margin-top: 40px; border: none; background: none; cursor: pointer; letter-spacing: 3px; font-size: 9px; border-bottom: 1px solid #000;">[ CLOSE ]</button>
     </div>
 
+    <div id="license-modal">
+        <div class="license-card">
+            <h2 style="font-size:12px; letter-spacing:4px; margin-bottom:20px;">ESTATE LICENSE APPLICATION</h2>
+            <p style="font-size:10px; color:red; margin-bottom:20px;">ONE-TIME LICENSE FEE: $70</p>
+            <input type="text" id="cust-name" placeholder="YOUR FULL NAME">
+            <input type="number" id="cust-plot" placeholder="PLOT ID (e.g. 77)">
+            <p style="font-size:10px; color:#888; margin: 15px 0;">Apply and contact via WhatsApp for payment and verification.</p>
+            <button class="license-btn" onclick="submitLicenseRequest()">APPLY & SEND</button>
+            <p onclick="toggleLicenseModal()" style="cursor:pointer; font-size:9px; margin-top:20px; text-decoration:underline; opacity:0.5;">CLOSE</p>
+        </div>
+    </div>
+
     <section class="snap-section"><div class="reveal active"><span class="label">Elite Tier</span><h2 class="title">Millionaires Club</h2><p class="sub-desc">Exclusive 7-tier glowing estates for the world's summit.</p><a href="millionaire_canvas.html" class="btn-enter interactive">Enter Estate</a></div></section>
     <section class="snap-section"><div class="reveal"><span class="label">Identity</span><h2 class="title">Social Creators</h2><p class="sub-desc">Heritage plots for influencers with 1M+ legacy.</p><a href="creator_canvas.html" class="btn-enter interactive">Claim Space</a></div></section>
     <section class="snap-section"><div class="reveal"><span class="label">Leaderboard</span><h2 class="title">Gaming Realm</h2><p class="sub-desc">Where professional rank meets eternal digital sovereignty.</p><a href="gaming_canvas.html" class="btn-enter interactive">View Rank</a></div></section>
@@ -184,24 +184,14 @@
     <section class="snap-section"><div class="reveal"><span class="label">Romance</span><h2 class="title">The Union Wall</h2><p class="sub-desc">Celebrate eternal love. Dedicated space for couples and milestones.</p><a href="couples_canvas.html" class="btn-enter interactive">Join Souls</a></div></section>
     <section class="snap-section"><div class="reveal"><span class="label">Companions</span><h2 class="title">Pet Paradise</h2><p class="sub-desc">Because loyalty deserves a place in the archive. For our silent friends.</p><a href="pets_canvas.html" class="btn-enter interactive">Enter Paradise</a></div></section>
 
-    <section class="cert-section reveal">
-        <span class="label">Legality</span>
-        <h2 class="title">Sovereign Deed</h2>
-        <p class="sub-desc">Official ownership certificate with lifetime validation archive. <b>Fee: $70</b></p>
-        <button class="btn-enter interactive" onclick="openCertRequest()">Request License</button>
-    </section>
-
-    <div id="cert-modal" class="cert-modal">
-        <div class="cert-card">
-            <h2 style="font-size:11px; letter-spacing:4px; color:var(--black); margin-bottom:20px;">CERTIFICATE APPLICATION</h2>
-            <p style="font-size:9px; color:red; margin-bottom:20px; letter-spacing:1px;">ONE-TIME REGISTRATION FEE: $70</p>
-            <input type="text" id="req-name" class="cert-input" placeholder="FULL LEGAL NAME">
-            <input type="text" id="req-plot" class="cert-input" placeholder="PLOT ID (e.g. #77)">
-            <p style="font-size:10px; color:#888; margin: 15px 0;">Submit details and proceed to WhatsApp for payment verification.</p>
-            <button class="cert-submit" onclick="submitCertRequest()">SUBMIT & CONTACT</button>
-            <p onclick="closeCertRequest()" style="cursor:pointer; font-size:9px; margin-top:20px; text-decoration:underline; opacity:0.5;">CANCEL</p>
+    <section class="snap-section" style="background: #fafafa; border-top: 1px solid #eee;">
+        <div class="reveal">
+            <span class="label">Official Activation</span>
+            <h2 class="title">Estate License</h2>
+            <p class="sub-desc">Get your shareable digital license to prove your sovereign ownership. <b>Fee: $70</b></p>
+            <div class="btn-enter interactive" onclick="toggleLicenseModal()">Request License</div>
         </div>
-    </div>
+    </section>
 
     <footer class="footer">
         <div class="footer-left reveal">
@@ -242,16 +232,20 @@
         function toggleDrawer() { document.getElementById('payment-drawer').classList.toggle('open'); }
         function copyV(text) { navigator.clipboard.writeText(text); alert("Copied: " + text); }
 
-        // Certificate Functions
-        function openCertRequest() { document.getElementById('cert-modal').style.display = 'flex'; }
-        function closeCertRequest() { document.getElementById('cert-modal').style.display = 'none'; }
-        function submitCertRequest() {
-            const name = document.getElementById('req-name').value;
-            const plot = document.getElementById('req-plot').value;
-            if(!name || !plot) return alert("Please fill all fields.");
-            const msg = `Hello K Archive, I am applying for the Sovereign Deed.%0AName: ${name}%0APlot ID: ${plot}%0AStatus: $70 Payment Ready.`;
+        // License Modal Functions
+        function toggleLicenseModal() {
+            const modal = document.getElementById('license-modal');
+            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function submitLicenseRequest() {
+            const name = document.getElementById('cust-name').value;
+            const plot = document.getElementById('cust-plot').value;
+            if(!name || !plot) { alert("Please fill all fields."); return; }
+            
+            const msg = `Hello K Archive, I am applying for the Official Estate License.%0AName: ${name}%0APlot ID: ${plot}%0AStatus: $70 Fee Ready.`;
             window.open(`https://wa.me/8801576940717?text=${msg}`, '_blank');
-            closeCertRequest();
+            toggleLicenseModal();
         }
 
         // Loader logic
