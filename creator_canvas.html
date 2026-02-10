@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SOCIAL CREATORS | K ARCHIVE</title>
+    <title>SOCIAL CREATORS | ELITE 300</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
@@ -15,16 +15,15 @@
         .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.98); border-bottom: 2px solid var(--gold); box-sizing: border-box; }
         .nav-left { display: flex; gap: 15px; align-items: center; }
         
-        /* Fixed Search Box - Width increased to show 1000 clearly */
-        .search-box { background: rgba(255,255,255,0.05); border: 1px solid #444; padding: 6px 15px; border-radius: 4px; display: flex; align-items: center; gap: 10px; min-width: 160px; }
-        .search-box input { background: none; border: none; color: #fff; width: 90px; outline: none; font-size: 13px; }
+        .search-box { background: rgba(255,255,255,0.05); border: 1px solid #444; padding: 6px 15px; border-radius: 4px; display: flex; align-items: center; gap: 10px; min-width: 180px; }
+        .search-box input { background: none; border: none; color: #fff; width: 80px; outline: none; font-size: 14px; }
         .search-box button { background: var(--gold); border: none; color: #000; padding: 4px 10px; cursor: pointer; font-weight: bold; font-size: 11px; border-radius: 2px; }
 
         .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 18px; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
         .nav-btn:hover { background: #fff; color: #000; border-color: #fff; }
         .exit-btn { border-color: #ff4444 !important; color: #ff4444 !important; }
 
-        /* Header Animation */
+        /* Header Area */
         .header-area { text-align: center; padding-top: 140px; margin-bottom: 40px; }
         .section-name { 
             font-size: clamp(35px, 8vw, 85px); 
@@ -36,43 +35,40 @@
         @keyframes fullColorShift { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
         .sub-slogan { font-size: 14px; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; opacity: 0.8; }
 
-        /* Grid Layout with Spacing */
-        #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 0 40px; box-sizing: border-box; padding-bottom: 80px; }
-        
-        .top-row { display: flex; justify-content: center; gap: 0; border: 2px solid #FFD700; width: fit-content; margin-bottom: 2px; }
+        /* Grid - Millionaires Club Style Glow */
+        #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 0 5%; box-sizing: border-box; padding-bottom: 80px; }
         
         .grid-container { 
             display: grid; 
-            grid-template-columns: repeat(18, 70px); 
-            gap: 0; 
-            border: 1px solid #222;
+            grid-template-columns: repeat(18, 80px); 
+            gap: 12px; /* স্পেসিং বাড়ানো হয়েছে গ্লো ইফেক্টের জন্য */
             width: fit-content;
+            padding: 20px;
         }
 
         .plot { 
-            width: 70px; height: 70px; 
-            border: 0.1px solid rgba(255,255,255,0.05); 
+            width: 80px; height: 80px; 
+            background: rgba(0,0,0,0.8);
+            border: 2px solid var(--r-col); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            position: relative; cursor: pointer; transition: 0.3s; background: #000;
+            position: relative; cursor: pointer; transition: 0.4s;
+            box-shadow: 0 0 10px var(--r-col); /* নিওন গ্লো ইফেক্ট */
         }
-        .plot:hover { transform: scale(1.15); z-index: 100; border: 1.5px solid #fff; box-shadow: 0 0 25px #fff; }
+        .plot:hover { transform: scale(1.15); z-index: 100; border-color: #fff; box-shadow: 0 0 30px #fff; }
         
-        /* Search Highlight Style */
-        .search-highlight { border: 3px solid #fff !important; box-shadow: 0 0 50px #fff !important; z-index: 500; transform: scale(1.3); background: #fff !important; color: #000 !important; }
-        .search-highlight .plot-price { color: #000 !important; }
+        .search-highlight { border: 4px solid #fff !important; box-shadow: 0 0 50px #fff !important; z-index: 500; transform: scale(1.3); background: #fff !important; }
+        .search-highlight span { color: #000 !important; }
 
-        .plot-id { position: absolute; top: 5px; left: 7px; font-size: 7px; color: var(--r-col); font-weight: bold; }
-        .plot-price { font-size: 10px; font-weight: bold; color: #fff; }
+        .plot-id { position: absolute; top: 6px; left: 8px; font-size: 8px; color: #fff; opacity: 0.5; }
+        .plot-price { font-size: 12px; font-weight: bold; color: #fff; }
 
-        /* Modal Styles */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; padding: 20px; box-sizing: border-box; }
+        /* Modals */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; padding: 20px; }
         .card { background: #fff; color:#000; padding:40px; width:100%; max-width:500px; text-align:center; border: 4px solid var(--gold); border-radius: 4px; }
         .p-input { width: 100%; padding: 18px; margin: 20px 0; border: 1px solid #ddd; text-align: center; font-size: 16px; outline: none; box-sizing: border-box; }
         .p-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* Footer */
-        .footer-area { text-align: center; padding: 60px 20px; border-top: 1px solid #222; background: #000; }
-        .footer-text { color: #555; font-size: 11px; letter-spacing: 1.5px; line-height: 2; max-width: 800px; margin: 0 auto; }
+        .fixed-support { position: fixed; bottom: 30px; left: 30px; z-index: 5000; background: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -81,117 +77,103 @@
         <div class="nav-left">
             <button class="nav-btn exit-btn" onclick="window.location.href='index.html'">EXIT</button>
             <div class="search-box">
-                <input type="number" id="plot-search-val" placeholder="ID (1-1000)">
-                <button onclick="runSearch()">FIND PLOT</button>
+                <input type="number" id="plot-search-input" placeholder="ID (1-300)">
+                <button onclick="findPlot()">SEARCH</button>
             </div>
             <button class="nav-btn" onclick="downloadHD()">HD MAP</button>
         </div>
         <div style="text-align: right; border-left: 2px solid var(--gold); padding-left: 15px;">
-            <span style="font-size: 9px; color: var(--gold); letter-spacing: 2px;">STATUS</span>
-            <span style="display: block; font-size: 14px; font-weight: bold;">AVAILABLE: 1000</span>
+            <span style="font-size: 9px; color: var(--gold); letter-spacing: 2px;">ELITE STATUS</span>
+            <span style="display: block; font-size: 14px; font-weight: bold;">AVAILABLE: 300</span>
         </div>
     </div>
 
     <div class="header-area">
         <h1 class="section-name">Social Creators</h1>
-        <div class="sub-slogan">Elite 1000 Global Archive</div>
+        <div class="sub-slogan">Elite 300 Digital Heritage</div>
     </div>
     
     <div id="capture-area">
-        <div id="top-premium-row" class="top-row"></div>
-        <div id="main-global-grid" class="grid-container"></div>
+        <div id="main-grid" class="grid-container"></div>
     </div>
 
-    <div class="footer-area">
-        <p class="footer-text">
-            <b>K ARCHIVE | SOCIAL CREATORS</b> © 2026. All rights reserved.<br>
-            Ownership of a plot is a lifetime digital heritage.
-        </p>
+    <div class="fixed-support" onclick="window.open('https://wa.me/8801576940717', '_blank')">
+        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.527 3.66 1.438 5.168L2.05 22l4.986-1.308A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
     </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h3 id="p-id-label" style="color:var(--gold); margin:0; letter-spacing: 3px;">RESERVATION</h3>
-            <h1 id="p-price-label" style="font-size: 45px; margin: 15px 0;">$000</h1>
+            <h3 id="pop-id" style="color:var(--gold); margin:0; letter-spacing: 3px;">RESERVATION</h3>
+            <h1 id="pop-price" style="font-size: 45px; margin: 15px 0;">$000</h1>
             <input type="text" id="brand-input" class="p-input" placeholder="YOUR BRAND NAME">
-            <button class="p-btn" onclick="processOrder()">CONFIRM SELECTION</button>
-            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:20px; text-decoration: underline; opacity: 0.5;">BACK TO GRID</p>
+            <button class="p-btn" onclick="submitOrder()">CLAIM THIS PLOT</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:20px; text-decoration: underline;">BACK</p>
         </div>
     </div>
 
     <script type="module">
         import { db, ref, push, serverTimestamp } from "./firebase-config.js";
 
-        const topGrid = document.getElementById('top-premium-row');
-        const mainGrid = document.getElementById('main-global-grid');
-        
-        // আপনার আগের ফাইলের সেই ১০টি সিগনেচার কালার
-        const evolutionColors = ['#FFD700', '#FFB800', '#FF8C00', '#FF4500', '#FF0055', '#D400FF', '#7A00FF', '#0070FF', '#00C3FF', '#00FFCC'];
+        const grid = document.getElementById('main-grid');
+        const colors = ['#FFD700', '#FFB800', '#FF8C00', '#FF4500', '#FF0055', '#D400FF', '#7A00FF', '#0070FF', '#00C3FF', '#00FFCC'];
 
-        let activeID, activePrice;
+        let selID, selPrice;
 
-        // ১. উপরের ১০টি প্রিমিয়াম লাইন ($৯৯৯)
-        for (let i = 1; i <= 10; i++) {
-            topGrid.appendChild(makePlot(i, 999, evolutionColors[0]));
-        }
+        // ১৭ সারি x ১৮ কলাম = ৩০৬টি প্লট (৩০০টি কভার করার জন্য)
+        for (let r = 0; r < 17; r++) {
+            // নিচ থেকে উপরে দাম ১০০ ডলার করে বাড়বে। ১৭তম সারি (নিচ) = $199
+            const price = 199 + ((16 - r) * 100);
+            const color = colors[r % 10];
 
-        // ২. নিচের ১৮ কলাম x ৫৫ শাড়ি (৯৯০ প্লট) - কালার বিবর্তনসহ
-        for (let r = 0; r < 55; r++) {
-            const price = 99 + ((54 - r) * 10);
-            // প্রতি লাইনে (শাড়িতে) আলাদা কালার যা উপর থেকে নিচে পরিবর্তন হবে
-            const color = evolutionColors[r % 10]; 
-            
             for (let c = 0; c < 18; c++) {
-                const id = 10 + (r * 18) + c + 1;
-                mainGrid.appendChild(makePlot(id, price, color));
+                const id = (r * 18) + c + 1;
+                if (id <= 300) { // ৩০০ এর বেশি প্লট দেখাবে না
+                    grid.appendChild(createPlot(id, price, color));
+                }
             }
         }
 
-        function makePlot(id, price, color) {
+        function createPlot(id, price, color) {
             const div = document.createElement('div');
             div.className = 'plot';
-            div.id = `box-${id}`;
+            div.id = `plot-${id}`;
             div.style.setProperty('--r-col', color);
-            // শাড়ির কালার অনুযায়ী বর্ডারের হালকা আভাস
-            div.style.borderColor = color + '33'; 
             div.innerHTML = `<span class="plot-id">#${id}</span><span class="plot-price">$${price}</span>`;
             
             div.onclick = () => {
-                activeID = id; activePrice = price;
-                document.getElementById('p-id-label').innerText = `PLOT #${id} ACQUISITION`;
-                document.getElementById('p-price-label').innerText = `$${price}`;
+                selID = id; selPrice = price;
+                document.getElementById('pop-id').innerText = `PLOT #${id} ACQUISITION`;
+                document.getElementById('pop-price').innerText = `$${price}`;
                 document.getElementById('order-modal').style.display = 'flex';
             };
             return div;
         }
 
-        window.runSearch = () => {
-            const val = document.getElementById('plot-search-val').value;
-            const target = document.getElementById(`box-${val}`);
+        window.findPlot = () => {
+            const val = document.getElementById('plot-search-input').value;
+            const target = document.getElementById(`plot-${val}`);
             if(target) {
                 document.querySelectorAll('.plot').forEach(p => p.classList.remove('search-highlight'));
                 target.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 target.classList.add('search-highlight');
-            } else { alert("Plot ID not found in 1-1000 range."); }
+            } else { alert("Plot ID not found (1-300)"); }
         }
 
-        window.processOrder = async () => {
-            const bName = document.getElementById('brand-input').value;
-            if(!bName) return alert("Please enter brand name.");
+        window.submitOrder = async () => {
+            const brand = document.getElementById('brand-input').value;
+            if(!brand) return alert("Enter brand name.");
             try {
-                await push(ref(db, 'orders/SocialCreators'), { plotID: activeID, price: activePrice, brand: bName, time: serverTimestamp() });
-                window.open(`https://wa.me/8801576940717?text=I%20want%20to%20buy%20Plot%20#${activeID}%20for%20${bName}`, '_blank');
-            } catch(e) { alert("Error connecting to database."); }
+                await push(ref(db, 'orders/SocialCreators'), { id: selID, price: selPrice, brand: brand, time: serverTimestamp() });
+                window.open(`https://wa.me/8801576940717?text=Claiming%20Plot%20#${selID}%20for%20${brand}`, '_blank');
+            } catch(e) { alert("Error!"); }
         };
 
         window.downloadHD = () => {
-            const btn = event.target; btn.innerText = "GENERATING...";
             html2canvas(document.getElementById('capture-area'), { scale: 3, backgroundColor: "#000" }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Social_Creators_Elite_1000.png';
+                link.download = 'Social_Creators_300.png';
                 link.href = canvas.toDataURL();
                 link.click();
-                btn.innerText = "HD MAP";
             });
         };
 
