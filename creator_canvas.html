@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SOCIAL CREATORS | ELITE 300</title>
+    <title>SOCIAL CREATORS | ELITE 306</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
@@ -40,19 +40,19 @@
         
         .grid-container { 
             display: grid; 
-            grid-template-columns: repeat(18, 80px); 
-            gap: 12px; /* স্পেসিং বাড়ানো হয়েছে গ্লো ইফেক্টের জন্য */
+            grid-template-columns: repeat(16, 85px); /* ১৬ কলাম */
+            gap: 12px; 
             width: fit-content;
             padding: 20px;
         }
 
         .plot { 
-            width: 80px; height: 80px; 
+            width: 85px; height: 85px; 
             background: rgba(0,0,0,0.8);
             border: 2px solid var(--r-col); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             position: relative; cursor: pointer; transition: 0.4s;
-            box-shadow: 0 0 10px var(--r-col); /* নিওন গ্লো ইফেক্ট */
+            box-shadow: 0 0 10px var(--r-col); 
         }
         .plot:hover { transform: scale(1.15); z-index: 100; border-color: #fff; box-shadow: 0 0 30px #fff; }
         
@@ -77,20 +77,20 @@
         <div class="nav-left">
             <button class="nav-btn exit-btn" onclick="window.location.href='index.html'">EXIT</button>
             <div class="search-box">
-                <input type="number" id="plot-search-input" placeholder="ID (1-300)">
+                <input type="number" id="plot-search-input" placeholder="ID (1-306)">
                 <button onclick="findPlot()">SEARCH</button>
             </div>
             <button class="nav-btn" onclick="downloadHD()">HD MAP</button>
         </div>
         <div style="text-align: right; border-left: 2px solid var(--gold); padding-left: 15px;">
             <span style="font-size: 9px; color: var(--gold); letter-spacing: 2px;">ELITE STATUS</span>
-            <span style="display: block; font-size: 14px; font-weight: bold;">AVAILABLE: 300</span>
+            <span style="display: block; font-size: 14px; font-weight: bold;">AVAILABLE: 306</span>
         </div>
     </div>
 
     <div class="header-area">
         <h1 class="section-name">Social Creators</h1>
-        <div class="sub-slogan">Elite 300 Digital Heritage</div>
+        <div class="sub-slogan">Elite 306 Digital Heritage</div>
     </div>
     
     <div id="capture-area">
@@ -119,15 +119,19 @@
 
         let selID, selPrice;
 
-        // ১৭ সারি x ১৮ কলাম = ৩০৬টি প্লট (৩০০টি কভার করার জন্য)
-        for (let r = 0; r < 17; r++) {
-            // নিচ থেকে উপরে দাম ১০০ ডলার করে বাড়বে। ১৭তম সারি (নিচ) = $199
-            const price = 199 + ((16 - r) * 100);
+        // ১৯ সারি x ১৬ কলাম = ৩০৪টি। গ্রিড পূর্ণ করতে ৩০৬টি প্লট।
+        const totalRows = 19;
+        const totalCols = 16;
+        const targetPlots = 306;
+
+        for (let r = 0; r < totalRows; r++) {
+            // নিচ থেকে উপরে দাম ১০০ ডলার করে বাড়বে। সর্বনিম্ন (নিচ) = $199
+            const price = 199 + ((totalRows - 1 - r) * 100);
             const color = colors[r % 10];
 
-            for (let c = 0; c < 18; c++) {
-                const id = (r * 18) + c + 1;
-                if (id <= 300) { // ৩০০ এর বেশি প্লট দেখাবে না
+            for (let c = 0; c < totalCols; c++) {
+                const id = (r * totalCols) + c + 1;
+                if (id <= targetPlots) {
                     grid.appendChild(createPlot(id, price, color));
                 }
             }
@@ -156,7 +160,7 @@
                 document.querySelectorAll('.plot').forEach(p => p.classList.remove('search-highlight'));
                 target.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 target.classList.add('search-highlight');
-            } else { alert("Plot ID not found (1-300)"); }
+            } else { alert("Plot ID not found (1-306)"); }
         }
 
         window.submitOrder = async () => {
@@ -171,7 +175,7 @@
         window.downloadHD = () => {
             html2canvas(document.getElementById('capture-area'), { scale: 3, backgroundColor: "#000" }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Social_Creators_300.png';
+                link.download = 'Social_Creators_Elite_306.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
