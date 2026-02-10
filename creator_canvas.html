@@ -3,86 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>K ARCHIVE | RETRO BLOCK EDITION</title>
+    <title>PYRAMID ARCHIVE | K ARCHIVE</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        :root { --gold: #9E7E45; --white: #ffffff; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Courier New', Courier, monospace; overflow-x: hidden; }
+        :root { --gold: #9E7E45; --bright-gold: #FFD700; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
 
         /* Navigation */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); border-bottom: 2px solid #333; box-sizing: border-box; }
-        .nav-left { display: flex; gap: 10px; }
-        .nav-btn { background: #000; border: 1px solid #555; color: #fff; padding: 10px 15px; font-size: 10px; cursor: pointer; text-transform: uppercase; }
-        .nav-btn:hover { background: var(--gold); border-color: #fff; }
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 1px solid #222; box-sizing: border-box; }
+        .nav-left { display: flex; gap: 15px; }
+        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 18px; font-size: 11px; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .nav-btn:hover { background: #fff; color: #000; }
         .pay-btn { border-color: var(--gold) !important; color: var(--gold); }
 
-        .header-area { text-align: center; padding-top: 120px; margin-bottom: 30px; }
-        .section-name { font-size: clamp(30px, 6vw, 60px); letter-spacing: 5px; font-weight: 900; color: #fff; text-transform: uppercase; margin: 0; }
-        .sub-slogan { color: var(--gold); font-size: 12px; letter-spacing: 3px; margin-top: 5px; }
+        .header-area { text-align: center; padding-top: 130px; margin-bottom: 20px; }
+        .section-name { font-size: clamp(30px, 6vw, 65px); letter-spacing: 8px; font-weight: 900; color: var(--gold); text-transform: uppercase; margin: 0; }
+        .sub-slogan { font-size: 12px; letter-spacing: 4px; color: #555; margin-top: 5px; }
 
-        /* Retro Block Grid Design */
-        #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 20px 0; background: #000; }
-        .row { display: flex; gap: 0; border: 1px solid #111; }
-        
-        .plot { 
-            width: 80px; height: 40px; /* Rectangular like brick games */
-            background: #111; border: 1px solid var(--r-col); 
-            display: flex; align-items: center; justify-content: center; 
-            position: relative; cursor: pointer; transition: 0.2s;
-            box-shadow: inset 0 0 8px var(--r-col); /* Glowing block effect */
+        /* Pyramid Canvas Area */
+        #capture-area { 
+            display: flex; flex-direction: column; align-items: center; 
+            width: 100%; padding: 100px 0; background: radial-gradient(circle, #111 0%, #000 70%); 
+            perspective: 1000px;
         }
-        .plot:hover { transform: scale(1.1); z-index: 10; background: #fff; box-shadow: 0 0 20px #fff; }
-        .plot span { font-size: 10px; font-weight: bold; color: #fff; text-shadow: 1px 1px #000; }
-        .plot:hover span { color: #000; text-shadow: none; }
 
-        /* The Missing Text area under Canvas */
-        .missing-info-text { text-align: center; padding: 40px 20px; max-width: 900px; margin: 0 auto; border-top: 1px solid #222; }
-        .missing-info-text p { color: #888; font-size: 12px; line-height: 1.6; letter-spacing: 1px; }
+        /* Isometric Cube Styling */
+        .pyramid-container { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .row { display: flex; justify-content: center; gap: 4px; }
+        
+        .cube { 
+            width: 40px; height: 40px; 
+            background: var(--c-bg); 
+            position: relative; cursor: pointer; transition: 0.3s;
+            transform: rotateX(45deg) rotateZ(45deg); /* Isometric View */
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5), inset -2px -2px 5px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+        .cube::before { /* Top Face */
+            content: ''; position: absolute; top: -10px; left: 0; width: 100%; height: 10px;
+            background: rgba(255,255,255,0.2); transform: skewX(-45deg); transform-origin: bottom;
+        }
+        .cube::after { /* Side Face */
+            content: ''; position: absolute; top: 0; right: -10px; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); transform: skewY(-45deg); transform-origin: left; width: 10px;
+        }
+
+        .cube:hover { transform: rotateX(45deg) rotateZ(45deg) translateZ(15px); border-color: #fff; filter: brightness(1.5); }
+        .cube-id { position: absolute; transform: rotateZ(-45deg) rotateX(-45deg); font-size: 8px; font-weight: bold; color: rgba(255,255,255,0.5); }
+
+        /* Missing Info Text below Canvas */
+        .bottom-info { text-align: center; padding: 60px 20px; border-top: 1px solid #222; max-width: 800px; margin: 0 auto; }
+        .bottom-info p { color: #555; font-size: 11px; line-height: 2; letter-spacing: 1px; }
 
         /* Modals */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background: #fff; color:#000; padding:30px; width:90%; max-width:500px; text-align:center; border-radius: 2px; }
-        .premium-btn { background: #000; color: #fff; width: 100%; padding: 15px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .pay-item { text-align: left; padding: 12px; background: #f0f0f0; margin-bottom: 10px; border-left: 4px solid var(--gold); font-size: 12px; }
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
+        .card { background: #fff; color:#000; padding:40px; width:90%; max-width:500px; text-align:center; border-radius: 4px; border-left: 10px solid var(--gold); }
+        .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 15px; }
+        .pay-item { text-align: left; padding: 15px; background: #f7f7f7; margin-bottom: 10px; border-left: 4px solid var(--gold); font-size: 13px; font-family: monospace; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
         <div class="nav-left">
-            <button class="nav-btn" onclick="downloadMap()">EXPORT MAP</button>
+            <button class="nav-btn" onclick="downloadMap()">EXPORT HD MAP</button>
             <button class="nav-btn pay-btn" onclick="openPayment()">PAYMENT GATEWAY</button>
         </div>
-        <div style="font-size: 10px; color: var(--gold);">300 BLOCKS AVAILABLE</div>
+        <div style="font-size: 10px; letter-spacing: 2px;">AVAILABLE: <span style="color:var(--gold);">300 CUBES</span></div>
     </div>
 
     <div class="header-area">
         <h1 class="section-name">Social Creators</h1>
-        <div class="sub-slogan">THE RETRO ARCHIVE EDITION</div>
+        <div class="sub-slogan">THE GOLDEN PYRAMID ARCHIVE</div>
     </div>
     
-    <div id="capture-area"></div>
+    <div id="capture-area">
+        <div class="pyramid-container" id="pyramid-body"></div>
+    </div>
 
-    <div class="missing-info-text">
-        <p><b>K ARCHIVE | SOCIAL CREATORS</b><br>
-        Each block represents a unique digital footprint. Preserving the legacy of internet creators.<br>
-        Ownership is verified via digital ledger. 2026 Archive Series.</p>
+    <div class="bottom-info">
+        <p><b>K ARCHIVE | SOCIAL CREATORS</b> © 2026. All rights reserved.<br>
+        Each cube represents a unique $99-$7000 investment in digital history. <br>
+        The Pyramid structure is a testament to the creators who build the foundation of the internet.</p>
     </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h3 id="disp-id" style="color:var(--gold)">BLOCK #000</h3>
-            <h1 id="disp-price">$000</h1>
-            <button class="premium-btn" onclick="submitOrder()">LOCK THIS BLOCK</button>
-            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; text-decoration: underline;">CANCEL</p>
+            <h2 id="disp-id" style="color:var(--gold); font-size: 14px;">CUBE #000</h2>
+            <h1 id="disp-price" style="font-size: 40px; margin: 10px 0;">$000</h1>
+            <button class="premium-btn" onclick="submitOrder()">LOCK THIS CUBE</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; text-decoration: underline; margin-top: 15px;">CANCEL</p>
         </div>
     </div>
 
     <div id="pay-modal" class="modal">
         <div class="card">
-            <h2 style="margin-bottom: 20px;">PAYMENT METHODS</h2>
+            <h2 style="letter-spacing: 3px; margin-bottom: 20px;">PAYMENT GATEWAY</h2>
             <div class="pay-item"><b>METAMASK:</b> 0x443792A4884e8e855f954ccEF910778Aff1eb78E</div>
             <div class="pay-item"><b>BINANCE UID:</b> 912221034</div>
             <div class="pay-item"><b>USDT (TRC20):</b> TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</div>
@@ -92,68 +110,72 @@
 
     <div id="final-modal" class="modal">
         <div class="card">
-            <h2 style="color: green;">BLOCK RESERVED!</h2>
-            <div id="final-info-box" style="margin: 20px 0; font-size: 14px; text-align: left;"></div>
-            <button class="premium-btn" id="whatsapp-btn">SEND TO SUPPORT</button>
+            <h2 style="color: #000;">CUBE RESERVED</h2>
+            <div id="final-info-box" style="text-align: left; margin: 20px 0; line-height: 1.8; font-size: 14px;"></div>
+            <button class="premium-btn" id="whatsapp-btn">SEND TO SUPPORT (WHATSAPP)</button>
         </div>
     </div>
 
     <script type="module">
         import { db, ref, push, serverTimestamp } from "./firebase-config.js";
 
-        const captureArea = document.getElementById('capture-area');
-        const colors = ['#00FFCC', '#0070FF', '#7A00FF', '#D400FF', '#FF0055', '#FF4500'];
+        const pyramidBody = document.getElementById('pyramid-body');
         let activeID, activePrice;
 
-        const totalPlots = 300;
-        const perRow = 12;
-        const totalRows = Math.ceil(totalPlots / perRow);
+        // Pyramid Logic: Rows increase in size
+        let currentPlot = 1;
+        const totalTarget = 300;
+        
+        // কালার প্যালেট - ওপর থেকে নিচে গাঢ় গোল্ডেন হবে
+        const goldShades = ['#FFD700', '#FFC700', '#FFB700', '#FFA700', '#FF9700', '#E68A00', '#CC7A00', '#B36B00', '#995C00', '#804D00'];
 
-        for (let r = 0; r < totalRows; r++) {
-            const row = document.createElement('div');
-            row.className = 'row';
-            const price = 99 + ((totalRows - 1 - r) * 100);
-            const color = colors[r % colors.length];
+        for (let rowIdx = 1; currentPlot <= totalTarget; rowIdx++) {
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'row';
+            
+            const price = 99 + (rowIdx * 50); // নিচ থেকে ওপরে দাম বাড়বে
+            const color = goldShades[rowIdx % goldShades.length];
 
-            for (let c = 0; c < perRow; c++) {
-                const id = (r * perRow) + c + 1;
-                if (id <= totalPlots) {
-                    const plot = document.createElement('div');
-                    plot.className = 'plot';
-                    plot.style.setProperty('--r-col', color);
-                    plot.innerHTML = `<span>$${price}</span>`;
-                    plot.onclick = () => {
-                        activeID = id; activePrice = price;
-                        document.getElementById('disp-id').innerText = `BLOCK #${id}`;
-                        document.getElementById('disp-price').innerText = `$${price}`;
-                        document.getElementById('order-modal').style.display = 'flex';
-                    };
-                    row.appendChild(plot);
-                }
+            for (let i = 0; i < rowIdx && currentPlot <= totalTarget; i++) {
+                const id = currentPlot++;
+                const cube = document.createElement('div');
+                cube.className = 'cube';
+                cube.style.setProperty('--c-bg', color);
+                cube.innerHTML = `<span class="cube-id">#${id}</span>`;
+                
+                cube.onclick = () => {
+                    activeID = id; activePrice = price;
+                    document.getElementById('disp-id').innerText = `CUBE #${id} SELECTION`;
+                    document.getElementById('disp-price').innerText = `$${price}`;
+                    document.getElementById('order-modal').style.display = 'flex';
+                };
+                rowDiv.appendChild(cube);
             }
-            captureArea.appendChild(row);
+            pyramidBody.appendChild(rowDiv);
         }
 
         window.submitOrder = async () => {
-            await push(ref(db, 'pending_orders/RetroBlocks'), { plotID: activeID, price: activePrice, timestamp: serverTimestamp() });
-            document.getElementById('order-modal').style.display = 'none';
-            confetti({ particleCount: 100, spread: 70 });
-            
-            const infoBox = document.getElementById('final-info-box');
-            infoBox.innerHTML = `📌 <b>Block ID:</b> #${activeID}<br>💰 <b>Price:</b> $${activePrice}<br>✅ <b>Status:</b> Locked`;
-            
-            const msg = encodeURIComponent(`Hello K ARCHIVE,\nI have locked Block #${activeID} ($${activePrice}).\nPlease confirm my order.`);
-            document.getElementById('whatsapp-btn').onclick = () => window.open(`https://wa.me/8801576940717?text=${msg}`);
-            
-            document.getElementById('final-modal').style.display = 'flex';
+            try {
+                await push(ref(db, 'pending_orders/Pyramid'), { plotID: activeID, price: activePrice, timestamp: serverTimestamp() });
+                document.getElementById('order-modal').style.display = 'none';
+                confetti({ particleCount: 150, spread: 70 });
+
+                const infoBox = document.getElementById('final-info-box');
+                infoBox.innerHTML = `📍 <b>Cube ID:</b> #${activeID}<br>💰 <b>Price:</b> $${activePrice}<br>🏛 <b>Section:</b> Social Creators Pyramid`;
+                
+                const msg = encodeURIComponent(`Hello K ARCHIVE,\nI want to confirm my Cube Acquisition:\n\n📌 Cube ID: #${activeID}\n💵 Price: $${activePrice}\n\nPlease provide payment confirmation.`);
+                document.getElementById('whatsapp-btn').onclick = () => window.open(`https://wa.me/8801576940717?text=${msg}`);
+                
+                document.getElementById('final-modal').style.display = 'flex';
+            } catch (e) { alert("Error!"); }
         };
 
         window.openPayment = () => document.getElementById('pay-modal').style.display = 'flex';
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
         window.downloadMap = () => {
-            html2canvas(document.getElementById('capture-area'), {backgroundColor: "#000"}).then(canvas => {
+            html2canvas(document.getElementById('capture-area'), { backgroundColor: "#000" }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Archive_Retro_Map.png';
+                link.download = 'Pyramid_Archive_HD.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
