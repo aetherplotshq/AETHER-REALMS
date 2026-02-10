@@ -3,218 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SOCIAL CREATORS | ROYAL PYRAMID</title>
+    <title>SOCIAL CREATORS | LUXURY 100</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        :root { --gold: #D4AF37; --bright-gold: #FFD700; --luxury-black: #050505; }
+        :root { --gold: #D4AF37; --luxury-black: #0a0a0a; }
         body { 
             margin: 0; background: var(--luxury-black); color: #fff; 
-            font-family: 'Playfair Display', serif; 
-            overflow-x: hidden;
-            background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('https://www.transparenttextures.com/patterns/dark-leather.png');
+            font-family: 'Playfair Display', serif; overflow-x: hidden;
+            background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://www.transparenttextures.com/patterns/dark-leather.png');
         }
 
-        /* Navigation */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 1px solid #333; box-sizing: border-box; }
-        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 12px 20px; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .nav-btn:hover { background: var(--gold); color: #000; border-color: var(--gold); }
+        /* Top Nav */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--gold); box-sizing: border-box; }
+        .nav-btn { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 10px 18px; font-size: 11px; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .nav-btn:hover { background: var(--gold); color: #000; }
 
-        /* Header with Golden Hover Effect */
         .header-area { text-align: center; padding-top: 150px; margin-bottom: 50px; }
         .section-name { 
-            font-size: clamp(35px, 7vw, 85px); letter-spacing: 12px; text-transform: uppercase; 
-            font-weight: 900; color: var(--gold); cursor: pointer;
-            transition: 0.5s ease; position: relative; display: inline-block;
+            font-size: clamp(30px, 6vw, 70px); letter-spacing: 15px; text-transform: uppercase; 
+            font-weight: 900; color: var(--gold); text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); margin: 0;
+            transition: 0.5s; cursor: pointer;
         }
-        .section-name:hover {
-            color: var(--bright-gold);
-            text-shadow: 0 0 20px var(--gold), 0 0 40px var(--bright-gold);
-            transform: scale(1.05);
-        }
-        .sub-slogan { font-size: 14px; letter-spacing: 8px; color: #666; text-transform: uppercase; margin-top: 15px; }
+        .section-name:hover { color: #fff; text-shadow: 0 0 30px var(--gold); }
 
-        /* Pyramid Grid & Glowing Borders */
-        #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 50px; }
-        .pyramid-container { display: flex; flex-direction: column-reverse; align-items: center; gap: 15px; }
-        .row { display: flex; justify-content: center; gap: 12px; }
+        /* 100 Plots Grid */
+        #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 100px; }
+        .grid-container { 
+            display: grid; 
+            grid-template-columns: repeat(10, 1fr); 
+            gap: 15px; 
+            max-width: 1200px;
+            padding: 20px;
+        }
         
         .plot { 
-            width: 100px; height: 100px; background: rgba(15, 15, 15, 0.95);
-            position: relative; cursor: pointer; transition: 0.5s; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border: 1px solid var(--border-col);
-            box-shadow: 0 0 var(--glow-size) var(--border-col);
+            width: 110px; height: 110px; background: rgba(20, 20, 20, 0.9);
+            border: 1px solid var(--border-glow); position: relative; cursor: pointer;
+            transition: 0.5s; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 0 var(--glow-power) var(--border-glow);
         }
-        .plot:hover { 
-            transform: scale(1.15) translateY(-10px); 
-            border-color: #fff; 
-            box-shadow: 0 0 30px #fff; 
-            z-index: 100; 
-        }
-        .plot span { font-size: 14px; font-weight: bold; color: #fff; z-index: 2; letter-spacing: 1px; }
-        .plot-id { position: absolute; top: 6px; left: 8px; font-size: 9px !important; color: var(--gold) !important; opacity: 0.6; }
+        .plot:hover { transform: scale(1.1); border-color: #fff; box-shadow: 0 0 30px #fff; z-index: 10; }
+        
+        .plot span { font-size: 14px; font-weight: bold; color: #fff; z-index: 2; }
+        .plot-id { position: absolute; top: 5px; left: 8px; font-size: 9px !important; color: var(--gold) !important; opacity: 0.7; }
+        .owner-name { position: absolute; bottom: 8px; font-size: 9px !important; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Payment Modal - Luxury Light Print Style */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
+        .card { background: #fff; color:#000; padding:40px; width:100%; max-width:550px; text-align:center; position: relative; border: 1px solid var(--gold); }
+        .card::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: url('https://www.transparenttextures.com/patterns/old-map.png'); opacity: 0.05; pointer-events: none; }
+        
+        .info-list { text-align: left; background: #f9f9f9; padding: 25px; margin: 20px 0; border-left: 5px solid var(--gold); line-height: 1.8; font-size: 14px; }
+        .pay-item { text-align: left; padding: 15px; background: #f7f7f7; margin-bottom: 10px; cursor: pointer; border: 1px solid #eee; }
+        .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; margin-top: 10px; position: relative; z-index: 5; }
 
         /* Footer */
-        .footer-container { text-align: center; padding: 60px 20px; border-top: 1px solid #222; background: #000; }
-        .footer-text { color: #444; font-size: 11px; letter-spacing: 1.5px; line-height: 1.8; max-width: 800px; margin: 0 auto; }
+        .footer-container { text-align: center; padding: 40px; border-top: 1px solid #222; color: #555; font-size: 11px; letter-spacing: 1px; }
 
-        /* Modals */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; padding: 15px; }
-        .card { background: #fff; color:#000; padding:40px; width:100%; max-width:500px; text-align:center; border-radius: 4px; border: 1px solid var(--gold); }
-        .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; margin-top: 15px; }
-        .pay-item { text-align: left; padding: 15px; background: #f7f7f7; margin-bottom: 12px; cursor: pointer; border: 1px solid #eee; }
-        .pay-address { font-family: monospace; font-size: 13px; color: #222; word-break: break-all; }
-
-        .fixed-support { position: fixed; bottom: 30px; left: 30px; z-index: 5000; background: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        /* Support Icon */
+        .fixed-support { position: fixed; bottom: 30px; left: 30px; z-index: 5000; background: #fff; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        
         #celeb-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:#000; display:none; flex-direction:column; align-items:center; justify-content:center; z-index:10000; }
+
+        @media (max-width: 768px) {
+            .grid-container { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+            .plot { width: 80px; height: 80px; }
+        }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
         <div class="nav-left">
-            <button class="nav-btn" onclick="downloadMap()">HD DOWNLOAD</button>
+            <button class="nav-btn" onclick="downloadMap()">HD MAP</button>
             <button class="nav-btn" onclick="window.location.href='index.html'">EXIT</button>
-            <button class="nav-btn" onclick="openPayment()" style="border-color: var(--gold); color: var(--gold);">PAYMENT GATEWAY</button>
         </div>
+        <button class="nav-btn" onclick="openPayment()" style="border-color: #fff; color: #fff;">PAYMENT GATEWAY</button>
     </div>
 
     <div class="header-area">
         <h1 class="section-name">Social Creators</h1>
-        <div class="sub-slogan">THE ANCIENT DIGITAL DYNASTY</div>
+        <div style="font-size: 10px; letter-spacing: 5px; color: #888;">THE ULTIMATE 100 LEGACIES</div>
     </div>
     
     <div id="capture-area">
-        <div class="pyramid-container" id="pyramid-grid"></div>
+        <div class="grid-container" id="main-grid"></div>
     </div>
 
     <div class="footer-container">
-        <p class="footer-text">
-            <b>SOCIAL CREATORS | ROYAL PYRAMID</b> © 2026. All rights reserved.<br>
-            Preserving digital culture through limited pyramid ownership. Each plot is a unique piece of internet history.<br>
-            All brand logos are trademarks of their respective owners.
-        </p>
+        <b>SOCIAL CREATORS | LUXURY EDITION © 2026.</b><br>
+        Limited to 100 plots only. Each plot represents a digital milestone.<br>
+        The value of the top rows increases with every update.
     </div>
 
-    <div id="pay-modal" class="modal"><div class="card"><h2>PAYMENT</h2><div class="pay-item" onclick="copy('912221034')"><span class="pay-address">Binance UID: 912221034</span></div><button class="premium-btn" onclick="closeModals()">CLOSE</button></div></div>
-    
+    <div id="pay-modal" class="modal">
+        <div class="card">
+            <h2 style="letter-spacing: 5px;">PAYMENT GATEWAY</h2>
+            <div class="pay-item" onclick="copy('912221034')">BINANCE UID: 912221034</div>
+            <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')">USDT TRC20: TTapBkTq...</div>
+            <button class="premium-btn" onclick="closeModals()">CLOSE</button>
+        </div>
+    </div>
+
     <div id="order-modal" class="modal">
         <div class="card">
             <h2 id="disp-id">PLOT ACQUISITION</h2>
             <h1 id="disp-price">$0</h1>
-            <input type="text" id="brand-input" placeholder="ENTER BRAND NAME" style="width:100%; padding:15px; margin:20px 0; border:1px solid #ddd; text-align:center;">
+            <input type="text" id="brand-input" placeholder="YOUR BRAND NAME" style="width:100%; padding:15px; border:1px solid #ddd; text-align:center; font-size:16px; margin-bottom:15px;">
             <button class="premium-btn" onclick="submitOrder()">CLAIM OWNERSHIP</button>
-            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:15px; text-decoration: underline;">BACK</p>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; margin-top:15px; opacity:0.5;">CANCEL</p>
         </div>
     </div>
 
     <div id="final-modal" class="modal">
         <div class="card">
-            <h2>REQUIRED STEPS</h2>
-            <p>Please contact support with Plot ID: <b id="final-plot-id">#00</b></p>
+            <h2 style="letter-spacing: 2px;">REQUIRED STEPS</h2>
+            <div class="info-list">
+                ✅ 1. Take a screenshot of Payment.<br>
+                ✅ 2. Provide High-Res Brand Logo.<br>
+                ✅ 3. Website link for Plot redirect.<br>
+                ✅ 4. Mention Plot ID: <b id="final-plot-id">#00</b>
+            </div>
             <button class="premium-btn" onclick="goToSupport()">CONTACT CUSTOMER SERVICE</button>
-            <button class="premium-btn" style="background:#555;" onclick="closeAndCelebrate()">BACK TO MAP</button>
+            <button class="premium-btn" style="background:#555;" onclick="closeModals()">BACK TO CANVAS</button>
         </div>
     </div>
 
     <div id="celeb-overlay">
-        <h1 style="font-size: 50px; color: #fff; letter-spacing: 10px;">SUCCESS!</h1>
-        <h2 id="congrats-brand" style="color: var(--gold);"></h2>
+        <h1 style="color:#fff; font-size:40px; letter-spacing:10px;">CONGRATULATIONS</h1>
+        <h2 id="congrats-brand" style="color:var(--gold);"></h2>
     </div>
 
-    <div class="fixed-support" onclick="goToSupport()">
-        <svg viewBox="0 0 24 24" width="24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.527 3.66 1.438 5.168L2.05 22l4.986-1.308A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+    <div class="fixed-support" onclick="window.open('https://wa.me/8801576940717', '_blank')">
+        <svg viewBox="0 0 24 24" width="28"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.527 3.66 1.438 5.168L2.05 22l4.986-1.308A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
     </div>
 
     <script>
-        const grid = document.getElementById('pyramid-grid');
-        const rowStructure = [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-        // প্রাইস লিস্ট (নিচ থেকে উপরে)
-        const rowPrices = [999, 1099, 1299, 1599, 1999, 2499, 3099, 3799, 4599, 5499, 6499, 7599, 8999];
-        
-        let currentPlot = 91; 
-        let activeID, activePrice, activeRow;
+        const grid = document.getElementById('main-grid');
+        let activeID, activePrice;
 
-        rowStructure.forEach((plotCount, rowIndex) => {
-            const row = document.createElement('div');
-            row.className = 'row';
+        // Generate 100 Plots
+        for(let i=1; i<=100; i++) {
+            const plot = document.createElement('div');
+            plot.className = 'plot';
             
-            // উজ্জ্বলতা লজিক: উপরের সারি ( rowIndex বড় ) বেশি উজ্জ্বল
-            const glowIntensity = (rowIndex + 1) / rowStructure.length;
-            const borderOpacity = 0.1 + (glowIntensity * 0.9);
-            const glowSize = 2 + (glowIntensity * 10);
+            // Dynamic Pricing Logic based on rows
+            let price = 39;
+            if (i <= 10) price = 999;
+            else if (i <= 20) price = 899;
+            else if (i <= 30) price = 599;
             
-            for(let i=0; i < plotCount; i++) {
-                if(currentPlot < 1) break;
-                const plot = document.createElement('div');
-                plot.className = 'plot';
-                plot.style.setProperty('--border-col', `rgba(212, 175, 55, ${borderOpacity})`);
-                plot.style.setProperty('--glow-size', `${glowSize}px`);
-                
-                const pPrice = rowPrices[rowIndex];
-                const pID = currentPlot;
-                const pRow = rowIndex + 1;
+            // Glow effect based on row importance
+            let glow = (101 - i) / 5;
+            let opac = (101 - i) / 100;
+            plot.style.setProperty('--border-glow', `rgba(212, 175, 55, ${opac})`);
+            plot.style.setProperty('--glow-power', `${glow}px`);
 
-                plot.innerHTML = `<span class="plot-id">#${pID}</span><span>$${pPrice}</span>`;
-                
-                plot.onclick = () => {
-                    activeID = pID; activePrice = pPrice; activeRow = pRow;
-                    document.getElementById('disp-id').innerText = `PLOT #${pID} ACQUISITION`;
-                    document.getElementById('disp-price').innerText = `$${pPrice}`;
-                    document.getElementById('order-modal').style.display = 'flex';
-                };
-                row.appendChild(plot);
-                currentPlot--;
-            }
-            grid.appendChild(row);
-        });
+            plot.innerHTML = `
+                <span class="plot-id">#${i}</span>
+                <span>$${price}</span>
+                <span class="owner-name" id="owner-${i}">AVAILABLE</span>
+            `;
+
+            plot.onclick = () => {
+                activeID = i; activePrice = price;
+                document.getElementById('disp-id').innerText = `PLOT #${i} ACQUISITION`;
+                document.getElementById('disp-price').innerText = `$${price}`;
+                document.getElementById('order-modal').style.display = 'flex';
+            };
+            grid.appendChild(plot);
+        }
 
         function submitOrder() {
             const brand = document.getElementById('brand-input').value;
             if(!brand) return alert("Enter brand name.");
-            document.getElementById('order-modal').style.display = 'none';
-            const overlay = document.getElementById('celeb-overlay');
-            document.getElementById('congrats-brand').innerText = brand.toUpperCase();
-            overlay.style.display = 'flex';
             
-            // মিশরীয় বালুকণা ও গোল্ড ডাস্ট ইফেক্ট
-            var duration = 3 * 1000;
+            document.getElementById('order-modal').style.display = 'none';
+            document.getElementById('congrats-brand').innerText = brand.toUpperCase();
+            document.getElementById('celeb-overlay').style.display = 'flex';
+            
+            // দুই দিক থেকে ঘন রঙিন কাগজ ছেটানো
+            var duration = 4 * 1000;
             var end = Date.now() + duration;
-
             (function frame() {
-              confetti({ particleCount: 2, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#D4AF37', '#C2B280', '#A68908'] });
-              confetti({ particleCount: 2, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#D4AF37', '#C2B280', '#A68908'] });
+              confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#D4AF37', '#ffffff', '#ff0000', '#00ff00'] });
+              confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#D4AF37', '#ffffff', '#0000ff', '#ffff00'] });
               if (Date.now() < end) requestAnimationFrame(frame);
             }());
 
             setTimeout(() => { 
-                overlay.style.display = 'none'; 
+                document.getElementById('celeb-overlay').style.display = 'none'; 
                 document.getElementById('final-plot-id').innerText = `#${activeID}`;
                 document.getElementById('final-modal').style.display = 'flex'; 
-            }, 3000);
-        }
-
-        function closeAndCelebrate() {
-            closeModals();
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#D4AF37', '#C2B280'] });
+            }, 3500);
         }
 
         function goToSupport() {
             const brand = document.getElementById('brand-input').value || "Owner";
-            const message = `Hello Support, I am interested in Social Creators Pyramid Plot.\n\nDetails:\nPlot ID: #${activeID}\nRow Level: ${activeRow}\nBrand: ${brand}\nPrice: $${activePrice}\n\nPlease guide me for the next steps.`;
-            window.open(`https://wa.me/8801576940717?text=${encodeURIComponent(message)}`, '_blank');
+            const msg = `Hello Support, I want to buy Plot #${activeID}.\nBrand: ${brand}\nPrice: $${activePrice}`;
+            window.open(`https://wa.me/8801576940717?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         function downloadMap() {
-            html2canvas(document.getElementById('capture-area'), { backgroundColor: "#050505", scale: 3 }).then(canvas => {
+            html2canvas(document.getElementById('capture-area'), {backgroundColor: "#0a0a0a", scale: 2}).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Social_Creators_Luxury_Map.png';
+                link.download = 'Social_Creators_Map.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
         }
+
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function openPayment() { document.getElementById('pay-modal').style.display = 'flex'; }
         function copy(t) { navigator.clipboard.writeText(t); alert("Copied!"); }
