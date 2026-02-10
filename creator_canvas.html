@@ -3,105 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PYRAMID ARCHIVE | K ARCHIVE</title>
+    <title>PIXEL PYRAMID | K ARCHIVE</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        :root { --gold: #9E7E45; --bright-gold: #FFD700; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Times New Roman', serif; overflow-x: hidden; }
+        :root { --pixel-gold: #D4AF37; --pixel-dark: #222; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'Courier New', Courier, monospace; overflow-x: hidden; }
 
         /* Navigation */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.95); border-bottom: 1px solid #222; box-sizing: border-box; }
-        .nav-left { display: flex; gap: 15px; }
-        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 18px; font-size: 11px; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .nav-btn:hover { background: #fff; color: #000; }
-        .pay-btn { border-color: var(--gold) !important; color: var(--gold); }
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: #111; border-bottom: 4px solid #333; box-sizing: border-box; }
+        .nav-btn { background: #333; border: 2px solid #555; color: #fff; padding: 8px 15px; font-size: 11px; cursor: pointer; text-transform: uppercase; image-rendering: pixelated; }
+        .nav-btn:hover { background: var(--pixel-gold); color: #000; }
+        .pay-btn { border-color: var(--pixel-gold) !important; color: var(--pixel-gold); }
 
-        .header-area { text-align: center; padding-top: 130px; margin-bottom: 20px; }
-        .section-name { font-size: clamp(30px, 6vw, 65px); letter-spacing: 8px; font-weight: 900; color: var(--gold); text-transform: uppercase; margin: 0; }
-        .sub-slogan { font-size: 12px; letter-spacing: 4px; color: #555; margin-top: 5px; }
-
-        /* Pyramid Canvas Area */
+        .header-area { text-align: center; padding-top: 110px; }
+        .section-name { font-size: 40px; letter-spacing: 4px; font-weight: bold; color: var(--pixel-gold); text-transform: uppercase; margin: 0; }
+        
+        /* Minecraft Pixel Pyramid Design */
         #capture-area { 
             display: flex; flex-direction: column; align-items: center; 
-            width: 100%; padding: 100px 0; background: radial-gradient(circle, #111 0%, #000 70%); 
-            perspective: 1000px;
+            width: 100%; padding: 80px 0; background: #000; 
         }
 
-        /* Isometric Cube Styling */
-        .pyramid-container { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-        .row { display: flex; justify-content: center; gap: 4px; }
+        .pyramid-container { display: flex; flex-direction: column; align-items: center; gap: 0; }
+        .row { display: flex; justify-content: center; gap: 0; }
         
-        .cube { 
-            width: 40px; height: 40px; 
-            background: var(--c-bg); 
-            position: relative; cursor: pointer; transition: 0.3s;
-            transform: rotateX(45deg) rotateZ(45deg); /* Isometric View */
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.5), inset -2px -2px 5px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,215,0,0.3);
-        }
-        .cube::before { /* Top Face */
-            content: ''; position: absolute; top: -10px; left: 0; width: 100%; height: 10px;
-            background: rgba(255,255,255,0.2); transform: skewX(-45deg); transform-origin: bottom;
-        }
-        .cube::after { /* Side Face */
-            content: ''; position: absolute; top: 0; right: -10px; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); transform: skewY(-45deg); transform-origin: left; width: 10px;
+        /* Pixel Cube - Large Size */
+        .pixel-block { 
+            width: 60px; height: 60px; 
+            background: #444; border: 3px solid #000;
+            position: relative; cursor: pointer; 
+            box-sizing: border-box; transition: 0.1s;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        .cube:hover { transform: rotateX(45deg) rotateZ(45deg) translateZ(15px); border-color: #fff; filter: brightness(1.5); }
-        .cube-id { position: absolute; transform: rotateZ(-45deg) rotateX(-45deg); font-size: 8px; font-weight: bold; color: rgba(255,255,255,0.5); }
+        /* 3D Pixel Depth Effect */
+        .pixel-block::before { 
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: rgba(255,255,255,0.2); 
+        }
+        .pixel-block::after { 
+            content: ''; position: absolute; bottom: 0; right: 0; width: 6px; height: 100%; background: rgba(0,0,0,0.3); 
+        }
 
-        /* Missing Info Text below Canvas */
-        .bottom-info { text-align: center; padding: 60px 20px; border-top: 1px solid #222; max-width: 800px; margin: 0 auto; }
-        .bottom-info p { color: #555; font-size: 11px; line-height: 2; letter-spacing: 1px; }
+        .pixel-block:hover { filter: brightness(1.3); transform: scale(1.1); z-index: 10; border-color: #fff; }
+        .block-id { font-size: 10px; font-weight: bold; color: rgba(255,255,255,0.4); pointer-events: none; }
+
+        /* Missing Info Section */
+        .footer-info { text-align: center; padding: 40px 20px; border-top: 4px solid #111; max-width: 900px; margin: 0 auto; color: #666; font-size: 12px; }
 
         /* Modals */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background: #fff; color:#000; padding:40px; width:90%; max-width:500px; text-align:center; border-radius: 4px; border-left: 10px solid var(--gold); }
-        .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 15px; }
-        .pay-item { text-align: left; padding: 15px; background: #f7f7f7; margin-bottom: 10px; border-left: 4px solid var(--gold); font-size: 13px; font-family: monospace; }
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:none; align-items:center; justify-content:center; z-index:9000; }
+        .card { background: #eee; color:#000; padding:30px; width:90%; max-width:450px; text-align:center; border: 5px solid #333; }
+        .premium-btn { background: #333; color: #fff; width: 100%; padding: 15px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px; font-family: 'Courier New'; }
+        .premium-btn:hover { background: #000; }
+        .pay-item { text-align: left; padding: 12px; background: #ddd; margin-bottom: 8px; border: 2px solid #bbb; font-size: 11px; word-break: break-all; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
         <div class="nav-left">
-            <button class="nav-btn" onclick="downloadMap()">EXPORT HD MAP</button>
+            <button class="nav-btn" onclick="downloadMap()">EXPORT MAP</button>
             <button class="nav-btn pay-btn" onclick="openPayment()">PAYMENT GATEWAY</button>
         </div>
-        <div style="font-size: 10px; letter-spacing: 2px;">AVAILABLE: <span style="color:var(--gold);">300 CUBES</span></div>
+        <div style="font-size: 11px;">BLOCKS: <span style="color:var(--pixel-gold);">300 / $199</span></div>
     </div>
 
     <div class="header-area">
         <h1 class="section-name">Social Creators</h1>
-        <div class="sub-slogan">THE GOLDEN PYRAMID ARCHIVE</div>
+        <p style="font-size: 12px; color: #444; letter-spacing: 5px;">PIXELATED ARCHIVE EDITION</p>
     </div>
     
     <div id="capture-area">
-        <div class="pyramid-container" id="pyramid-body"></div>
+        <div class="pyramid-container" id="pixel-pyramid"></div>
     </div>
 
-    <div class="bottom-info">
-        <p><b>K ARCHIVE | SOCIAL CREATORS</b> © 2026. All rights reserved.<br>
-        Each cube represents a unique $99-$7000 investment in digital history. <br>
-        The Pyramid structure is a testament to the creators who build the foundation of the internet.</p>
+    <div class="footer-info">
+        <p><b>K ARCHIVE | PIXEL SOCIAL CREATORS</b><br>
+        2026 Limited Collection. Each pixel block is a digital landmark. <br>
+        Verified on the K-Archive Ledger. $199 Fixed Price Acquisition.</p>
     </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 id="disp-id" style="color:var(--gold); font-size: 14px;">CUBE #000</h2>
-            <h1 id="disp-price" style="font-size: 40px; margin: 10px 0;">$000</h1>
-            <button class="premium-btn" onclick="submitOrder()">LOCK THIS CUBE</button>
-            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; text-decoration: underline; margin-top: 15px;">CANCEL</p>
+            <h3 id="disp-id">PIXEL BLOCK #000</h3>
+            <h1 style="font-size: 50px; margin: 10px 0;">$199</h1>
+            <button class="premium-btn" onclick="submitOrder()">CONFIRM PURCHASE</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; text-decoration: underline; margin-top: 10px;">CANCEL</p>
         </div>
     </div>
 
     <div id="pay-modal" class="modal">
         <div class="card">
-            <h2 style="letter-spacing: 3px; margin-bottom: 20px;">PAYMENT GATEWAY</h2>
-            <div class="pay-item"><b>METAMASK:</b> 0x443792A4884e8e855f954ccEF910778Aff1eb78E</div>
+            <h3 style="margin-bottom: 20px;">PAYMENT DETAILS</h3>
+            <div class="pay-item"><b>ETH:</b> 0x443792A4884e8e855f954ccEF910778Aff1eb78E</div>
             <div class="pay-item"><b>BINANCE UID:</b> 912221034</div>
             <div class="pay-item"><b>USDT (TRC20):</b> TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</div>
             <button class="premium-btn" onclick="closeModals()">CLOSE</button>
@@ -110,64 +106,56 @@
 
     <div id="final-modal" class="modal">
         <div class="card">
-            <h2 style="color: #000;">CUBE RESERVED</h2>
-            <div id="final-info-box" style="text-align: left; margin: 20px 0; line-height: 1.8; font-size: 14px;"></div>
-            <button class="premium-btn" id="whatsapp-btn">SEND TO SUPPORT (WHATSAPP)</button>
+            <h2 style="color: #222;">SUCCESSFULLY LOCKED</h2>
+            <div id="final-info-box" style="text-align: left; margin: 20px 0; font-size: 13px;"></div>
+            <button class="premium-btn" id="whatsapp-btn">SEND TO CS (WHATSAPP)</button>
         </div>
     </div>
 
     <script type="module">
         import { db, ref, push, serverTimestamp } from "./firebase-config.js";
 
-        const pyramidBody = document.getElementById('pyramid-body');
-        let activeID, activePrice;
+        const pyramidBody = document.getElementById('pixel-pyramid');
+        const colors = ['#5e4c2f', '#7d663e', '#9c804d', '#bc9a5c', '#dbb46b', '#ffd700'];
+        let activeID;
 
-        // Pyramid Logic: Rows increase in size
         let currentPlot = 1;
         const totalTarget = 300;
-        
-        // কালার প্যালেট - ওপর থেকে নিচে গাঢ় গোল্ডেন হবে
-        const goldShades = ['#FFD700', '#FFC700', '#FFB700', '#FFA700', '#FF9700', '#E68A00', '#CC7A00', '#B36B00', '#995C00', '#804D00'];
 
         for (let rowIdx = 1; currentPlot <= totalTarget; rowIdx++) {
             const rowDiv = document.createElement('div');
             rowDiv.className = 'row';
-            
-            const price = 99 + (rowIdx * 50); // নিচ থেকে ওপরে দাম বাড়বে
-            const color = goldShades[rowIdx % goldShades.length];
+            const color = colors[rowIdx % colors.length];
 
             for (let i = 0; i < rowIdx && currentPlot <= totalTarget; i++) {
                 const id = currentPlot++;
-                const cube = document.createElement('div');
-                cube.className = 'cube';
-                cube.style.setProperty('--c-bg', color);
-                cube.innerHTML = `<span class="cube-id">#${id}</span>`;
+                const block = document.createElement('div');
+                block.className = 'pixel-block';
+                block.style.backgroundColor = color;
+                block.innerHTML = `<span class="block-id">${id}</span>`;
                 
-                cube.onclick = () => {
-                    activeID = id; activePrice = price;
-                    document.getElementById('disp-id').innerText = `CUBE #${id} SELECTION`;
-                    document.getElementById('disp-price').innerText = `$${price}`;
+                block.onclick = () => {
+                    activeID = id;
+                    document.getElementById('disp-id').innerText = `PIXEL BLOCK #${id}`;
                     document.getElementById('order-modal').style.display = 'flex';
                 };
-                rowDiv.appendChild(cube);
+                rowDiv.appendChild(block);
             }
             pyramidBody.appendChild(rowDiv);
         }
 
         window.submitOrder = async () => {
-            try {
-                await push(ref(db, 'pending_orders/Pyramid'), { plotID: activeID, price: activePrice, timestamp: serverTimestamp() });
-                document.getElementById('order-modal').style.display = 'none';
-                confetti({ particleCount: 150, spread: 70 });
+            await push(ref(db, 'pending_orders/PixelPyramid'), { plotID: activeID, price: 199, timestamp: serverTimestamp() });
+            document.getElementById('order-modal').style.display = 'none';
+            confetti({ particleCount: 100, spread: 70 });
 
-                const infoBox = document.getElementById('final-info-box');
-                infoBox.innerHTML = `📍 <b>Cube ID:</b> #${activeID}<br>💰 <b>Price:</b> $${activePrice}<br>🏛 <b>Section:</b> Social Creators Pyramid`;
-                
-                const msg = encodeURIComponent(`Hello K ARCHIVE,\nI want to confirm my Cube Acquisition:\n\n📌 Cube ID: #${activeID}\n💵 Price: $${activePrice}\n\nPlease provide payment confirmation.`);
-                document.getElementById('whatsapp-btn').onclick = () => window.open(`https://wa.me/8801576940717?text=${msg}`);
-                
-                document.getElementById('final-modal').style.display = 'flex';
-            } catch (e) { alert("Error!"); }
+            const infoBox = document.getElementById('final-info-box');
+            infoBox.innerHTML = `📌 <b>Block ID:</b> #${activeID}<br>💵 <b>Amount:</b> $199<br>🕹 <b>Style:</b> Minecraft Pixel`;
+            
+            const msg = encodeURIComponent(`Hello K ARCHIVE,\nI want to confirm my Pixel Block acquisition:\n\n📌 ID: #${activeID}\n💵 Price: $199\n\nGuide me through payment.`);
+            document.getElementById('whatsapp-btn').onclick = () => window.open(`https://wa.me/8801576940717?text=${msg}`);
+            
+            document.getElementById('final-modal').style.display = 'flex';
         };
 
         window.openPayment = () => document.getElementById('pay-modal').style.display = 'flex';
@@ -175,7 +163,7 @@
         window.downloadMap = () => {
             html2canvas(document.getElementById('capture-area'), { backgroundColor: "#000" }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Pyramid_Archive_HD.png';
+                link.download = 'Pixel_Pyramid_Map.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
