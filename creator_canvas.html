@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SOCIAL CREATORS | ELITE K ARCHIVE</title>
+    <title>GLOBAL LEGENDS | K ARCHIVE</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
@@ -13,126 +13,89 @@
 
         /* Navigation */
         .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: rgba(0,0,0,0.98); border-bottom: 2px solid var(--gold); box-sizing: border-box; }
-        .nav-left { display: flex; gap: 10px; }
-        .nav-btn { background: none; border: 1px solid var(--silver); color: #fff; padding: 10px 15px; font-size: 10px; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .nav-btn:hover { background: #fff; color: #000; }
-        .pay-btn { border-color: var(--gold) !important; color: var(--gold) !important; font-weight: bold; }
+        .nav-left { display: flex; gap: 10px; align-items: center; }
+        
+        /* Search Box */
+        .search-container { background: rgba(255,255,255,0.1); border: 1px solid var(--gold); padding: 5px 15px; border-radius: 20px; display: flex; align-items: center; }
+        .search-input { background: none; border: none; color: #fff; outline: none; padding: 5px; width: 100px; font-size: 12px; }
+        .search-btn { cursor: pointer; color: var(--gold); font-weight: bold; font-size: 12px; }
 
-        .live-counter { text-align: right; line-height: 1.2; }
-        .count-val { color: var(--gold); font-size: 16px; font-weight: 900; display: block; }
+        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 10px 15px; font-size: 10px; letter-spacing: 1px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .nav-btn:hover { background: #fff; color: #000; }
 
         /* Header */
         .header-area { text-align: center; padding-top: 130px; padding-bottom: 40px; }
-        .section-title { 
-            font-size: clamp(30px, 7vw, 70px); letter-spacing: 10px; text-transform: uppercase; font-weight: 900; 
-            background: linear-gradient(90deg, var(--gold), #FFF, var(--silver), var(--gold)); 
+        .section-name { 
+            font-size: clamp(30px, 7vw, 75px); letter-spacing: 10px; text-transform: uppercase; font-weight: 900; 
+            background: linear-gradient(90deg, #D4AF37, #FFF, #C0C0C0, #D4AF37); 
             background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            animation: shine 4s linear infinite; margin: 0;
+            animation: shine 5s linear infinite; margin: 0;
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* The Grid - No Gap Design */
+        /* 1000 Plots Grid - No Gap */
         #capture-area { display: flex; flex-direction: column; align-items: center; width: 100%; padding-bottom: 50px; }
         .grid-container { 
             display: grid; 
-            grid-template-columns: repeat(10, 100px); /* 10 columns */
+            grid-template-columns: repeat(20, 80px); /* ২০টি কলাম ১০০০ প্লটের জন্য */
             border: 2px solid var(--gold);
             background: #111;
-            /* গ্যাপ সম্পূর্ণ ০ করে দেওয়া হয়েছে */
             gap: 0; 
         }
         .plot { 
-            width: 100px; height: 100px; 
-            border: 0.1px solid rgba(212,175,55,0.3); /* চিকন বর্ডার যাতে প্লট বোঝা যায় */
+            width: 80px; height: 80px; 
+            border: 0.1px solid rgba(212,175,55,0.2); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             position: relative; cursor: pointer; transition: 0.3s; background: #000;
         }
-        .plot:hover { transform: scale(1.05); z-index: 10; border: 1px solid #fff; box-shadow: 0 0 20px #fff; }
-        .plot-id { position: absolute; top: 5px; left: 5px; font-size: 8px; color: var(--gold); opacity: 0.7; }
-        .plot-price { font-size: 14px; font-weight: bold; color: #fff; }
-
-        /* Footer */
-        .footer-area { text-align: center; padding: 60px 20px; border-top: 1px solid #222; }
-        .footer-text { color: #555; font-size: 11px; letter-spacing: 1.5px; line-height: 1.8; max-width: 800px; margin: 0 auto; }
-
-        /* Modals */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9999; padding: 20px; box-sizing: border-box; }
-        .card { background: #fff; color:#000; padding:35px; width:100%; max-width:500px; text-align:center; border-radius: 5px; border: 3px solid var(--gold); }
-        .p-input { width: 100%; padding: 15px; margin: 20px 0; border: 1px solid #ddd; text-align: center; font-size: 16px; outline: none; }
-        .p-btn { background: #000; color: var(--gold); width: 100%; padding: 15px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-bottom: 10px; }
+        .plot:hover { transform: scale(1.1); z-index: 10; border: 1px solid #fff; box-shadow: 0 0 20px #fff; }
         
-        .pay-item { text-align: left; background: #f9f9f9; padding: 12px; margin-bottom: 10px; border: 1px solid #eee; cursor: pointer; font-size: 12px; }
+        /* Search Highlight Effect */
+        .highlight { border: 3px solid #fff !important; box-shadow: 0 0 40px #fff !important; transform: scale(1.2); z-index: 100; background: var(--gold) !important; color: #000 !important; }
+        .highlight .plot-price { color: #000 !important; }
 
-        /* Support Icon */
-        .support-icon { position: fixed; bottom: 25px; left: 25px; background: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5000; }
+        .plot-id { position: absolute; top: 5px; left: 5px; font-size: 7px; color: var(--gold); }
+        .plot-price { font-size: 11px; font-weight: bold; color: #fff; }
+
+        /* Modals & Footer - (Same as your shared code) */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); display:none; align-items:center; justify-content:center; z-index:9000; padding: 20px; box-sizing: border-box; }
+        .card { background: #fff; color:#000; padding:35px; width:100%; max-width:500px; text-align:center; border: 3px solid var(--gold); border-radius: 5px; }
+        .p-input { width: 100%; padding: 15px; margin: 20px 0; border: 1px solid #ddd; text-align: center; }
+        .p-btn { background: #000; color: #fff; width: 100%; padding: 15px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
         <div class="nav-left">
-            <button class="nav-btn" onclick="downloadHD()">DOWNLOAD HD</button>
-            <button class="nav-btn" onclick="window.location.href='index.html'">BACK</button>
-            <button class="nav-btn pay-btn" onclick="openModal('pay-modal')">PAYMENT</button>
+            <div class="search-container">
+                <input type="number" id="search-plot" class="search-input" placeholder="PLOT NO (1-1000)">
+                <span class="search-btn" onclick="findPlot()">SEARCH</span>
+            </div>
+            <button class="nav-btn" onclick="downloadHD()">HD MAP</button>
+            <button class="nav-btn" onclick="openPayment()">PAYMENT</button>
         </div>
-        <div class="live-counter">
-            <span style="font-size: 8px; color: var(--silver);">STATUS</span>
-            <span class="count-val">0 / 100</span>
+        <div style="text-align: right; color: var(--gold); font-size: 12px; font-weight: bold;">
+            SOLD: 0 / 1000
         </div>
     </div>
 
     <div class="header-area">
-        <h1 class="section-title">Social Creators</h1>
-        <p style="color: var(--gold); letter-spacing: 5px; font-size: 12px; margin-top: 10px;">PRESERVING DIGITAL LEGENDS</p>
+        <h1 class="section-name">Global Legends</h1>
+        <p style="color: var(--silver); letter-spacing: 5px; font-size: 12px; margin-top: 10px;">THE ELITE 1000 ARCHIVE</p>
     </div>
     
     <div id="capture-area">
         <div class="grid-container" id="main-grid"></div>
     </div>
 
-    <div class="footer-area">
-        <p class="footer-text">
-            <b>K ARCHIVE | SOCIAL CREATORS</b> © 2026. All rights reserved.<br>
-            Ownership of these plots represents a permanent spot in digital history.<br>
-            All brand trademarks belong to their respective owners.
-        </p>
-    </div>
-
-    <div class="support-icon" onclick="window.open('https://wa.me/8801576940717', '_blank')">
-        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.527 3.66 1.438 5.168L2.05 22l4.986-1.308A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
-    </div>
-
     <div id="order-modal" class="modal">
         <div class="card">
-            <h3 id="pop-id" style="color:var(--gold); margin:0;">PLOT #00</h3>
-            <h1 style="margin: 10px 0;">$1,999</h1>
+            <h3 id="pop-id" style="color:var(--gold);">PLOT #00</h3>
+            <h1 id="pop-price">$00</h1>
             <input type="text" id="brand-name" class="p-input" placeholder="YOUR BRAND NAME">
-            <button class="p-btn" onclick="submitOrder()">RESERVE PLOT</button>
-            <span onclick="closeModals()" style="cursor:pointer; font-size:10px; opacity:0.5;">CANCEL</span>
-        </div>
-    </div>
-
-    <div id="pay-modal" class="modal">
-        <div class="card">
-            <h2 style="margin-bottom:20px; font-size:16px;">PAYMENT GATEWAY</h2>
-            <div class="pay-item" onclick="copy('0x443792A4884e8e855f954ccEF910778Aff1eb78E')"><b>Metamask:</b> 0x443792A4884e8e855f954ccEF910778Aff1eb78E</div>
-            <div class="pay-item" onclick="copy('912221034')"><b>Binance UID:</b> 912221034</div>
-            <div class="pay-item" onclick="copy('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6')"><b>USDT (TRC20):</b> TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</div>
-            <button class="p-btn" onclick="closeModals()">CLOSE</button>
-        </div>
-    </div>
-
-    <div id="success-modal" class="modal">
-        <div class="card" style="text-align: left;">
-            <h2 style="text-align:center; color:var(--gold);">REQUIRED STEPS</h2>
-            <div style="background:#fdfaf0; padding:20px; border-left:4px solid var(--gold); font-size:13px; line-height:2;">
-                ✅ 1. Take a screenshot of Payment.<br>
-                ✅ 2. Provide High-Res Brand Logo.<br>
-                ✅ 3. Website link for Plot redirect.<br>
-                ✅ 4. Mention Plot ID: <b id="final-id">#00</b>
-            </div>
-            <button class="p-btn" style="background:#25D366; color:#fff; margin-top:20px;" onclick="goToWA()">SEND TO CUSTOMER SERVICE</button>
-            <button class="p-btn" style="background:#555; color:#fff;" onclick="backToCanvas()">BACK TO CANVAS</button>
+            <button class="p-btn" onclick="submitOrder()">RESERVE NOW</button>
+            <span onclick="closeModals()" style="cursor:pointer; font-size:10px;">CANCEL</span>
         </div>
     </div>
 
@@ -140,62 +103,65 @@
         import { db, ref, push, serverTimestamp } from "./firebase-config.js";
 
         const grid = document.getElementById('main-grid');
-        let selID, selBrand;
+        let selID, selPrice, selBrand;
 
-        // Generate 100 Plots with No Gaps
-        for (let i = 1; i <= 100; i++) {
+        // ১০০০ প্লট জেনারেশন লজিক
+        // নিচের সারি (Row 50 to 1) এর দাম $99, উপরে উঠলে $10 বাড়বে
+        const totalRows = 50; // ২০টি কলাম হলে ৫০টি সারি হবে ১০০০ প্লটের জন্য
+        for (let i = 1; i <= 1000; i++) {
+            const currentRow = Math.ceil(i / 20); // প্রতি ২০টিতে ১টি সারি
+            const price = 99 + ((totalRows - currentRow) * 10); // নিচের সারি থেকে উপরে দাম বাড়বে
+
             const plot = document.createElement('div');
             plot.className = 'plot';
-            plot.innerHTML = `<span class="plot-id">#${i}</span><span class="plot-price">$1999</span>`;
+            plot.id = `plot-${i}`;
+            plot.innerHTML = `<span class="plot-id">#${i}</span><span class="plot-price">$${price}</span>`;
+            
             plot.onclick = () => {
-                selID = i;
-                document.getElementById('pop-id').innerText = `PLOT #${i} RESERVATION`;
-                openModal('order-modal');
+                selID = i; selPrice = price;
+                document.getElementById('pop-id').innerText = `PLOT #${i} ACQUISITION`;
+                document.getElementById('pop-price').innerText = `$${price}`;
+                document.getElementById('order-modal').style.display = 'flex';
             };
             grid.appendChild(plot);
         }
+
+        // সার্চ ফাংশন
+        window.findPlot = () => {
+            const num = document.getElementById('search-plot').value;
+            const target = document.getElementById(`plot-${num}`);
+            if(target) {
+                // আগের হাইলাইট রিমুভ করা
+                document.querySelectorAll('.plot').forEach(p => p.classList.remove('highlight'));
+                // স্ক্রল করে নিয়ে আসা
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // হাইলাইট করা
+                target.classList.add('highlight');
+            } else {
+                alert("Plot not found!");
+            }
+        };
 
         window.submitOrder = async () => {
             selBrand = document.getElementById('brand-name').value;
             if(!selBrand) return alert("Enter brand name");
             try {
-                await push(ref(db, 'orders/SocialCreators'), { id: selID, brand: selBrand, time: serverTimestamp() });
-                closeModals();
-                document.getElementById('final-id').innerText = `#${selID}`;
-                openModal('success-modal');
-                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            } catch(e) { alert("Error!"); }
-        };
-
-        window.goToWA = () => {
-            const text = `Hello K Archive,\n\nI want to finalize my plot in *SOCIAL CREATORS*.\n\nPlot ID: #${selID}\nBrand: ${selBrand}\nPrice: $1,999\n\nVerified payment screenshot attached below.`;
-            window.open(`https://wa.me/8801576940717?text=${encodeURIComponent(text)}`, '_blank');
-        };
-
-        window.backToCanvas = () => {
-            closeModals();
-            var end = Date.now() + 3000;
-            (function frame() {
-                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#D4AF37', '#FFF'] });
-                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#C0C0C0', '#D4AF37'] });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
+                await push(ref(db, 'pending_orders/GlobalLegends'), { plotID: selID, price: selPrice, brandName: selBrand, timestamp: serverTimestamp() });
+                alert("Request Sent! Contact support for payment.");
+                window.open(`https://wa.me/8801576940717?text=Plot%20#${selID}%20Reservation%20for%20${selBrand}`, '_blank');
+            } catch(e) { console.error(e); }
         };
 
         window.downloadHD = () => {
-            const btn = event.target; btn.innerText = "CAPTURING...";
-            html2canvas(document.getElementById('capture-area'), { scale: 4, backgroundColor: "#000" }).then(canvas => {
+            html2canvas(document.getElementById('capture-area'), { scale: 2, backgroundColor: "#000" }).then(canvas => {
                 const a = document.createElement('a');
-                a.download = 'Social_Creators_HD.png';
+                a.download = 'Global_Legends_Map.png';
                 a.href = canvas.toDataURL();
                 a.click();
-                btn.innerText = "DOWNLOAD HD";
             });
         };
 
-        window.openModal = (id) => document.getElementById(id).style.display = 'flex';
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied!"); };
     </script>
 </body>
 </html>
