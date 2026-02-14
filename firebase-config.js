@@ -1,8 +1,3 @@
-/**
- * K ARCHIVE - Universal Firebase Core Engine
- * All-in-One Config for All Manual Update Panels
- */
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { 
     getDatabase, 
@@ -29,27 +24,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// এখানে SocialCreators এর পাথটি ঠিক করে দেওয়া হয়েছে
 const SECTIONS = {
-    MILLIONAIRE: "estate_data/Millionaire",
-    NATIONS:     "estate_data/Nations",
-    GAMING:      "estate_data/Gaming",
-    SOCIAL:      "requests/SocialCreators", // এই পাথে কাস্টমারের রিকোয়েস্ট জমা হবে
-    BILLIONAIRE: "estate_data/Billionaire",
-    LUXURY:      "estate_data/Luxury",
-    ENTERPRISE:  "estate_data/Enterprise",
-    EXCLUSIVE:   "estate_data/Exclusive",
-    ARCHIVE:     "estate_data/Archive"
+    SOCIAL: "requests/SocialCreators" // আপনার রিকোয়েস্ট এই পাথে জমা হবে
 };
 
-export { 
-    db, 
-    ref, 
-    set, 
-    push, 
-    onValue, 
-    update, 
-    remove,
-    serverTimestamp,
-    SECTIONS 
-};
+export { db, ref, push, serverTimestamp, SECTIONS };
