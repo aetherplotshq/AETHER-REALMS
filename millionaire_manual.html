@@ -1,88 +1,43 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>MILLIONAIRE MASTER PANEL | K ARCHIVE</title>
+    <title>MASTER UPDATE | Millionaires Club</title>
     <style>
-        body { background: #0B0E11; color: #fff; font-family: 'Segoe UI', sans-serif; padding: 20px; display: none; }
-        .grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; margin-top: 40px; }
-        .card { background: #1E2329; padding: 30px; border-radius: 12px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h2 { color: #FCD535; margin-top: 0; text-align: center; }
-        input { width: 100%; padding: 14px; margin: 10px 0; background: #0B0E11; border: 1px solid #444; color: #fff; border-radius: 6px; box-sizing: border-box; }
-        .btn-main { width: 100%; padding: 15px; background: #FCD535; color: #000; font-weight: bold; border: none; cursor: pointer; border-radius: 6px; font-size: 16px; transition: 0.3s; }
-        .btn-main:hover { background: #e2be2d; }
-        .live-list { height: 500px; overflow-y: auto; background: #0B0E11; border-radius: 6px; padding: 10px; }
-        .item { padding: 12px; border-bottom: 1px solid #2B3139; display: flex; justify-content: space-between; align-items: center; }
-        .btn-del { background: #f6465d; color: white; border: none; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 12px; }
+        body { background: #0B0E11; color: #fff; font-family: sans-serif; padding: 40px; display: none; }
+        .box { max-width: 500px; margin: 0 auto; background: #1E2329; padding: 30px; border-radius: 15px; border: 1px solid #333; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #0B0E11; border: 1px solid #444; color: #fff; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #FCD535; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; margin-top: 10px; }
     </style>
 </head>
 <body>
     <script>
-        if(prompt("Master Access Password:") === "KAWSARahmed22@@") { 
-            document.body.style.display = "block"; 
-        } else { 
-            alert("এক্সেস ডিনাইড!");
-            window.location.href = "index.html"; 
-        }
+        if(prompt("Master Password:") !== "KAWSARahmed22@@") { window.location.href="index.html"; } 
+        else { document.body.style.display="block"; }
     </script>
 
-    <div class="grid">
-        <div class="card">
-            <h2>DIRECT UPDATE</h2>
-            <input type="number" id="mPlot" placeholder="Plot ID (1-100)">
-            <input type="text" id="mBrand" placeholder="Brand Name">
-            <input type="text" id="mImg" placeholder="Logo URL (Direct Link)">
-            <input type="text" id="mWeb" placeholder="Website URL">
-            <button class="btn-main" onclick="directPublish()">UPDATE & GO LIVE</button>
-        </div>
-
-        <div class="card">
-            <h2>LIVE PLOTS (SOLD)</h2>
-            <div id="liveRecords" class="live-list">লোডিং...</div>
-        </div>
+    <div class="box">
+        <h2 style="color:#FCD535; text-align:center;">DIRECT UPDATE</h2>
+        <input type="number" id="p" placeholder="Plot ID">
+        <input type="text" id="n" placeholder="Brand Name">
+        <input type="text" id="i" placeholder="Logo URL">
+        <input type="text" id="l" placeholder="Website URL">
+        <button onclick="update()">UPDATE NOW</button>
     </div>
 
     <script type="module">
-        import { db, ref, onValue } from "./millionaire_firebase-config.js";
-        import { set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { db, ref } from "./millionaire_firebase-config.js";
+        import { set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        window.directPublish = () => {
-            const name = document.getElementById('mBrand').value, 
-                  img = document.getElementById('mImg').value, 
-                  web = document.getElementById('mWeb').value, 
-                  pid = document.getElementById('mPlot').value;
-
-            if(!pid || pid < 1 || pid > 100) return alert("প্লট আইডি ১ থেকে ১০০ এর মধ্যে হতে হবে!");
-            if(!name || !img) return alert("নাম এবং লোগো লিঙ্ক অবশ্যই লাগবে!");
-
+        window.update = () => {
+            const pid = document.getElementById('p').value;
+            if(!pid) return alert("প্লট আইডি দিন!");
             set(ref(db, 'estate_data/Millionaire/' + pid), {
-                name, imageUrl: img, link: web || "#", plotID: parseInt(pid), status: "SOLD"
-            }).then(() => {
-                alert("Plot #" + pid + " সাকসেসফুলি আপডেট হয়েছে!");
-                document.getElementById('mPlot').value = "";
-                document.getElementById('mBrand').value = "";
-                document.getElementById('mImg').value = "";
-            });
-        };
-
-        onValue(ref(db, 'estate_data/Millionaire'), s => {
-            const list = document.getElementById('liveRecords');
-            list.innerHTML = "";
-            const data = s.val();
-            if(!data) { list.innerHTML = "কোনো লাইভ রেকর্ড নেই।"; return; }
-            
-            Object.keys(data).forEach(id => {
-                list.innerHTML += `<div class="item">
-                    <span><b>#${id}</b> - ${data[id].name}</span>
-                    <button class="btn-del" onclick="deletePlot('${id}')">DELETE</button>
-                </div>`;
-            });
-        });
-
-        window.deletePlot = (id) => {
-            if(confirm("আপনি কি নিশ্চিত যে প্লট #" + id + " ম্যাপ থেকে মুছে ফেলতে চান?")) {
-                remove(ref(db, 'estate_data/Millionaire/' + id));
-            }
+                name: document.getElementById('n').value,
+                imageUrl: document.getElementById('i').value,
+                link: document.getElementById('l').value || "#",
+                plotID: parseInt(pid),
+                status: "SOLD"
+            }).then(() => alert("আপডেট সফল হয়েছে!"));
         };
     </script>
 </body>
