@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserve Plot | Millionaires Club</title>
+    <style>
+        :root { --gold: #FCD535; --bg: #0B0E11; --card: #1E2329; }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .order-container { background: var(--card); padding: 35px; border-radius: 15px; border: 1px solid var(--gold); width: 90%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2 { color: var(--gold); margin-bottom: 10px; text-transform: uppercase; }
+        p { color: #848e9c; font-size: 14px; margin-bottom: 25px; }
+        input { width: 100%; padding: 14px; margin: 10px 0; background: var(--bg); border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        input:focus { border-color: var(--gold); outline: none; }
+        .btn-send { width: 100%; padding: 16px; background: var(--gold); color: #000; font-weight: bold; border: none; cursor: pointer; border-radius: 8px; font-size: 16px; margin-top: 15px; transition: 0.3s; }
+        .btn-send:hover { background: #e2be2d; transform: translateY(-2px); }
+        .footer-note { font-size: 11px; color: #5e6673; margin-top: 20px; line-height: 1.5; }
+    </style>
+</head>
+<body>
+
+    <div class="order-container">
+        <h2>RESERVE PLOT</h2>
+        <p>আপনার ব্র্যান্ডের তথ্য সাবমিট করুন।</p>
+        
+        <input type="number" id="plotID" placeholder="Plot ID (1-100)">
+        <input type="text" id="brandName" placeholder="Brand Name">
+        <input type="text" id="whatsapp" placeholder="WhatsApp Number">
+        
+        <button class="btn-send" onclick="sendToAdmin()">SUBMIT REQUEST</button>
+        
+        <div class="footer-note">
+            * তথ্য সাবমিট করার পর আমাদের টিম আপনার পেমেন্ট যাচাই করে প্লটটি লাইভ করে দিবে। যোগাযোগে সহায়তার জন্য সঠিক WhatsApp নম্বর দিন।
+        </div>
+    </div>
+
+    <script type="module">
+        import { db, ref } from "./millionaire_firebase-config.js";
+        import { set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        window.sendToAdmin = () => {
+            const pid = document.getElementById('plotID').value;
+            const bname = document.getElementById('brandName').value;
+            const wapp = document.getElementById('whatsapp').value;
+
+            if(!pid || !bname || !wapp) return alert("সবগুলো তথ্য পূরণ করুন!");
+            if(pid < 1 || pid > 100) return alert("প্লট আইডি ১ থেকে ১০০ এর মধ্যে হতে হবে!");
+
+            const orderID = Date.now();
+            set(ref(db, 'pending_orders/Millionaire/' + orderID), {
+                plotID: parseInt(pid),
+                brandName: bname,
+                whatsapp: wapp,
+                timestamp: orderID,
+                price: 99 // কাস্টম প্রাইস লজিক এখানে যুক্ত করা যাবে
+            }).then(() => {
+                alert("আপনার রিকোয়েস্টটি সাকসেসফুলি পাঠানো হয়েছে!");
+                window.location.href = "millionaire_canvas.html";
+            }).catch(e => alert("Error: " + e.message));
+        };
+    </script>
+</body>
+</html>
