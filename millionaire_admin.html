@@ -1,91 +1,65 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>MILLIONAIRE ADMIN | K ARCHIVE</title>
+    <title>ADMIN PANEL | Millionaires Club</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0B0E11; color: #fff; padding: 20px; display: none; }
-        .container { max-width: 800px; margin: 0 auto; }
-        h1 { color: #FCD535; text-align: center; text-transform: uppercase; margin-bottom: 30px; }
-        .card { background: #1E2329; padding: 20px; margin-bottom: 20px; border-radius: 10px; border-left: 8px solid #FCD535; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .card b { color: #FCD535; font-size: 1.1em; }
-        .input-group { margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
-        input { flex: 1; padding: 12px; min-width: 200px; border: 1px solid #444; background: #0B0E11; color: #fff; border-radius: 5px; }
-        .btn-approve { background: #2ebd85; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        .btn-reject { background: #f6465d; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        .btn-approve:hover { background: #26a676; }
-        .btn-reject:hover { background: #d93e4f; }
+        body { background: #0B0E11; color: #fff; font-family: sans-serif; padding: 30px; display: none; }
+        .order-card { background: #1E2329; border-radius: 12px; padding: 25px; margin-bottom: 20px; border-left: 10px solid #FCD535; }
+        .info { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px; }
+        input { padding: 12px; width: 280px; background: #0B0E11; border: 1px solid #444; color: #fff; border-radius: 5px; margin-right: 10px; }
+        .btn-live { background: #2ebd85; color: #fff; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-delete { background: #f6465d; color: #fff; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; margin-left: 10px; }
     </style>
 </head>
 <body>
     <script>
-        const accessPass = prompt("Admin Access Password:");
-        if(accessPass === "KAWSARahmed22@@") { 
-            document.body.style.display = "block"; 
-        } else { 
-            alert("ভুল পাসওয়ার্ড!");
-            window.location.href = "index.html"; 
-        }
+        if(prompt("Access Password:") !== "KAWSARahmed22@@") { window.location.href="index.html"; } 
+        else { document.body.style.display="block"; }
     </script>
 
-    <div class="container">
-        <h1>Millionaires Club - Pending Requests</h1>
-        <div id="order-list">অর্ডারগুলো লোড হচ্ছে...</div>
-    </div>
+    <h1 style="color:#FCD535;">PENDING ORDERS</h1>
+    <div id="list">লোড হচ্ছে...</div>
 
     <script type="module">
         import { db, ref, onValue } from "./millionaire_firebase-config.js";
         import { set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        const listDiv = document.getElementById('order-list');
-
-        // আপনার প্রজেক্টের পাথ: pending_orders/Millionaire
-        onValue(ref(db, 'pending_orders/Millionaire'), (snapshot) => {
-            const data = snapshot.val();
-            listDiv.innerHTML = "";
-            if (!data) {
-                listDiv.innerHTML = "<p style='text-align:center; color:#888;'>বর্তমানে কোনো পেন্ডিং অর্ডার নেই।</p>";
-                return;
-            }
+        onValue(ref(db, 'pending_orders/Millionaire'), s => {
+            const data = s.val();
+            const container = document.getElementById('list');
+            container.innerHTML = "";
+            if(!data) { container.innerHTML = "কোন পেন্ডিং অর্ডার নেই।"; return; }
 
             Object.keys(data).forEach(id => {
-                const order = data[id];
-                listDiv.innerHTML += `
-                    <div class="card">
-                        <b>PLOT #${order.plotID} - ${order.brandName}</b><br>
-                        <small style="color:#848e9c">Price: $${order.price} | Submitted: ${new Date(order.timestamp).toLocaleString()}</small>
-                        <div class="input-group">
-                            <input type="text" id="img_${id}" placeholder="Logo URL (Direct PNG Link)">
-                            <input type="text" id="web_${id}" placeholder="Brand Website Link">
-                            <button class="btn-approve" onclick="approveOrder('${id}', ${order.plotID}, '${order.brandName}')">APPROVE</button>
-                            <button class="btn-reject" onclick="rejectOrder('${id}')">DELETE</button>
+                const o = data[id];
+                container.innerHTML += `
+                    <div class="order-card">
+                        <div class="info">
+                            <span><b>PLOT #${o.plotID}</b> - ${o.brandName} (WhatsApp: ${o.whatsapp})</span>
+                            <small>${new Date(o.timestamp).toLocaleString()}</small>
                         </div>
+                        <input type="text" id="img_${id}" placeholder="Logo Link (Direct PNG)">
+                        <input type="text" id="url_${id}" placeholder="Website URL">
+                        <button class="btn-live" onclick="goLive('${id}', ${o.plotID}, '${o.brandName}')">APPROVE & LIVE</button>
+                        <button class="btn-delete" onclick="delOrder('${id}')">REJECT</button>
                     </div>`;
             });
         });
 
-        window.approveOrder = (id, plotID, brandName) => {
-            const img = document.getElementById(`img_${id}`).value;
-            const web = document.getElementById(`web_${id}`).value;
-            if(!img) return alert("লোগো লিঙ্ক অবশ্যই দিতে হবে!");
+        window.goLive = (id, pid, name) => {
+            const img = document.getElementById('img_'+id).value;
+            const web = document.getElementById('url_'+id).value;
+            if(!img) return alert("লোগো লিঙ্ক দিন!");
 
-            set(ref(db, 'estate_data/Millionaire/' + plotID), {
-                name: brandName,
-                imageUrl: img,
-                link: web || "#",
-                plotID: plotID,
-                status: "SOLD"
+            set(ref(db, 'estate_data/Millionaire/' + pid), {
+                name, imageUrl: img, link: web || "#", plotID: pid, status: "SOLD"
             }).then(() => {
                 remove(ref(db, 'pending_orders/Millionaire/' + id));
-                alert("Plot #" + plotID + " সফলভাবে লাইভ করা হয়েছে!");
+                alert("প্লটটি এখন লাইভ!");
             });
         };
 
-        window.rejectOrder = (id) => {
-            if(confirm("আপনি কি নিশ্চিত যে এই অর্ডারটি ডিলিট করতে চান?")) {
-                remove(ref(db, 'pending_orders/Millionaire/' + id));
-            }
-        };
+        window.delOrder = (id) => { if(confirm("ডিলিট করবেন?")) remove(ref(db, 'pending_orders/Millionaire/' + id)); };
     </script>
 </body>
 </html>
