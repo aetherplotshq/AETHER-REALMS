@@ -7,6 +7,7 @@
         .card { background: #1E2329; padding: 20px; margin-bottom: 20px; border-radius: 10px; border-left: 8px solid #FCD535; }
         input { padding: 12px; width: 250px; margin-right: 10px; border: 1px solid #444; background: #0B0E11; color: #fff; border-radius: 4px; }
         button { padding: 12px 25px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; }
+        h1 { color: #FCD535; text-transform: uppercase; letter-spacing: 2px; }
     </style>
 </head>
 <body>
@@ -20,7 +21,7 @@
         }
     </script>
 
-    <h1 style="color:#FCD535">MILLIONAIRE PENDING ORDERS</h1>
+    <h1>MILLIONAIRE PENDING APPROVALS</h1>
     <div id="order-list">লোড হচ্ছে...</div>
 
     <script type="module">
@@ -29,7 +30,7 @@
 
         const listDiv = document.getElementById('order-list');
 
-        // পেন্ডিং অর্ডার লোড করা
+        // আপনার প্রজেক্টের পাথ: pending_orders/Millionaire
         onValue(ref(db, SECTIONS.MILLIONAIRE_PENDING), (snapshot) => {
             const data = snapshot.val();
             listDiv.innerHTML = "";
@@ -44,9 +45,9 @@
                     <div class="card">
                         <b>PLOT #${order.plotID}</b> | BRAND: ${order.brandName} | PRICE: $${order.price}
                         <br><br>
-                        <input type="text" id="img_${id}" placeholder="Logo URL (PNG/JPG)">
-                        <input type="text" id="web_${id}" placeholder="Website Link">
-                        <button onclick="approveOrder('${id}', ${order.plotID}, '${order.brandName}')" style="background:#2ebd85; color:white;">APPROVE</button>
+                        <input type="text" id="img_${id}" placeholder="Logo URL (Direct PNG Link)">
+                        <input type="text" id="web_${id}" placeholder="Brand Website Link">
+                        <button onclick="approveOrder('${id}', ${order.plotID}, '${order.brandName}')" style="background:#2ebd85; color:white;">APPROVE & LIVE</button>
                         <button onclick="rejectOrder('${id}')" style="background:red; color:white; margin-left:10px;">REJECT</button>
                     </div>`;
             });
@@ -55,9 +56,9 @@
         window.approveOrder = (id, plotID, brandName) => {
             const img = document.getElementById(`img_${id}`).value;
             const web = document.getElementById(`web_${id}`).value;
-            if(!img) return alert("Logo URL দিন!");
+            if(!img) return alert("Logo URL ছাড়া প্লট লাইভ করা সম্ভব নয়!");
 
-            // এস্টেট ডাটাতে সেভ করা
+            // এস্টেট ডাটাতে (মেইন ক্যানভাস) ডাটা পাঠানো
             set(ref(db, 'estate_data/Millionaire/' + plotID), {
                 name: brandName,
                 imageUrl: img,
@@ -65,9 +66,10 @@
                 plotID: plotID,
                 status: "SOLD"
             }).then(() => {
+                // অনুমোদন হয়ে গেলে পেন্ডিং লিস্ট থেকে মুছে ফেলা
                 remove(ref(db, SECTIONS.MILLIONAIRE_PENDING + '/' + id));
-                alert("প্লটটি এখন লাইভ!");
-            }).catch(e => alert("Error: " + e.message));
+                alert("Plot #" + plotID + " এখন মেইন ম্যাপে লাইভ দেখা যাবে!");
+            });
         };
 
         window.rejectOrder = (id) => {
