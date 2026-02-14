@@ -153,8 +153,8 @@
     </div>
 
     <script type="module">
-        // আপডেট: SECTIONS ইমপোর্ট করা হয়েছে
-        import { db, ref, push, serverTimestamp, SECTIONS } from "./firebase-config.js";
+        // আপডেট: আপনার দেওয়া ফাইলনেম millionaire_firebase-config.js অনুযায়ী ইমপোর্ট করা হয়েছে
+        import { db, ref, push, serverTimestamp, SECTIONS } from "./millionaire_firebase-config.js";
 
         const captureArea = document.getElementById('capture-area');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
@@ -190,7 +190,7 @@
             const brand = document.getElementById('brand-input').value;
             if(!brand) return alert("Please enter brand name.");
             try {
-                // আপডেট: SECTIONS.MILLIONAIRE_PENDING ব্যবহার করে সঠিক পাথে ডাটা পাঠানো হচ্ছে
+                // আপডেট: SECTIONS.MILLIONAIRE_PENDING ব্যবহার করে ডাটা পাঠানো হচ্ছে
                 await push(ref(db, SECTIONS.MILLIONAIRE_PENDING), { 
                     plotID: activeID, 
                     price: activePrice, 
@@ -202,7 +202,7 @@
                 showCelebration(brand);
             } catch (e) { 
                 console.error(e);
-                alert("Database Connection Failed! Check firebase-config.js"); 
+                alert("Database Connection Error!"); 
             }
         };
 
