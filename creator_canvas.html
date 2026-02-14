@@ -2,172 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PIXEL PYRAMID | K ARCHIVE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOCIAL CREATORS | 1M PIXEL GRID</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
     <style>
-        :root { --pixel-gold: #D4AF37; --pixel-dark: #222; }
-        body { margin: 0; background: #000; color: #fff; font-family: 'Courier New', Courier, monospace; overflow-x: hidden; }
-
-        /* Navigation */
-        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: #111; border-bottom: 4px solid #333; box-sizing: border-box; }
-        .nav-btn { background: #333; border: 2px solid #555; color: #fff; padding: 8px 15px; font-size: 11px; cursor: pointer; text-transform: uppercase; image-rendering: pixelated; }
-        .nav-btn:hover { background: var(--pixel-gold); color: #000; }
-        .pay-btn { border-color: var(--pixel-gold) !important; color: var(--pixel-gold); }
-
-        .header-area { text-align: center; padding-top: 110px; }
-        .section-name { font-size: 40px; letter-spacing: 4px; font-weight: bold; color: var(--pixel-gold); text-transform: uppercase; margin: 0; }
+        :root { --gold: #9E7E45; }
+        body { margin: 0; background: #f0f0f0; font-family: 'Courier New', monospace; overflow: hidden; }
         
-        /* Minecraft Pixel Pyramid Design */
-        #capture-area { 
-            display: flex; flex-direction: column; align-items: center; 
-            width: 100%; padding: 80px 0; background: #000; 
+        /* Navigation & Header - Copying your style */
+        .top-nav { position: fixed; top: 0; width: 100%; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: #000; color: #fff; border-bottom: 2px solid var(--gold); box-sizing: border-box; }
+        .nav-btn { background: none; border: 1px solid #444; color: #fff; padding: 8px 15px; font-size: 11px; cursor: pointer; text-transform: uppercase; }
+        .nav-btn:hover { background: var(--gold); }
+
+        /* The Grid Container */
+        .viewport { width: 100vw; height: 100vh; overflow: auto; padding-top: 80px; cursor: grab; background: #ddd; position: relative; }
+        .canvas-wrapper { 
+            width: 1000px; height: 1000px; 
+            background: #fff; border: 5px solid #000; 
+            margin: 20px auto; position: relative;
+            background-image: linear-gradient(#eee 1px, transparent 1px), linear-gradient(90deg, #eee 1px, transparent 1px);
+            background-size: 10px 10px; /* Each 10x10 unit is one plot */
         }
 
-        .pyramid-container { display: flex; flex-direction: column; align-items: center; gap: 0; }
-        .row { display: flex; justify-content: center; gap: 0; }
-        
-        /* Pixel Cube - Large Size */
-        .pixel-block { 
-            width: 60px; height: 60px; 
-            background: #444; border: 3px solid #000;
-            position: relative; cursor: pointer; 
-            box-sizing: border-box; transition: 0.1s;
-            display: flex; align-items: center; justify-content: center;
+        .plot-overlay {
+            position: absolute; width: 10px; height: 10px;
+            border: 0.1px solid rgba(0,0,0,0.05);
+            box-sizing: border-box;
         }
+        .plot-overlay:hover { background: rgba(255, 215, 0, 0.4); border: 1px solid gold; z-index: 10; }
 
-        /* 3D Pixel Depth Effect */
-        .pixel-block::before { 
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: rgba(255,255,255,0.2); 
-        }
-        .pixel-block::after { 
-            content: ''; position: absolute; bottom: 0; right: 0; width: 6px; height: 100%; background: rgba(0,0,0,0.3); 
-        }
+        /* Order Modal */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; align-items:center; justify-content:center; z-index:9999; }
+        .card { background: #fff; color:#000; padding:30px; width:90%; max-width:400px; text-align:center; }
+        .premium-btn { background: #000; color: #fff; width: 100%; padding: 15px; border: none; font-weight: bold; cursor: pointer; margin-top: 15px; }
 
-        .pixel-block:hover { filter: brightness(1.3); transform: scale(1.1); z-index: 10; border-color: #fff; }
-        .block-id { font-size: 10px; font-weight: bold; color: rgba(255,255,255,0.4); pointer-events: none; }
-
-        /* Missing Info Section */
-        .footer-info { text-align: center; padding: 40px 20px; border-top: 4px solid #111; max-width: 900px; margin: 0 auto; color: #666; font-size: 12px; }
-
-        /* Modals */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:none; align-items:center; justify-content:center; z-index:9000; }
-        .card { background: #eee; color:#000; padding:30px; width:90%; max-width:450px; text-align:center; border: 5px solid #333; }
-        .premium-btn { background: #333; color: #fff; width: 100%; padding: 15px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px; font-family: 'Courier New'; }
-        .premium-btn:hover { background: #000; }
-        .pay-item { text-align: left; padding: 12px; background: #ddd; margin-bottom: 8px; border: 2px solid #bbb; font-size: 11px; word-break: break-all; }
+        /* Zoom Info */
+        .zoom-ctrl { position: fixed; bottom: 20px; right: 20px; background: #000; color: #fff; padding: 10px; font-size: 12px; border: 1px solid var(--gold); }
     </style>
 </head>
 <body>
 
     <div class="top-nav">
-        <div class="nav-left">
-            <button class="nav-btn" onclick="downloadMap()">EXPORT MAP</button>
-            <button class="nav-btn pay-btn" onclick="openPayment()">PAYMENT GATEWAY</button>
+        <div>
+            <button class="nav-btn" onclick="openPayment()">PAYMENT GATEWAY</button>
         </div>
-        <div style="font-size: 11px;">BLOCKS: <span style="color:var(--pixel-gold);">300 / $199</span></div>
+        <div style="text-align: center;">
+            <b style="color:var(--gold)">SOCIAL CREATORS</b><br>
+            <small>1,000,000 PIXELS SYSTEM</small>
+        </div>
+        <div style="font-size: 12px;">$10 / PLOT (10x10)</div>
     </div>
 
-    <div class="header-area">
-        <h1 class="section-name">Social Creators</h1>
-        <p style="font-size: 12px; color: #444; letter-spacing: 5px;">PIXELATED ARCHIVE EDITION</p>
-    </div>
-    
-    <div id="capture-area">
-        <div class="pyramid-container" id="pixel-pyramid"></div>
+    <div class="viewport" id="viewport">
+        <div class="canvas-wrapper" id="grid-canvas">
+            </div>
     </div>
 
-    <div class="footer-info">
-        <p><b>K ARCHIVE | PIXEL SOCIAL CREATORS</b><br>
-        2026 Limited Collection. Each pixel block is a digital landmark. <br>
-        Verified on the K-Archive Ledger. $199 Fixed Price Acquisition.</p>
-    </div>
+    <div class="zoom-ctrl">TIP: Scroll to explore | Click to Buy</div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h3 id="disp-id">PIXEL BLOCK #000</h3>
-            <h1 style="font-size: 50px; margin: 10px 0;">$199</h1>
-            <button class="premium-btn" onclick="submitOrder()">CONFIRM PURCHASE</button>
-            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; text-decoration: underline; margin-top: 10px;">CANCEL</p>
+            <h2>ACQUIRE SPACE</h2>
+            <p>Min Order: 20 Plots ($200)</p>
+            <input type="number" id="plot-qty" value="20" min="20" style="width:100%; padding:10px; margin: 10px 0;">
+            <button class="premium-btn" onclick="requestOrder()">REQUEST PLOTS</button>
+            <p onclick="closeModal()" style="cursor:pointer; font-size:10px; text-decoration: underline;">CLOSE</p>
         </div>
     </div>
 
-    <div id="pay-modal" class="modal">
-        <div class="card">
-            <h3 style="margin-bottom: 20px;">PAYMENT DETAILS</h3>
-            <div class="pay-item"><b>ETH:</b> 0x443792A4884e8e855f954ccEF910778Aff1eb78E</div>
-            <div class="pay-item"><b>BINANCE UID:</b> 912221034</div>
-            <div class="pay-item"><b>USDT (TRC20):</b> TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</div>
-            <button class="premium-btn" onclick="closeModals()">CLOSE</button>
-        </div>
-    </div>
-
-    <div id="final-modal" class="modal">
-        <div class="card">
-            <h2 style="color: #222;">SUCCESSFULLY LOCKED</h2>
-            <div id="final-info-box" style="text-align: left; margin: 20px 0; font-size: 13px;"></div>
-            <button class="premium-btn" id="whatsapp-btn">SEND TO CS (WHATSAPP)</button>
-        </div>
-    </div>
-
-    <script type="module">
-        import { db, ref, push, serverTimestamp } from "./firebase-config.js";
-
-        const pyramidBody = document.getElementById('pixel-pyramid');
-        const colors = ['#5e4c2f', '#7d663e', '#9c804d', '#bc9a5c', '#dbb46b', '#ffd700'];
-        let activeID;
-
-        let currentPlot = 1;
-        const totalTarget = 300;
-
-        for (let rowIdx = 1; currentPlot <= totalTarget; rowIdx++) {
-            const rowDiv = document.createElement('div');
-            rowDiv.className = 'row';
-            const color = colors[rowIdx % colors.length];
-
-            for (let i = 0; i < rowIdx && currentPlot <= totalTarget; i++) {
-                const id = currentPlot++;
-                const block = document.createElement('div');
-                block.className = 'pixel-block';
-                block.style.backgroundColor = color;
-                block.innerHTML = `<span class="block-id">${id}</span>`;
-                
-                block.onclick = () => {
-                    activeID = id;
-                    document.getElementById('disp-id').innerText = `PIXEL BLOCK #${id}`;
-                    document.getElementById('order-modal').style.display = 'flex';
-                };
-                rowDiv.appendChild(block);
-            }
-            pyramidBody.appendChild(rowDiv);
+    <script>
+        const canvas = document.getElementById('grid-canvas');
+        
+        // Creating a visual sample of plots
+        for(let i=0; i<100; i++) { // Sample rendering
+            let p = document.createElement('div');
+            p.className = 'plot-overlay';
+            p.style.left = (Math.random() * 990) + 'px';
+            p.style.top = (Math.random() * 990) + 'px';
+            p.onclick = () => document.getElementById('order-modal').style.display='flex';
+            canvas.appendChild(p);
         }
 
-        window.submitOrder = async () => {
-            await push(ref(db, 'pending_orders/PixelPyramid'), { plotID: activeID, price: 199, timestamp: serverTimestamp() });
-            document.getElementById('order-modal').style.display = 'none';
-            confetti({ particleCount: 100, spread: 70 });
-
-            const infoBox = document.getElementById('final-info-box');
-            infoBox.innerHTML = `📌 <b>Block ID:</b> #${activeID}<br>💵 <b>Amount:</b> $199<br>🕹 <b>Style:</b> Minecraft Pixel`;
-            
-            const msg = encodeURIComponent(`Hello K ARCHIVE,\nI want to confirm my Pixel Block acquisition:\n\n📌 ID: #${activeID}\n💵 Price: $199\n\nGuide me through payment.`);
-            document.getElementById('whatsapp-btn').onclick = () => window.open(`https://wa.me/8801576940717?text=${msg}`);
-            
-            document.getElementById('final-modal').style.display = 'flex';
-        };
-
-        window.openPayment = () => document.getElementById('pay-modal').style.display = 'flex';
-        window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-        window.downloadMap = () => {
-            html2canvas(document.getElementById('capture-area'), { backgroundColor: "#000" }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Pixel_Pyramid_Map.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        };
+        function closeModal() { document.getElementById('order-modal').style.display='none'; }
+        
+        function requestOrder() {
+            const qty = document.getElementById('plot-qty').value;
+            if(qty < 20) return alert("Minimum 20 plots required!");
+            const msg = encodeURIComponent(`Hi K ARCHIVE, I want to buy ${qty} plots ($${qty*10}) on the Social Creators Map.`);
+            window.open(`https://wa.me/8801576940717?text=${msg}`);
+        }
     </script>
 </body>
 </html>
