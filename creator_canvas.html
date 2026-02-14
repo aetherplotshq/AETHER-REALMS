@@ -11,7 +11,7 @@
         :root { --binance-gold: #F3BA2F; --bg: #f0f0f0; }
         body { margin: 0; background: var(--bg); font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; }
 
-        /* Navigation - Unchanged structure */
+        /* Navigation */
         .top-nav { position: fixed; top: 0; width: 100%; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: #fff; border-bottom: 2px solid #000; box-sizing: border-box; }
         .nav-left { display: flex; gap: 10px; align-items: center; }
         .nav-btn { background: #eee; border: 1px solid #ccc; color: #000; padding: 8px 15px; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
@@ -20,7 +20,7 @@
 
         .counter-box { text-align: right; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; }
 
-        /* Binance Style Title */
+        /* Header - Binance Style */
         .header-main { text-align: center; padding: 80px 0 20px 0; background: #fff; }
         .site-title { 
             font-size: 45px; font-weight: 900; letter-spacing: -1px; margin: 0; 
@@ -29,21 +29,24 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        /* Canvas - Million Dollar Homepage Style */
+        /* Canvas - Million Dollar Style */
         .canvas-container { position: relative; width: 1050px; margin: 20px auto; background: #fff; border: 2px solid #000; padding: 25px; box-shadow: 10px 10px 0 rgba(0,0,0,0.05); }
         .grid-label-v { position: absolute; left: 5px; top: 25px; height: 1000px; display: flex; flex-direction: column; justify-content: space-between; font-size: 9px; color: #888; }
         .grid-label-h { position: absolute; top: 5px; left: 25px; width: 1000px; display: flex; justify-content: space-between; font-size: 9px; color: #888; }
         #pixel-canvas { width: 1000px; height: 1000px; background: #fff; border: 1px solid #ddd; position: relative; background-image: linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px); background-size: 10px 10px; }
 
-        /* Support Icon Moved Down */
+        /* Support Icon - Bottom Left */
         .support-icon { position: fixed; bottom: 30px; left: 30px; background: #000; color: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid var(--binance-gold); z-index: 2000; }
 
         /* Modals */
         .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; align-items:center; justify-content:center; z-index:9999; }
-        .card { background: #fff; padding: 35px; width: 450px; border: 5px solid #000; text-align: center; box-shadow: 10px 10px 0 var(--binance-gold); }
-        .buy-input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #000; font-size: 16px; text-align: center; box-sizing: border-box; }
+        .card { background: #fff; padding: 35px; width: 450px; border: 5px solid #000; text-align: center; box-shadow: 15px 15px 0 var(--binance-gold); }
+        .buy-input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #000; font-size: 16px; text-align: center; box-sizing: border-box; outline: none; }
         .premium-btn { background: #000; color: #fff; width: 100%; padding: 15px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
-        .info-list { text-align: left; background: #f4f4f4; padding: 15px; margin: 15px 0; font-size: 13px; line-height: 1.6; border-left: 4px solid var(--binance-gold); }
+        .info-list { text-align: left; background: #f9f9f9; padding: 20px; margin: 15px 0; font-size: 14px; line-height: 1.6; border-left: 5px solid var(--binance-gold); }
+
+        .info-strip { width: 1000px; margin: 10px auto; text-align: center; border: 1px solid #ccc; background: #fff; padding: 10px 0; font-size: 12px; font-weight: bold; }
+        .footer-text { width: 1000px; margin: 20px auto; text-align: center; color: #666; font-size: 11px; line-height: 1.6; padding-bottom: 50px; }
     </style>
 </head>
 <body>
@@ -51,7 +54,7 @@
     <div class="top-nav">
         <div class="nav-left">
             <button class="nav-btn" onclick="downloadMap()">Download Map</button>
-            <button class="nav-btn" onclick="location.href='index.html'">Back Home</button>
+            <button class="nav-btn" onclick="location.href='index.html'">Back to Home</button>
             <button class="nav-btn" onclick="openModal('pay-modal')">Payment Gateway</button>
             <button class="nav-btn buy-btn" onclick="openModal('order-modal')">Buy Plots</button>
         </div>
@@ -68,45 +71,56 @@
         <div id="pixel-canvas"></div>
     </div>
 
+    <div class="info-strip">
+        1,000,000 PIXELS • 100,000 PLOTS • $10 PER PLOT • MIN ORDER $100
+    </div>
+
+    <div class="footer-text">
+        <b>SOCIAL CREATORS | K ARCHIVE</b><br>
+        © 2026 Social Creators. No pixel will ever be added beyond the 1,000,000 limit.
+    </div>
+
     <div id="order-modal" class="modal">
         <div class="card">
-            <h3>SUBMIT REQUEST</h3>
-            <input type="text" id="brand-name" class="buy-input" placeholder="Enter Brand Name">
+            <h2 style="margin:0 0 15px 0;">SUBMIT REQUEST</h2>
+            <input type="text" id="brand-name" class="buy-input" placeholder="Enter Your Brand Name">
             <input type="number" id="plot-qty" class="buy-input" value="10" min="10">
-            <p id="total-price" style="font-weight:bold;">Total: $100</p>
-            <button class="premium-btn" onclick="submitToAdmin()">SUBMIT REQUEST</button>
-            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; text-decoration:underline; margin-top:10px;">CANCEL</p>
+            <p id="calc-price" style="font-weight:bold; font-size:18px;">Total: $100</p>
+            <button class="premium-btn" onclick="submitOrder()">SUBMIT REQUEST</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:10px; text-decoration:underline; margin-top:15px;">CANCEL</p>
         </div>
     </div>
 
     <div id="success-modal" class="modal">
-        <div class="card" style="border-color: green;">
-            <h2 style="color: green;">CONGRATULATIONS!</h2>
-            <p>Your request has been successfully submitted to the admin panel.</p>
+        <div class="card" style="border-color: #28a745;">
+            <h1 style="color: #28a745; margin: 0;">CONGRATULATIONS!</h1>
+            <p style="font-weight: bold; font-size: 18px; margin-top: 10px;">Request Submitted Successfully!</p>
+            <p>Your details have been sent to our admin panel.</p>
         </div>
     </div>
 
     <div id="support-modal" class="modal">
         <div class="card">
-            <h3>WHAT TO DO NEXT?</h3>
+            <h2 style="margin: 0; letter-spacing: 1px;">WHAT'S NEXT?</h2>
+            <p style="font-size: 13px; color: #555; margin-top: 5px;">Please provide the following to Support Team:</p>
             <div class="info-list">
-                - ✅ Send Payment Screenshot<br>
-                - ✅ Send Brand Logo (PNG)<br>
-                - ✅ Send Target Website Link<br>
-                - ✅ Plot Quantity: <span id="final-qty">0</span>
+                ✅ 1. <b>Payment Screenshot</b> (Proof of transfer)<br>
+                ✅ 2. <b>High-Res Logo</b> (PNG/SVG format)<br>
+                ✅ 3. <b>Target Link</b> (Website URL for plot redirect)<br>
+                ✅ 4. <b>Total Plots:</b> <span id="final-plot-qty" style="color:red; font-weight:bold;">10</span>
             </div>
-            <button class="premium-btn" id="wa-final-btn">CONTACT SUPPORT</button>
+            <button class="premium-btn" id="wa-final-link">CONTACT CUSTOMER SUPPORT</button>
             <button class="premium-btn" style="background:#888;" onclick="closeModals()">BACK TO CANVAS</button>
         </div>
     </div>
 
     <div id="pay-modal" class="modal">
         <div class="card">
-            <h3>PAYMENT GATEWAY</h3>
-            <div style="text-align:left; font-size:12px; line-height:2;">
-                <b>Metamask:</b> <span onclick="navigator.clipboard.writeText(this.innerText); alert('Copied')">0x443792A4884e8e855f954ccEF910778Aff1eb78E</span><br>
-                <b>Binance UID:</b> <span onclick="navigator.clipboard.writeText(this.innerText); alert('Copied')">912221034</span><br>
-                <b>USDT (TRC20):</b> <span onclick="navigator.clipboard.writeText(this.innerText); alert('Copied')">TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</span>
+            <h2 style="margin-bottom: 25px;">PAYMENT GATEWAY</h2>
+            <div style="text-align:left; font-size:13px; line-height:2.2; background:#f4f4f4; padding:20px;">
+                <b>Metamask:</b> <span style="cursor:pointer; color:blue;" onclick="navigator.clipboard.writeText('0x443792A4884e8e855f954ccEF910778Aff1eb78E'); alert('Copied')">0x443792A4...b78E (Copy)</span><br>
+                <b>Binance UID:</b> <span style="cursor:pointer; color:blue;" onclick="navigator.clipboard.writeText('912221034'); alert('Copied')">912221034 (Copy)</span><br>
+                <b>USDT (TRC20):</b> <span style="cursor:pointer; color:blue;" onclick="navigator.clipboard.writeText('TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6'); alert('Copied')">TTapBkTqrDnzHb...Ws6 (Copy)</span>
             </div>
             <button class="premium-btn" onclick="closeModals()">CLOSE</button>
         </div>
@@ -122,35 +136,53 @@
         window.openModal = (id) => document.getElementById(id).style.display = 'flex';
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
 
-        document.getElementById('plot-qty').oninput = function() {
-            document.getElementById('total-price').innerText = `Total: $${this.value * 10}`;
-        };
+        const qtyInp = document.getElementById('plot-qty');
+        qtyInp.oninput = () => { document.getElementById('calc-price').innerText = `Total: $${qtyInp.value * 10}`; };
 
-        window.submitToAdmin = async () => {
+        window.submitOrder = async () => {
             const brand = document.getElementById('brand-name').value;
-            const qty = document.getElementById('plot-qty').value;
-            if(!brand) return alert("Enter brand name!");
+            const qty = qtyInp.value;
+            if(!brand || qty < 10) return alert("Please enter brand name and minimum 10 plots!");
 
             try {
-                // Admin Panel এ ডাটা পাঠানো
-                await push(ref(db, 'requests/SocialCreators'), { brand, quantity: qty, timestamp: serverTimestamp() });
-                
+                // Admin Panel (Firebase) ডাটা সাবমিট
+                await push(ref(db, 'requests/SocialCreators'), {
+                    brand: brand,
+                    quantity: qty,
+                    totalPrice: qty * 10,
+                    timestamp: serverTimestamp()
+                });
+
                 // অভিনন্দন ও কনফেটি
                 document.getElementById('order-modal').style.display = 'none';
                 document.getElementById('success-modal').style.display = 'flex';
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
 
-                // ৩ সেকেন্ড পর অটো ইন্সট্রাকশন পপ-আপ
+                // ৩ সেকেন্ড পর পরবর্তী গাইডলাইন পপ-আপ
                 setTimeout(() => {
                     document.getElementById('success-modal').style.display = 'none';
                     document.getElementById('support-modal').style.display = 'flex';
-                    document.getElementById('final-qty').innerText = qty;
-                    
-                    const msg = encodeURIComponent(`Hi K ARCHIVE Support,\nI want to buy ${qty} plots for "${brand}". Request submitted.`);
-                    document.getElementById('wa-final-btn').onclick = () => window.open(`https://wa.me/8801576940717?text=${msg}`);
+                    document.getElementById('final-plot-qty').innerText = qty;
+
+                    const msg = encodeURIComponent(`Hi K ARCHIVE Support,\nI want to confirm my order for ${qty} plots ($${qty*10}) for brand "${brand}".\nI have submitted the request in the admin panel.`);
+                    document.getElementById('wa-final-link').onclick = () => window.open(`https://wa.me/8801576940717?text=${msg}`);
                 }, 3000);
 
-            } catch (e) { console.error(e); alert("Connection error. Check firebase-config."); }
+            } catch (e) {
+                console.error(e);
+                alert("Error: Database connection failed. Please check firebase-config.js");
+            }
+        };
+
+        window.downloadMap = () => {
+            const btn = event.target; btn.innerText = "Capturing...";
+            html2canvas(document.getElementById('capture-area'), { scale: 3 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Social_Creators_Map.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                btn.innerText = "Download Map";
+            });
         };
     </script>
 </body>
