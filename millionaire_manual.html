@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MILLIONAIRE MASTER PANEL | K ARCHIVE</title>
+    <style>
+        body { background: #0B0E11; color: #fff; font-family: sans-serif; padding: 20px; display: none; }
+        .grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: #1E2329; padding: 25px; border-radius: 10px; border: 1px solid #333; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #0B0E11; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 15px; background: #FCD535; color: #000; font-weight: bold; border: none; cursor: pointer; border-radius: 4px; }
+        .item { padding: 10px; background: #000; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <script>
+        if(prompt("Master Password:") === "KAWSARahmed22@@") { 
+            document.body.style.display = "block"; 
+        } else { 
+            window.location.href = "millionaire_canvas.html"; 
+        }
+    </script>
+
+    <div class="grid">
+        <div class="card">
+            <h2 style="color:#FCD535">DIRECT PUBLISH</h2>
+            <input type="number" id="mPlot" placeholder="Plot ID (1-100)">
+            <input type="text" id="mBrand" placeholder="Brand Name">
+            <input type="text" id="mImg" placeholder="Logo URL">
+            <input type="text" id="mWeb" placeholder="Website URL">
+            <button class="btn" onclick="directPublish()">GO LIVE NOW</button>
+        </div>
+        <div class="card">
+            <h2 style="color:#FCD535">LIVE PLOTS (SOLD)</h2>
+            <div id="liveRecords" style="height: 400px; overflow-y: auto;">Loading...</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db, ref, onValue } from "./millionaire_firebase-config.js";
+        import { set, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        window.directPublish = () => {
+            const name = document.getElementById('mBrand').value, 
+                  img = document.getElementById('mImg').value, 
+                  web = document.getElementById('mWeb').value, 
+                  pid = parseInt(document.getElementById('mPlot').value);
+
+            if(!pid || pid < 1 || pid > 100) return alert("Invalid Plot ID (1-100)!");
+            if(!name || !img) return alert("Brand Name and Logo URL required!");
+
+            set(ref(db, 'estate_data/Millionaire/' + pid), {
+                name, imageUrl: img, link: web || "#", plotID: pid, status: "SOLD"
+            }).then(() => {
+                alert("Plot #" + pid + " Updated Successfully!");
+                document.getElementById('mPlot').value = "";
+                document.getElementById('mBrand').value = "";
+            });
+        };
+
+        // লাইভ রেকর্ড দেখানো
+        onValue(ref(db, 'estate_data/Millionaire'), s => {
+            const list = document.getElementById('liveRecords'); list.innerHTML = "";
+            const data = s.val(); if(!data) return list.innerHTML = "No Records.";
+            Object.keys(data).forEach(id => {
+                list.innerHTML += `<div class="item">
+                    <span><b>#${id}</b> - ${data[id].name}</span>
+                    <button onclick="deletePlot('${id}')" style="background:red; color:white; border:none; cursor:pointer; padding:5px 10px; border-radius:3px;">DELETE</button>
+                </div>`;
+            });
+        });
+
+        window.deletePlot = (id) => {
+            if(confirm("Are you sure you want to make Plot #" + id + " available again?")) {
+                remove(ref(db, 'estate_data/Millionaire/' + id));
+            }
+        };
+    </script>
+</body>
+</html>
