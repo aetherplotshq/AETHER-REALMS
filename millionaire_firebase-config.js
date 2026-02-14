@@ -12,7 +12,7 @@ import {
     onValue 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-// আপনার প্রোভাইড করা ফায়ারবেস কনফিগারেশন
+// ফায়ারবেস কনফিগারেশন
 const firebaseConfig = {
     apiKey: "AIzaSyDmMgjlpXsk0Ip5Frrlifu6bgRJNNIIYzM",
     authDomain: "aether-realms.firebaseapp.com",
@@ -24,18 +24,18 @@ const firebaseConfig = {
     measurementId: "G-XTRFZJTMEW"
 };
 
-// ইনিশিয়ালাইজেশন
+// অ্যাপ এবং ডাটাবেস ইনিশিয়ালাইজেশন
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-/** * আপনার রুলস অনুযায়ী পাথ সেট করা হয়েছে:
- * "pending_orders" সেকশনে ডাটা রাইট করার পারমিশন 'true' দেওয়া আছে।
+/** * SECTIONS পাথ সেটিংস:
+ * আপনার রুলস অনুযায়ী ডাটা 'pending_orders/Millionaire' পাথে জমা হবে।
  */
 const SECTIONS = {
     MILLIONAIRE_PENDING: "pending_orders/Millionaire"
 };
 
-// শুধুমাত্র এই প্রজেক্টের জন্য প্রয়োজনীয় ডাটা এক্সপোর্ট
+// মেইন ফাইলে ব্যবহারের জন্য প্রয়োজনীয় ফাংশন ও ভেরিয়েবল এক্সপোর্ট
 export { 
     db, 
     ref, 
