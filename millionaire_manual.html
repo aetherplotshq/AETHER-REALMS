@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MILLIONAIRE MASTER PANEL</title>
+    <title>MILLIONAIRE MASTER PANEL | K ARCHIVE</title>
     <style>
-        body { background: #0B0E11; color: #fff; font-family: sans-serif; padding: 20px; display: none; }
-        .grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .card { background: #1E2329; padding: 25px; border-radius: 10px; border: 1px solid #333; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #0B0E11; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 15px; background: #FCD535; color: #000; font-weight: bold; border: none; cursor: pointer; border-radius: 4px; }
-        .item { padding: 10px; background: #000; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        body { background: #12161C; color: #fff; font-family: sans-serif; padding: 20px; display: none; }
+        .grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 50px; }
+        .card { background: #1E2329; padding: 30px; border-radius: 12px; border: 1px solid #2B3139; }
+        h2 { color: #FCD535; margin-top: 0; letter-spacing: 1px; }
+        input { width: 100%; padding: 14px; margin: 12px 0; background: #0B0E11; border: 1px solid #444; color: #fff; border-radius: 6px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 16px; background: #FCD535; color: #000; font-weight: bold; border: none; cursor: pointer; border-radius: 6px; font-size: 16px; margin-top: 10px; }
+        .item { padding: 12px; background: #0B0E11; border: 1px solid #2B3139; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 6px; }
     </style>
 </head>
 <body>
@@ -22,16 +23,17 @@
 
     <div class="grid">
         <div class="card">
-            <h2 style="color:#FCD535">MANUAL UPDATE</h2>
+            <h2>DIRECT PUBLISH</h2>
             <input type="number" id="mPlot" placeholder="Plot ID (1-100)">
             <input type="text" id="mBrand" placeholder="Brand Name">
-            <input type="text" id="mImg" placeholder="Logo URL">
+            <input type="text" id="mImg" placeholder="Logo URL (Direct PNG Link)">
             <input type="text" id="mWeb" placeholder="Website URL">
-            <button class="btn" onclick="directPublish()">UPDATE PLOT</button>
+            <button class="btn" onclick="directPublish()">GO LIVE NOW</button>
         </div>
+
         <div class="card">
-            <h2 style="color:#FCD535">LIVE PLOTS</h2>
-            <div id="liveRecords" style="height: 400px; overflow-y: auto;">লোডিং...</div>
+            <h2>LIVE PLOTS (SOLD)</h2>
+            <div id="liveRecords" style="height: 450px; overflow-y: auto;">লোডিং...</div>
         </div>
     </div>
 
@@ -45,32 +47,34 @@
                   web = document.getElementById('mWeb').value, 
                   pid = document.getElementById('mPlot').value;
 
-            if(!pid || !name || !img) return alert("সবগুলো তথ্য পূরণ করুন!");
+            if(!pid || pid < 1 || pid > 100) return alert("সঠিক প্লট আইডি দিন (১-১০০)");
+            if(!name || !img) return alert("ব্র্যান্ডের নাম এবং লোগো লিঙ্ক অবশ্যই লাগবে!");
 
             set(ref(db, 'estate_data/Millionaire/' + pid), {
                 name, imageUrl: img, link: web || "#", plotID: parseInt(pid), status: "SOLD"
             }).then(() => {
-                alert("Plot #" + pid + " Updated!");
+                alert("Plot #" + pid + " সরাসরি ম্যাপে লাইভ করা হয়েছে!");
                 document.getElementById('mPlot').value = "";
                 document.getElementById('mBrand').value = "";
             });
         };
 
+        // লাইভ ডাটা লোড করা
         onValue(ref(db, 'estate_data/Millionaire'), s => {
             const list = document.getElementById('liveRecords');
             list.innerHTML = "";
             const data = s.val();
-            if(!data) return list.innerHTML = "No Records Found.";
+            if(!data) return list.innerHTML = "বর্তমানে কোনো প্লট সোল্ড হয়নি।";
             Object.keys(data).forEach(id => {
                 list.innerHTML += `<div class="item">
-                    <span>#${id} - ${data[id].name}</span>
-                    <button onclick="deletePlot('${id}')" style="background:red; color:white; border:none; padding:5px; cursor:pointer;">DELETE</button>
+                    <span><b>#${id}</b> - ${data[id].name}</span>
+                    <button onclick="deletePlot('${id}')" style="background:#ff3b30; color:white; border:none; padding:6px 12px; cursor:pointer; border-radius:4px; font-size:12px;">DELETE</button>
                 </div>`;
             });
         });
 
         window.deletePlot = (id) => {
-            if(confirm("Delete Plot #" + id + "?")) {
+            if(confirm("প্লট #" + id + " কি আবার খালি করতে চান? এটি মেইন ক্যানভাস থেকে মুছে যাবে।")) {
                 remove(ref(db, 'estate_data/Millionaire/' + id));
             }
         };
