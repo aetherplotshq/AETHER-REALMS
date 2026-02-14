@@ -1,6 +1,6 @@
 /**
  * K ARCHIVE - Universal Firebase Core Engine
- * All-in-One Config for 9 Manual Update Panels
+ * All-in-One Config for All Manual Update Panels
  */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -29,11 +29,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+// এখানে SocialCreators এর পাথটি ঠিক করে দেওয়া হয়েছে
 const SECTIONS = {
     MILLIONAIRE: "estate_data/Millionaire",
     NATIONS:     "estate_data/Nations",
     GAMING:      "estate_data/Gaming",
-    SOCIAL:      "estate_data/Social",
+    SOCIAL:      "requests/SocialCreators", // এই পাথে কাস্টমারের রিকোয়েস্ট জমা হবে
     BILLIONAIRE: "estate_data/Billionaire",
     LUXURY:      "estate_data/Luxury",
     ENTERPRISE:  "estate_data/Enterprise",
@@ -41,7 +42,6 @@ const SECTIONS = {
     ARCHIVE:     "estate_data/Archive"
 };
 
-// একদম নিচের এই অংশটুকু খেয়াল করুন, এখানে সব ঠিক থাকতে হবে
 export { 
     db, 
     ref, 
