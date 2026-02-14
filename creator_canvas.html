@@ -8,61 +8,69 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        :root { --gold: #9E7E45; --bg: #f0f0f0; }
-        body { margin: 0; background: var(--bg); font-family: Arial, Helvetica, sans-serif; }
+        :root { --binance-gold: #F3BA2F; --bg: #f0f0f0; }
+        body { margin: 0; background: var(--bg); font-family: Arial, Helvetica, sans-serif; overflow-x: hidden; }
 
         /* Navigation */
         .top-nav { position: fixed; top: 0; width: 100%; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: #fff; border-bottom: 2px solid #000; box-sizing: border-box; }
-        .nav-left { display: flex; gap: 10px; }
-        .nav-btn { background: #eee; border: 1px solid #ccc; color: #000; padding: 8px 15px; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .nav-left { display: flex; gap: 10px; align-items: center; }
+        .nav-btn { background: #eee; border: 1px solid #ccc; color: #000; padding: 8px 15px; font-size: 11px; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.2s; }
         .nav-btn:hover { background: #000; color: #fff; }
-        .pay-btn { border-color: var(--gold); color: var(--gold); }
+        .buy-btn { background: var(--binance-gold) !important; border-color: #000 !important; color: #000 !important; }
 
-        .counter-box { text-align: right; font-family: 'Courier New', monospace; font-size: 13px; font-weight: bold; }
-        .count-num { color: red; }
+        .counter-box { text-align: right; font-family: 'Courier New', monospace; font-size: 12px; font-weight: bold; }
+        .count-num { color: #d9534f; }
 
-        /* Header Area */
+        /* Header Area - Binance Style */
         .header-main { text-align: center; padding: 80px 0 20px 0; background: #fff; }
-        .site-title { font-size: 45px; font-weight: 900; letter-spacing: -1px; margin: 0; text-transform: uppercase; color: #000; }
-        .site-title span { color: var(--gold); }
+        .site-title { 
+            font-size: 45px; font-weight: 900; letter-spacing: -1px; margin: 0; 
+            text-transform: uppercase; 
+            background: linear-gradient(135deg, #000000 0%, #F3BA2F 50%, #000000 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
 
-        /* Canvas Layout like MillionDollarHomepage */
+        /* Canvas Layout */
         .canvas-container { 
             position: relative; width: 1050px; margin: 20px auto; 
             background: #fff; border: 2px solid #000; padding: 25px; 
-            box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+            box-shadow: 10px 10px 0 rgba(0,0,0,0.05);
         }
         
-        /* Grid Labels (Pips) */
         .grid-label-v { position: absolute; left: 5px; top: 25px; height: 1000px; display: flex; flex-direction: column; justify-content: space-between; font-size: 9px; color: #888; }
         .grid-label-h { position: absolute; top: 5px; left: 25px; width: 1000px; display: flex; justify-content: space-between; font-size: 9px; color: #888; }
 
         #pixel-canvas { 
             width: 1000px; height: 1000px; background: #fff; 
-            border: 1px solid #ddd; position: relative; cursor: crosshair;
+            border: 1px solid #ddd; position: relative; cursor: default;
             background-image: linear-gradient(#f0f0f0 1px, transparent 1px), linear-gradient(90deg, #f0f0f0 1px, transparent 1px);
             background-size: 10px 10px;
         }
 
-        /* Side Support */
-        .support-icon { position: absolute; top: -15px; left: -15px; background: #000; color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid var(--gold); }
+        /* Support Icon - Moved to Bottom Right */
+        .support-icon { 
+            position: fixed; bottom: 30px; left: 30px; 
+            background: #000; color: #fff; width: 50px; height: 50px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; border: 2px solid var(--binance-gold); z-index: 2000;
+        }
 
-        /* Footer Info */
+        /* Info Strips */
         .info-strip { width: 1000px; margin: 10px auto; text-align: center; border: 1px solid #ccc; background: #fff; padding: 10px 0; font-size: 12px; font-weight: bold; }
-        .footer-text { width: 1000px; margin: 20px auto; text-align: center; color: #666; font-size: 11px; line-height: 1.6; }
+        .footer-text { width: 1000px; margin: 20px auto; text-align: center; color: #666; font-size: 11px; line-height: 1.6; padding-bottom: 50px; }
 
         /* Modals */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:none; align-items:center; justify-content:center; z-index:9999; }
-        .card { background: #fff; padding: 30px; width: 450px; border: 5px solid #000; text-align: center; position: relative; }
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); display:none; align-items:center; justify-content:center; z-index:9999; }
+        .card { background: #fff; padding: 35px; width: 450px; border: 5px solid #000; text-align: center; box-shadow: 15px 15px 0 var(--binance-gold); }
+        
         .pay-item { text-align: left; background: #f9f9f9; border: 1px solid #ddd; padding: 12px; margin-bottom: 10px; cursor: pointer; }
-        .pay-item:hover { border-color: var(--gold); }
+        .pay-item:hover { border-color: var(--binance-gold); }
         .pay-label { font-size: 10px; font-weight: bold; color: #888; text-transform: uppercase; }
         .pay-addr { font-family: monospace; font-size: 12px; word-break: break-all; color: #000; display: block; margin-top: 4px; }
         
-        .buy-input { width: 100%; padding: 12px; margin: 15px 0; border: 2px solid #000; font-size: 18px; text-align: center; box-sizing: border-box; }
-        .premium-btn { background: #000; color: #fff; width: 100%; padding: 15px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .premium-btn:hover { background: var(--gold); }
-
+        .buy-input { width: 100%; padding: 12px; margin: 15px 0; border: 2px solid #000; font-size: 20px; text-align: center; box-sizing: border-box; outline: none; }
+        .premium-btn { background: #000; color: #fff; width: 100%; padding: 18px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .premium-btn:hover { background: var(--binance-gold); color: #000; }
     </style>
 </head>
 <body>
@@ -71,24 +79,21 @@
         <div class="nav-left">
             <button class="nav-btn" onclick="downloadMap()">Download Map</button>
             <button class="nav-btn" onclick="location.href='index.html'">Back to Home</button>
-            <button class="nav-btn pay-btn" onclick="openModal('pay-modal')">Payment Gateway</button>
+            <button class="nav-btn" onclick="openModal('pay-modal')">Payment Gateway</button>
+            <button class="nav-btn buy-btn" onclick="openModal('order-modal')">Buy Plots</button>
         </div>
         <div class="counter-box">
-            Pixels Sold: <span class="count-num" id="sold-count">0</span> | 
-            Available: <span class="count-num" id="avail-count">1,000,000</span>
+            Plots Sold: <span class="count-num" id="sold-plots">0</span> / 100,000<br>
+            Pixels: <span class="count-num">1,000,000</span>
         </div>
     </div>
 
     <div class="header-main">
-        <h1 class="site-title">Social <span>Creators</span></h1>
-        <p style="font-size: 12px; font-weight: bold; margin-top: 5px;">1,000,000 pixels • $1 per pixel • Own a piece of history!</p>
+        <h1 class="site-title">Social Creators</h1>
+        <p style="font-size: 11px; font-weight: bold; margin-top: 5px; letter-spacing: 1px;">$10 PER PLOT (10x10 PIXELS) • MINIMUM 10 PLOTS</p>
     </div>
 
     <div class="canvas-container" id="capture-area">
-        <div class="support-icon" onclick="window.open('https://wa.me/8801576940717')">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.527 3.66 1.438 5.168L2.05 22l4.986-1.308A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.731 0-3.355-.487-4.736-1.332l-.339-.207-2.958.776.79-2.883-.228-.363A7.955 7.955 0 0 1 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
-        </div>
-
         <div class="grid-label-h">
             <span>0</span><span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>800</span><span>900</span><span>1000</span>
         </div>
@@ -96,34 +101,38 @@
             <span>0</span><span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>800</span><span>900</span><span>1000</span>
         </div>
 
-        <div id="pixel-canvas" onclick="openModal('order-modal')">
+        <div id="pixel-canvas">
             </div>
     </div>
 
+    <div class="support-icon" onclick="window.open('https://wa.me/8801576940717')">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.527 3.66 1.438 5.168L2.05 22l4.986-1.308A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.731 0-3.355-.487-4.736-1.332l-.339-.207-2.958.776.79-2.883-.228-.363A7.955 7.955 0 0 1 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
+    </div>
+
     <div class="info-strip">
-        1,000,000 PIXELS TOTAL • 100x100 BLOCKS • $100 PER BLOCK (10x10)
+        1,000,000 PIXELS • 100,000 PLOTS • $10 PER PLOT • MIN ORDER $100
     </div>
 
     <div class="footer-text">
         <b>SOCIAL CREATORS | K ARCHIVE</b><br>
-        The Million Pixel Archive is a digital landmark for creators. Buy your space, link your brand, and be part of the legacy.<br>
-        © 2026 Social Creators. Inspired by The Million Dollar Homepage.
+        This archive preserves the digital footprint of creators. Each 10x10 plot is a unique space on the map.<br>
+        © 2026 Social Creators. No pixel will ever be added beyond the 1,000,000 limit.
     </div>
 
     <div id="order-modal" class="modal">
         <div class="card">
-            <h2 style="margin: 0;">ACQUIRE PIXELS</h2>
-            <p style="font-size: 12px; color: #666;">Minimum order: 100 pixels (1 block)</p>
-            <input type="number" id="pixel-qty" class="buy-input" value="100" min="100" step="100">
-            <div id="price-calc" style="font-weight: bold; margin-bottom: 15px; font-size: 20px;">Total: $100</div>
-            <button class="premium-btn" onclick="submitOrder()">Order Now via WhatsApp</button>
-            <p onclick="closeModals()" style="cursor:pointer; font-size:11px; margin-top:15px; text-decoration: underline;">Close</p>
+            <h2 style="margin: 0;">ACQUIRE PLOTS</h2>
+            <p style="font-size: 12px; color: #666;">Minimum order: 10 Plots ($100)</p>
+            <input type="number" id="plot-qty" class="buy-input" value="10" min="10">
+            <div id="price-calc" style="font-weight: bold; margin-bottom: 15px; font-size: 22px; color: var(--binance-gold); background: #000; padding: 10px;">Total: $100</div>
+            <button class="premium-btn" onclick="submitOrder()">Confirm via WhatsApp</button>
+            <p onclick="closeModals()" style="cursor:pointer; font-size:11px; margin-top:15px; text-decoration: underline;">Back to Canvas</p>
         </div>
     </div>
 
     <div id="pay-modal" class="modal">
         <div class="card">
-            <h2 style="margin-bottom: 20px;">PAYMENT GATEWAY</h2>
+            <h2 style="margin-bottom: 25px;">PAYMENT GATEWAY</h2>
             
             <div class="pay-item" onclick="copyAddr('0x443792A4884e8e855f954ccEF910778Aff1eb78E')">
                 <span class="pay-label">Metamask (ETH/BNB/Polygon)</span>
@@ -140,46 +149,42 @@
                 <span class="pay-addr">TTapBkTqrDnzHbWzek6wSBUTcJKFmR8Ws6</span>
             </div>
 
-            <button class="premium-btn" onclick="closeModals()" style="background: #888;">Back to Map</button>
+            <button class="premium-btn" onclick="closeModals()" style="background: #888;">Close</button>
         </div>
     </div>
 
     <script>
-        // Copy function
         function copyAddr(text) {
             navigator.clipboard.writeText(text);
-            alert("Address Copied: " + text);
+            alert("Copied: " + text);
         }
 
-        // Modal Controls
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-        // Price Calculation
-        const pixelInput = document.getElementById('pixel-qty');
-        pixelInput.addEventListener('input', () => {
-            const qty = pixelInput.value;
-            document.getElementById('price-calc').innerText = `Total: $${qty}`;
+        const plotInput = document.getElementById('plot-qty');
+        plotInput.addEventListener('input', () => {
+            const qty = plotInput.value;
+            document.getElementById('price-calc').innerText = `Total: $${qty * 10}`;
         });
 
-        // WhatsApp Order
         function submitOrder() {
-            const qty = pixelInput.value;
-            const msg = encodeURIComponent(`Hi K ARCHIVE,\nI want to buy ${qty} pixels for my brand on Social Creators.\nTotal Price: $${qty}`);
+            const qty = plotInput.value;
+            if(qty < 10) return alert("Minimum 10 plots required!");
+            const msg = encodeURIComponent(`Hi K ARCHIVE,\nI want to buy ${qty} plots for my brand on Social Creators.\nTotal Price: $${qty * 10}`);
             window.open(`https://wa.me/8801576940717?text=${msg}`);
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
 
-        // Export Map
         function downloadMap() {
             const btn = document.querySelector('.nav-btn');
             btn.innerText = "Capturing...";
             html2canvas(document.getElementById('capture-area'), {
-                scale: 2,
+                scale: 3,
                 backgroundColor: "#fff"
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Social_Creators_Map.png';
+                link.download = 'Social_Creators_Archive.png';
                 link.href = canvas.toDataURL();
                 link.click();
                 btn.innerText = "Download Map";
