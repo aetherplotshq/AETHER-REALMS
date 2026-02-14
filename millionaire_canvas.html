@@ -153,7 +153,8 @@
     </div>
 
     <script type="module">
-        import { db, ref, push, serverTimestamp } from "./firebase-config.js";
+        // আপডেট: SECTIONS ইমপোর্ট করা হয়েছে
+        import { db, ref, push, serverTimestamp, SECTIONS } from "./firebase-config.js";
 
         const captureArea = document.getElementById('capture-area');
         const prices = [7000, 5000, 4900, 4700, 4400, 4000, 3500, 2900, 2200, 1400];
@@ -189,11 +190,20 @@
             const brand = document.getElementById('brand-input').value;
             if(!brand) return alert("Please enter brand name.");
             try {
-                await push(ref(db, 'pending_orders/Millionaire'), { plotID: activeID, price: activePrice, brandName: brand, timestamp: serverTimestamp() });
+                // আপডেট: SECTIONS.MILLIONAIRE_PENDING ব্যবহার করে সঠিক পাথে ডাটা পাঠানো হচ্ছে
+                await push(ref(db, SECTIONS.MILLIONAIRE_PENDING), { 
+                    plotID: activeID, 
+                    price: activePrice, 
+                    brandName: brand, 
+                    timestamp: serverTimestamp() 
+                });
                 document.getElementById('order-modal').style.display = 'none';
                 document.getElementById('final-plot-id').innerText = `#${activeID}`;
                 showCelebration(brand);
-            } catch (e) { alert("Error!"); }
+            } catch (e) { 
+                console.error(e);
+                alert("Database Connection Failed! Check firebase-config.js"); 
+            }
         };
 
         function showCelebration(name) {
@@ -218,10 +228,6 @@
         window.closeModals = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
         window.copy = (t) => { navigator.clipboard.writeText(t); alert("Copied!"); };
 
-        /* সংশোধিত ডাউনলোড লজিক: 
-           ১. 'x: 0' এবং 'scrollX: 0' দিয়ে বামের কালো অংশ দূর করা হয়েছে।
-           ২. 'scale: 4' দিয়ে ছবির কোয়ালিটি আরও উন্নত করা হয়েছে।
-        */
         window.downloadMap = () => {
             const btn = event.target;
             const originalText = btn.innerText;
@@ -231,16 +237,15 @@
             
             html2canvas(area, {
                 backgroundColor: "#000",
-                scale: 4,               // আরও হাই কোয়ালিটি
+                scale: 4,
                 useCORS: true,
                 allowTaint: true,
-                width: 1350,            // গ্রিডের পূর্ণ প্রশস্ততা ফিক্সড করা হয়েছে
+                width: 1350,
                 windowWidth: 1350,
-                x: 0,                   // একদম বাম থেকে শুরু হবে
-                scrollX: 0,             // স্ক্রল থাকলেও সেটা ধরবে না
+                x: 0,
+                scrollX: 0,
                 scrollY: 0,
                 onclone: (clonedDoc) => {
-                    // ক্লোন করা ক্যানভাসে স্লাইডার খুলে দেওয়া হচ্ছে যেন পুরোটা দেখা যায়
                     const containers = clonedDoc.querySelectorAll('.row-container');
                     containers.forEach(el => {
                         el.style.overflow = 'visible';
