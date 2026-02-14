@@ -141,7 +141,7 @@
                 ✅ 3. Website link for Plot redirect.<br>
                 ✅ 4. Mention Plot ID: <b id="final-plot-id">#00</b>
             </div>
-            <button class="premium-btn" onclick="window.open('https://wa.me/8801576940717', '_blank')">CONTACT CUSTOMER SERVICE</button>
+            <button class="premium-btn" id="whatsapp-btn">CONTACT CUSTOMER SERVICE</button>
             <button class="premium-btn" style="background:#555; margin-top:10px;" onclick="closeAndCelebrate()">BACK TO CANVAS</button>
         </div>
     </div>
@@ -153,7 +153,6 @@
     </div>
 
     <script type="module">
-        // আপডেট: আপনার দেওয়া ফাইলনেম millionaire_firebase-config.js অনুযায়ী ইমপোর্ট করা হয়েছে
         import { db, ref, push, serverTimestamp, SECTIONS } from "./millionaire_firebase-config.js";
 
         const captureArea = document.getElementById('capture-area');
@@ -190,13 +189,17 @@
             const brand = document.getElementById('brand-input').value;
             if(!brand) return alert("Please enter brand name.");
             try {
-                // আপডেট: SECTIONS.MILLIONAIRE_PENDING ব্যবহার করে ডাটা পাঠানো হচ্ছে
                 await push(ref(db, SECTIONS.MILLIONAIRE_PENDING), { 
                     plotID: activeID, 
                     price: activePrice, 
                     brandName: brand, 
                     timestamp: serverTimestamp() 
                 });
+
+                // হোয়াটসঅ্যাপ মেসেজ কাস্টমাইজেশন
+                const message = encodeURIComponent(`Hello K ARCHIVE, I want to acquire Plot #${activeID} for my brand "${brand}". The price is $${activePrice.toLocaleString()}. Please guide me with the next steps.`);
+                document.getElementById('whatsapp-btn').onclick = () => window.open(`https://wa.me/8801576940717?text=${message}`, '_blank');
+
                 document.getElementById('order-modal').style.display = 'none';
                 document.getElementById('final-plot-id').innerText = `#${activeID}`;
                 showCelebration(brand);
@@ -232,9 +235,7 @@
             const btn = event.target;
             const originalText = btn.innerText;
             btn.innerText = "CAPTURING HD MAP...";
-            
             const area = document.getElementById('capture-area');
-            
             html2canvas(area, {
                 backgroundColor: "#000",
                 scale: 4,
