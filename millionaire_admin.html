@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MILLIONAIRE ADMIN | K ARCHIVE</title>
+    <style>
+        body { font-family: sans-serif; background: #0B0E11; color: #fff; padding: 20px; display: none; }
+        .card { background: #1E2329; padding: 20px; margin-bottom: 20px; border-radius: 10px; border-left: 8px solid #FCD535; }
+        input { padding: 12px; width: 250px; margin-right: 10px; border: 1px solid #444; background: #0B0E11; color: #fff; border-radius: 4px; }
+        button { padding: 12px 25px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; }
+        .status-info { color: #888; font-size: 12px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <script>
+        const accessPass = prompt("Access Password:");
+        if(accessPass === "KAWSARahmed22@@") { 
+            document.body.style.display = "block"; 
+        } else { 
+            alert("ভুল পাসওয়ার্ড!");
+            window.location.href = "millionaire_canvas.html"; 
+        }
+    </script>
+
+    <h1 style="color:#FCD535">MILLIONAIRE PENDING APPROVALS</h1>
+    <div id="order-list">Loading...</div>
+
+    <script type="module">
+        import { db, ref, push, onValue, SECTIONS } from "./millionaire_firebase-config.js";
+        // আমরা রিমুভ এবং সেট করার জন্য সরাসরি ডাটাবেস ফাংশন ব্যবহার করব
+        import { remove, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        function loadOrders() {
+            const ordersRef = ref(db, SECTIONS.MILLIONAIRE_PENDING);
+            onValue(ordersRef, s => {
+                const list = document.getElementById('order-list'); 
+                list.innerHTML = "";
+                const data = s.val(); 
+                if(!data) return list.innerHTML = "No pending orders.";
+                
+                Object.keys(data).forEach(key => {
+                    const order = data[key];
+                    const plotID = order.plotID;
+                    list.innerHTML += `<div class="card">
+                        <b>PLOT #${plotID}</b> | BRAND: ${order.brandName} | PRICE: $${order.price} <br><br>
+                        <input type="text" id="img_${key}" placeholder="Logo URL (PNG/JPG)">
+                        <input type="text" id="web_${key}" placeholder="Website URL">
+                        <button onclick="approveOrder('${key}', ${plotID}, '${order.brandName}')" style="background:#2ebd85; color:white;">APPROVE & LIVE</button>
+                        <button onclick="rejectOrder('${key}')" style="background:red; color:white; margin-left:10px;">REJECT</button>
+                        <div class="status-info">Submitted on: ${new Date(order.timestamp).toLocaleString()}</div>
+                    </div>`;
+                });
+            });
+        }
+
+        window.approveOrder = (key, pid, name) => {
+            const img = document.getElementById('img_'+key).value;
+            const web = document.getElementById('web_'+key).value;
+            if(!img) return alert("Logo URL missing!");
+
+            // এস্টেট ডাটাবেসে মেইন ডাটা সেট করা (Live করা)
+            set(ref(db, 'estate_data/Millionaire/' + pid), {
+                name: name,
+                imageUrl: img,
+                link: web || "#",
+                plotID: pid,
+                status: "SOLD"
+            }).then(() => {
+                // পেন্ডিং লিস্ট থেকে রিমুভ করা
+                remove(ref(db, SECTIONS.MILLIONAIRE_PENDING + '/' + key));
+                alert("Plot #" + pid + " is now LIVE!");
+            });
+        };
+
+        window.rejectOrder = (key) => {
+            if(confirm("Delete this request?")) {
+                remove(ref(db, SECTIONS.MILLIONAIRE_PENDING + '/' + key));
+            }
+        };
+
+        loadOrders();
+    </script>
+</body>
+</html>
